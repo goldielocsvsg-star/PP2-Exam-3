@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intracranial Regulation - Interactive Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brain-pink: #FF6B9D;
+  --neuro-purple: #7B68EE;
+  --synapse-blue: #4FC3F7;
+  --heal-green: #66BB6A;
+  --alert-orange: #FFA726;
+  --warning-red: #EF5350;
+  --dark-bg: #1a1a2e;
+  --card-bg: #16213e;
+  --card-bg2: #0f3460;
+  --text-light: #e8e8e8;
+  --glow: rgba(123, 104, 238, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: var(--dark-bg);
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Floating particles background */
+.particles {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0.15;
+}
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(720deg); }
+}
+
+/* Navigation */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  padding: 12px 20px;
+  border-bottom: 2px solid var(--neuro-purple);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+}
+.nav-bar::-webkit-scrollbar { height: 0; }
+.nav-btn {
+  background: var(--card-bg);
+  border: 2px solid transparent;
+  color: var(--text-light);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.nav-btn:hover, .nav-btn.active {
+  border-color: var(--neuro-purple);
+  background: rgba(123, 104, 238, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--glow);
+}
+.nav-btn.active { background: var(--neuro-purple); color: #fff; }
+
+/* Progress bar */
+.progress-container {
+  position: fixed;
+  top: 60px; left: 0; right: 0;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  z-index: 999;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brain-pink), var(--neuro-purple), var(--synapse-blue));
+  border-radius: 0 3px 3px 0;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+/* XP Counter */
+.xp-counter {
+  position: fixed;
+  top: 75px; right: 20px;
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg2));
+  border: 2px solid var(--heal-green);
+  border-radius: 20px;
+  padding: 8px 18px;
+  z-index: 998;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(102, 187, 106, 0.3);
+}
+.xp-counter .xp-num { color: var(--heal-green); font-weight: 700; }
+.xp-pop {
+  position: fixed;
+  pointer-events: none;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--heal-green);
+  z-index: 9999;
+  animation: xpPop 1s ease-out forwards;
+}
+@keyframes xpPop {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-60px) scale(1.5); }
+}
+
+/* Main Content */
+.main-content {
+  position: relative;
+  z-index: 1;
+  padding: 90px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section styling */
+.section {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  margin-bottom: 30px;
+}
+.hero h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, var(--brain-pink), var(--neuro-purple), var(--synapse-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+.hero .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+.hero .emoji-row {
+  font-size: 2rem;
+  letter-spacing: 10px;
+}
+.motivational {
+  background: linear-gradient(135deg, rgba(123,104,238,0.15), rgba(255,107,157,0.15));
+  border: 1px solid rgba(123,104,238,0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Content Cards */
+.content-card {
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg2));
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.content-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.content-card h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.content-card h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  margin: 18px 0 10px;
+  color: var(--synapse-blue);
+}
+.content-card p, .content-card li {
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+.content-card ul { padding-left: 20px; margin: 8px 0; }
+.content-card li { margin: 5px 0; }
+
+/* Color accent tags */
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 2px 4px;
+}
+.tag-pink { background: rgba(255,107,157,0.2); color: var(--brain-pink); border: 1px solid var(--brain-pink); }
+.tag-purple { background: rgba(123,104,238,0.2); color: var(--neuro-purple); border: 1px solid var(--neuro-purple); }
+.tag-blue { background: rgba(79,195,247,0.2); color: var(--synapse-blue); border: 1px solid var(--synapse-blue); }
+.tag-green { background: rgba(102,187,106,0.2); color: var(--heal-green); border: 1px solid var(--heal-green); }
+.tag-orange { background: rgba(255,167,38,0.2); color: var(--alert-orange); border: 1px solid var(--alert-orange); }
+.tag-red { background: rgba(239,83,80,0.2); color: var(--warning-red); border: 1px solid var(--warning-red); }
+
+/* Key concept boxes */
+.key-box {
+  background: rgba(123,104,238,0.1);
+  border-left: 4px solid var(--neuro-purple);
+  padding: 15px 20px;
+  border-radius: 0 12px 12px 0;
+  margin: 15px 0;
+}
+.alert-box {
+  background: rgba(239,83,80,0.1);
+  border-left: 4px solid var(--warning-red);
+  padding: 15px 20px;
+  border-radius: 0 12px 12px 0;
+  margin: 15px 0;
+}
+.tip-box {
+  background: rgba(102,187,106,0.1);
+  border-left: 4px solid var(--heal-green);
+  padding: 15px 20px;
+  border-radius: 0 12px 12px 0;
+  margin: 15px 0;
+}
+.formula-box {
+  background: rgba(79,195,247,0.1);
+  border: 2px dashed var(--synapse-blue);
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin: 15px 0;
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.3rem;
+}
+
+/* Flip Cards */
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+.flip-card {
+  perspective: 1000px;
+  height: 220px;
+  cursor: pointer;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.flip-front {
+  background: linear-gradient(135deg, var(--card-bg2), var(--card-bg));
+  border: 2px solid var(--neuro-purple);
+}
+.flip-front h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  color: var(--synapse-blue);
+}
+.flip-front .flip-hint {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin-top: 10px;
+}
+.flip-back {
+  background: linear-gradient(135deg, var(--neuro-purple), var(--brain-pink));
+  transform: rotateY(180deg);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+/* Medication Table Cards */
+.med-card {
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg2));
+  border-radius: 16px;
+  padding: 20px;
+  margin: 15px 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.3s;
+}
+.med-card:hover {
+  border-color: var(--neuro-purple);
+  box-shadow: 0 0 20px var(--glow);
+}
+.med-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.med-header h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.15rem;
+  color: var(--synapse-blue);
+}
+.med-body {
+  display: none;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.med-card.open .med-body { display: block; }
+.med-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+.med-label {
+  font-weight: 700;
+  color: var(--brain-pink);
+  font-size: 0.85rem;
+}
+.expand-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+  color: var(--neuro-purple);
+}
+.med-card.open .expand-icon { transform: rotate(45deg); }
+
+/* GCS Interactive */
+.gcs-calc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+.gcs-section {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+.gcs-section h3 {
+  font-family: 'Fredoka', sans-serif;
+  margin-bottom: 12px;
+  color: var(--synapse-blue);
+}
+.gcs-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+.gcs-option:hover { background: rgba(123,104,238,0.15); }
+.gcs-option.selected {
+  background: rgba(123,104,238,0.3);
+  border: 1px solid var(--neuro-purple);
+}
+.gcs-score-badge {
+  background: var(--neuro-purple);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.gcs-total {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 16px;
+  font-family: 'Fredoka', sans-serif;
+}
+.gcs-total .big-number {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.gcs-total .interpretation {
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+/* Quiz section */
+.quiz-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.quiz-question {
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg2));
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255,255,255,0.08);
+}
+.quiz-question h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.quiz-question .q-num {
+  display: inline-block;
+  background: var(--neuro-purple);
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 8px;
+  font-size: 0.85rem;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-light);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.quiz-option:hover:not(.disabled) {
+  border-color: var(--neuro-purple);
+  background: rgba(123,104,238,0.1);
+}
+.quiz-option.correct {
+  border-color: var(--heal-green);
+  background: rgba(102,187,106,0.2);
+}
+.quiz-option.incorrect {
+  border-color: var(--warning-red);
+  background: rgba(239,83,80,0.2);
+}
+.quiz-option.disabled { cursor: not-allowed; opacity: 0.7; }
+.quiz-explanation {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(79,195,247,0.1);
+  border: 1px solid var(--synapse-blue);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.quiz-score-bar {
+  text-align: center;
+  padding: 20px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.3rem;
+}
+.quiz-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--neuro-purple), var(--brain-pink));
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
+.quiz-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px var(--glow); }
+
+/* Cranial nerve mnemonic */
+.nerve-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.nerve-item {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 2px solid rgba(255,255,255,0.08);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.nerve-item:hover {
+  border-color: var(--synapse-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(79,195,247,0.2);
+}
+.nerve-num {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.5rem;
+  color: var(--brain-pink);
+  font-weight: 700;
+}
+.nerve-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin: 5px 0;
+  color: var(--synapse-blue);
+}
+.nerve-fn {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-bar { padding: 10px 12px; }
+  .nav-btn { padding: 6px 12px; font-size: 0.8rem; }
+  .main-content { padding: 85px 12px 30px; }
+  .content-card { padding: 20px; }
+  .flip-grid { grid-template-columns: 1fr; }
+  .med-row { grid-template-columns: 1fr; }
+  .gcs-calc { grid-template-columns: 1fr; }
+  .xp-counter { top: 72px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
+}
+
+/* Scroll indicator animation */
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Badge popup */
+.badge-popup {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg2));
+  border: 3px solid var(--heal-green);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  z-index: 10000;
+  display: none;
+  animation: badgeBounce 0.5s ease;
+  box-shadow: 0 0 60px rgba(102,187,106,0.4);
+}
+@keyframes badgeBounce {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  60% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.badge-popup .badge-emoji { font-size: 4rem; }
+.badge-popup h2 { font-family: 'Fredoka', sans-serif; color: var(--heal-green); margin: 10px 0; }
+.badge-popup p { opacity: 0.8; }
+.badge-close {
+  margin-top: 15px;
+  padding: 8px 25px;
+  background: var(--heal-green);
+  border: none;
+  border-radius: 20px;
+  color: #1a1a2e;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Self-care reminder */
+.self-care {
+  background: linear-gradient(135deg, rgba(255,107,157,0.1), rgba(123,104,238,0.1));
+  border: 2px solid rgba(255,107,157,0.3);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 25px 0;
+  text-align: center;
+}
+.self-care h3 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--brain-pink);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+.self-care p { line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+.breathing-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--brain-pink), var(--neuro-purple));
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.breathing-btn:hover { transform: scale(1.05); }
+
+.breathing-circle {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--neuro-purple), var(--brain-pink));
+  margin: 20px auto;
+  display: none;
+  animation: breathe 8s ease-in-out infinite;
+}
+.breathing-text {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  display: none;
+  text-align: center;
+  animation: breatheText 8s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(0.6); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+@keyframes breatheText {
+  0%, 20% { opacity: 1; }
+  25%, 45% { opacity: 0; }
+  50%, 70% { opacity: 1; }
+  75%, 95% { opacity: 0; }
+}
+
+/* NIHSS table styling */
+.nihss-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  font-size: 0.9rem;
+  margin: 15px 0;
+}
+.nihss-table th {
+  background: var(--neuro-purple);
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  font-family: 'Fredoka', sans-serif;
+}
+.nihss-table th:first-child { border-radius: 10px 0 0 10px; }
+.nihss-table th:last-child { border-radius: 0 10px 10px 0; }
+.nihss-table td {
+  background: rgba(255,255,255,0.04);
+  padding: 10px 14px;
+}
+.nihss-table tr td:first-child { border-radius: 8px 0 0 8px; }
+.nihss-table tr td:last-child { border-radius: 0 8px 8px 0; }
+</style>
+</head>
+<body>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showSection('icr')">🧠 ICR Basics</button>
+  <button class="nav-btn" onclick="showSection('icp')">⚡ ICP</button>
+  <button class="nav-btn" onclick="showSection('seizures')">🌩️ Seizures</button>
+  <button class="nav-btn" onclick="showSection('stroke')">❤️‍🩹 Stroke</button>
+  <button class="nav-btn" onclick="showSection('meds')">💊 Medications</button>
+  <button class="nav-btn" onclick="showSection('gcs')">📊 GCS Tool</button>
+  <button class="nav-btn" onclick="showSection('cranial')">🔬 Cranial Nerves</button>
+  <button class="nav-btn" onclick="showSection('quiz')">🎯 Quiz</button>
+</nav>
+
+<!-- Progress bar -->
+<div class="progress-container">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- XP Counter -->
+<div class="xp-counter">
+  ⭐ <span class="xp-num" id="xpCount">0</span> XP
+</div>
+
+<!-- Badge popup -->
+<div class="badge-popup" id="badgePopup">
+  <div class="badge-emoji" id="badgeEmoji">🏆</div>
+  <h2 id="badgeTitle">Achievement Unlocked!</h2>
+  <p id="badgeDesc">You're doing amazing!</p>
+  <button class="badge-close" onclick="closeBadge()">Keep Going! 💪</button>
+</div>
+
+<div class="main-content">
+
+<!-- HOME SECTION -->
+<div class="section active" id="section-home">
+  <div class="hero">
+    <h1>🧠 Intracranial Regulation</h1>
+    <p class="subtitle">Your Interactive Neuro Study Buddy</p>
+    <div class="emoji-row">🩺 💡 ⚡ 🧬 💊</div>
+  </div>
+
+  <div class="motivational">
+    💜 Hey future nurse — burnout is real, but so is your passion. This guide is designed to make studying feel less like a chore. Take breaks, breathe, and remember: you're learning to save lives. That's pretty incredible.
+  </div>
+
+  <div class="self-care">
+    <h3>🫧 Quick Reset Before You Study</h3>
+    <p>Take 30 seconds to ground yourself. You deserve this moment.</p>
+    <button class="breathing-btn" onclick="startBreathing()">Start Breathing Exercise</button>
+    <div class="breathing-circle" id="breathCircle"></div>
+    <div class="breathing-text" id="breathText">Breathe in... hold... breathe out...</div>
+  </div>
+
+  <div class="content-card">
+    <h2>📋 What's Covered</h2>
+    <p>This guide covers <strong>everything</strong> from Dr. Johnson's Intracranial Regulation module:</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
+      <span class="tag tag-pink">ICR Basics</span>
+      <span class="tag tag-purple">Increased ICP</span>
+      <span class="tag tag-blue">Seizures & Epilepsy</span>
+      <span class="tag tag-green">Stroke Types</span>
+      <span class="tag tag-orange">14+ Medications</span>
+      <span class="tag tag-red">NCLEX-Style Quiz</span>
+    </div>
+    <div class="tip-box" style="margin-top: 15px;">
+      <strong>💡 How to use:</strong> Click through sections at the top. Flip cards to test yourself. Try the interactive GCS calculator. Earn XP for answering quiz questions! Aim for 200+ XP.
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🎯 Module Objectives</h2>
+    <ul>
+      <li>List risk factors for altered intracranial regulation</li>
+      <li>Apply pathophysiology of epilepsy, ICP, and hemorrhagic stroke</li>
+      <li>Understand drug therapy for altered intracranial regulation</li>
+      <li>Know drug names, classes, actions, adverse effects, and nursing considerations</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ICR BASICS SECTION -->
+<div class="section" id="section-icr">
+  <div class="content-card">
+    <h2>🧠 Intracranial Regulation: The Big Picture</h2>
+    <p>ICR refers to the mechanisms and conditions that impact intracranial processing and function — basically, everything happening inside your skull that keeps your brain working properly.</p>
+    
+    <div class="key-box">
+      <strong>🔑 Key Concept:</strong> The skull is a fixed, rigid space containing three things: brain tissue, blood, and CSF. If one increases, another must decrease — or ICP rises.
+    </div>
+
+    <div class="formula-box">
+      🧠 BRAIN + 🩸 BLOOD + 💧 CSF = Constant Pressure<br>
+      <small style="opacity: 0.7;">(Monro-Kellie Hypothesis)</small>
+    </div>
+
+    <h3>Three Things That Can Go Wrong</h3>
+
+    <div class="tip-box">
+      <strong>1. Impaired Perfusion 🩸</strong><br>
+      The brain needs constant oxygen and blood flow. This depends on cardiac output, blood volume, and hemoglobin's oxygen-carrying capacity. Poor perfusion = neuronal death.
+    </div>
+
+    <div class="tip-box">
+      <strong>2. Glucose Dysregulation 🍬</strong><br>
+      Glucose is the brain's primary fuel. Hypoglycemia causes altered mental status. Hyperglycemia worsens brain injury.
+    </div>
+
+    <div class="tip-box">
+      <strong>3. Neurotransmission Disruption ⚡</strong><br>
+      Normal brain function requires healthy neurons, intact synapses, and balanced neurotransmitters. Disruptions cause seizures or neurologic dysfunction.
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>👥 Populations at Risk</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+      <div class="key-box">
+        <strong>🧓 Elderly</strong><br>
+        Degenerative conditions, falls, and age-related vascular changes
+      </div>
+      <div class="key-box">
+        <strong>👦 Adolescents/Young Adults</strong><br>
+        Traumatic brain injury from MVAs, risky behaviors, being struck by objects
+      </div>
+      <div class="key-box">
+        <strong>🏥 Individual Risk Factors</strong><br>
+        Hypertension, diabetes, smoking, obesity, cardiovascular disease, drug use (cocaine)
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🔬 Cerebral Edema</h2>
+    <p>Fluid buildup around the brain causing increased ICP. It can restrict blood supply and cause irreversible damage — potentially fatal.</p>
+    <h3>Common Causes</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+      <span class="tag tag-red">Traumatic Brain Injury</span>
+      <span class="tag tag-red">Ischemic Stroke</span>
+      <span class="tag tag-orange">Brain Abscess</span>
+      <span class="tag tag-orange">Brain Tumor</span>
+      <span class="tag tag-pink">Hemorrhage</span>
+      <span class="tag tag-pink">Meningitis</span>
+      <span class="tag tag-purple">High Altitude</span>
+    </div>
+  </div>
+</div>
+
+<!-- ICP SECTION -->
+<div class="section" id="section-icp">
+  <div class="content-card">
+    <h2>⚡ Increased Intracranial Pressure (ICP)</h2>
+    
+    <div class="formula-box">
+      Normal ICP = 5 – 15 mmHg<br>
+      <span style="font-size: 1rem;">CPP = MAP − ICP</span>
+    </div>
+
+    <div class="alert-box">
+      <strong>🚨 EXAM ALERT — #1 Tested Concept:</strong><br>
+      The <strong>EARLIEST sign</strong> of increased ICP is a <strong>change in level of consciousness (LOC)</strong>. Headache is another early sign.
+    </div>
+
+    <h3>Early Signs of Increased ICP</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="tag tag-orange">Change in LOC</span>
+      <span class="tag tag-orange">Headache</span>
+      <span class="tag tag-orange">Restlessness</span>
+      <span class="tag tag-orange">Confusion</span>
+      <span class="tag tag-orange">Pupillary changes</span>
+    </div>
+
+    <h3>Late Signs — Cushing's Triad ⚠️</h3>
+    <div class="alert-box">
+      <strong>Cushing's Triad = Brain Emergency!</strong><br>
+      Remember: <strong>"WIDE, SLOW, IRREGULAR"</strong><br><br>
+      🔴 <strong>Widened pulse pressure</strong> (↑ systolic BP)<br>
+      🔴 <strong>Bradycardia</strong> (↓ heart rate)<br>
+      🔴 <strong>Irregular respirations</strong><br><br>
+      This is an ominous late sign indicating impending brain herniation!
+    </div>
+
+    <h3>Other Signs of Increased ICP</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="tag tag-pink">Papilledema</span>
+      <span class="tag tag-pink">Impaired eye movement</span>
+      <span class="tag tag-purple">Seizures</span>
+      <span class="tag tag-purple">Vomiting</span>
+      <span class="tag tag-blue">Speech changes</span>
+      <span class="tag tag-red">Posturing</span>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🏥 Posturing Types</h2>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Decorticate Posturing</h3>
+            <div style="font-size: 2rem; margin: 10px 0;">💪</div>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Arms FLEXED inward</strong> (toward the COR/core)<br><br>
+            • Arms adducted & flexed against chest<br>
+            • Closed hands<br>
+            • Legs internally rotated<br>
+            • Feet turned inward<br><br>
+            <em>Memory: de-COR-ticate = arms toward CORe</em>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Decerebrate Posturing</h3>
+            <div style="font-size: 2rem; margin: 10px 0;">🤸</div>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Arms EXTENDED outward</strong> (worse prognosis!)<br><br>
+            • Head & neck arched<br>
+            • Arms straight, extended, hands curled<br>
+            • Legs straight<br>
+            • Toes pointed downward<br><br>
+            <em>Memory: de-cere-BRATE = arms go STRAIGHT</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>💊 Treatment for Increased ICP</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+      <div class="key-box">
+        <strong>Prevention</strong><br>
+        Smoking cessation, healthy weight, BP control, exercise
+      </div>
+      <div class="key-box">
+        <strong>Pharmacotherapy</strong><br>
+        Osmotic diuretics (Mannitol), sedatives, analgesics, antiepileptics, glucocorticoids, antipyretics
+      </div>
+      <div class="key-box">
+        <strong>Surgical</strong><br>
+        Craniotomy, shunt procedures
+      </div>
+      <div class="key-box">
+        <strong>Nursing Care</strong><br>
+        Positioning (HOB 30°), airway management, hyperventilation, bowel/nutrition management, education, rehab
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🔍 Diagnostics</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="tag tag-blue">CT scan</span>
+      <span class="tag tag-blue">MRI</span>
+      <span class="tag tag-purple">EEG</span>
+      <span class="tag tag-purple">Skull radiograph</span>
+      <span class="tag tag-green">Lumbar puncture</span>
+      <span class="tag tag-green">Brain biopsy</span>
+    </div>
+  </div>
+</div>
+
+<!-- SEIZURES SECTION -->
+<div class="section" id="section-seizures">
+  <div class="content-card">
+    <h2>🌩️ Seizures & Epilepsy</h2>
+    <div class="key-box">
+      <strong>Seizure:</strong> An abnormal, sudden, excessive, uncontrolled electrical discharge of neurons that may alter consciousness, movement, sensation, or behavior.
+    </div>
+    <div class="key-box">
+      <strong>Epilepsy:</strong> A chronic disorder with recurrent unprovoked seizures, often caused by abnormal electrical neuronal activity or neurotransmitter imbalance.
+    </div>
+
+    <h3>Causes of Secondary Seizures</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="tag tag-red">Brain tumor</span>
+      <span class="tag tag-red">Trauma/TBI</span>
+      <span class="tag tag-orange">Metabolic disorders</span>
+      <span class="tag tag-orange">Alcohol withdrawal</span>
+      <span class="tag tag-pink">Electrolyte imbalance</span>
+      <span class="tag tag-pink">High fever</span>
+      <span class="tag tag-purple">Stroke</span>
+      <span class="tag tag-purple">Substance abuse</span>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>📊 Phases of a Seizure</h2>
+    <p style="margin-bottom: 10px;"><em>This is an NCLEX favorite — know these phases!</em></p>
+    
+    <div class="flip-grid">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div style="font-size: 1.5rem;">1️⃣</div>
+            <h3>Prodrome</h3>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Hours to days before</strong><br>
+            Early warning signs: headache, malaise, mood changes, altered smell/taste/vision
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div style="font-size: 1.5rem;">2️⃣</div>
+            <h3>Aura</h3>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Immediately before seizure</strong><br>
+            Sensory warning: strange smell, visual disturbance, dizziness, "funny feeling" — can be gustatory, visual, or auditory
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div style="font-size: 1.5rem;">3️⃣</div>
+            <h3>Ictal Phase</h3>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>The actual seizure event</strong><br>
+            Includes Tonic Phase (muscle stiffening) and Clonic Phase (rhythmic jerking)
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div style="font-size: 1.5rem;">4️⃣</div>
+            <h3>Postictal Phase</h3>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Recovery period after seizure</strong><br>
+            Confusion, sleepiness, headache, disorientation. Patient may not remember the event.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>📋 Types of Seizures</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+      <div class="key-box">
+        <strong>Generalized Seizures</strong><br>
+        Both hemispheres involved<br>
+        Types: Tonic-clonic, Clonic, Tonic, Myoclonic, Atonic
+      </div>
+      <div class="key-box">
+        <strong>Partial (Focal) Seizures</strong><br>
+        One area of brain<br>
+        Types: Simple partial, Complex partial
+      </div>
+      <div class="key-box">
+        <strong>Epilepsy Syndromes</strong><br>
+        Lennox-Gastaut, Febrile seizures, Pseudoseizures, Status Epilepticus
+      </div>
+    </div>
+
+    <div class="alert-box" style="margin-top: 15px;">
+      <strong>🚨 Status Epilepticus</strong> = Medical emergency! Continuous seizure activity lasting >5 minutes or repeated seizures without recovery between them. Requires immediate intervention.
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🩺 Nursing Management of Seizures</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+      <div class="tip-box">
+        <strong>✅ Seizure Precautions</strong><br>
+        • Padded side rails<br>
+        • Suction at bedside<br>
+        • Oxygen available<br>
+        • Bed in lowest position
+      </div>
+      <div class="tip-box">
+        <strong>✅ DURING Seizure — DO:</strong><br>
+        • Protect head<br>
+        • Turn patient on side<br>
+        • Loosen tight clothing<br>
+        • Note time and duration
+      </div>
+      <div class="alert-box">
+        <strong>❌ DURING Seizure — DO NOT:</strong><br>
+        • Do NOT restrain patient<br>
+        • Do NOT put objects in mouth<br>
+        • Do NOT hold tongue
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STROKE SECTION -->
+<div class="section" id="section-stroke">
+  <div class="content-card">
+    <h2>❤️‍🩹 Stroke Overview</h2>
+    <p>A stroke occurs when blood flow to part of the brain is interrupted, causing tissue death (infarction). It's a medical emergency — sometimes called a "Brain Attack."</p>
+    
+    <div class="alert-box">
+      <strong>🚨 B.E. F.A.S.T. — Know the Signs!</strong><br><br>
+      <strong>B</strong> = Balance (loss, headache, dizziness)<br>
+      <strong>E</strong> = Eyes (sudden vision loss)<br>
+      <strong>F</strong> = Face (drooping, uneven)<br>
+      <strong>A</strong> = Arm (weakness)<br>
+      <strong>S</strong> = Speech (difficulty)<br>
+      <strong>T</strong> = Time (call 911!)
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🔄 Types of Stroke</h2>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Transient Ischemic Attack (TIA)</h3>
+            <div style="font-size: 2rem;">⏱️</div>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Temporary</strong> neurologic dysfunction from brief interruption of blood flow.<br><br>
+            • Resolves in 30-60 min (up to 24 hrs)<br>
+            • Causes: carotid stenosis, atherosclerotic plaque<br>
+            • Treatment: aspirin, clopidogrel, BP & diabetes control<br>
+            • "Warning stroke" — take seriously!
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Ischemic Stroke</h3>
+            <div style="font-size: 2rem;">🧊</div>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Blockage</strong> of cerebral artery by thrombus or embolus.<br><br>
+            • Thrombotic: atherosclerosis (>50% of strokes)<br>
+            • Embolic: thrombi break off, travel to brain (often from A-fib, carotid plaques)<br>
+            • Treatment: tPA within window
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Hemorrhagic Stroke</h3>
+            <div style="font-size: 2rem;">🩸</div>
+            <p class="flip-hint">tap to reveal</p>
+          </div>
+          <div class="flip-back">
+            <strong>Bleeding</strong> within brain tissue from ruptured blood vessels.<br><br>
+            • Intracerebral: from severe/sustained HTN<br>
+            • Subarachnoid: ruptured aneurysm or AVM<br>
+            • Cocaine can trigger sudden BP spike → hemorrhagic stroke<br>
+            • Aneurysm = abnormal ballooning of artery
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🧠 Effects of Stroke by Side</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+      <div class="key-box" style="border-left-color: var(--brain-pink);">
+        <strong>Right Brain Damage →</strong><br>
+        Paralyzed LEFT side<br>
+        Spatial/perceptual deficits<br>
+        Quick, impulsive behavior<br>
+        Memory deficits (performance)
+      </div>
+      <div class="key-box" style="border-left-color: var(--synapse-blue);">
+        <strong>Left Brain Damage →</strong><br>
+        Paralyzed RIGHT side<br>
+        Speech/language deficits<br>
+        Slow, cautious behavior<br>
+        Memory deficits (language)
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>🔍 Stroke Diagnostics & Treatment</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
+      <span class="tag tag-blue">CT scan</span>
+      <span class="tag tag-blue">CT angiogram</span>
+      <span class="tag tag-purple">MRI/MRA</span>
+      <span class="tag tag-purple">NIHSS</span>
+      <span class="tag tag-green">Carotid duplex</span>
+      <span class="tag tag-green">Lab studies</span>
+    </div>
+    <div class="tip-box">
+      <strong>Treatment Priorities:</strong> Maintain airway → Stabilize breathing → Support circulation → Prevent neurological deterioration. Treatment depends on stroke type and extent.
+    </div>
+  </div>
+</div>
+
+<!-- MEDICATIONS SECTION -->
+<div class="section" id="section-meds">
+  <div class="content-card">
+    <h2>💊 Medication Master Guide</h2>
+    <p>All medications from the Intracranial Regulation module. Click each card to expand details!</p>
+    
+    <div class="tip-box">
+      <strong>💡 Study Tip:</strong> Focus on the mechanism of action, key side effects (especially SJS!), and what to monitor. Almost ALL anticonvulsants require behavioral monitoring and skin checks.
+    </div>
+  </div>
+
+  <h3 style="font-family: 'Fredoka', sans-serif; padding: 10px 0; color: var(--brain-pink); font-size: 1.3rem;">⚡ Broad-Spectrum Antiepileptics</h3>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Clonazepam / Diazepam</h3>
+      <div><span class="tag tag-purple">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>Clonazepam: PO | Diazepam: IV, IM, PO, PR</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Lennox-Gastaut, akinetic, myoclonic seizures; prevention of acute/abrupt seizures</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Anticonvulsant effects via presynaptic inhibition</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Palpitations, rash, nystagmus, suicidal ideation, diplopia</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Assess for drowsiness, unsteadiness, clumsiness. Monitor for notable behavioral changes.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decrease/cessation of seizures without undue sedation</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Lamotrigine</h3>
+      <div><span class="tag tag-purple">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Decreased seizure incidence; delays mood episodes in bipolar disorder</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Stabilizes neuronal membranes by inhibiting sodium transport</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>⚠️ Cardiac arrest, <strong>Stevens-Johnson syndrome (SJS)</strong>, hepatic failure, blurred vision</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor behavioral changes. <strong>Monitor for skin changes</strong> (SJS risk!).</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decrease in frequency or cessation of seizures</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Levetiracetam</h3>
+      <div><span class="tag tag-purple">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO and IV</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Decreased incidence and severity of seizures</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Inhibits burst firing without affecting normal neuronal excitability</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Hypertension, SJS, aggression, suicidal ideation</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor behavioral changes. Monitor skin changes.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decrease in frequency or cessation of seizures</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Topiramate</h3>
+      <div><span class="tag tag-purple">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Decreased incidence of seizures</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Blockade of sodium channels in neurons</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>SJS, decreased growth in children, vision changes, bleeding, seizures, SI</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor behavioral changes. Monitor growth rate in pediatric patients.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Absence or reduction of seizure activity</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Valproic Acid</h3>
+      <div><span class="tag tag-purple">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO and IV</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Suppression of seizure activity</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Increases levels of GABA (inhibitory neurotransmitter) in the CNS</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Peripheral edema, <strong>pancreatitis</strong>, hypothermia, rash</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Assess seizure activity, assess for SI, <strong>monitor for signs of pancreatitis</strong>.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decreased seizure activity</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-family: 'Fredoka', sans-serif; padding: 10px 0; color: var(--synapse-blue); font-size: 1.3rem;">🎯 Narrow-Spectrum Antiepileptics</h3>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Carbamazepine</h3>
+      <div><span class="tag tag-blue">Antiepileptic</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Epilepsy therapy, seizure prevention, bipolar disorder management</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Suppresses high-frequency neuronal discharge by affecting sodium channels</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>CNS depression, nystagmus, blurred vision, diplopia, ataxia, vertigo, edema, HF, hypotension, <strong>aplastic anemia</strong></span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor behavioral/skin changes. Monitor lab levels (therapeutic range). <strong>Avoid grapefruit!</strong></span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Absence or reduction of seizure activity</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Gabapentin</h3>
+      <div><span class="tag tag-blue">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Partial seizures (adjunct treatment, immediate release only)</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>SJS, nystagmus, gingivitis, rhabdomyolysis, ataxia, confusion</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span><strong>Do NOT take within 2 hours of antacid.</strong> Monitor behavioral/skin changes. Assess seizure activity. Check herbal medicine interactions.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decreased frequency or cessation of seizures</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Oxcarbazepine</h3>
+      <div><span class="tag tag-blue">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Partial seizures (monotherapy or adjunctive)</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Rash, SJS, vision changes, diplopia, nystagmus, NV, dizziness, headache</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor behavioral changes, skin changes, and CNS changes.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Absence or reduction of seizure activity</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Phenytoin ⭐</h3>
+      <div><span class="tag tag-red">HIGH YIELD</span> <span class="tag tag-blue">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO and IV</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Focal-onset and generalized seizures; can terminate ventricular arrhythmias</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Suppresses activity of seizure-generating neurons</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Nystagmus, sedation, ataxia, diplopia, cognitive impairment, <strong>gingival hyperplasia</strong>, cleft palate to fetus, dysrhythmias, hypotension, <strong>Purple Glove Syndrome</strong></span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span><strong>Monitor levels (therapeutic range 10-20)</strong>. GI upset with PO. Monitor enteral feedings (hold tube feeds!).</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Limit seizure activity</span></div>
+      <div class="alert-box" style="margin-top: 10px;">
+        <strong>🚨 High-Yield Facts:</strong><br>
+        • Therapeutic range: 10-20 mcg/mL<br>
+        • Can cause gingival hyperplasia → teach oral care!<br>
+        • Purple Glove Syndrome with IV admin<br>
+        • Teratogenic — cleft palate risk<br>
+        • Hold tube feeds before/after administration
+      </div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Pregabalin</h3>
+      <div><span class="tag tag-blue">Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Decreased partial-onset seizures</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Binds to calcium channels in CNS tissues regulating neurotransmitter release</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Peripheral edema, SJS, vision changes, NVD, dizziness, respiratory depression</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor closely for behavioral changes, suicidal thoughts, or depression.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decrease in frequency or cessation of seizures</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-family: 'Fredoka', sans-serif; padding: 10px 0; color: var(--alert-orange); font-size: 1.3rem;">😴 Sedative/Hypnotic Anticonvulsant</h3>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Phenobarbital</h3>
+      <div><span class="tag tag-orange">Sedative/Anticonvulsant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>PO, IM, IV</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Anticonvulsant activity</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Inhibits transmission in the nervous system and raises seizure threshold</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>Hypotension, rash, constipation, NVD, delirium, depression</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span>Monitor respiratory status, pulse, BP, and signs of angioedema. May take several weeks for maximum anticonvulsant effects.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span>Decrease/cessation of seizures without excessive sedation</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-family: 'Fredoka', sans-serif; padding: 10px 0; color: var(--heal-green); font-size: 1.3rem;">💧 Osmotic Diuretic</h3>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Mannitol ⭐</h3>
+      <div><span class="tag tag-red">HIGH YIELD</span> <span class="tag tag-green">Osmotic Diuretic</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Route</span><span>IV only</span></div>
+      <div class="med-row"><span class="med-label">Use</span><span>Reduction of intraocular or intracranial pressure</span></div>
+      <div class="med-row"><span class="med-label">Mechanism</span><span>Increases osmotic pressure of glomerular filtrate, inhibiting reabsorption of water and electrolytes</span></div>
+      <div class="med-row"><span class="med-label">Side Effects</span><span>HF, chest pain, blurred vision, electrolyte changes, NV, <strong>COMA</strong>, pulmonary edema</span></div>
+      <div class="med-row"><span class="med-label">Nursing</span><span><strong>Monitor neuro status and ICP readings.</strong> Used to decrease cerebral edema.</span></div>
+      <div class="med-row"><span class="med-label">Expected</span><span><strong>Urine output ≥ 30-50 mL/hr</strong>. Reduction in intracranial pressure.</span></div>
+      <div class="alert-box" style="margin-top: 10px;">
+        <strong>🚨 Key Point:</strong> Monitor urine output! Expected = at least 30-50 mL/hr or an increase per HCP parameters.
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family: 'Fredoka', sans-serif; padding: 10px 0; color: var(--warning-red); font-size: 1.3rem;">🩸 Stroke Medications</h3>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Warfarin (Coumadin)</h3>
+      <div><span class="tag tag-red">Anticoagulant</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Use</span><span>Stroke prevention, anticoagulation therapy</span></div>
+      <div class="med-row"><span class="med-label">Key Points</span><span>Monitor INR (therapeutic: 2-3). Antidote: Vitamin K. Watch for bleeding. Many drug/food interactions (Vitamin K foods).</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>Clopidogrel (Plavix)</h3>
+      <div><span class="tag tag-red">Antiplatelet</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Use</span><span>Prevention of thrombotic/embolic strokes, often prescribed post-TIA</span></div>
+      <div class="med-row"><span class="med-label">Key Points</span><span>Monitor for bleeding. Often paired with aspirin after TIA.</span></div>
+    </div>
+  </div>
+
+  <div class="med-card" onclick="toggleMed(this)">
+    <div class="med-header">
+      <h3>tPA (Tissue Plasminogen Activator)</h3>
+      <div><span class="tag tag-red">Thrombolytic</span> <span class="expand-icon">+</span></div>
+    </div>
+    <div class="med-body">
+      <div class="med-row"><span class="med-label">Use</span><span>Treatment of ischemic stroke — dissolves clots</span></div>
+      <div class="med-row"><span class="med-label">Key Points</span><span>Must be given within treatment window. Major risk: bleeding/hemorrhage. Confirm ischemic (NOT hemorrhagic) stroke before administering!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GCS SECTION -->
+<div class="section" id="section-gcs">
+  <div class="content-card">
+    <h2>📊 Glasgow Coma Scale Calculator</h2>
+    <p>Click to select responses in each category. The total score updates automatically!</p>
+    
+    <div class="gcs-calc">
+      <div class="gcs-section">
+        <h3>👁️ Eye Opening</h3>
+        <div class="gcs-option" onclick="selectGCS(this, 'eye', 4)">Spontaneously <span class="gcs-score-badge">4</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'eye', 3)">To speech <span class="gcs-score-badge">3</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'eye', 2)">To pain <span class="gcs-score-badge">2</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'eye', 1)">No response <span class="gcs-score-badge">1</span></div>
+      </div>
+      <div class="gcs-section">
+        <h3>💬 Verbal Response</h3>
+        <div class="gcs-option" onclick="selectGCS(this, 'verbal', 5)">Oriented <span class="gcs-score-badge">5</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'verbal', 4)">Confused <span class="gcs-score-badge">4</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'verbal', 3)">Inappropriate words <span class="gcs-score-badge">3</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'verbal', 2)">Incomprehensible <span class="gcs-score-badge">2</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'verbal', 1)">No response <span class="gcs-score-badge">1</span></div>
+      </div>
+      <div class="gcs-section">
+        <h3>💪 Motor Response</h3>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 6)">Obeys commands <span class="gcs-score-badge">6</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 5)">Localizes pain <span class="gcs-score-badge">5</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 4)">Withdrawal from pain <span class="gcs-score-badge">4</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 3)">Abnormal flexion (decorticate) <span class="gcs-score-badge">3</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 2)">Extension (decerebrate) <span class="gcs-score-badge">2</span></div>
+        <div class="gcs-option" onclick="selectGCS(this, 'motor', 1)">No response <span class="gcs-score-badge">1</span></div>
+      </div>
+    </div>
+
+    <div class="gcs-total" id="gcsTotal" style="background: rgba(123,104,238,0.15); border: 2px solid var(--neuro-purple);">
+      <div>Total GCS Score</div>
+      <div class="big-number" id="gcsNumber">—</div>
+      <div class="interpretation" id="gcsInterpretation">Select responses above</div>
+    </div>
+
+    <div class="tip-box" style="margin-top: 15px;">
+      <strong>📝 GCS Score Interpretation:</strong><br>
+      15 = Best possible (fully alert) | 8 or less = Comatose | 3 = Totally unresponsive
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>📋 NIHSS Quick Reference</h2>
+    <p>National Institutes of Health Stroke Scale: Range 0-42. Higher score = greater severity.</p>
+    <table class="nihss-table">
+      <tr><th>Score</th><th>Severity</th></tr>
+      <tr><td>0</td><td>No stroke symptoms</td></tr>
+      <tr><td>1-4</td><td>Minor stroke</td></tr>
+      <tr><td>5-15</td><td>Moderate stroke</td></tr>
+      <tr><td>16-20</td><td>Moderate to severe stroke</td></tr>
+      <tr><td>21-42</td><td>Severe stroke</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CRANIAL NERVES SECTION -->
+<div class="section" id="section-cranial">
+  <div class="content-card">
+    <h2>🔬 The 12 Cranial Nerves</h2>
+    <p>Mnemonic: <strong>"On Old Olympus' Towering Top, A French And German Viewed A Hop"</strong></p>
+    <p style="margin-top: 8px; opacity: 0.7;">Click each nerve to highlight it!</p>
+    
+    <div class="nerve-grid">
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">I</div>
+        <div class="nerve-name">Olfactory</div>
+        <div class="nerve-fn">Smell</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">II</div>
+        <div class="nerve-name">Optic</div>
+        <div class="nerve-fn">Visual acuity</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">III</div>
+        <div class="nerve-name">Oculomotor</div>
+        <div class="nerve-fn">Eyelid opening, eye movement</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">IV</div>
+        <div class="nerve-name">Trochlear</div>
+        <div class="nerve-fn">Eye movement (down/medial)</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">V</div>
+        <div class="nerve-name">Trigeminal</div>
+        <div class="nerve-fn">Facial sensation, chewing</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">VI</div>
+        <div class="nerve-name">Abducens</div>
+        <div class="nerve-fn">Eye movement (lateral)</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">VII</div>
+        <div class="nerve-name">Facial</div>
+        <div class="nerve-fn">Facial muscles, eyelid closing</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">VIII</div>
+        <div class="nerve-name">Vestibulocochlear</div>
+        <div class="nerve-fn">Hearing & balance</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">IX</div>
+        <div class="nerve-name">Glossopharyngeal</div>
+        <div class="nerve-fn">Taste (posterior tongue)</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">X</div>
+        <div class="nerve-name">Vagus</div>
+        <div class="nerve-fn">Uvula, swallowing</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">XI</div>
+        <div class="nerve-name">Accessory</div>
+        <div class="nerve-fn">Shoulder shrug</div>
+      </div>
+      <div class="nerve-item" onclick="this.style.borderColor=this.style.borderColor==='rgb(79, 195, 247)'?'rgba(255,255,255,0.08)':'rgb(79, 195, 247)'">
+        <div class="nerve-num">XII</div>
+        <div class="nerve-name">Hypoglossal</div>
+        <div class="nerve-fn">Tongue movement</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SECTION -->
+<div class="section" id="section-quiz">
+  <div class="content-card" style="text-align: center;">
+    <h2>🎯 NCLEX-Style Practice Quiz</h2>
+    <p>Test your knowledge! Earn 20 XP for each correct answer.</p>
+    <div class="quiz-score-bar">
+      Score: <span id="quizScore">0</span> / <span id="quizTotal">10</span>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <!-- Quiz questions generated by JS -->
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button class="quiz-btn" onclick="resetQuiz()">🔄 Reset Quiz</button>
+  </div>
+
+  <div class="self-care" style="margin-top: 30px;">
+    <h3>🌟 You Did That!</h3>
+    <p>Whether you scored 100% or 50%, the fact that you're here studying means you're already winning. Go get some water, stretch, and be proud of yourself.</p>
+  </div>
+</div>
+
+</div><!-- end main-content -->
+
+<script>
+// ======= PARTICLES =======
+const particlesEl = document.getElementById('particles');
+const colors = ['#FF6B9D', '#7B68EE', '#4FC3F7', '#66BB6A', '#FFA726'];
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 8 + 4;
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.background = colors[Math.floor(Math.random() * colors.length)];
+  p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+  p.style.animationDelay = (Math.random() * 10) + 's';
+  particlesEl.appendChild(p);
+}
+
+// ======= NAVIGATION =======
+let visitedSections = new Set(['home']);
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  visitedSections.add(id);
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  if (visitedSections.size === 3 && !badges.explorer) {
+    showBadge('🗺️', 'Explorer!', 'You visited 3 sections. Keep going!');
+    badges.explorer = true;
+    addXP(50);
+  }
+  if (visitedSections.size === 7 && !badges.scholar) {
+    showBadge('🎓', 'Neuro Scholar!', 'You explored most of the study guide!');
+    badges.scholar = true;
+    addXP(100);
+  }
+}
+
+function updateProgress() {
+  const total = 9;
+  const pct = (visitedSections.size / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ======= XP SYSTEM =======
+let xp = 0;
+let badges = {};
+
+function addXP(amount) {
+  xp += amount;
+  document.getElementById('xpCount').textContent = xp;
+  
+  // Pop animation
+  const pop = document.createElement('div');
+  pop.className = 'xp-pop';
+  pop.textContent = '+' + amount + ' XP';
+  pop.style.right = '80px';
+  pop.style.top = '80px';
+  document.body.appendChild(pop);
+  setTimeout(() => pop.remove(), 1000);
+}
+
+function showBadge(emoji, title, desc) {
+  document.getElementById('badgeEmoji').textContent = emoji;
+  document.getElementById('badgeTitle').textContent = title;
+  document.getElementById('badgeDesc').textContent = desc;
+  document.getElementById('badgePopup').style.display = 'block';
+}
+
+function closeBadge() {
+  document.getElementById('badgePopup').style.display = 'none';
+}
+
+// ======= FLIP CARDS =======
+function flipCard(el) {
+  el.classList.toggle('flipped');
+  if (el.classList.contains('flipped') && !el.dataset.flipped) {
+    el.dataset.flipped = 'true';
+    addXP(5);
+  }
+}
+
+// ======= MEDICATION CARDS =======
+function toggleMed(el) {
+  el.classList.toggle('open');
+  if (el.classList.contains('open') && !el.dataset.opened) {
+    el.dataset.opened = 'true';
+    addXP(3);
+  }
+}
+
+// ======= GCS CALCULATOR =======
+let gcsScores = { eye: 0, verbal: 0, motor: 0 };
+
+function selectGCS(el, category, score) {
+  const section = el.parentElement;
+  section.querySelectorAll('.gcs-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  gcsScores[category] = score;
+  
+  const total = gcsScores.eye + gcsScores.verbal + gcsScores.motor;
+  const numEl = document.getElementById('gcsNumber');
+  const interpEl = document.getElementById('gcsInterpretation');
+  const totalEl = document.getElementById('gcsTotal');
+  
+  if (gcsScores.eye && gcsScores.verbal && gcsScores.motor) {
+    numEl.textContent = total;
+    if (total === 15) {
+      interpEl.textContent = '✅ Best response — fully alert & oriented';
+      totalEl.style.borderColor = '#66BB6A';
+      numEl.style.color = '#66BB6A';
+    } else if (total >= 9) {
+      interpEl.textContent = '⚠️ Moderate — needs monitoring';
+      totalEl.style.borderColor = '#FFA726';
+      numEl.style.color = '#FFA726';
+    } else if (total > 3) {
+      interpEl.textContent = '🚨 Comatose (≤8) — severe impairment';
+      totalEl.style.borderColor = '#EF5350';
+      numEl.style.color = '#EF5350';
+    } else {
+      interpEl.textContent = '🚨 Totally unresponsive';
+      totalEl.style.borderColor = '#EF5350';
+      numEl.style.color = '#EF5350';
+    }
+    if (!badges.gcs) {
+      addXP(20);
+      badges.gcs = true;
+    }
+  } else {
+    numEl.textContent = total || '—';
+    interpEl.textContent = 'Select all three categories';
+  }
+}
+
+// ======= BREATHING EXERCISE =======
+function startBreathing() {
+  const circle = document.getElementById('breathCircle');
+  const text = document.getElementById('breathText');
+  circle.style.display = 'block';
+  text.style.display = 'block';
+  
+  const phases = ['Breathe in slowly... 🌬️', 'Hold... 💜', 'Breathe out slowly... 😌', 'Hold... ✨'];
+  let i = 0;
+  text.textContent = phases[0];
+  const interval = setInterval(() => {
+    i++;
+    if (i >= 12) {
+      clearInterval(interval);
+      circle.style.display = 'none';
+      text.textContent = 'Great job! You\'re ready to study. 💪';
+      setTimeout(() => { text.style.display = 'none'; }, 3000);
+      if (!badges.breathe) { addXP(10); badges.breathe = true; }
+      return;
+    }
+    text.textContent = phases[i % 4];
+  }, 2000);
+}
+
+// ======= QUIZ =======
+const quizData = [
+  {
+    q: "A nurse is assessing a patient with suspected increased ICP. What is the EARLIEST sign the nurse should look for?",
+    options: ["Cushing's triad", "Change in level of consciousness", "Projectile vomiting", "Decerebrate posturing"],
+    correct: 1,
+    explanation: "A change in LOC is the earliest and most sensitive indicator of increased ICP. Cushing's triad and posturing are late signs."
+  },
+  {
+    q: "Which medication is an osmotic diuretic used to reduce intracranial pressure?",
+    options: ["Phenytoin", "Valproic acid", "Mannitol", "Gabapentin"],
+    correct: 2,
+    explanation: "Mannitol (IV) is an osmotic diuretic that draws fluid out of brain tissue. Expected outcome: urine output ≥30-50 mL/hr."
+  },
+  {
+    q: "A patient on phenytoin should be monitored for which distinctive oral side effect?",
+    options: ["Gingivitis", "Gingival hyperplasia", "Oral candidiasis", "Dry mouth"],
+    correct: 1,
+    explanation: "Phenytoin commonly causes gingival hyperplasia (overgrowth of gum tissue). Good oral hygiene is essential patient teaching."
+  },
+  {
+    q: "Cushing's triad includes which three late signs of increased ICP?",
+    options: ["Tachycardia, hypotension, rapid breathing", "Widened pulse pressure, bradycardia, irregular respirations", "Fever, headache, nuchal rigidity", "Nausea, diplopia, confusion"],
+    correct: 1,
+    explanation: "Cushing's triad = widened pulse pressure (↑systolic BP), bradycardia, irregular respirations. Remember: 'WIDE, SLOW, IRREGULAR = BRAIN EMERGENCY.'"
+  },
+  {
+    q: "Which anticonvulsant works by increasing GABA levels in the CNS?",
+    options: ["Lamotrigine", "Topiramate", "Valproic acid", "Phenytoin"],
+    correct: 2,
+    explanation: "Valproic acid increases GABA (an inhibitory neurotransmitter) in the CNS. Monitor for pancreatitis and suicidal ideation."
+  },
+  {
+    q: "A nurse is caring for a seizing patient. Which action is MOST appropriate?",
+    options: ["Insert a tongue blade to prevent biting", "Restrain the patient's arms", "Turn the patient on their side and protect the head", "Administer oral medication immediately"],
+    correct: 2,
+    explanation: "Turn to side (protect airway), protect head, time the seizure. NEVER put objects in mouth or restrain the patient."
+  },
+  {
+    q: "Which drug must NOT be taken within 2 hours of an antacid?",
+    options: ["Phenobarbital", "Carbamazepine", "Gabapentin", "Lamotrigine"],
+    correct: 2,
+    explanation: "Gabapentin should not be taken within 2 hours of antacid administration as it affects absorption."
+  },
+  {
+    q: "A hemorrhagic stroke patient most likely has a history of which condition?",
+    options: ["Atrial fibrillation", "Severe or sustained hypertension", "Deep vein thrombosis", "Mitral valve prolapse"],
+    correct: 1,
+    explanation: "Intracerebral hemorrhage typically results from severe/sustained hypertension that damages arterial walls. Cocaine use can also trigger it."
+  },
+  {
+    q: "The therapeutic range for phenytoin is:",
+    options: ["5-10 mcg/mL", "10-20 mcg/mL", "20-30 mcg/mL", "1-5 mcg/mL"],
+    correct: 1,
+    explanation: "Phenytoin therapeutic range is 10-20 mcg/mL. Levels must be monitored regularly to prevent toxicity or subtherapeutic dosing."
+  },
+  {
+    q: "Which posturing type involves arms flexed toward the core and indicates cortical damage?",
+    options: ["Decerebrate", "Decorticate", "Flaccid", "Opisthotonus"],
+    correct: 1,
+    explanation: "Decorticate = arms flexed toward the CORe (cortical damage). Decerebrate = arms extended/straight (brainstem damage, worse prognosis)."
+  }
+];
+
+let quizAnswered = 0;
+let quizCorrect = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `
+      <h3><span class="q-num">${idx + 1}</span> ${q.q}</h3>
+      ${q.options.map((opt, oi) => `
+        <button class="quiz-option" onclick="answerQuiz(${idx}, ${oi}, this)">${opt}</button>
+      `).join('')}
+      <div class="quiz-explanation" id="explain-${idx}">💡 ${q.explanation}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function answerQuiz(qIdx, optIdx, btn) {
+  const question = btn.parentElement;
+  if (question.dataset.answered) return;
+  question.dataset.answered = 'true';
+  
+  const buttons = question.querySelectorAll('.quiz-option');
+  buttons.forEach(b => b.classList.add('disabled'));
+  
+  if (optIdx === quizData[qIdx].correct) {
+    btn.classList.add('correct');
+    quizCorrect++;
+    addXP(20);
+  } else {
+    btn.classList.add('incorrect');
+    buttons[quizData[qIdx].correct].classList.add('correct');
+  }
+  
+  quizAnswered++;
+  document.getElementById('quizScore').textContent = quizCorrect;
+  document.getElementById('explain-' + qIdx).style.display = 'block';
+  
+  if (quizAnswered === quizData.length) {
+    if (quizCorrect >= 8 && !badges.quizMaster) {
+      showBadge('🏆', 'Quiz Master!', `You got ${quizCorrect}/10! Amazing work!`);
+      badges.quizMaster = true;
+      addXP(50);
+    } else if (quizCorrect >= 5 && !badges.quizGood) {
+      showBadge('⭐', 'Great Effort!', `You got ${quizCorrect}/10! Keep reviewing!`);
+      badges.quizGood = true;
+    }
+  }
+}
+
+function resetQuiz() {
+  quizAnswered = 0;
+  quizCorrect = 0;
+  document.getElementById('quizScore').textContent = '0';
+  buildQuiz();
+}
+
+// Initialize
+buildQuiz();
+</script>
+</body>
+</html>
