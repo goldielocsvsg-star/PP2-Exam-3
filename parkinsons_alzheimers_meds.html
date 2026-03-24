@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 NeuroMeds: Parkinson's & Alzheimer's Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pk-primary: #7c3aed;
+    --pk-secondary: #a78bfa;
+    --pk-accent: #f59e0b;
+    --pk-light: #ede9fe;
+    --az-primary: #0ea5e9;
+    --az-secondary: #38bdf8;
+    --az-accent: #f97316;
+    --az-light: #e0f2fe;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --bg: #0f0a1e;
+    --card: #1a1030;
+    --card2: #0d1f35;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars BG */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14,165,233,0.12) 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; position:relative; z-index:1; }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 2.5rem 0 1.5rem;
+    position: relative;
+  }
+  .header-emoji { font-size: 3.5rem; animation: pulse 2s infinite; display:block; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    background: linear-gradient(135deg, #a78bfa, #38bdf8, #f59e0b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin: 0.5rem 0 0.25rem;
+  }
+  .subtitle { color: var(--muted); font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* XP BAR */
+  .xp-bar-wrap {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    display: flex; align-items:center; gap:1rem;
+    margin: 1.5rem auto; max-width:500px;
+  }
+  .xp-label { font-weight:800; font-size:0.85rem; color:var(--pk-accent); white-space:nowrap; }
+  .xp-track { flex:1; height:10px; background:rgba(255,255,255,0.1); border-radius:50px; overflow:hidden; }
+  .xp-fill { height:100%; background:linear-gradient(90deg,#7c3aed,#0ea5e9,#f59e0b); border-radius:50px; width:0; transition:width 0.6s ease; }
+  .xp-count { font-weight:900; font-size:0.9rem; color:#fff; white-space:nowrap; }
+
+  /* TABS */
+  .tabs { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+  .tab-btn {
+    font-family:'Fredoka One',cursive; font-size:1rem;
+    padding: 0.6rem 1.4rem; border-radius:50px; border:2px solid transparent;
+    cursor:pointer; transition:all 0.25s; font-weight:700;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+  }
+  .tab-btn:hover { transform:translateY(-2px); }
+  .tab-btn.active-pk { background:var(--pk-primary); color:#fff; border-color:var(--pk-secondary); }
+  .tab-btn.active-az { background:var(--az-primary); color:#fff; border-color:var(--az-secondary); }
+  .tab-btn.active-quiz { background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; }
+  .tab-btn.active-flash { background:linear-gradient(135deg,#10b981,#0ea5e9); color:#fff; }
+
+  /* SECTIONS */
+  .section { display:none; }
+  .section.active { display:block; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* SECTION HEADER */
+  .section-title {
+    font-family:'Fredoka One',cursive; font-size:1.8rem;
+    margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem;
+  }
+  .pk-color { color: var(--pk-secondary); }
+  .az-color { color: var(--az-secondary); }
+
+  /* MED CARD GRID */
+  .med-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.25rem; }
+
+  .med-card {
+    border-radius:16px; overflow:hidden;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    background: var(--card);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor:pointer;
+  }
+  .med-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,0.4); }
+
+  .med-card-header {
+    padding: 1rem 1.25rem;
+    display:flex; align-items:center; gap:0.75rem;
+  }
+  .med-icon { font-size:1.8rem; }
+  .med-name { font-family:'Fredoka One',cursive; font-size:1.2rem; line-height:1.2; }
+  .med-class { font-size:0.75rem; font-weight:700; letter-spacing:1px; opacity:0.8; text-transform:uppercase; }
+
+  .pk-header { background: linear-gradient(135deg, #4c1d95, #7c3aed); }
+  .az-header { background: linear-gradient(135deg, #0c4a6e, #0ea5e9); }
+
+  .med-card-body { padding:1rem 1.25rem; }
+
+  .tag-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; }
+  .tag {
+    font-size:0.7rem; font-weight:800; padding:0.2rem 0.6rem; border-radius:50px;
+    text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .tag-moa { background:rgba(124,58,237,0.3); color:#c4b5fd; border:1px solid rgba(124,58,237,0.5); }
+  .tag-az-moa { background:rgba(14,165,233,0.3); color:#7dd3fc; border:1px solid rgba(14,165,233,0.5); }
+
+  .accordion-btn {
+    width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px; padding:0.5rem 0.75rem;
+    color:var(--text); font-family:'Nunito',sans-serif; font-weight:800; font-size:0.8rem;
+    text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:0.4rem; transition:background 0.2s;
+    letter-spacing:0.5px; text-transform:uppercase;
+  }
+  .accordion-btn:hover { background:rgba(255,255,255,0.08); }
+  .accordion-btn.open { background:rgba(255,255,255,0.1); }
+  .accordion-arrow { transition:transform 0.25s; }
+  .accordion-btn.open .accordion-arrow { transform:rotate(180deg); }
+
+  .accordion-content { display:none; padding:0.6rem 0 0.25rem; }
+  .accordion-content.open { display:block; animation:fadeUp 0.2s ease; }
+
+  ul.detail-list { list-style:none; padding:0; }
+  ul.detail-list li { 
+    padding:0.3rem 0; font-size:0.85rem; color:#cbd5e1;
+    display:flex; gap:0.5rem; align-items:flex-start;
+  }
+  ul.detail-list li::before { content:'▸'; color:var(--pk-accent); flex-shrink:0; }
+  .az-card ul.detail-list li::before { color:var(--az-accent); }
+
+  .alert-badge {
+    display:inline-flex; align-items:center; gap:0.3rem;
+    background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.4);
+    border-radius:6px; padding:0.25rem 0.6rem; font-size:0.75rem; font-weight:800; color:#fca5a5;
+    margin-top:0.4rem;
+  }
+  .success-badge {
+    display:inline-flex; align-items:center; gap:0.3rem;
+    background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4);
+    border-radius:6px; padding:0.25rem 0.6rem; font-size:0.75rem; font-weight:800; color:#6ee7b7;
+    margin-top:0.4rem;
+  }
+
+  .moa-box {
+    background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(14,165,233,0.1));
+    border-left:3px solid var(--pk-secondary);
+    border-radius:0 8px 8px 0; padding:0.6rem 0.75rem; margin-bottom:0.75rem; font-size:0.85rem;
+    color:#e2d9f3; font-weight:600;
+  }
+  .az-moa-box {
+    background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(16,185,129,0.1));
+    border-left:3px solid var(--az-secondary);
+  }
+
+  /* QUIZ */
+  .quiz-wrap { max-width:700px; margin:0 auto; }
+  .quiz-score-bar {
+    display:flex; justify-content:space-between; align-items:center;
+    background:rgba(255,255,255,0.04); border-radius:12px; padding:1rem 1.5rem;
+    margin-bottom:1.5rem; border:1px solid rgba(255,255,255,0.08);
+  }
+  .score-stat { text-align:center; }
+  .score-num { font-family:'Fredoka One',cursive; font-size:2rem; }
+  .score-lbl { font-size:0.7rem; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:1px; }
+
+  .question-card {
+    background:var(--card); border-radius:16px;
+    border:1.5px solid rgba(255,255,255,0.08);
+    padding:1.5rem; margin-bottom:1.25rem;
+  }
+  .q-num { font-size:0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:0.5rem; }
+  .q-text { font-size:1.05rem; font-weight:700; margin-bottom:1.25rem; line-height:1.5; }
+
+  .options { display:grid; gap:0.6rem; }
+  .opt-btn {
+    background:rgba(255,255,255,0.04); border:2px solid rgba(255,255,255,0.1);
+    border-radius:10px; padding:0.7rem 1rem; text-align:left;
+    color:var(--text); font-family:'Nunito',sans-serif; font-weight:700; font-size:0.9rem;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .opt-btn:hover:not(:disabled) { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.25); transform:translateX(4px); }
+  .opt-btn.correct { background:rgba(16,185,129,0.2); border-color:#10b981; color:#6ee7b7; }
+  .opt-btn.wrong { background:rgba(239,68,68,0.2); border-color:#ef4444; color:#fca5a5; }
+  .opt-btn:disabled { cursor:default; }
+
+  .feedback-box {
+    border-radius:10px; padding:0.75rem 1rem; margin-top:0.75rem;
+    font-size:0.9rem; font-weight:700; line-height:1.5; display:none;
+  }
+  .feedback-box.show { display:block; animation:fadeUp 0.3s ease; }
+  .feedback-box.correct { background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#a7f3d0; }
+  .feedback-box.wrong { background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); color:#fecaca; }
+
+  .next-btn {
+    background:linear-gradient(135deg,var(--pk-primary),var(--az-primary));
+    color:#fff; border:none; border-radius:50px;
+    padding:0.7rem 2rem; font-family:'Fredoka One',cursive; font-size:1.1rem;
+    cursor:pointer; margin-top:1rem; display:none; transition:transform 0.2s, opacity 0.2s;
+  }
+  .next-btn.show { display:inline-block; }
+  .next-btn:hover { transform:scale(1.05); }
+
+  .quiz-complete {
+    text-align:center; padding:2.5rem; background:var(--card);
+    border-radius:20px; border:1.5px solid rgba(255,255,255,0.1); display:none;
+  }
+  .quiz-complete.show { display:block; animation:fadeUp 0.5s ease; }
+  .big-score { font-family:'Fredoka One',cursive; font-size:4rem; background:linear-gradient(135deg,#a78bfa,#38bdf8,#f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .restart-btn {
+    background:linear-gradient(135deg,#7c3aed,#0ea5e9);
+    color:#fff; border:none; border-radius:50px;
+    padding:0.75rem 2rem; font-family:'Fredoka One',cursive; font-size:1.15rem;
+    cursor:pointer; margin-top:1rem; transition:transform 0.2s;
+  }
+  .restart-btn:hover { transform:scale(1.05); }
+
+  /* FLASHCARDS */
+  .flash-wrap { max-width:650px; margin:0 auto; text-align:center; }
+  .flash-counter { color:var(--muted); font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:1rem; }
+  .flashcard-container { perspective:1000px; height:280px; margin-bottom:1.5rem; }
+  .flashcard {
+    width:100%; height:100%; position:relative;
+    transform-style:preserve-3d; transition:transform 0.6s ease;
+    cursor:pointer; border-radius:20px;
+  }
+  .flashcard.flipped { transform:rotateY(180deg); }
+  .flash-front, .flash-back {
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border-radius:20px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    padding:2rem;
+  }
+  .flash-front {
+    background:linear-gradient(135deg,#4c1d95,#1e3a5f);
+    border:2px solid rgba(167,139,250,0.3);
+  }
+  .flash-back {
+    transform:rotateY(180deg);
+    background:linear-gradient(135deg,#0c4a6e,#1a1030);
+    border:2px solid rgba(56,189,248,0.3);
+    overflow-y:auto;
+  }
+  .flash-label { font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:0.75rem; }
+  .flash-drug { font-family:'Fredoka One',cursive; font-size:1.8rem; color:#e9d5ff; }
+  .flash-class { font-size:0.9rem; color:#7dd3fc; font-weight:700; margin-top:0.3rem; }
+  .flash-hint { font-size:0.75rem; color:var(--muted); margin-top:1rem; animation:bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+  .flash-back-content { text-align:left; width:100%; font-size:0.82rem; }
+  .flash-back-content h4 { font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; color:#7dd3fc; font-weight:900; margin-bottom:0.25rem; margin-top:0.6rem; }
+  .flash-back-content p, .flash-back-content li { color:#e2e8f0; font-weight:600; margin-bottom:0.15rem; }
+  .flash-back-content ul { padding-left:1rem; }
+  .flash-back-content li::marker { color:#f59e0b; }
+
+  .flash-nav { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .flash-btn {
+    padding:0.6rem 1.5rem; border-radius:50px; border:none;
+    font-family:'Fredoka One',cursive; font-size:1rem; cursor:pointer; transition:all 0.2s;
+    color:#fff;
+  }
+  .flash-btn:hover { transform:scale(1.06); }
+  .flash-prev { background:rgba(255,255,255,0.1); }
+  .flash-next { background:linear-gradient(135deg,var(--pk-primary),var(--az-primary)); }
+  .flash-shuffle { background:linear-gradient(135deg,#f59e0b,#ef4444); }
+  .flash-category-btns { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }
+  .flash-cat-btn {
+    padding:0.4rem 1rem; border-radius:50px; border:2px solid transparent;
+    font-weight:800; font-size:0.8rem; cursor:pointer; transition:all 0.2s; background:transparent;
+  }
+  .flash-cat-btn.pk { border-color:var(--pk-secondary); color:var(--pk-secondary); }
+  .flash-cat-btn.pk.active, .flash-cat-btn.pk:hover { background:var(--pk-primary); color:#fff; }
+  .flash-cat-btn.az { border-color:var(--az-secondary); color:var(--az-secondary); }
+  .flash-cat-btn.az.active, .flash-cat-btn.az:hover { background:var(--az-primary); color:#fff; }
+  .flash-cat-btn.all { border-color:var(--pk-accent); color:var(--pk-accent); }
+  .flash-cat-btn.all.active, .flash-cat-btn.all:hover { background:var(--pk-accent); color:#fff; }
+
+  /* MNEMONICS */
+  .mnemonic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.25rem; }
+  .mnemonic-card {
+    background:var(--card); border-radius:16px; padding:1.25rem;
+    border:1.5px solid rgba(255,255,255,0.08);
+  }
+  .mnemonic-title { font-family:'Fredoka One',cursive; font-size:1.1rem; margin-bottom:0.75rem; }
+  .mnemonic-letters { display:flex; flex-direction:column; gap:0.35rem; }
+  .mnemonic-row { display:flex; gap:0.5rem; align-items:flex-start; font-size:0.88rem; }
+  .mnemonic-letter {
+    font-family:'Fredoka One',cursive; font-size:1.2rem; min-width:28px;
+    text-align:center;
+  }
+  .mnemonic-word { color:#e2e8f0; font-weight:600; line-height:1.4; }
+  .mnemonic-highlight { color:#f9fafb; font-weight:900; }
+
+  .compare-table { width:100%; border-collapse:collapse; margin-top:1rem; }
+  .compare-table th {
+    padding:0.6rem 1rem; text-align:left; font-size:0.75rem;
+    text-transform:uppercase; letter-spacing:1px; font-weight:900;
+    border-bottom:2px solid rgba(255,255,255,0.1);
+  }
+  .compare-table td {
+    padding:0.6rem 1rem; font-size:0.85rem; font-weight:600;
+    border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:top;
+  }
+  .compare-table tr:last-child td { border-bottom:none; }
+  .compare-table tr:hover td { background:rgba(255,255,255,0.03); }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .med-grid { grid-template-columns:1fr; }
+    .tabs { flex-direction:row; }
+    .tab-btn { font-size:0.85rem; padding:0.5rem 0.9rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="header-emoji">🧠</span>
+    <h1>NeuroMeds Master Guide</h1>
+    <p class="subtitle">Parkinson's & Alzheimer's Pharmacology</p>
+  </header>
+
+  <div class="xp-bar-wrap">
+    <span class="xp-label">⚡ XP</span>
+    <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+    <span class="xp-count" id="xpCount">0 / 500</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active-pk" onclick="switchTab('pk')">🟣 Parkinson's Meds</button>
+    <button class="tab-btn" onclick="switchTab('az')">🔵 Alzheimer's Meds</button>
+    <button class="tab-btn" onclick="switchTab('flash')">⚡ Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">🎯 NCLEX Quiz</button>
+    <button class="tab-btn" onclick="switchTab('mnemonics')">🧩 Mnemonics</button>
+  </div>
+
+  <!-- PARKINSON'S -->
+  <div class="section active" id="sec-pk">
+    <h2 class="section-title"><span>🟣</span> <span class="pk-color">Parkinson's Medications</span></h2>
+    <div class="med-grid" id="pk-grid"></div>
+  </div>
+
+  <!-- ALZHEIMER'S -->
+  <div class="section" id="sec-az">
+    <h2 class="section-title"><span>🔵</span> <span class="az-color">Alzheimer's Medications</span></h2>
+    <div class="med-grid" id="az-grid"></div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="section" id="sec-flash">
+    <h2 class="section-title"><span>⚡</span> Flashcards</h2>
+    <div class="flash-wrap">
+      <div class="flash-category-btns">
+        <button class="flash-cat-btn all active" onclick="setFlashCat('all',this)">🌐 All Meds</button>
+        <button class="flash-cat-btn pk" onclick="setFlashCat('pk',this)">🟣 Parkinson's</button>
+        <button class="flash-cat-btn az" onclick="setFlashCat('az',this)">🔵 Alzheimer's</button>
+      </div>
+      <div class="flash-counter" id="flashCounter">Card 1 of 10</div>
+      <div class="flashcard-container">
+        <div class="flashcard" id="flashCard" onclick="flipCard()">
+          <div class="flash-front" id="flashFront">
+            <div class="flash-label">Drug Name</div>
+            <div class="flash-drug" id="flashDrug">Loading...</div>
+            <div class="flash-class" id="flashClass"></div>
+            <div class="flash-hint">👆 Tap to reveal details</div>
+          </div>
+          <div class="flash-back" id="flashBack">
+            <div class="flash-back-content" id="flashBackContent"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flash-nav">
+        <button class="flash-btn flash-prev" onclick="prevCard()">← Prev</button>
+        <button class="flash-btn flash-shuffle" onclick="shuffleCards()">🔀 Shuffle</button>
+        <button class="flash-btn flash-next" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="section" id="sec-quiz">
+    <h2 class="section-title"><span>🎯</span> NCLEX-Style Quiz</h2>
+    <div class="quiz-wrap">
+      <div class="quiz-score-bar">
+        <div class="score-stat"><div class="score-num" id="qCorrect" style="color:#10b981">0</div><div class="score-lbl">Correct</div></div>
+        <div class="score-stat"><div class="score-num" id="qWrong" style="color:#ef4444">0</div><div class="score-lbl">Incorrect</div></div>
+        <div class="score-stat"><div class="score-num" id="qNum" style="color:#a78bfa">1</div><div class="score-lbl">Question</div></div>
+        <div class="score-stat"><div class="score-num" id="qTotal" style="color:#7dd3fc">20</div><div class="score-lbl">Total</div></div>
+      </div>
+      <div id="quizContainer"></div>
+      <div class="quiz-complete" id="quizComplete">
+        <div style="font-size:3rem">🏆</div>
+        <div class="big-score" id="finalScore"></div>
+        <p style="color:var(--muted);font-weight:700;margin-top:0.5rem" id="finalMsg"></p>
+        <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MNEMONICS -->
+  <div class="section" id="sec-mnemonics">
+    <h2 class="section-title"><span>🧩</span> Memory Tricks & Mnemonics</h2>
+    <div class="mnemonic-grid" id="mnemonicGrid"></div>
+    <br>
+    <h3 style="font-family:'Fredoka One',cursive;color:var(--pk-accent);margin-bottom:1rem">⚡ Quick Compare: Parkinson's MOA</h3>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <thead><tr>
+        <th style="color:#a78bfa">Drug</th>
+        <th style="color:#38bdf8">Class</th>
+        <th style="color:#f59e0b">MOA Summary</th>
+        <th style="color:#6ee7b7">Key Alert</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Carbidopa/Levodopa</td><td>Dopamine precursor</td><td>→ Converts to dopamine in brain</td><td>⚠️ Protein interferes</td></tr>
+        <tr><td>Pramipexole/Ropinirole</td><td>Dopamine agonist</td><td>→ Stimulates DA receptors</td><td>⚠️ Sleep attacks</td></tr>
+        <tr><td>Entacapone</td><td>COMT inhibitor</td><td>→ Prolongs levodopa effect</td><td>🟠 Orange urine</td></tr>
+        <tr><td>Selegiline</td><td>MAO-B inhibitor</td><td>→ Blocks dopamine breakdown</td><td>⚠️ Tyramine foods</td></tr>
+        <tr><td>Amantadine</td><td>Antiviral/dopaminergic</td><td>→ Increases dopamine release</td><td>🔵 Livedo reticularis</td></tr>
+        <tr><td>Benztropine</td><td>Anticholinergic</td><td>→ Blocks acetylcholine (for EPS)</td><td>⚠️ Avoid in glaucoma</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <br>
+    <h3 style="font-family:'Fredoka One',cursive;color:var(--az-secondary);margin-bottom:1rem">⚡ Quick Compare: Alzheimer's MOA</h3>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <thead><tr>
+        <th style="color:#7dd3fc">Drug</th>
+        <th style="color:#a78bfa">Class</th>
+        <th style="color:#f59e0b">MOA Summary</th>
+        <th style="color:#6ee7b7">Key Alert</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Donepezil</td><td>Cholinesterase inhibitor</td><td>→ ↑ Acetylcholine in brain</td><td>⚠️ Bradycardia risk</td></tr>
+        <tr><td>Rivastigmine</td><td>Cholinesterase inhibitor</td><td>→ ↑ Acetylcholine in brain</td><td>📌 Patch – rotate sites</td></tr>
+        <tr><td>Galantamine</td><td>Cholinesterase inhibitor</td><td>→ ↑ Acetylcholine in brain</td><td>🍽️ Give with food</td></tr>
+        <tr><td>Memantine</td><td>NMDA antagonist</td><td>→ Blocks glutamate excitotoxicity</td><td>🔵 Mod-severe only</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* === DATA === */
+const pkMeds = [
+  {
+    name:"Carbidopa / Levodopa",
+    icon:"💊",
+    pharm:"Dopamine precursor + decarboxylase inhibitor",
+    moa:"Converts to dopamine in the brain → improves motor control",
+    use:"First-line for Parkinson's symptoms",
+    se:["Dyskinesia (uncontrolled movements)","Nausea / vomiting","Orthostatic hypotension","Hallucinations / confusion"],
+    labs:["Liver function tests (LFTs)","CBC (rare blood issues)"],
+    nursing:["Give on EMPTY stomach — protein interferes","Monitor 'on/off' effects","Fall precautions","Avoid excess Vitamin B6"],
+    expected:"↑ Mobility, ↓ tremor & rigidity",
+    alert:"⚠️ Protein blocks absorption!",
+    alertType:"danger"
+  },
+  {
+    name:"Pramipexole / Ropinirole",
+    icon:"🧬",
+    pharm:"Dopamine agonists",
+    moa:"Directly stimulates dopamine receptors (bypasses conversion step)",
+    use:"Used alone or with levodopa",
+    se:["Sudden sleep attacks (driving risk!)","Hallucinations","Hypotension","Impulse control issues (gambling, hypersexuality)"],
+    labs:["Renal function (especially pramipexole)"],
+    nursing:["Warn about sudden sleep episodes — no driving","Monitor behavior changes","Avoid alcohol"],
+    expected:"↑ Motor function",
+    alert:"🚗 Sleep attacks → no driving!",
+    alertType:"danger"
+  },
+  {
+    name:"Entacapone",
+    icon:"⏱️",
+    pharm:"COMT inhibitor",
+    moa:"Inhibits enzyme that breaks down levodopa → prolongs its effect",
+    use:"Adjunct — always given WITH levodopa",
+    se:["Diarrhea","Orange urine (harmless!)","Dyskinesia","Orthostatic hypotension"],
+    labs:["Liver function tests"],
+    nursing:["Always given WITH levodopa — never alone","Monitor for enhanced levodopa side effects"],
+    expected:"Longer duration of symptom control",
+    alert:"🟠 Orange urine — warn the patient!",
+    alertType:"warning"
+  },
+  {
+    name:"Selegiline",
+    icon:"🛡️",
+    pharm:"MAO-B inhibitor",
+    moa:"Prevents breakdown of dopamine by blocking MAO-B enzyme",
+    use:"Early Parkinson's or adjunct therapy",
+    se:["Insomnia","Hypertension","Headache","Hallucinations"],
+    labs:["Monitor BP"],
+    nursing:["Avoid tyramine foods (aged cheese, cured meats) → hypertensive crisis","Give EARLY in day to avoid insomnia","Watch for serotonin syndrome"],
+    expected:"Slowed disease progression",
+    alert:"🧀 Tyramine = hypertensive crisis!",
+    alertType:"danger"
+  },
+  {
+    name:"Amantadine",
+    icon:"🦠",
+    pharm:"Antiviral / dopaminergic agent",
+    moa:"Increases dopamine release from nerve terminals; also blocks NMDA receptors",
+    use:"Reduces dyskinesia; mild early PD",
+    se:["Confusion","Livedo reticularis (mottled/blotchy skin)","Edema","Dry mouth"],
+    labs:["Renal function (dose adjust in CKD)"],
+    nursing:["Dose adjust in kidney disease","Monitor mental status"],
+    expected:"↓ Tremors & dyskinesia",
+    alert:"🔵 Watch for livedo reticularis (marble skin pattern)",
+    alertType:"warning"
+  },
+  {
+    name:"Benztropine / Trihexyphenidyl / Diphenhydramine",
+    icon:"🤚",
+    pharm:"Anticholinergics (for EPS)",
+    moa:"Blocks muscarinic acetylcholine receptors → reduces EPS/tremor",
+    use:"Extrapyramidal symptoms, drug-induced parkinsonism",
+    se:["Dry mouth (SAND: Slow gut, Anuria/retention, No secretions, Dry/blurred)","Urinary retention","Constipation","Blurred vision","Confusion"],
+    labs:["Monitor elderly closely — no specific labs"],
+    nursing:["AVOID in glaucoma (↑ IOP)","Increase fluids & fiber for constipation","Monitor for anticholinergic toxicity (SAND)"],
+    expected:"↓ Tremors and rigidity",
+    alert:"🚫 Contraindicated in glaucoma!",
+    alertType:"danger"
+  }
+];
+
+const azMeds = [
+  {
+    name:"Donepezil",
+    icon:"💙",
+    pharm:"Cholinesterase inhibitor (AChEI)",
+    moa:"Inhibits acetylcholinesterase → ↑ acetylcholine → improved nerve signaling",
+    use:"Mild to severe Alzheimer's",
+    se:["Nausea","Diarrhea","Bradycardia","Insomnia"],
+    labs:["Monitor heart rate"],
+    nursing:["Give at BEDTIME (reduces GI effects)","Hold if pulse < 60 bpm","Monitor GI upset"],
+    expected:"Slowed cognitive decline",
+    alert:"❤️ Hold if pulse < 60!",
+    alertType:"danger"
+  },
+  {
+    name:"Rivastigmine",
+    icon:"🩹",
+    pharm:"Cholinesterase inhibitor (AChEI)",
+    moa:"Inhibits both acetylcholinesterase & butyrylcholinesterase → ↑ ACh",
+    use:"Mild to moderate Alzheimer's & Parkinson's dementia",
+    se:["Nausea / vomiting","Weight loss","Dizziness","Headache"],
+    labs:["Weight monitoring"],
+    nursing:["Available as TRANSDERMAL PATCH — rotate sites","Monitor appetite and weight weekly"],
+    expected:"Improved cognition and daily function",
+    alert:"📌 Patch: rotate sites to prevent irritation",
+    alertType:"warning"
+  },
+  {
+    name:"Galantamine",
+    icon:"🌿",
+    pharm:"Cholinesterase inhibitor (AChEI)",
+    moa:"Inhibits AChE + allosteric modulation of nicotinic receptors → ↑ ACh",
+    use:"Mild to moderate Alzheimer's",
+    se:["Nausea","Vomiting","Bradycardia","Dizziness"],
+    labs:["Renal function"],
+    nursing:["Give WITH FOOD to reduce GI effects","Monitor heart rate","Extended-release available (once daily)"],
+    expected:"Slowed memory decline",
+    alert:"🍽️ Must give with food!",
+    alertType:"warning"
+  },
+  {
+    name:"Memantine",
+    icon:"🔬",
+    pharm:"NMDA receptor antagonist",
+    moa:"Blocks NMDA glutamate receptors → prevents calcium overload & neuronal death",
+    use:"Moderate to severe Alzheimer's (different MOA from AChEIs)",
+    se:["Dizziness","Headache","Confusion","Constipation"],
+    labs:["Renal function (dose adjust in CKD)"],
+    nursing:["Used for MODERATE-SEVERE Alzheimer's","Can combine with donepezil for additive effect","Adjust dose in renal impairment"],
+    expected:"Slower progression, improved daily function",
+    alert:"💊 Can combine with donepezil (different MOA)",
+    alertType:"success"
+  }
+];
+
+/* === FLASHCARD DATA === */
+function buildFlashData(arr, category) {
+  return arr.map(m => ({
+    name: m.name, pharm: m.pharm, moa: m.moa,
+    se: m.se, nursing: m.nursing, expected: m.expected,
+    alert: m.alert, category
+  }));
+}
+const allFlash = [...buildFlashData(pkMeds,'pk'), ...buildFlashData(azMeds,'az')];
+let currentFlash = [...allFlash];
+let flashIdx = 0;
+
+/* === XP === */
+let xp = 0;
+const maxXp = 500;
+function addXP(n) {
+  xp = Math.min(maxXp, xp + n);
+  document.getElementById('xpFill').style.width = (xp/maxXp*100)+'%';
+  document.getElementById('xpCount').textContent = xp+' / '+maxXp;
+}
+
+/* === TABS === */
+const tabMap = { pk:'active-pk', az:'active-az', quiz:'active-quiz', flash:'active-flash', mnemonics:'active-pk' };
+const tabs = document.querySelectorAll('.tab-btn');
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  tabs.forEach((b,i)=>{ b.classList.remove('active-pk','active-az','active-quiz','active-flash'); });
+  const idx = ['pk','az','flash','quiz','mnemonics'].indexOf(id);
+  if(idx>=0) tabs[idx].classList.add(tabMap[id]||'active-pk');
+  addXP(5);
+}
+
+/* === BUILD MED CARDS === */
+function buildCard(med, isMed, isAz) {
+  const theme = isAz ? 'az' : 'pk';
+  const headerClass = isAz ? 'az-header' : 'pk-header';
+  const moaclass = isAz ? 'az-moa-box' : 'moa-box';
+  const alertBg = med.alertType==='danger' ? 'alert-badge' : med.alertType==='success' ? 'success-badge' : 'alert-badge" style="background:rgba(245,158,11,0.2);border-color:rgba(245,158,11,0.4);color:#fde68a';
+
+  const seHTML = med.se.map(s=>`<li>${s}</li>`).join('');
+  const labHTML = med.labs.map(l=>`<li>${l}</li>`).join('');
+  const nurseHTML = med.nursing.map(n=>`<li>${n}</li>`).join('');
+
+  return `
+  <div class="med-card ${isAz?'az-card':''}">
+    <div class="med-card-header ${headerClass}">
+      <span class="med-icon">${med.icon}</span>
+      <div>
+        <div class="med-name">${med.name}</div>
+        <div class="med-class">${med.pharm}</div>
+      </div>
+    </div>
+    <div class="med-card-body">
+      <div class="${moaclass}">⚙️ <strong>MOA:</strong> ${med.moa}</div>
+      
+      <button class="accordion-btn" onclick="toggleAccordion(this)">
+        ⚠️ Side Effects <span class="accordion-arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul class="detail-list">${seHTML}</ul>
+      </div>
+
+      <button class="accordion-btn" onclick="toggleAccordion(this)">
+        🔬 Labs to Monitor <span class="accordion-arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul class="detail-list">${labHTML}</ul>
+      </div>
+
+      <button class="accordion-btn" onclick="toggleAccordion(this)">
+        🩺 Nursing Considerations <span class="accordion-arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul class="detail-list">${nurseHTML}</ul>
+      </div>
+
+      <div style="margin-top:0.6rem">
+        <span class="${alertBg}">⚡ ${med.alert}</span>
+      </div>
+      <div style="margin-top:0.4rem">
+        <span class="success-badge">✅ ${med.expected}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('pk-grid').innerHTML = pkMeds.map(m=>buildCard(m,true,false)).join('');
+document.getElementById('az-grid').innerHTML = azMeds.map(m=>buildCard(m,true,true)).join('');
+
+function toggleAccordion(btn) {
+  btn.classList.toggle('open');
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
+  if(content.classList.contains('open')) addXP(3);
+}
+
+/* === FLASHCARDS === */
+function setFlashCat(cat, btn) {
+  document.querySelectorAll('.flash-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(cat==='pk') currentFlash = buildFlashData(pkMeds,'pk');
+  else if(cat==='az') currentFlash = buildFlashData(azMeds,'az');
+  else currentFlash = [...allFlash];
+  flashIdx = 0;
+  renderFlash();
+}
+
+function renderFlash() {
+  const card = currentFlash[flashIdx];
+  document.getElementById('flashDrug').textContent = card.name;
+  document.getElementById('flashClass').textContent = card.pharm;
+  document.getElementById('flashCounter').textContent = `Card ${flashIdx+1} of ${currentFlash.length}`;
+  
+  document.getElementById('flashBackContent').innerHTML = `
+    <h4>⚙️ Mechanism</h4><p>${card.moa}</p>
+    <h4>⚠️ Key Side Effects</h4><ul>${card.se.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h4>🩺 Top Nursing Points</h4><ul>${card.nursing.slice(0,2).map(n=>`<li>${n}</li>`).join('')}</ul>
+    <h4>⚡ Critical Alert</h4><p style="color:#fde68a;font-weight:800">${card.alert}</p>
+    <h4>✅ Expected Response</h4><p>${card.expected}</p>
+  `;
+  
+  // Reset flip
+  document.getElementById('flashCard').classList.remove('flipped');
+}
+
+function flipCard() {
+  document.getElementById('flashCard').classList.toggle('flipped');
+  addXP(5);
+}
+function nextCard() {
+  flashIdx = (flashIdx+1) % currentFlash.length;
+  renderFlash();
+  addXP(3);
+}
+function prevCard() {
+  flashIdx = (flashIdx-1+currentFlash.length) % currentFlash.length;
+  renderFlash();
+}
+function shuffleCards() {
+  currentFlash = currentFlash.sort(()=>Math.random()-0.5);
+  flashIdx=0; renderFlash(); addXP(10);
+}
+renderFlash();
+
+/* === QUIZ === */
+const allQuestions = [
+  {q:"A patient with Parkinson's disease is prescribed carbidopa/levodopa. The nurse should instruct the patient to take this medication:", opts:["With a high-protein meal","On an empty stomach","With a full glass of milk","At bedtime with food"], ans:1, exp:"Dietary protein competes with levodopa for absorption in the GI tract and blood-brain barrier transport. Taking on an empty stomach maximizes absorption."},
+  {q:"A nurse is caring for a patient taking pramipexole. Which assessment finding requires IMMEDIATE action?", opts:["Mild nausea after doses","Sudden falling asleep while talking","Slightly decreased appetite","Mild postural instability"], ans:1, exp:"Sleep attacks (sudden-onset sleep) can occur without warning — a major safety risk for driving/hazardous activities. This requires immediate notification and patient education."},
+  {q:"The nurse notes a patient taking entacapone reports orange-colored urine. The best action is:", opts:["Hold the medication and notify the physician","Document as an expected, harmless side effect","Increase fluid intake to 3L/day","Send a urinalysis to check for hematuria"], ans:1, exp:"Orange urine is a benign, expected side effect of entacapone. The nurse should document it and reassure the patient — no action needed."},
+  {q:"A patient starting selegiline needs dietary teaching. Which food should be AVOIDED?", opts:["Fresh apples","Aged cheddar cheese","Cooked chicken","White rice"], ans:1, exp:"Selegiline (MAO-B inhibitor) can cause hypertensive crisis when combined with tyramine-rich foods such as aged cheeses, cured meats, and fermented products."},
+  {q:"A nurse assesses a patient on amantadine and notices mottled, blotchy skin on the legs. The nurse recognizes this as:", opts:["An allergic reaction requiring medication discontinuation","Livedo reticularis — an expected side effect","Peripheral vascular disease","Deep vein thrombosis"], ans:1, exp:"Livedo reticularis (a lace-like mottled skin pattern) is a known side effect of amantadine. It is benign and reversible upon discontinuation but should be documented and monitored."},
+  {q:"Benztropine is contraindicated in which condition?", opts:["Parkinson's disease","Narrow-angle glaucoma","Hypertension","Chronic kidney disease"], ans:1, exp:"Anticholinergics like benztropine decrease aqueous humor drainage, increasing intraocular pressure — dangerous in narrow-angle glaucoma."},
+  {q:"Donepezil is prescribed for a patient with Alzheimer's disease. Which heart rate finding requires the nurse to HOLD the medication?", opts:["HR 72 bpm","HR 58 bpm","HR 88 bpm","HR 100 bpm"], ans:1, exp:"Donepezil (AChEI) increases acetylcholine, which slows the heart. The standard protocol is to hold if pulse < 60 bpm and notify the provider."},
+  {q:"The nurse teaches a patient about rivastigmine transdermal patches. Which instruction is MOST important?", opts:["Apply the patch to the same site daily","Rotate application sites with each patch change","Apply over bony prominences for best absorption","Cut the patch if dose reduction is needed"], ans:1, exp:"Rotating patch sites prevents skin irritation and ensures consistent medication absorption. Using the same site repeatedly can cause localized skin reactions."},
+  {q:"Galantamine is prescribed for a patient with Alzheimer's disease. When should it be administered?", opts:["On an empty stomach in the morning","With food to reduce GI side effects","At bedtime to prevent insomnia","30 minutes before meals"], ans:1, exp:"Galantamine should be taken with food to minimize nausea, vomiting, and other GI side effects, which are the most common reasons for discontinuation."},
+  {q:"A nurse is caring for a patient with moderate Alzheimer's disease. Which medication class is specifically indicated for moderate-to-severe Alzheimer's?", opts:["Cholinesterase inhibitors only","NMDA receptor antagonists (memantine)","MAO-B inhibitors","Dopamine agonists"], ans:1, exp:"Memantine (NMDA receptor antagonist) is specifically FDA-approved for moderate-to-severe Alzheimer's disease. It can be combined with cholinesterase inhibitors for additive benefit."},
+  {q:"Which statement about carbidopa's role in the carbidopa/levodopa combination is accurate?", opts:["Carbidopa crosses the blood-brain barrier to convert to dopamine","Carbidopa prevents peripheral conversion of levodopa, allowing more to reach the brain","Carbidopa increases renal excretion of dopamine","Carbidopa stimulates dopamine receptors directly"], ans:1, exp:"Carbidopa is a peripheral decarboxylase inhibitor — it blocks conversion of levodopa to dopamine OUTSIDE the brain, allowing more levodopa to cross the BBB and convert to dopamine where it's needed."},
+  {q:"A patient with Parkinson's disease reports dramatic fluctuations between good mobility and severe rigidity throughout the day. The nurse recognizes this as:", opts:["Medication toxicity requiring dose reduction","Expected 'on/off' phenomenon of carbidopa/levodopa","A sign the disease has progressed beyond treatment","Symptoms of serotonin syndrome"], ans:1, exp:"The 'on/off' phenomenon occurs with long-term carbidopa/levodopa use — periods of good symptom control ('on') alternate with breakthrough Parkinson's symptoms ('off')."},
+  {q:"Which nursing consideration is UNIQUE to pramipexole compared to other dopamine agonists?", opts:["Monitor liver function tests","Monitor renal function (pramipexole is renally cleared)","Avoid high-protein foods","Give on empty stomach only"], ans:1, exp:"Pramipexole is primarily renally excreted, so renal function monitoring is essential. Dose adjustment is required in patients with decreased kidney function."},
+  {q:"The nurse is teaching a patient starting selegiline. What is the MOST important timing instruction?", opts:["Take at bedtime for best absorption","Take in the morning to prevent insomnia","Take with the evening meal","Take 2 hours before carbidopa/levodopa"], ans:1, exp:"Selegiline can cause insomnia because it metabolizes into amphetamine-like compounds. It should be taken earlier in the day to minimize sleep disruption."},
+  {q:"A patient taking memantine for Alzheimer's also has moderate chronic kidney disease. What does the nurse anticipate?", opts:["The medication should be discontinued","A dose adjustment will likely be required","The medication will be switched to donepezil","No change is needed — CKD does not affect memantine"], ans:1, exp:"Memantine is renally cleared. Patients with CKD require dose adjustment to prevent drug accumulation and adverse effects such as confusion and dizziness."},
+  {q:"Which side effect of cholinesterase inhibitors (donepezil, rivastigmine, galantamine) is related to their mechanism of action?", opts:["Bradycardia and GI symptoms due to excess acetylcholine","Hypertension from sympathetic stimulation","Insomnia from dopamine increase","Livedo reticularis from peripheral vasodilation"], ans:0, exp:"Cholinesterase inhibitors increase acetylcholine. Excess ACh stimulates muscarinic receptors → bradycardia (cardiac slowing), nausea, diarrhea, and increased GI motility."},
+  {q:"The nurse understands that entacapone works 'upstream' from which medication?", opts:["Memantine","Selegiline","Carbidopa/levodopa","Benztropine"], ans:2, exp:"Entacapone is a COMT inhibitor — it prevents breakdown of levodopa in the peripheral tissues, extending its half-life and duration. It must always be given WITH carbidopa/levodopa."},
+  {q:"A patient on selegiline develops sudden severe headache, flushing, and a blood pressure of 195/110 mmHg after eating dinner at a party. The nurse suspects:", opts:["Stroke","Tyramine-induced hypertensive crisis","Serotonin syndrome","Medication overdose"], ans:1, exp:"MAO-B inhibitors like selegiline inhibit the enzyme that breaks down tyramine. High-tyramine foods (aged cheese, wine, cured meats) cause massive norepinephrine release → hypertensive crisis."},
+  {q:"Which Parkinson's medication is also classified as an antiviral agent?", opts:["Entacapone","Selegiline","Amantadine","Benztropine"], ans:2, exp:"Amantadine was originally developed as an antiviral (influenza). Its dopaminergic properties were discovered incidentally — it increases dopamine release and has some NMDA antagonist activity."},
+  {q:"The nurse is educating family members about a patient newly diagnosed with moderate Alzheimer's disease. Which combination of medications would the nurse anticipate being prescribed?", opts:["Selegiline + Benztropine","Donepezil + Memantine","Carbidopa/Levodopa + Entacapone","Pramipexole + Galantamine"], ans:1, exp:"Donepezil (AChEI) and memantine (NMDA antagonist) have complementary mechanisms and are commonly combined in moderate-to-severe Alzheimer's for additive cognitive benefit."}
+];
+
+let quizData = [], qIdx = 0, correct = 0, wrong = 0;
+
+function startQuiz() {
+  quizData = allQuestions.sort(()=>Math.random()-0.5).slice(0,20);
+  qIdx=0; correct=0; wrong=0;
+  updateScoreBar();
+  renderQuestion();
+  document.getElementById('quizComplete').classList.remove('show');
+  document.getElementById('quizContainer').style.display='block';
+}
+
+function updateScoreBar() {
+  document.getElementById('qCorrect').textContent=correct;
+  document.getElementById('qWrong').textContent=wrong;
+  document.getElementById('qNum').textContent=qIdx+1;
+}
+
+function renderQuestion() {
+  if(qIdx >= quizData.length) { showQuizComplete(); return; }
+  const q = quizData[qIdx];
+  const optsHTML = q.opts.map((o,i)=>
+    `<button class="opt-btn" onclick="answerQ(this,${i},${q.ans},'${encodeURIComponent(q.exp)}')">${String.fromCharCode(65+i)}. ${o}</button>`
+  ).join('');
+  document.getElementById('quizContainer').innerHTML = `
+    <div class="question-card">
+      <div class="q-num">Question ${qIdx+1} of ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optsHTML}</div>
+      <div class="feedback-box" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+    </div>`;
+}
+
+function answerQ(btn, chosen, correct_idx, expEnc) {
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const exp = decodeURIComponent(expEnc);
+  const fb = document.getElementById('feedback');
+  if(chosen===correct_idx) {
+    btn.classList.add('correct');
+    correct++; addXP(20);
+    fb.className='feedback-box correct show';
+    fb.innerHTML=`✅ <strong>Correct!</strong> ${exp}`;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.opt-btn')[correct_idx].classList.add('correct');
+    wrong++;
+    fb.className='feedback-box wrong show';
+    fb.innerHTML=`❌ <strong>Incorrect.</strong> ${exp}`;
+  }
+  document.getElementById('nextBtn').classList.add('show');
+  updateScoreBar();
+}
+
+function nextQuestion() { qIdx++; updateScoreBar(); renderQuestion(); }
+
+function showQuizComplete() {
+  document.getElementById('quizContainer').style.display='none';
+  const pct = Math.round(correct/quizData.length*100);
+  const msgs = ['Keep studying! Review the cards 💪', 'Good effort! Almost there 📚', 'Nice work! You\'re getting it 🌟', 'Great job! Nurse material! 🏥', 'Excellent! NCLEX ready! 🏆'];
+  const msgIdx = Math.floor(pct/20);
+  document.getElementById('finalScore').textContent = pct+'%';
+  document.getElementById('finalMsg').textContent = `${correct}/${quizData.length} correct — ${msgs[Math.min(msgIdx,4)]}`;
+  document.getElementById('quizComplete').classList.add('show');
+  addXP(50);
+}
+
+function restartQuiz() {
+  document.getElementById('quizContainer').style.display='block';
+  startQuiz();
+}
+
+/* === MNEMONICS === */
+const mnemonics = [
+  {
+    title:"🧠 CARBIDOPA / LEVODOPA",
+    color:"#a78bfa",
+    items:[
+      {letter:"C",word:"Carbidopa prevents peripheral conversion"},
+      {letter:"A",word:"Avoid protein (interferes with absorption)"},
+      {letter:"R",word:"Rigidity & tremor are the targets"},
+      {letter:"B",word:"B6 excess blocks levodopa — avoid it!"},
+      {letter:"I",word:"'In/out' ON/OFF effect — monitor timing"},
+      {letter:"D",word:"Dyskinesia = sign of too much dopamine"},
+      {letter:"O",word:"Orthostatic hypotension → fall precautions"},
+      {letter:"P",word:"Patient education: empty stomach, no protein"}
+    ]
+  },
+  {
+    title:"🚫 ANTICHOLINERGIC TOXICITY (SAND)",
+    color:"#f87171",
+    items:[
+      {letter:"S",word:"Slow gut (constipation, ileus)"},
+      {letter:"A",word:"Anuria / urinary retention"},
+      {letter:"N",word:"No secretions (dry mouth, dry skin)"},
+      {letter:"D",word:"Delirium / Dilation of pupils / Dry eyes"}
+    ]
+  },
+  {
+    title:"💙 CHOLINESTERASE INHIBITORS (3 Drugs)",
+    color:"#38bdf8",
+    items:[
+      {letter:"D",word:"Donepezil → Bedtime, hold if HR<60"},
+      {letter:"R",word:"Rivastigmine → Rotate patch sites"},
+      {letter:"G",word:"Galantamine → Give with food"}
+    ]
+  },
+  {
+    title:"🧀 SELEGILINE SAFETY: MAO-B = MIND YOUR BEANS",
+    color:"#fbbf24",
+    items:[
+      {letter:"M",word:"Morning administration (prevents insomnia)"},
+      {letter:"A",word:"Avoid Aged cheese, Alcohol, cured meats"},
+      {letter:"O",word:"On alert for serotonin syndrome"},
+      {letter:"-",word:""},
+      {letter:"B",word:"Blood pressure monitoring essential"},
+      {letter:"E",word:"Early in day to prevent insomnia"},
+      {letter:"A",word:"Avoid meperidine, SSRIs, TCAs"},
+      {letter:"N",word:"No tyramine foods — hypertensive crisis!"},
+      {letter:"S",word:"Slow disease progression is the goal"}
+    ]
+  },
+  {
+    title:"🔵 MEMANTINE vs CHOLINESTERASE INHIBITORS",
+    color:"#34d399",
+    items:[
+      {letter:"M",word:"Memantine = Moderate-Severe Alzheimer's"},
+      {letter:"E",word:"Excitotoxicity (glutamate) is what it blocks"},
+      {letter:"M",word:"May combine with donepezil for added benefit"},
+      {letter:"C",word:"Cholinesterase inhibitors = Mild-Moderate"},
+      {letter:"H",word:"HR monitoring needed (all AChEIs)"},
+      {letter:"I",word:"Increase ACh = GI & cardiac side effects"}
+    ]
+  },
+  {
+    title:"🟠 AMANTADINE: Think 'A-MAN-TA-DINE' (Man in a Net)",
+    color:"#fb923c",
+    items:[
+      {letter:"A",word:"Antiviral origins (flu drug repurposed)"},
+      {letter:"M",word:"Mottled skin = livedo reticularis (expect it)"},
+      {letter:"A",word:"Adjust dose in renal impairment"},
+      {letter:"N",word:"Neuropsychiatric effects — monitor mental status"},
+      {letter:"T",word:"Tremor & dyskinesia reduction is the goal"}
+    ]
+  }
+];
+
+document.getElementById('mnemonicGrid').innerHTML = mnemonics.map(m => `
+  <div class="mnemonic-card">
+    <div class="mnemonic-title" style="color:${m.color}">${m.title}</div>
+    <div class="mnemonic-letters">
+      ${m.items.map(i=>i.letter==='-' ? '' : `
+        <div class="mnemonic-row">
+          <span class="mnemonic-letter" style="color:${m.color}">${i.letter}</span>
+          <span class="mnemonic-word">${i.word}</span>
+        </div>`).join('')}
+    </div>
+  </div>`).join('');
+
+// Init quiz
+startQuiz();
+</script>
+</body>
+</html>
