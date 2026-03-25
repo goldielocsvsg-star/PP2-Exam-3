@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neuro Meds Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --white: #ffffff;
+  --ink: #1a1410;
+  --ink-light: #5c5449;
+  --border: #e8e3da;
+  --shadow: rgba(26,20,16,0.08);
+  --shadow-md: rgba(26,20,16,0.14);
+  --sage: #7cb99a;
+  --sage-light: #e8f4ee;
+  --coral: #e8735a;
+  --coral-light: #fdeee9;
+  --sky: #5ba4c8;
+  --sky-light: #e8f3fa;
+  --amber: #d4935a;
+  --amber-light: #fdf0e6;
+  --rose: #c47a8a;
+  --rose-light: #f9edf0;
+  --lavender: #8b7fc4;
+  --lavender-light: #f0eef9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+/* SPLASH */
+#splash { position:fixed;inset:0;z-index:1000;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;transition:opacity .5s,visibility .5s; }
+#splash.gone { opacity:0;visibility:hidden;pointer-events:none; }
+.spl-title { font-family:'Syne',sans-serif;font-size:clamp(2rem,7vw,3.8rem);color:var(--cream);text-align:center;line-height:1.1; }
+.spl-title span { color:var(--sage); }
+.spl-sub { color:#9b9289;font-size:.95rem;text-align:center; }
+.spl-pills { display:flex;gap:8px;flex-wrap:wrap;justify-content:center; }
+.spl-pill { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:5px 14px;font-size:.78rem;color:#c8c1b8; }
+.spl-btn { background:var(--sage);color:var(--ink);border:none;border-radius:50px;padding:14px 44px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:8px; }
+.spl-btn:hover { transform:scale(1.04);box-shadow:0 8px 24px rgba(124,185,154,.4); }
+
+/* APP */
+#app { display:none;min-height:100vh; }
+#app.show { display:block; }
+.layout { display:flex;min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar { width:216px;background:var(--ink);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;padding:24px 14px;gap:3px;overflow-y:auto; }
+.sb-logo { font-family:'Syne',sans-serif;font-size:1.05rem;color:var(--cream);padding:0 8px 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:10px;line-height:1.3; }
+.sb-logo span { color:var(--sage); }
+.nav-btn { display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;color:#9b9289;font-weight:600;font-size:.86rem;transition:background .15s,color .15s;border:none;background:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif; }
+.nav-btn:hover { background:rgba(255,255,255,.06);color:var(--cream); }
+.nav-btn.active { background:var(--sage);color:var(--ink); }
+.nav-icon { font-size:1rem;width:20px;text-align:center; }
+.sb-bottom { margin-top:auto;padding-top:18px;border-top:1px solid rgba(255,255,255,.08); }
+.sb-prog-label { font-size:.72rem;color:#9b9289;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px; }
+.mini-bar { background:rgba(255,255,255,.1);border-radius:50px;height:5px;overflow:hidden;margin-bottom:5px; }
+.mini-bar-fill { height:100%;border-radius:50px;background:var(--sage);transition:width .4s; }
+.sb-prog-nums { font-size:.72rem;color:#6b6360;display:flex;justify-content:space-between; }
+
+/* MAIN */
+.main { margin-left:216px;flex:1;padding:32px;max-width:calc(100% - 216px); }
+.page { display:none;animation:fadeUp .3s ease; }
+.page.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+
+.pg-head { margin-bottom:26px; }
+.pg-title { font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:800;line-height:1.2; }
+.pg-sub { color:var(--ink-light);font-size:.9rem;margin-top:5px; }
+
+/* DRUG BROWSER */
+.filter-bar { display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px; }
+.filter-chip { background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:6px 15px;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--ink-light);transition:all .15s; }
+.filter-chip:hover { border-color:var(--sage);color:var(--sage); }
+.filter-chip.on { background:var(--ink);color:var(--cream);border-color:var(--ink); }
+.drug-list { display:flex;flex-direction:column;gap:10px; }
+.drug-row { background:var(--white);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;transition:box-shadow .2s; }
+.drug-row:hover { box-shadow:0 3px 14px var(--shadow-md); }
+.drug-row-head { display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer; }
+.d-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
+.d-name { font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;flex:1; }
+.d-badge { font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap; }
+.d-route { font-size:.78rem;color:var(--ink-light);white-space:nowrap; }
+.d-arrow { font-size:.75rem;color:var(--ink-light);transition:transform .25s;flex-shrink:0; }
+.drug-row.open .d-arrow { transform:rotate(180deg); }
+.drug-row-body { display:none;padding:0 18px 18px;border-top:1.5px solid var(--border); }
+.drug-row.open .drug-row-body { display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px; }
+.db-block { background:var(--cream);border-radius:10px;padding:13px; }
+.db-block.full { grid-column:1/-1; }
+.db-label { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-light);margin-bottom:6px; }
+.db-text { font-size:.86rem;font-weight:500;line-height:1.6; }
+.chiplist { display:flex;flex-wrap:wrap;gap:4px; }
+.chip { font-size:.73rem;font-weight:600;padding:3px 9px;border-radius:50px;display:inline-block; }
+.chip-r { background:#fee4e0;color:#b44a38; }
+.chip-b { background:#deeef9;color:#2a6a94; }
+.chip-g { background:#e0f4eb;color:#2d7a5a; }
+.chip-a { background:#fdefd8;color:#8a5a28; }
+.chip-p { background:#ede9f9;color:#5c4d9a; }
+.tip-box { background:#fffbf0;border-left:3px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:.83rem;font-weight:600;color:#7a5520; }
+
+/* BUTTONS */
+.btn { border:none;border-radius:50px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .15s; }
+.btn-dark { background:var(--ink);color:var(--cream); }
+.btn-dark:hover { background:#2d2620; }
+.btn-sage { background:var(--sage);color:var(--ink); }
+.btn-sage:hover { background:#6aaa89; }
+.btn-coral { background:var(--coral);color:#fff; }
+.btn-coral:hover { background:#d4614a; }
+.btn-outline { background:transparent;border:1.5px solid var(--border);color:var(--ink-light); }
+.btn-outline:hover { border-color:var(--ink);color:var(--ink); }
+.btn-row { display:flex;gap:8px;flex-wrap:wrap; }
+
+/* FLASHCARDS */
+.fc-wrap { max-width:620px;margin:0 auto; }
+.fc-topbar { display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px; }
+.fc-ctr { font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700; }
+.fc-filters { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px; }
+.fc-filt { background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:5px 13px;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--ink-light);transition:all .15s; }
+.fc-filt:hover { border-color:var(--sage); }
+.fc-filt.on { background:var(--sage);color:var(--ink);border-color:var(--sage); }
+.fc-prog { background:var(--border);border-radius:50px;height:5px;overflow:hidden;margin-bottom:22px; }
+.fc-prog-fill { height:100%;border-radius:50px;background:var(--coral);transition:width .4s; }
+.fc-scene { perspective:1000px;height:300px; }
+.fc-card { width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.25,.8,.25,1);cursor:pointer; }
+.fc-card.flipped { transform:rotateY(180deg); }
+.fc-face { position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;border:1.5px solid var(--border); }
+.fc-front { background:var(--white); }
+.fc-back { background:var(--ink);transform:rotateY(180deg);border-color:var(--ink); }
+.fc-cat-label { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-light);margin-bottom:12px; }
+.fc-back .fc-cat-label { color:#9b9289; }
+.fc-q-text { font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;line-height:1.4;color:var(--ink); }
+.fc-hint { margin-top:18px;font-size:.78rem;color:var(--border); }
+.fc-ans-lbl { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sage);margin-bottom:10px; }
+.fc-ans { font-size:.92rem;font-weight:500;line-height:1.7;color:var(--cream);text-align:left;width:100%;max-height:200px;overflow-y:auto; }
+.fc-ans ul { list-style:none; }
+.fc-ans ul li::before { content:'→ ';color:var(--sage);font-weight:700; }
+.fc-nav { display:flex;justify-content:center;gap:10px;margin-top:16px; }
+.fc-know { display:flex;justify-content:center;gap:10px;margin-top:10px; }
+.know-btn { border:none;border-radius:50px;padding:8px 22px;font-weight:700;font-family:'DM Sans',sans-serif;font-size:.83rem;cursor:pointer;transition:all .15s; }
+.know-y { background:var(--sage-light);color:#2d7a5a; }
+.know-y:hover { background:#d0ecdc; }
+.know-n { background:var(--coral-light);color:#b44a38; }
+.know-n:hover { background:#fad8d0; }
+.fc-stats { display:flex;justify-content:center;gap:22px;margin-top:14px; }
+.fc-stat { text-align:center; }
+.fc-stat-num { font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800; }
+.fc-stat-lbl { font-size:.7rem;font-weight:600;color:var(--ink-light); }
+
+/* QUIZ */
+.quiz-wrap { max-width:660px;margin:0 auto; }
+.q-mode-row { display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px; }
+.q-mode-btn { background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:6px 15px;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--ink-light);transition:all .15s; }
+.q-mode-btn.on { background:var(--coral);color:#fff;border-color:var(--coral); }
+.q-prog { background:var(--border);border-radius:50px;height:5px;overflow:hidden;margin-bottom:20px; }
+.q-prog-fill { height:100%;border-radius:50px;background:var(--coral);transition:width .4s; }
+.q-box { background:var(--white);border-radius:18px;padding:26px;border:1.5px solid var(--border);margin-bottom:12px; }
+.q-num { font-size:.72rem;font-weight:700;color:var(--ink-light);text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px; }
+.q-text { font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;line-height:1.45; }
+.q-opts { display:grid;gap:8px;margin-top:18px; }
+.q-opt { background:var(--cream);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:600;font-size:.88rem;color:var(--ink);transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif; }
+.q-opt:hover:not(:disabled) { border-color:var(--sky);background:var(--sky-light); }
+.q-opt.correct { background:var(--sage-light);border-color:var(--sage);color:#1d6042; }
+.q-opt.wrong { background:var(--coral-light);border-color:var(--coral);color:#8a2c1e; }
+.q-opt:disabled { cursor:default; }
+.q-fb { border-radius:12px;padding:13px 16px;font-weight:600;font-size:.86rem;display:none;line-height:1.5;margin-top:12px; }
+.q-fb.show { display:block; }
+.q-fb.ok { background:var(--sage-light);color:#1d6042; }
+.q-fb.bad { background:var(--coral-light);color:#8a2c1e; }
+.q-next { display:flex;justify-content:flex-end;margin-top:12px; }
+.score-card { background:var(--white);border-radius:20px;padding:44px 28px;text-align:center;border:1.5px solid var(--border);display:none; }
+.score-card.show { display:block; }
+.score-emoji { font-size:2.8rem;margin-bottom:14px; }
+.score-big { font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800; }
+.score-lbl { font-size:.88rem;color:var(--ink-light);margin-top:4px; }
+.score-msg { font-size:1rem;font-weight:600;color:var(--ink-light);margin-top:10px; }
+
+/* MNEMONICS */
+.mnem-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px; }
+.mnem-card { background:var(--white);border-radius:16px;padding:22px;border:1.5px solid var(--border); }
+.mnem-drug { font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:3px; }
+.mnem-word { font-size:.78rem;font-weight:600;color:var(--ink-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px; }
+.mnem-rows { display:flex;flex-direction:column;gap:5px; }
+.mnem-row { display:flex;gap:11px;align-items:flex-start;background:var(--cream);border-radius:8px;padding:8px 11px; }
+.mnem-L { font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;min-width:22px; }
+.mnem-body { font-size:.83rem;font-weight:500;line-height:1.5; }
+
+/* DANGERS */
+.danger-sec { margin-bottom:32px; }
+.danger-title { font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; }
+.danger-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:9px; }
+.danger-card { background:var(--white);border-radius:12px;padding:14px;border:1.5px solid var(--border);display:flex;flex-direction:column;gap:7px; }
+.danger-drug { font-weight:700;font-size:.9rem; }
+
+/* COMPARE */
+.cmp-scroll { overflow-x:auto;border-radius:14px;border:1.5px solid var(--border); }
+.cmp-tbl { width:100%;border-collapse:collapse;font-size:.83rem;min-width:780px; }
+.cmp-tbl thead th { background:var(--ink);color:var(--cream);font-family:'Syne',sans-serif;font-size:.85rem;padding:13px 15px;text-align:left;white-space:nowrap; }
+.cmp-tbl tbody tr:hover td { background:var(--cream); }
+.cmp-tbl tbody td { padding:12px 15px;border-bottom:1px solid var(--border);vertical-align:top; }
+.cmp-tbl tbody tr:last-child td { border-bottom:none; }
+.td-name { font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem; }
+
+/* TRACKER */
+.trak-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px; }
+.trak-card { background:var(--white);border-radius:13px;padding:17px;border:1.5px solid var(--border); }
+.trak-drug { font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:10px; }
+.trak-bar { background:var(--border);border-radius:50px;height:6px;overflow:hidden;margin-bottom:5px; }
+.trak-fill { height:100%;border-radius:50px;background:var(--sage);transition:width .5s; }
+.trak-pct { font-size:.73rem;font-weight:600;color:var(--ink-light);display:flex;justify-content:space-between;margin-bottom:10px; }
+.trak-checks { display:flex;flex-wrap:wrap;gap:5px; }
+.check-it { font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:50px;cursor:pointer;transition:all .15s;border:1.5px solid var(--border);color:var(--ink-light); }
+.check-it.done { background:var(--sage-light);border-color:var(--sage);color:#1d6042; }
+
+/* MOBILE */
+.mob-nav { display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:7px 4px;z-index:200;justify-content:space-around; }
+.mob-btn { display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:5px 8px;border-radius:9px;color:var(--ink-light);font-family:'DM Sans',sans-serif; }
+.mob-btn.active { color:var(--sage); }
+.mob-icon { font-size:1.2rem; }
+.mob-lbl { font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em; }
+
+@media(max-width:768px){
+  .sidebar{display:none}
+  .mob-nav{display:flex}
+  .main{margin-left:0;max-width:100%;padding:18px 14px 88px}
+  .drug-row.open .drug-row-body{grid-template-columns:1fr}
+  .mnem-grid{grid-template-columns:1fr}
+  .fc-scene{height:340px}
+}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="spl-title">Neuro Meds<br><span>Study Guide</span></div>
+  <div class="spl-sub">12 intracranial medications · Active recall · Spaced repetition</div>
+  <div class="spl-pills">
+    <span class="spl-pill">💊 Antiseizure</span>
+    <span class="spl-pill">🛡️ Anticonvulsants</span>
+    <span class="spl-pill">💉 Osmotic Diuretics</span>
+    <span class="spl-pill">🔵 Benzodiazepines</span>
+  </div>
+  <button class="spl-btn" onclick="startApp()">Start Studying →</button>
+</div>
+
+<div id="app">
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sb-logo">Neuro<br><span>Meds RX</span></div>
+      <button class="nav-btn active" onclick="goTo('home',this)"><span class="nav-icon">💊</span>Drug Browser</button>
+      <button class="nav-btn" onclick="goTo('flashcards',this)"><span class="nav-icon">🃏</span>Flashcards</button>
+      <button class="nav-btn" onclick="goTo('quiz',this)"><span class="nav-icon">🎯</span>Quiz Me</button>
+      <button class="nav-btn" onclick="goTo('mnemonics',this)"><span class="nav-icon">🔤</span>Mnemonics</button>
+      <button class="nav-btn" onclick="goTo('dangers',this)"><span class="nav-icon">⚠️</span>Danger Zones</button>
+      <button class="nav-btn" onclick="goTo('compare',this)"><span class="nav-icon">⚖️</span>Compare All</button>
+      <button class="nav-btn" onclick="goTo('tracker',this)"><span class="nav-icon">📊</span>My Progress</button>
+      <div class="sb-bottom">
+        <div class="sb-prog-label">Mastered</div>
+        <div class="mini-bar"><div class="mini-bar-fill" id="sbBar" style="width:0%"></div></div>
+        <div class="sb-prog-nums"><span id="sbDone">0</span><span id="sbTotal">/ 60 topics</span></div>
+      </div>
+    </nav>
+    <main class="main">
+
+      <!-- DRUG BROWSER -->
+      <div id="pg-home" class="page active">
+        <div class="pg-head"><div class="pg-title">Drug Browser</div><div class="pg-sub">Tap any drug to expand · Study one at a time</div></div>
+        <div class="filter-bar" id="filterBar"></div>
+        <div class="drug-list" id="drugList"></div>
+      </div>
+
+      <!-- FLASHCARDS -->
+      <div id="pg-flashcards" class="page">
+        <div class="pg-head"><div class="pg-title">Flashcards</div><div class="pg-sub">Click to flip · Mark what you know</div></div>
+        <div class="fc-wrap">
+          <div class="fc-topbar">
+            <div class="fc-ctr" id="fcCtr">1 / 0</div>
+            <div class="btn-row">
+              <button class="btn btn-outline" onclick="shuffleFC()">🔀 Shuffle</button>
+              <button class="btn btn-outline" onclick="resetFC()">Reset</button>
+            </div>
+          </div>
+          <div class="fc-filters" id="fcFilters"></div>
+          <div class="fc-prog"><div class="fc-prog-fill" id="fcFill"></div></div>
+          <div class="fc-scene">
+            <div class="fc-card" id="fcCard" onclick="flipFC()">
+              <div class="fc-face fc-front">
+                <div class="fc-cat-label" id="fcCat">Category</div>
+                <div class="fc-q-text" id="fcQ">Question</div>
+                <div class="fc-hint">Click to reveal answer ↗</div>
+              </div>
+              <div class="fc-face fc-back">
+                <div class="fc-ans-lbl">Answer</div>
+                <div class="fc-ans" id="fcAns"></div>
+              </div>
+            </div>
+          </div>
+          <div class="fc-nav">
+            <button class="btn btn-outline" onclick="fcPrev()">← Back</button>
+            <button class="btn btn-dark" onclick="fcNext()">Next →</button>
+          </div>
+          <div class="fc-know">
+            <button class="know-btn know-y" onclick="markFC(true)">✓ Got it!</button>
+            <button class="know-btn know-n" onclick="markFC(false)">✗ Still learning</button>
+          </div>
+          <div class="fc-stats">
+            <div class="fc-stat"><div class="fc-stat-num" id="stMastered" style="color:var(--sage)">0</div><div class="fc-stat-lbl">Mastered</div></div>
+            <div class="fc-stat"><div class="fc-stat-num" id="stReview" style="color:var(--coral)">0</div><div class="fc-stat-lbl">Review</div></div>
+            <div class="fc-stat"><div class="fc-stat-num" id="stUnseen" style="color:var(--ink-light)">0</div><div class="fc-stat-lbl">Unseen</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUIZ -->
+      <div id="pg-quiz" class="page">
+        <div class="pg-head"><div class="pg-title">Quiz Me</div><div class="pg-sub">Multiple choice · Instant feedback</div></div>
+        <div class="quiz-wrap">
+          <div class="q-mode-row" id="qModes"></div>
+          <div class="q-prog"><div class="q-prog-fill" id="qFill"></div></div>
+          <div id="quizArea">
+            <div class="q-box" id="qBox">
+              <div class="q-num" id="qNum"></div>
+              <div class="q-text" id="qText"></div>
+              <div class="q-opts" id="qOpts"></div>
+              <div class="q-fb" id="qFb"></div>
+            </div>
+            <div class="q-next" id="qNext" style="display:none"><button class="btn btn-dark" onclick="quizNext()">Next →</button></div>
+          </div>
+          <div class="score-card" id="scoreCard">
+            <div class="score-emoji" id="sEmoji"></div>
+            <div class="score-big" id="sBig"></div>
+            <div class="score-lbl">correct answers</div>
+            <div class="score-msg" id="sMsg"></div>
+            <div class="btn-row" style="justify-content:center;margin-top:20px;">
+              <button class="btn btn-dark" onclick="startQuiz()">Try Again</button>
+              <button class="btn btn-sage" onclick="goTo('flashcards',document.querySelectorAll('.nav-btn')[1])">Back to Cards</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MNEMONICS -->
+      <div id="pg-mnemonics" class="page">
+        <div class="pg-head"><div class="pg-title">Mnemonics</div><div class="pg-sub">Letter-by-letter memory aids for high-yield drugs</div></div>
+        <div class="mnem-grid" id="mnemGrid"></div>
+      </div>
+
+      <!-- DANGERS -->
+      <div id="pg-dangers" class="page">
+        <div class="pg-head"><div class="pg-title">Danger Zones</div><div class="pg-sub">Critical adverse effects grouped by severity — know these cold!</div></div>
+        <div id="dangersArea"></div>
+      </div>
+
+      <!-- COMPARE -->
+      <div id="pg-compare" class="page">
+        <div class="pg-head"><div class="pg-title">Side-by-Side</div><div class="pg-sub">Compare all drugs at once</div></div>
+        <div class="cmp-scroll"><table class="cmp-tbl" id="cmpTbl"></table></div>
+      </div>
+
+      <!-- TRACKER -->
+      <div id="pg-tracker" class="page">
+        <div class="pg-head"><div class="pg-title">My Progress</div><div class="pg-sub">Click each topic to mark it mastered</div></div>
+        <div class="trak-grid" id="trakGrid"></div>
+      </div>
+
+    </main>
+  </div>
+  <div class="mob-nav">
+    <button class="mob-btn active" onclick="goTo('home',this)"><span class="mob-icon">💊</span><span class="mob-lbl">Drugs</span></button>
+    <button class="mob-btn" onclick="goTo('flashcards',this)"><span class="mob-icon">🃏</span><span class="mob-lbl">Cards</span></button>
+    <button class="mob-btn" onclick="goTo('quiz',this)"><span class="mob-icon">🎯</span><span class="mob-lbl">Quiz</span></button>
+    <button class="mob-btn" onclick="goTo('mnemonics',this)"><span class="mob-icon">🔤</span><span class="mob-lbl">Tips</span></button>
+    <button class="mob-btn" onclick="goTo('tracker',this)"><span class="mob-icon">📊</span><span class="mob-lbl">Progress</span></button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════ DATA ═══════════════════════
+const DRUGS=[
+  {id:'diazepam',name:'Diazepam / Lorazepam',route:'IV, IM, PO, PR, nasal / IV',pharmClass:'Benzodiazepine',classKey:'benzo',color:'#8b7fc4',
+   use:'Lennox-Gastaut, akinetic/myoclonic seizures. Lorazepam IV = FIRST-LINE for status epilepticus!',
+   moa:'Presynaptic inhibition — enhances GABA-A receptor activity → suppresses seizure activity',
+   adverse:['Palpitations','Rash','Nystagmus','Diplopia','Bradypnea','Bradycardia','Respiratory depression','Rapid IV → apnea / cardiac arrest'],
+   nursing:['Assess for drowsiness & clumsiness','Monitor closely for behavior changes','Monitor respiratory rate','Have resuscitation equipment ready for IV use'],
+   expected:'Decrease or cessation of seizure activity WITHOUT undue sedation.',
+   tip:'💡 Lorazepam IV = gold standard for status epilepticus. Always have airway equipment ready!',
+   sev:['CRITICAL: Cardiac Arrest (rapid IV)','HIGH: Respiratory Depression','MOD: Sedation']},
+  {id:'lamotrigine',name:'Lamotrigine',route:'PO',pharmClass:'Antiseizure (Broad)',classKey:'broad',color:'#7cb99a',
+   use:'Decreased seizure incidence. Also delays mood episodes in bipolar disorder.',
+   moa:'Stabilizes neuronal membranes by INHIBITING SODIUM TRANSPORT',
+   adverse:['Cardiac arrest','Stevens-Johnson Syndrome (SJS)','Hepatic failure','Blurred vision'],
+   nursing:['Monitor behavioral changes','Assess for suicidal ideation (↑ risk vs other AEDs!)','Monitor skin — report any rash immediately'],
+   expected:'Decrease in frequency or cessation of seizures.',
+   tip:'💡 BLACK BOX: Increased suicidal ideation vs other AEDs. Monitor mood carefully!',
+   sev:['HIGH: SJS','HIGH: Cardiac Arrest','MOD: Suicidal Ideation']},
+  {id:'levetiracetam',name:'Levetiracetam',route:'PO & IV',pharmClass:'Antiseizure (Broad)',classKey:'broad',color:'#7cb99a',
+   use:'Decreased incidence and severity of seizures.',
+   moa:'Inhibits BURST FIRING without affecting normal neuronal excitability (unique!)',
+   adverse:['Drowsiness (most common)','Weakness','Hypertension','SJS (rare)','Agitation','Bone marrow suppression (rare)'],
+   nursing:['Monitor behavioral changes','Monitor skin changes'],
+   expected:'Decrease in frequency or cessation of seizures.',
+   tip:'💡 Unique MOA: selectively stops burst firing — spares normal neurons!',
+   sev:['HIGH: SJS (rare)','MOD: Agitation','MOD: Bone Marrow Suppression']},
+  {id:'topiramate',name:'Topiramate',route:'PO',pharmClass:'Antiseizure (Broad)',classKey:'broad',color:'#7cb99a',
+   use:'Decreased incidence of seizures.',
+   moa:'Blockade of SODIUM CHANNELS in neurons',
+   adverse:['Extreme somnolence ("Dopamax")','Dizziness','Ataxia','Anorexia / weight loss','Hyperthermia','Vision changes','Suicidal ideation','SJS (rare)','Decreased growth in children'],
+   nursing:['Monitor behavioral changes & suicidal ideation','Monitor growth rate in children','Monitor visual changes'],
+   expected:'Absence or reduction of seizure activity.',
+   tip:'💡 Nicknamed "Dopamax" — cognitive dulling + word-finding problems are common complaints!',
+   sev:['HIGH: SJS','HIGH: Hyperthermia','MOD: Suicidal Ideation']},
+  {id:'valproic',name:'Valproic Acid',route:'PO & IV',pharmClass:'Antiseizure (Broad)',classKey:'broad',color:'#7cb99a',
+   use:'Suppression of seizure activity.',
+   moa:'Increases GABA (inhibitory neurotransmitter) levels in the CNS',
+   adverse:['Peripheral edema','Pancreatitis','Hepatic failure','Hypothermia','HIGHLY TERATOGENIC','Rash → SJS','Blood dyscrasias (leukopenia, thrombocytopenia)'],
+   nursing:['Assess seizure activity','Monitor for pancreatitis: abd pain, N/V, anorexia','Monitor for liver failure: jaundice, abd pain','Monitor CBC for infection/bleeding risk'],
+   expected:'Decreased seizure activity.',
+   tip:'💡 HIGHLY TERATOGENIC — neural tube defects. Avoid in pregnancy. Requires reliable birth control!',
+   sev:['CRITICAL: Teratogenic (neural tube defects)','HIGH: Hepatic Failure','HIGH: Pancreatitis','HIGH: Blood Dyscrasias']},
+  {id:'carbamazepine',name:'Carbamazepine',route:'PO',pharmClass:'Antiepileptic (Narrow)',classKey:'narrow',color:'#d4935a',
+   use:'Epilepsy, seizure prevention. Also bipolar disorder management.',
+   moa:'Suppresses high-frequency neuronal discharge in/around seizure foci via sodium channels',
+   adverse:['CNS depression','Nystagmus / blurred vision / diplopia','Ataxia','Fluid retention → edema (HF risk)','Aplastic anemia','SJS','TEN (Toxic Epidermal Necrolysis)'],
+   nursing:['Monitor behavioral & visual changes','Monitor/report skin changes','Monitor CBC & drug levels','AVOID grapefruit juice (CYP3A4 interaction)','Take medication as prescribed — do not stop abruptly'],
+   expected:'Absence or reduction of seizure activity.',
+   tip:'💡 AVOID GRAPEFRUIT — CYP3A4 interaction raises levels → toxicity. Check CBC regularly!',
+   sev:['CRITICAL: Aplastic Anemia','HIGH: SJS / TEN','HIGH: Fluid Retention (HF risk)']},
+  {id:'gabapentin',name:'Gabapentin',route:'PO',pharmClass:'Antiseizure (Narrow)',classKey:'narrow',color:'#d4935a',
+   use:'Decreased incidence of partial seizures (adjunct, immediate release only).',
+   moa:'Mimics GABA; binds to calcium channels to reduce nervous system activity',
+   adverse:['Stevens-Johnson Syndrome','Nystagmus','Gingivitis','Rhabdomyolysis','Ataxia','Confusion'],
+   nursing:['Do NOT take within 2 hrs of antacid!','Monitor behavioral changes','Monitor skin changes','Assess seizure characteristics','Check herbal medicine interactions'],
+   expected:'Decreased frequency or cessation of seizures.',
+   tip:'💡 ANTACID TIMING: Wait at least 2 hours — antacids significantly reduce absorption!',
+   sev:['HIGH: SJS','HIGH: Rhabdomyolysis','MOD: Ataxia / Confusion']},
+  {id:'oxcarbazepine',name:'Oxcarbazepine',route:'PO',pharmClass:'Anticonvulsant (Narrow)',classKey:'narrow',color:'#d4935a',
+   use:'Partial seizures (monotherapy or adjunctive therapy).',
+   moa:'Decreased seizure incidence via sodium channel stabilization',
+   adverse:['Rash → SJS','Vision changes','Diplopia','Nystagmus','Nausea/vomiting','Dizziness','Headache'],
+   nursing:['Monitor behavioral changes','Monitor/report skin changes promptly','Monitor CNS changes'],
+   expected:'Absence or reduction of seizure activity.',
+   tip:'💡 Similar to carbamazepine but fewer drug interactions. Still watch for SJS!',
+   sev:['HIGH: SJS','MOD: Vision Changes','MOD: CNS Depression']},
+  {id:'phenytoin',name:'Phenytoin',route:'PO & IV',pharmClass:'Anticonvulsant (Narrow)',classKey:'narrow',color:'#d4935a',
+   use:'Focal-onset & generalized-onset seizures. Also terminates ventricular arrhythmias.',
+   moa:'Suppresses activity of seizure-generating neurons via sodium channel stabilization',
+   adverse:['Nystagmus / sedation / ataxia','Decreased OCP effectiveness','TERATOGENIC (cleft palate)','Gingival hyperplasia','Dysrhythmias / Hypotension','Purple Glove Syndrome (IV)','SJS risk'],
+   nursing:['Monitor phenytoin levels: TR = 10–20 mcg/mL','Hold dose & notify provider if out of range','Women: need non-OCP birth control!','Teach oral hygiene — daily brushing & flossing','No alcohol (↑ CNS depression)','Hold enteral feeds 1 hr before and after dose','Report any rash immediately'],
+   expected:'Limited seizure activity.',
+   tip:'💡 Purple Glove Syndrome = IV site emergency! Therapeutic level: 10–20. Watch teeth!',
+   sev:['CRITICAL: Teratogenic (cleft palate)','HIGH: Dysrhythmias / Hypotension','HIGH: Purple Glove Syndrome (IV)','HIGH: SJS','MOD: Gingival Hyperplasia']},
+  {id:'pregabalin',name:'Pregabalin',route:'PO',pharmClass:'Antiseizure (Broad)',classKey:'broad',color:'#7cb99a',
+   use:'Decreased partial-onset seizures.',
+   moa:'Binds to CALCIUM CHANNELS in CNS → regulates neurotransmitter release',
+   adverse:['Peripheral edema','SJS','Vision changes','Rhabdomyolysis','Dizziness','Excessive somnolence','Respiratory depression','Significant weight gain','Angioedema (airway!)'],
+   nursing:['Monitor for behavior changes / suicidal thoughts / depression','Report muscle injury signs: pain, tenderness, weakness (rhabdomyolysis)','Avoid CNS depressants','Report swelling of face/tongue/lips/throat IMMEDIATELY → angioedema!'],
+   expected:'Decrease in frequency or cessation of seizures.',
+   tip:'💡 ANGIOEDEMA = airway emergency! Swelling of face/tongue/throat → call 911 immediately.',
+   sev:['HIGH: Angioedema (airway emergency)','HIGH: SJS','HIGH: Rhabdomyolysis','MOD: Respiratory Depression']},
+  {id:'phenobarbital',name:'Phenobarbital',route:'PO, IM, IV',pharmClass:'Anticonvulsant / Sedative',classKey:'sedative',color:'#c47a8a',
+   use:'Anticonvulsant activity.',
+   moa:'Inhibits nervous system transmission AND raises the seizure threshold',
+   adverse:['Hypotension','Rash','Constipation','Nausea/vomiting/diarrhea','Delirium','Depression'],
+   nursing:['Monitor respiratory status, pulse, BP','Monitor for signs/symptoms of angioedema'],
+   expected:'Decrease or cessation of seizure activity WITHOUT excessive sedation. Weeks may be needed for max effect.',
+   tip:'💡 Takes WEEKS for maximum anticonvulsant effect — set patient expectations early!',
+   sev:['HIGH: Respiratory Depression','MOD: Hypotension','MOD: Delirium']},
+  {id:'mannitol',name:'Mannitol',route:'IV',pharmClass:'Osmotic Diuretic',classKey:'osmotic',color:'#e8735a',
+   use:'Reduction of intraocular OR intracranial pressure (ICP).',
+   moa:'Increases osmotic pressure of glomerular filtrate → inhibits reabsorption of water & electrolytes → reduces ICP',
+   adverse:['Heart failure','Chest pain','Blurred vision','Electrolyte imbalances','Nausea/vomiting','COMA (severe electrolyte crash)','Pulmonary edema'],
+   nursing:['Monitor neurologic status AND ICP readings','Monitor urine output: goal ≥30–50 mL/hr','Monitor electrolytes closely — imbalances = dangerous'],
+   expected:'Urine output ≥30–50 mL/hr OR increase per HCP parameters. Reduction in intracranial pressure — monitor the TREND.',
+   tip:'💡 Urine output ≥30–50 mL/hr = drug is working. Monitor ICP trend, not just single values!',
+   sev:['CRITICAL: COMA (electrolyte crash)','HIGH: Pulmonary Edema','HIGH: Heart Failure','HIGH: Electrolyte Imbalance']}
+];
+
+const CLASS_LABELS={benzo:'Benzodiazepine',broad:'Broad Spectrum AED',narrow:'Narrow Spectrum AED',sedative:'Sedative / Hypnotic',osmotic:'Osmotic Diuretic'};
+
+// ═══════════════════════ STATE ═══════════════════════
+let mastered=new Set(),review=new Set();
+let prog={};
+DRUGS.forEach(d=>{prog[d.id]={class:false,moa:false,adverse:false,nursing:false,expected:false};});
+function save(){try{localStorage.setItem('nmrx',JSON.stringify({m:[...mastered],r:[...review],p:prog}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('nmrx')||'{}');if(d.m)mastered=new Set(d.m);if(d.r)review=new Set(d.r);if(d.p)prog=d.p;}catch(e){}}
+
+// ═══════════════════════ SPLASH ═══════════════════════
+function startApp(){
+  document.getElementById('splash').classList.add('gone');
+  document.getElementById('app').classList.add('show');
+  load();
+  buildHome();buildMnemonics();buildDangers();buildCompare();buildTracker();buildQuizModes();startQuiz();
+  initFC();updateSB();
+}
+
+// ═══════════════════════ NAV ═══════════════════════
+function goTo(page,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+page).classList.add('active');
+  document.querySelectorAll('.nav-btn,.mob-btn').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(page==='tracker')buildTracker();
+  if(page==='flashcards')showFC();
+  if(page==='quiz')startQuiz();
+}
+
+// ═══════════════════════ HOME ═══════════════════════
+let homeFilter='all';
+function buildHome(){
+  const bar=document.getElementById('filterBar');
+  [{k:'all',l:'All Drugs'},...Object.entries(CLASS_LABELS).map(([k,l])=>({k,l}))].forEach(f=>{
+    const c=document.createElement('button');
+    c.className='filter-chip'+(f.k==='all'?' on':'');
+    c.textContent=f.l;
+    c.onclick=()=>{homeFilter=f.k;document.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');renderList();};
+    bar.appendChild(c);
+  });
+  renderList();
+}
+function renderList(){
+  const el=document.getElementById('drugList');
+  el.innerHTML='';
+  (homeFilter==='all'?DRUGS:DRUGS.filter(d=>d.classKey===homeFilter)).forEach(d=>{
+    const row=document.createElement('div');
+    row.className='drug-row';row.id='row-'+d.id;
+    row.innerHTML=`<div class="drug-row-head" onclick="toggleRow('${d.id}')">
+      <div class="d-dot" style="background:${d.color}"></div>
+      <div class="d-name">${d.name}</div>
+      <div class="d-badge" style="background:${d.color}22;color:${d.color}">${d.pharmClass}</div>
+      <div class="d-route">${d.route}</div>
+      <div class="d-arrow">▾</div>
+    </div>
+    <div class="drug-row-body">
+      <div class="db-block"><div class="db-label">Therapeutic Use</div><div class="db-text">${d.use}</div></div>
+      <div class="db-block"><div class="db-label">Mechanism of Action</div><div class="db-text">${d.moa}</div></div>
+      <div class="db-block"><div class="db-label">⚠️ Adverse Effects</div><div class="chiplist">${d.adverse.map(a=>`<span class="chip chip-r">${a}</span>`).join('')}</div></div>
+      <div class="db-block"><div class="db-label">👩‍⚕️ Nursing Considerations</div><div class="chiplist">${d.nursing.map(n=>`<span class="chip chip-b">${n}</span>`).join('')}</div></div>
+      <div class="db-block full"><div class="db-label">✅ Expected Response</div><div class="db-text">${d.expected}</div></div>
+      <div class="db-block full tip-box">${d.tip}</div>
+    </div>`;
+    el.appendChild(row);
+  });
+}
+function toggleRow(id){
+  const r=document.getElementById('row-'+id),open=r.classList.contains('open');
+  document.querySelectorAll('.drug-row.open').forEach(x=>x.classList.remove('open'));
+  if(!open)r.classList.add('open');
+}
+
+// ═══════════════════════ FLASHCARDS ═══════════════════════
+let fcAll=[],fcCards=[],fcIdx=0,fcFlipped=false,fcFilter='all';
+function initFC(){
+  fcAll=[];
+  DRUGS.forEach(d=>{
+    fcAll.push({id:`${d.id}-cls`,cat:'Drug Class',q:`What class is ${d.name}?`,a:d.pharmClass,type:'class',did:d.id});
+    fcAll.push({id:`${d.id}-moa`,cat:'Mechanism of Action',q:`How does ${d.name} work (MOA)?`,a:d.moa,type:'moa',did:d.id});
+    fcAll.push({id:`${d.id}-use`,cat:'Therapeutic Use',q:`What is ${d.name} used for?`,a:d.use,type:'use',did:d.id});
+    fcAll.push({id:`${d.id}-adv`,cat:'⚠️ Adverse Effects',q:`Key adverse effects of ${d.name}?`,a:'<ul>'+d.adverse.map(x=>`<li>${x}</li>`).join('')+'</ul>',type:'adverse',did:d.id});
+    fcAll.push({id:`${d.id}-nur`,cat:'Nursing Considerations',q:`Nursing priorities for ${d.name}?`,a:'<ul>'+d.nursing.map(x=>`<li>${x}</li>`).join('')+'</ul>',type:'nursing',did:d.id});
+    fcAll.push({id:`${d.id}-exp`,cat:'Expected Response',q:`Expected response for ${d.name}?`,a:d.expected,type:'expected',did:d.id});
+  });
+  const fr=document.getElementById('fcFilters');
+  [{k:'all',l:'All'},{k:'moa',l:'MOA'},{k:'adverse',l:'Side Effects'},{k:'nursing',l:'Nursing'},{k:'use',l:'Uses'},{k:'expected',l:'Response'}].forEach(f=>{
+    const b=document.createElement('button');
+    b.className='fc-filt'+(f.k==='all'?' on':'');
+    b.textContent=f.l;
+    b.onclick=()=>{fcFilter=f.k;document.querySelectorAll('.fc-filt').forEach(x=>x.classList.remove('on'));b.classList.add('on');applyFCFilter();};
+    fr.appendChild(b);
+  });
+  applyFCFilter();
+}
+function applyFCFilter(){fcCards=fcFilter==='all'?[...fcAll]:fcAll.filter(c=>c.type===fcFilter);fcIdx=0;showFC();}
+function showFC(){
+  if(!fcCards.length)return;
+  const c=fcCards[fcIdx];
+  document.getElementById('fcCard').classList.remove('flipped');fcFlipped=false;
+  document.getElementById('fcCat').textContent=c.cat;
+  document.getElementById('fcQ').textContent=c.q;
+  document.getElementById('fcAns').innerHTML=c.a;
+  document.getElementById('fcCtr').textContent=`${fcIdx+1} / ${fcCards.length}`;
+  document.getElementById('fcFill').style.width=`${((fcIdx+1)/fcCards.length)*100}%`;
+  updateFCStats();
+}
+function flipFC(){fcFlipped=!fcFlipped;document.getElementById('fcCard').classList.toggle('flipped',fcFlipped);}
+function fcNext(){fcIdx=(fcIdx+1)%fcCards.length;showFC();}
+function fcPrev(){fcIdx=(fcIdx-1+fcCards.length)%fcCards.length;showFC();}
+function shuffleFC(){fcCards.sort(()=>Math.random()-.5);fcIdx=0;showFC();}
+function markFC(know){
+  const c=fcCards[fcIdx];
+  if(know){mastered.add(c.id);review.delete(c.id);}else{review.add(c.id);mastered.delete(c.id);}
+  save();updateFCStats();updateSB();fcNext();
+}
+function resetFC(){mastered.clear();review.clear();save();updateFCStats();updateSB();}
+function updateFCStats(){
+  const total=fcAll.length;
+  document.getElementById('stMastered').textContent=mastered.size;
+  document.getElementById('stReview').textContent=review.size;
+  document.getElementById('stUnseen').textContent=Math.max(0,total-mastered.size-review.size);
+}
+
+// ═══════════════════════ QUIZ ═══════════════════════
+const QB=[
+  {q:'Lorazepam is FIRST-LINE treatment for which neurological emergency?',opts:['Hypertensive crisis','Status epilepticus','Pulmonary edema','Stroke'],ans:1,exp:'IV Lorazepam is first-line for status epilepticus — rapid onset, effective at stopping prolonged seizures.',type:'nursing'},
+  {q:'Valproic acid\'s primary teratogenic effect is:',opts:['Cleft palate','Neural tube defects (spina bifida)','Cardiac defects','Limb abnormalities'],ans:1,exp:'Valproic acid causes neural tube defects. It is HIGHLY teratogenic — avoid in pregnancy.',type:'adverse'},
+  {q:'Phenytoin therapeutic range is:',opts:['1–5 mcg/mL','5–10 mcg/mL','10–20 mcg/mL','20–30 mcg/mL'],ans:2,exp:'Phenytoin TR = 10–20 mcg/mL. Outside this range — hold the dose and notify the provider.',type:'misc'},
+  {q:'Mannitol reduces ICP by:',opts:['Blocking sodium channels','Increasing osmotic pressure in glomerular filtrate','Inhibiting GABA breakdown','Decreasing neuronal firing'],ans:1,exp:'Mannitol increases osmotic pressure → inhibits water/electrolyte reabsorption → draws fluid out of brain tissue.',type:'moa'},
+  {q:'A patient on Carbamazepine should avoid:',opts:['Dairy products','Grapefruit / grapefruit juice','Leafy greens','High-protein foods'],ans:1,exp:'Grapefruit inhibits CYP3A4 → raises carbamazepine levels → increased risk of toxicity.',type:'nursing'},
+  {q:'Which drug causes GINGIVAL HYPERPLASIA?',opts:['Valproic acid','Carbamazepine','Phenytoin','Gabapentin'],ans:2,exp:'Phenytoin causes gingival (gum) overgrowth. Teach daily brushing and flossing!',type:'adverse'},
+  {q:'Lamotrigine carries a black box warning for:',opts:['Aplastic anemia','Suicidal ideation','Teratogenicity','Gingival hyperplasia'],ans:1,exp:'Lamotrigine increases risk of suicidal ideation compared to other antiseizure drugs.',type:'adverse'},
+  {q:'Effective Mannitol therapy should produce urine output of:',opts:['5–10 mL/hr','10–20 mL/hr','30–50 mL/hr','>100 mL/hr'],ans:2,exp:'Urine output ≥30–50 mL/hr (or as specified by HCP) indicates Mannitol is working.',type:'nursing'},
+  {q:'Gabapentin must NOT be taken within how many hours of antacids?',opts:['30 minutes','1 hour','2 hours','4 hours'],ans:2,exp:'Antacids reduce gabapentin absorption. Always wait at least 2 hours.',type:'nursing'},
+  {q:'Purple Glove Syndrome is a rare IV complication of:',opts:['Diazepam','Phenobarbital','Mannitol','Phenytoin'],ans:3,exp:'Purple Glove Syndrome — painful purple discoloration — is a serious IV infiltration complication of phenytoin.',type:'adverse'},
+  {q:'Pregabalin\'s MOA involves binding to:',opts:['GABA-A receptors','Sodium channels','Calcium channels in CNS','Dopamine receptors'],ans:2,exp:'Pregabalin binds to calcium channels in CNS tissues, regulating neurotransmitter release.',type:'moa'},
+  {q:'Which drug INCREASES GABA levels as its MOA?',opts:['Phenytoin','Valproic Acid','Levetiracetam','Topiramate'],ans:1,exp:'Valproic acid increases GABA (inhibitory neurotransmitter) levels in the CNS.',type:'moa'},
+  {q:'Levetiracetam\'s unique MOA is:',opts:['Blocks sodium channels','Increases GABA','Inhibits burst firing WITHOUT affecting normal neurons','Binds calcium channels'],ans:2,exp:'Levetiracetam selectively inhibits burst firing — it spares normal neuronal activity. This is unique!',type:'moa'},
+  {q:'Topiramate is nicknamed "Dopamax" because of:',opts:['Weight gain side effects','Cognitive dulling / word-finding difficulty','Causing dopamine release','Its dopamine receptor affinity'],ans:1,exp:'Topiramate causes cognitive dulling and word-finding problems — leading to the nickname "Dopamax".',type:'misc'},
+  {q:'Phenobarbital may require how long to reach max anticonvulsant effect?',opts:['Hours','1–2 days','Several weeks','Several months'],ans:2,exp:'Phenobarbital may take several weeks to reach maximum anticonvulsant effect. Set patient expectations!',type:'nursing'},
+  {q:'Pregabalin can cause which life-threatening allergic reaction?',opts:['Anaphylaxis','Angioedema (airway)','Serum sickness','DRESS syndrome'],ans:1,exp:'Angioedema — swelling of face, tongue, lips, gums, throat — is an airway emergency. Call 911 immediately.',type:'adverse'},
+  {q:'Phenobarbital\'s MOA raises the:',opts:['Blood-brain barrier','Seizure threshold','GABA reuptake','Neuronal resting potential'],ans:1,exp:'Phenobarbital inhibits nervous system transmission AND raises the seizure threshold.',type:'moa'},
+  {q:'Phenytoin enteral feeding instructions require:',opts:['Give with feeds for absorption','Hold feeds 1 hr before and after dosing','Double the dose if feeds are running','No interaction with feeds'],ans:1,exp:'Enteral feedings significantly reduce phenytoin absorption. Hold feeds 1 hour before and 1 hour after dosing.',type:'nursing'},
+  {q:'Which antiseizure drug class is FIRST used for status epilepticus?',opts:['Barbiturates','Benzodiazepines','Hydantoins','Osmotic diuretics'],ans:1,exp:'Benzodiazepines (specifically IV Lorazepam) are the first-line drug class for status epilepticus.',type:'misc'},
+  {q:'Carbamazepine\'s most dangerous hematologic side effect is:',opts:['Thrombocytopenia','Iron-deficiency anemia','Aplastic anemia','Polycythemia'],ans:2,exp:'Aplastic anemia is a life-threatening hematologic complication of carbamazepine — monitor CBC.',type:'adverse'},
+];
+
+let qMode='all',qOrder=[],qIdx=0,qScore=0,qAnswered=false;
+function buildQuizModes(){
+  const row=document.getElementById('qModes');
+  [{k:'all',l:'All Topics'},{k:'adverse',l:'Side Effects'},{k:'nursing',l:'Nursing'},{k:'moa',l:'MOA'},{k:'misc',l:'Fast Facts'}].forEach(m=>{
+    const b=document.createElement('button');
+    b.className='q-mode-btn'+(m.k==='all'?' on':'');
+    b.textContent=m.l;
+    b.onclick=()=>{qMode=m.k;document.querySelectorAll('.q-mode-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');startQuiz();};
+    row.appendChild(b);
+  });
+}
+function startQuiz(){
+  const pool=qMode==='all'?QB:QB.filter(q=>q.type===qMode);
+  qOrder=pool.sort(()=>Math.random()-.5);
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('scoreCard').classList.remove('show');
+  document.getElementById('quizArea').style.display='';
+  showQ();
+}
+function showQ(){
+  qAnswered=false;
+  document.getElementById('qNext').style.display='none';
+  const q=qOrder[qIdx];
+  document.getElementById('qNum').textContent=`Question ${qIdx+1} of ${qOrder.length}`;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qFill').style.width=`${(qIdx/qOrder.length)*100}%`;
+  const fb=document.getElementById('qFb');fb.className='q-fb';fb.textContent='';
+  const oo=document.getElementById('qOpts');oo.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='q-opt';
+    b.innerHTML=`<strong>${['A','B','C','D'][i]}.</strong> ${o}`;
+    b.onclick=()=>pickAns(i);
+    oo.appendChild(b);
+  });
+}
+function pickAns(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=qOrder[qIdx],btns=document.querySelectorAll('.q-opt');
+  btns.forEach(b=>b.disabled=true);
+  btns[q.ans].classList.add('correct');
+  const fb=document.getElementById('qFb');
+  if(i===q.ans){qScore++;fb.className='q-fb ok show';fb.textContent='✅ Correct! '+q.exp;}
+  else{btns[i].classList.add('wrong');fb.className='q-fb bad show';fb.textContent='❌ '+q.exp;}
+  document.getElementById('qNext').style.display='flex';
+}
+function quizNext(){qIdx++;if(qIdx>=qOrder.length)showScore();else showQ();}
+function showScore(){
+  document.getElementById('quizArea').style.display='none';
+  const sc=document.getElementById('scoreCard');sc.classList.add('show');
+  document.getElementById('qFill').style.width='100%';
+  const pct=Math.round((qScore/qOrder.length)*100);
+  document.getElementById('sBig').textContent=`${qScore} / ${qOrder.length}`;
+  document.getElementById('sBig').style.color=pct>=75?'var(--sage)':pct>=60?'var(--amber)':'var(--coral)';
+  document.getElementById('sEmoji').textContent=pct>=90?'🏆':pct>=75?'🌟':pct>=60?'💪':'📚';
+  document.getElementById('sMsg').textContent=pct>=90?'Outstanding! You\'re ready for clinicals!':pct>=75?'Great work! Review the missed ones.':pct>=60?'Solid effort — keep reviewing!':'Keep at it — you\'ve got this!';
+}
+
+// ═══════════════════════ MNEMONICS ═══════════════════════
+const MNEM=[
+  {drug:'Phenytoin',word:'PHENYTOIN',color:'#d4935a',ls:[
+    {L:'P',t:'Phenytoin levels: therapeutic range 10–20 mcg/mL'},
+    {L:'H',t:'Hold dose if out of therapeutic range — notify provider'},
+    {L:'E',t:'Effective for focal, generalized seizures AND ventricular arrhythmias'},
+    {L:'N',t:'Non-OCP birth control needed (reduces oral contraceptive effectiveness!)'},
+    {L:'Y',t:'Young women: TERATOGENIC — risk of cleft palate to fetus'},
+    {L:'T',t:'Teeth/gum overgrowth: gingival hyperplasia — brush daily!'},
+    {L:'O',t:'Oral hygiene: teach daily brushing AND flossing'},
+    {L:'I',t:'IV: Purple Glove Syndrome — monitor IV site extremely closely'},
+    {L:'N',t:'No alcohol — dangerously increases CNS depression'},
+  ]},
+  {drug:'Valproic Acid',word:'VALPROIC',color:'#7cb99a',ls:[
+    {L:'V',t:'Very teratogenic — neural tube defects. Avoid in pregnancy!'},
+    {L:'A',t:'Assess for pancreatitis: abdominal pain, nausea, vomiting'},
+    {L:'L',t:'Liver failure risk — monitor for jaundice, abdominal pain'},
+    {L:'P',t:'Peripheral edema — assess swelling in extremities'},
+    {L:'R',t:'Rash → may progress to SJS — report skin changes NOW'},
+    {L:'O',t:'Other drug interactions — many! Always check the med list'},
+    {L:'I',t:'Inhibitory NT: increases GABA → calms overactive neurons'},
+    {L:'C',t:'CBC monitoring: blood dyscrasias (leukopenia, thrombocytopenia)'},
+  ]},
+  {drug:'Mannitol',word:'MANNITOL',color:'#e8735a',ls:[
+    {L:'M',t:'Monitor urine output — goal is ≥30–50 mL/hr'},
+    {L:'A',t:'Assess neurologic status AND ICP readings regularly'},
+    {L:'N',t:'No reabsorption of water/electrolytes = the osmotic mechanism'},
+    {L:'N',t:'Neurological: watch for changes in LOC, pupil response'},
+    {L:'I',t:'ICP TREND is the target — one reading isn\'t enough'},
+    {L:'T',t:'Toxicity: HF, pulmonary edema, electrolyte crashes, COMA'},
+    {L:'O',t:'Osmotic pressure increase pulls fluid OUT of swollen brain cells'},
+    {L:'L',t:'Labs: electrolytes must be monitored continuously'},
+  ]},
+  {drug:'Carbamazepine',word:'CARBS',color:'#d4935a',ls:[
+    {L:'C',t:'CNS depression — assess for behavioral and cognitive changes'},
+    {L:'A',t:'Aplastic anemia — life-threatening hematologic emergency'},
+    {L:'R',t:'Rash → can progress to SJS or TEN (toxic epidermal necrolysis)'},
+    {L:'B',t:'Bipolar disorder — also used as a mood stabilizer'},
+    {L:'S',t:'Stay away from grapefruit! Raises drug levels → toxicity'},
+  ]},
+  {drug:'Benzodiazepines',word:'STATUS',color:'#8b7fc4',ls:[
+    {L:'S',t:'Status epilepticus — Lorazepam IV is the FIRST-LINE treatment'},
+    {L:'T',t:'Titrate slowly — rapid IV can cause apnea and cardiac arrest'},
+    {L:'A',t:'Assess respiratory rate continuously during IV administration'},
+    {L:'T',t:'Track behavior: sedation can mask important neurological changes'},
+    {L:'U',t:'Unsteadiness (ataxia) is common — implement fall precautions'},
+    {L:'S',t:'Seizure cessation WITHOUT excessive sedation = therapeutic goal'},
+  ]},
+  {drug:'Pregabalin',word:'PREGAB',color:'#7cb99a',ls:[
+    {L:'P',t:'Peripheral edema — monitor for swelling in extremities'},
+    {L:'R',t:'Rhabdomyolysis risk — report muscle pain, tenderness, weakness'},
+    {L:'E',t:'Excessive somnolence and significant weight gain are common'},
+    {L:'G',t:'Get emergency help: angioedema (face/tongue/throat) = airway!'},
+    {L:'A',t:'Avoid CNS depressants — additive respiratory depression'},
+    {L:'B',t:'Behavioral monitoring: watch for suicidal ideation and depression'},
+  ]},
+];
+function buildMnemonics(){
+  const g=document.getElementById('mnemGrid');
+  MNEM.forEach(m=>{
+    const c=document.createElement('div');
+    c.className='mnem-card';c.style.borderTop=`3px solid ${m.color}`;
+    c.innerHTML=`<div class="mnem-drug" style="color:${m.color}">${m.drug}</div>
+    <div class="mnem-word">Remember: "${m.word}"</div>
+    <div class="mnem-rows">${m.ls.map(l=>`<div class="mnem-row"><div class="mnem-L" style="color:${m.color}">${l.L}</div><div class="mnem-body">${l.t}</div></div>`).join('')}</div>`;
+    g.appendChild(c);
+  });
+}
+
+// ═══════════════════════ DANGERS ═══════════════════════
+function buildDangers(){
+  const el=document.getElementById('dangersArea');
+  const sections=[
+    {title:'🚨 Critical / Life-Threatening',color:'#b44a38',border:'#fbc9c2',prefix:'CRITICAL',chipCls:'chip-r'},
+    {title:'⚠️ High Priority Monitoring',color:'#8a5a28',border:'#fdefd8',prefix:'HIGH',chipCls:'chip-a'},
+    {title:'💊 SJS Risk Drugs',color:'#2a6a94',border:'#deeef9',note:'Stevens-Johnson Syndrome',chipCls:'chip-b',special:'sjs'},
+    {title:'🤰 Teratogenic — Critical for Women!',color:'#5c4d9a',border:'#ede9f9',note:'Teratogenic Risk',chipCls:'chip-p',special:'terat'},
+  ];
+  el.innerHTML=sections.map(s=>{
+    let drugs;
+    if(s.special==='sjs')drugs=DRUGS.filter(d=>d.adverse.some(a=>a.includes('SJS')||a.includes('Stevens')));
+    else if(s.special==='terat')drugs=DRUGS.filter(d=>d.adverse.some(a=>a.toLowerCase().includes('teratogen')));
+    else drugs=DRUGS.filter(d=>d.sev.some(sv=>sv.startsWith(s.prefix)));
+    return `<div class="danger-sec">
+      <div class="danger-title" style="color:${s.color}">${s.title}</div>
+      <div class="danger-grid">${drugs.map(d=>`<div class="danger-card" style="border-color:${s.border}">
+        <div class="danger-drug">${d.name}</div>
+        <div class="chiplist">${s.special
+          ?`<span class="chip ${s.chipCls}">${s.note}</span><span class="chip ${s.chipCls}">Monitor closely</span>`
+          :d.sev.filter(sv=>sv.startsWith(s.prefix)).map(sv=>`<span class="chip ${s.chipCls}">${sv.replace(s.prefix+': ','')}</span>`).join('')
+        }</div>
+      </div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════ COMPARE ═══════════════════════
+function buildCompare(){
+  const t=document.getElementById('cmpTbl');
+  t.innerHTML=`<thead><tr><th>Drug</th><th>Class</th><th>Route</th><th>MOA</th><th>Top Danger</th><th>Response</th></tr></thead>
+  <tbody>${DRUGS.map(d=>`<tr>
+    <td><div class="td-name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${d.color};margin-right:7px;vertical-align:middle"></span>${d.name}</div></td>
+    <td><span class="chip" style="background:${d.color}22;color:${d.color}">${d.pharmClass}</span></td>
+    <td style="font-size:.78rem;color:var(--ink-light)">${d.route}</td>
+    <td style="font-size:.8rem">${d.moa.substring(0,55)}…</td>
+    <td><span class="chip chip-r">${d.sev[0].replace(/^(CRITICAL|HIGH|MOD): /,'')}</span></td>
+    <td style="font-size:.78rem">${d.expected.substring(0,65)}…</td>
+  </tr>`).join('')}</tbody>`;
+}
+
+// ═══════════════════════ TRACKER ═══════════════════════
+function buildTracker(){
+  const g=document.getElementById('trakGrid');g.innerHTML='';
+  DRUGS.forEach(d=>{
+    const cats=[{k:'class',l:'Class'},{k:'moa',l:'MOA'},{k:'adverse',l:'Side FX'},{k:'nursing',l:'Nursing'},{k:'expected',l:'Response'}];
+    const done=cats.filter(c=>prog[d.id]?.[c.k]).length;
+    const pct=Math.round((done/cats.length)*100);
+    const card=document.createElement('div');
+    card.className='trak-card';card.id='tc-'+d.id;
+    card.innerHTML=`<div class="trak-drug"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${d.color};margin-right:6px;vertical-align:middle"></span>${d.name}</div>
+    <div class="trak-bar"><div class="trak-fill" id="tf-${d.id}" style="width:${pct}%"></div></div>
+    <div class="trak-pct"><span>Progress</span><span id="tp-${d.id}">${pct}%</span></div>
+    <div class="trak-checks">${cats.map(c=>`<div class="check-it${prog[d.id]?.[c.k]?' done':''}" onclick="toggleTrack('${d.id}','${c.k}',this)">${c.l}</div>`).join('')}</div>`;
+    g.appendChild(card);
+  });
+}
+function toggleTrack(did,cat,el){
+  prog[did][cat]=!prog[did][cat];el.classList.toggle('done',prog[did][cat]);save();
+  const cats=['class','moa','adverse','nursing','expected'];
+  const done=cats.filter(c=>prog[did][c]).length;
+  const pct=Math.round((done/cats.length)*100);
+  document.getElementById('tf-'+did).style.width=pct+'%';
+  document.getElementById('tp-'+did).textContent=pct+'%';
+  updateSB();
+}
+
+// ═══════════════════════ SIDEBAR BAR ═══════════════════════
+function updateSB(){
+  const total=DRUGS.length*5;
+  const done=DRUGS.reduce((s,d)=>s+['class','moa','adverse','nursing','expected'].filter(c=>prog[d.id]?.[c]).length,0);
+  const pct=Math.round((done/total)*100);
+  document.getElementById('sbBar').style.width=pct+'%';
+  document.getElementById('sbDone').textContent=done;
+  document.getElementById('sbTotal').textContent=`/ ${total} topics`;
+}
+</script>
+</body>
+</html>
