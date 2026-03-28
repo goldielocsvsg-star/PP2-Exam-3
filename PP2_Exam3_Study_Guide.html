@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PP2 Exam 3 — Ultimate Study Guide SP 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111420;
+    --card: #161b2e;
+    --border: #1e2640;
+    --accent-blue: #4f8ef7;
+    --accent-teal: #2dd4bf;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --accent-violet: #a78bfa;
+    --accent-green: #34d399;
+    --text: #e8eaf6;
+    --text-muted: #8892b0;
+    --text-dim: #4a5568;
+    --glow-blue: rgba(79,142,247,0.15);
+    --glow-teal: rgba(45,212,191,0.15);
+    --glow-amber: rgba(245,158,11,0.12);
+    --glow-rose: rgba(244,63,94,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ANIMATED GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* FLOATING ORBS */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 400px; height: 400px; background: rgba(79,142,247,0.08); top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(45,212,191,0.06); bottom: 10%; right: -80px; animation-delay: -7s; }
+  .orb-3 { width: 250px; height: 250px; background: rgba(167,139,250,0.07); top: 40%; left: 30%; animation-delay: -12s; }
+
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(30px, 20px) scale(1.05); }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* HERO HEADER */
+  .hero {
+    text-align: center;
+    padding: 70px 24px 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    border: 1px solid rgba(45,212,191,0.3);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    background: rgba(45,212,191,0.05);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 50%, var(--accent-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 0 24px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .nav-tab:hover, .nav-tab.active {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: var(--glow-blue);
+    box-shadow: 0 0 20px var(--glow-blue);
+  }
+
+  /* SECTIONS */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .section-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(79,142,247,0.3);
+    box-shadow: 0 4px 30px rgba(79,142,247,0.05);
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .badge-blue { background: rgba(79,142,247,0.15); color: var(--accent-blue); border: 1px solid rgba(79,142,247,0.3); }
+  .badge-teal { background: rgba(45,212,191,0.12); color: var(--accent-teal); border: 1px solid rgba(45,212,191,0.3); }
+  .badge-amber { background: rgba(245,158,11,0.12); color: var(--accent-amber); border: 1px solid rgba(245,158,11,0.3); }
+  .badge-rose { background: rgba(244,63,94,0.12); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.3); }
+  .badge-violet { background: rgba(167,139,250,0.12); color: var(--accent-violet); border: 1px solid rgba(167,139,250,0.3); }
+  .badge-green { background: rgba(52,211,153,0.12); color: var(--accent-green); border: 1px solid rgba(52,211,153,0.3); }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .compare-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.03);
+    color: var(--text-muted);
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .compare-table th:nth-child(2) { color: var(--accent-rose); }
+  .compare-table th:nth-child(3) { color: var(--accent-violet); }
+  .compare-table th:nth-child(4) { color: var(--accent-teal); }
+
+  .compare-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+    font-size: 13px;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* DRUG CARDS */
+  .drug-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+  .drug-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .drug-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .drug-card.blue::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal)); }
+  .drug-card.amber::before { background: linear-gradient(90deg, var(--accent-amber), var(--accent-rose)); }
+  .drug-card.violet::before { background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue)); }
+  .drug-card.green::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-teal)); }
+  .drug-card.rose::before { background: linear-gradient(90deg, var(--accent-rose), var(--accent-violet)); }
+
+  .drug-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .drug-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .drug-class {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .drug-detail { margin-bottom: 10px; }
+
+  .drug-detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .drug-detail-content { font-size: 13px; line-height: 1.6; color: var(--text); }
+
+  .warn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin: 3px 3px 3px 0;
+  }
+
+  .warn-red { background: rgba(244,63,94,0.1); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.25); }
+  .warn-amber { background: rgba(245,158,11,0.1); color: var(--accent-amber); border: 1px solid rgba(245,158,11,0.25); }
+  .warn-green { background: rgba(52,211,153,0.1); color: var(--accent-green); border: 1px solid rgba(52,211,153,0.25); }
+  .warn-blue { background: rgba(79,142,247,0.1); color: var(--accent-blue); border: 1px solid rgba(79,142,247,0.25); }
+
+  /* INFO BOXES */
+  .info-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-left: 3px solid;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+
+  .info-box.blue { background: var(--glow-blue); border-color: var(--accent-blue); }
+  .info-box.amber { background: var(--glow-amber); border-color: var(--accent-amber); }
+  .info-box.rose { background: var(--glow-rose); border-color: var(--accent-rose); }
+  .info-box.teal { background: var(--glow-teal); border-color: var(--accent-teal); }
+  .info-box.violet { background: rgba(167,139,250,0.08); border-color: var(--accent-violet); }
+
+  .info-box-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  /* FLASHCARD SECTION */
+  .flashcard-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--glow-teal); }
+  .btn.primary { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+  .btn.primary:hover { background: #3d7ef0; }
+
+  .flashcard-wrapper {
+    perspective: 1000px;
+    max-width: 640px;
+    margin: 0 auto 20px;
+    height: 220px;
+    cursor: pointer;
+  }
+
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+
+  .flashcard-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .flashcard-front {
+    background: linear-gradient(135deg, var(--card) 0%, rgba(79,142,247,0.08) 100%);
+    border-color: rgba(79,142,247,0.2);
+  }
+
+  .flashcard-back {
+    background: linear-gradient(135deg, var(--card) 0%, rgba(45,212,191,0.08) 100%);
+    border-color: rgba(45,212,191,0.2);
+    transform: rotateY(180deg);
+  }
+
+  .flashcard-q {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .flashcard-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .flashcard-a { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .fc-counter {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* CATEGORY FILTER */
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: white;
+  }
+
+  /* QUIZ */
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .quiz-q {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+
+  .quiz-opt {
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s;
+    text-align: left;
+    color: var(--text);
+  }
+
+  .quiz-opt:hover:not(:disabled) { border-color: var(--accent-blue); background: var(--glow-blue); }
+  .quiz-opt.correct { border-color: var(--accent-green); background: rgba(52,211,153,0.1); color: var(--accent-green); }
+  .quiz-opt.wrong { border-color: var(--accent-rose); background: rgba(244,63,94,0.1); color: var(--accent-rose); }
+
+  .quiz-explanation {
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(79,142,247,0.08);
+    border-left: 3px solid var(--accent-blue);
+    font-size: 13.5px;
+    line-height: 1.7;
+    display: none;
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .quiz-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 4px;
+    height: 4px;
+    margin-bottom: 28px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .progress-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+    transition: width 0.3s ease;
+  }
+
+  /* CALC */
+  .calc-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .calc-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 18px; }
+
+  .calc-field label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .calc-field input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .calc-field input:focus { border-color: var(--accent-blue); }
+
+  .calc-result {
+    background: var(--glow-teal);
+    border: 1px solid rgba(45,212,191,0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--accent-teal);
+    display: none;
+    margin-top: 14px;
+  }
+
+  .calc-result.visible { display: block; }
+
+  /* GRID LAYOUTS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } .drug-grid { grid-template-columns: 1fr; } }
+
+  /* GCS TABLE */
+  .gcs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 600px) { .gcs-grid { grid-template-columns: 1fr; } }
+
+  .gcs-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .gcs-col-header {
+    padding: 12px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .gcs-col.eye .gcs-col-header { background: rgba(79,142,247,0.15); color: var(--accent-blue); }
+  .gcs-col.verbal .gcs-col-header { background: rgba(45,212,191,0.12); color: var(--accent-teal); }
+  .gcs-col.motor .gcs-col-header { background: rgba(167,139,250,0.12); color: var(--accent-violet); }
+
+  .gcs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .gcs-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent-amber);
+  }
+
+  /* MONRO-KELLIE */
+  .mk-visual {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .mk-box {
+    flex: 1;
+    min-width: 120px;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid;
+  }
+
+  .mk-box .mk-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .mk-box .mk-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .mk-box.brain { border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08); color: var(--accent-violet); }
+  .mk-box.csf { border-color: rgba(45,212,191,0.4); background: rgba(45,212,191,0.08); color: var(--accent-teal); }
+  .mk-box.blood { border-color: rgba(244,63,94,0.4); background: rgba(244,63,94,0.08); color: var(--accent-rose); }
+  .mk-box.eq { border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.08); color: var(--accent-amber); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+
+  /* MNEMONIC */
+  .mnemonic {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .mnem-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mnem-letter {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .mnem-word {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* SCROLL TO TOP */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+    z-index: 100;
+  }
+
+  .scroll-top:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+  /* RESPONSIVE TABLE WRAPPER */
+  .table-wrap { overflow-x: auto; border-radius: 12px; }
+
+  ul.checklist { list-style: none; padding: 0; }
+  ul.checklist li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  ul.checklist li:last-child { border-bottom: none; }
+  ul.checklist li::before { content: '›'; color: var(--accent-teal); font-weight: bold; flex-shrink: 0; }
+
+  .highlight-text { color: var(--accent-amber); font-weight: 600; }
+  .text-rose { color: var(--accent-rose); }
+  .text-teal { color: var(--accent-teal); }
+  .text-blue { color: var(--accent-blue); }
+  .text-violet { color: var(--accent-violet); }
+  .text-green { color: var(--accent-green); }
+
+  .spacer { height: 16px; }
+
+  /* Final padding */
+  .section { padding-bottom: 60px; }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="hero">
+  <div class="hero-tag">SP 2026 · Patho Pharm 2</div>
+  <h1>Exam 3 Study Guide</h1>
+  <p class="hero-sub">Cognition &amp; Intracranial Regulation · Complete Blueprint Coverage</p>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('cognition')">🧠 Cognition</button>
+  <button class="nav-tab" onclick="showSection('drugs-cog')">💊 Cog Drugs</button>
+  <button class="nav-tab" onclick="showSection('intracranial')">⛑️ Intracranial</button>
+  <button class="nav-tab" onclick="showSection('drugs-ic')">💊 IC Drugs</button>
+  <button class="nav-tab" onclick="showSection('casestudy')">📋 Case Studies</button>
+  <button class="nav-tab" onclick="showSection('calc')">🔢 Calculations</button>
+  <button class="nav-tab" onclick="showSection('flashcards')">🃏 Flashcards</button>
+  <button class="nav-tab" onclick="showSection('quiz')">✏️ Quiz</button>
+</div>
+
+<div class="container">
+
+<!-- ======= COGNITION SECTION ======= -->
+<div id="sec-cognition" class="section active">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,142,247,0.12); border:1px solid rgba(79,142,247,0.3);">🧠</div>
+    <div>
+      <h2 style="color:var(--accent-blue)">Cognition</h2>
+      <p>Delirium · Alzheimer's Disease · Parkinson's Disease</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Definition of Cognition <span class="badge badge-blue">Obj 1</span></div>
+    <p style="font-size:14px;line-height:1.8;">The <span class="highlight-text">mental action or process</span> of acquiring knowledge and understanding through thought, experience, and the senses. Involves memory, attention, executive function, language, and perception.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The Big 3 — Differential Pathophysiology <span class="badge badge-rose">EXAM FOCUS</span></div>
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>🚨 Delirium</th>
+            <th>🧩 Alzheimer's (AD)</th>
+            <th>🌀 Parkinson's (PD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Etiology</td>
+            <td>Acute illness, drug toxicity, metabolic imbalance</td>
+            <td>Beta-amyloid plaques + neurofibrillary tangles (tau)</td>
+            <td>Degeneration of dopamine neurons in <em>substantia nigra</em></td>
+          </tr>
+          <tr>
+            <td>Onset</td>
+            <td><span class="text-rose">Sudden, acute, fluctuating</span></td>
+            <td><span class="text-violet">Slow, progressive, irreversible</span></td>
+            <td><span class="text-teal">Gradual, chronic progression</span></td>
+          </tr>
+          <tr>
+            <td>LOC</td>
+            <td>Reduced, fluctuating</td>
+            <td>Normal until late stages</td>
+            <td>Generally preserved</td>
+          </tr>
+          <tr>
+            <td>Key Signs</td>
+            <td>Hallucinations, disorientation, restlessness</td>
+            <td>Memory loss, aphasia, loss of executive function</td>
+            <td>TRAP: Tremor, Rigidity, Akinesia, Postural instability</td>
+          </tr>
+          <tr>
+            <td>Risk Factors</td>
+            <td>Infection (UTI!), polypharmacy, sleep deprivation, elderly</td>
+            <td>Age, ApoE-ε4 gene, head trauma</td>
+            <td>Older age, male sex, environmental toxins</td>
+          </tr>
+          <tr>
+            <td>Reversible?</td>
+            <td><span class="text-green">Often YES</span> — treat the cause</td>
+            <td><span class="text-rose">No</span> — progressive decline</td>
+            <td><span class="text-amber">Managed, not cured</span></td>
+          </tr>
+          <tr>
+            <td>Hallmark Pathology</td>
+            <td>Metabolic/toxic disruption</td>
+            <td>Amyloid plaques, tau tangles → cholinergic deficit</td>
+            <td>Lewy bodies, dopamine deficit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">TRAP Mnemonic — Parkinson's <span class="badge badge-teal">Obj 3</span></div>
+      <div class="mnemonic">
+        <div class="mnem-box">
+          <div class="mnem-letter" style="background:rgba(244,63,94,0.15);color:var(--accent-rose)">T</div>
+          <div class="mnem-word">Tremor<br>(resting)</div>
+        </div>
+        <div class="mnem-box">
+          <div class="mnem-letter" style="background:rgba(245,158,11,0.15);color:var(--accent-amber)">R</div>
+          <div class="mnem-word">Rigidity<br>(cogwheel)</div>
+        </div>
+        <div class="mnem-box">
+          <div class="mnem-letter" style="background:rgba(79,142,247,0.15);color:var(--accent-blue)">A</div>
+          <div class="mnem-word">Akinesia<br>(bradykinesia)</div>
+        </div>
+        <div class="mnem-box">
+          <div class="mnem-letter" style="background:rgba(167,139,250,0.15);color:var(--accent-violet)">P</div>
+          <div class="mnem-word">Postural<br>Instability</div>
+        </div>
+      </div>
+      <div class="info-box teal">
+        <div class="info-box-title">⚡ Key PD Facts</div>
+        Shuffling gait, masked facies (facial masking), micrographia (small handwriting), dysarthria, dysphagia
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">AD Pathophysiology <span class="badge badge-violet">Obj 3</span></div>
+      <ul class="checklist">
+        <li>Acetylcholine (ACh) is markedly decreased — primary deficit</li>
+        <li>Beta-amyloid plaques accumulate outside neurons</li>
+        <li>Neurofibrillary tangles (tau protein) inside neurons</li>
+        <li>Progressive cortical atrophy, especially hippocampus</li>
+        <li>Memory loss begins with short-term → long-term</li>
+        <li>Aphasia, agnosia, apraxia develop in later stages</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Risk Factors Summary <span class="badge badge-amber">Obj 2</span></div>
+    <div class="two-col">
+      <div>
+        <div class="badge badge-rose" style="margin-bottom:12px">Delirium Risk Factors</div>
+        <ul class="checklist">
+          <li>UTI / infections (most common in elderly)</li>
+          <li>Polypharmacy / drug toxicity</li>
+          <li>Electrolyte imbalances</li>
+          <li>Sleep deprivation / ICU environment</li>
+          <li>Advanced age, dementia, sensory impairment</li>
+          <li>Urinary retention / catheter insertion</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-violet" style="margin-bottom:12px">AD Risk Factors</div>
+        <ul class="checklist">
+          <li>Age &gt;65 (greatest risk factor)</li>
+          <li>ApoE-ε4 allele (genetic)</li>
+          <li>Head trauma history</li>
+          <li>Female sex (longer lifespan)</li>
+          <li>Cardiovascular disease</li>
+          <li>Low education / cognitive reserve</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box rose">
+    <div class="info-box-title">🚨 EXAM ALERT — Delirium vs Dementia</div>
+    The #1 tested differentiator: <strong>Onset.</strong> Delirium = ACUTE/sudden. Dementia = GRADUAL/chronic. A patient who "suddenly seems confused" has delirium until proven otherwise. Always look for an underlying cause (UTI, medication, infection).
+  </div>
+</div>
+
+<!-- ======= COGNITION DRUGS SECTION ======= -->
+<div id="sec-drugs-cog" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(167,139,250,0.12); border:1px solid rgba(167,139,250,0.3);">💊</div>
+    <div>
+      <h2 style="color:var(--accent-violet)">Cognition Pharmacology</h2>
+      <p>Alzheimer's &amp; Parkinson's Drug Therapy · Obj 4, 5, 6</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Cholinesterase Inhibitors — Alzheimer's Disease <span class="badge badge-violet">Mechanism: ↑ ACh</span></div>
+    <div class="info-box blue">
+      <div class="info-box-title">Mechanism of Action</div>
+      Inhibit acetylcholinesterase (AChE), the enzyme that breaks down ACh → increases ACh levels in synaptic cleft → improves cholinergic neurotransmission. Does NOT cure; slows functional decline.
+    </div>
+    <div class="drug-grid">
+
+      <div class="drug-card blue">
+        <div class="drug-name">Donepezil</div>
+        <div class="drug-class">Cholinesterase Inhibitor · 2nd & 3rd Gen</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Route / Dosing</div>
+          <div class="drug-detail-content">Oral (tablet or ODT); taken at bedtime (causes insomnia if AM). QD dosing.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Side Effects</div>
+          <div class="drug-detail-content">
+            <span class="warn-red">⚠ Bradycardia</span>
+            <span class="warn-amber">Nausea</span>
+            <span class="warn-amber">Diarrhea</span>
+            <span class="warn-amber">Insomnia</span>
+            <span class="warn-amber">Muscle cramps</span>
+          </div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Nursing / Evaluation</div>
+          <div class="drug-detail-content">Monitor <strong>heart rate</strong> (risk of AV block/bradycardia). Evaluate ADL performance as therapeutic outcome. Drug-drug: NSAIDs ↑ GI bleed risk; anticholinergics counteract effects.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Donepezil + Memantine</div>
+          <div class="drug-detail-content">May be combined in moderate-severe AD. Memantine = NMDA antagonist; different mechanism (protects from glutamate excitotoxicity). Evaluate: functional status, memory tasks, ADLs.</div>
+        </div>
+      </div>
+
+      <div class="drug-card violet">
+        <div class="drug-name">Rivastigmine</div>
+        <div class="drug-class">Cholinesterase Inhibitor — Transdermal Patch</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Route / Administration</div>
+          <div class="drug-detail-content">
+            <span class="warn-green">✓ Transdermal PATCH (preferred)</span><br>
+            Also available oral capsule. Patch provides steady plasma levels, fewer GI side effects.
+          </div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">📌 Patient Teaching — PATCH</div>
+          <div class="drug-detail-content">
+            <strong>Rotate patch sites daily.</strong> Do NOT apply new patch to same site for <strong>14 days</strong>. Apply to upper arm, upper back, or chest. Remove old patch before new one. Dispose carefully (still contains drug).
+          </div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Side Effects / Contraindications</div>
+          <div class="drug-detail-content">
+            <span class="warn-amber">Nausea, vomiting, anorexia</span>
+            <span class="warn-red">Skin irritation at patch site</span><br>
+            Contraindicated: Known hypersensitivity to carbamate derivatives.
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card rose">
+        <div class="drug-name">Galantamine</div>
+        <div class="drug-class">Cholinesterase Inhibitor + Nicotinic Receptor Modulator</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Unique Feature</div>
+          <div class="drug-detail-content">Also modulates nicotinic receptors (dual mechanism). Available as extended-release capsule.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">⛔ Contraindications</div>
+          <div class="drug-detail-content">
+            <span class="warn-red">🚫 Severe hepatic impairment</span>
+            <span class="warn-red">🚫 Severe renal impairment</span><br>
+            (renally cleared; adjust dose for mild-moderate impairment)
+          </div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Side Effects</div>
+          <div class="drug-detail-content">
+            <span class="warn-amber">Nausea, vomiting</span>
+            <span class="warn-amber">Diarrhea</span>
+            <span class="warn-amber">Weight loss</span>
+            <span class="warn-amber">Anorexia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box amber" style="margin-top:16px">
+      <div class="info-box-title">⚠ Class-Wide Side Effects — All ChEIs</div>
+      All cholinesterase inhibitors share cholinergic side effects (SLUDGE overlap): Nausea, vomiting, diarrhea, bradycardia, bronchoconstriction, increased secretions, urinary incontinence. Anticholinergic drugs COUNTERACT these medications — avoid concurrent use!
+    </div>
+  </div>
+
+  <!-- PARKINSON'S DRUGS -->
+  <div class="card">
+    <div class="card-title">Parkinson's Disease Pharmacology <span class="badge badge-teal">Goal: ↑ Dopamine OR ↓ ACh</span></div>
+
+    <div class="drug-grid">
+      <div class="drug-card green" style="grid-column: span 2;">
+        <div class="drug-name">Levodopa / Carbidopa (Sinemet)</div>
+        <div class="drug-class">Dopamine Precursor + Decarboxylase Inhibitor · GOLD STANDARD</div>
+        <div class="two-col">
+          <div>
+            <div class="drug-detail">
+              <div class="drug-detail-label">Mechanism of Action</div>
+              <div class="drug-detail-content">
+                <strong>Levodopa</strong> crosses the BBB → converted to <strong>dopamine</strong> in the CNS.<br>
+                <strong>Carbidopa</strong> blocks peripheral decarboxylase → prevents conversion BEFORE crossing BBB → more levodopa reaches brain → reduces peripheral side effects.
+              </div>
+            </div>
+            <div class="drug-detail">
+              <div class="drug-detail-label">Side Effects</div>
+              <div class="drug-detail-content">
+                <span class="warn-amber">Dark urine/sweat (harmless!)</span>
+                <span class="warn-red">Orthostatic hypotension</span>
+                <span class="warn-red">Dyskinesia (long-term)</span>
+                <span class="warn-amber">Nausea</span>
+                <span class="warn-red">On-off phenomenon</span>
+                <span class="warn-amber">Hallucinations</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="drug-detail">
+              <div class="drug-detail-label">📌 Patient Teaching</div>
+              <div class="drug-detail-content">
+                • <strong>Avoid high-protein meals</strong> — amino acids compete with levodopa for transport across BBB → ↓ drug absorption<br>
+                • Change positions slowly (orthostatic hypotension)<br>
+                • Do NOT abruptly stop (risk of neuroleptic malignant syndrome–like reaction)<br>
+                • Dark sweat/urine is HARMLESS — reassure patient
+              </div>
+            </div>
+            <div class="drug-detail">
+              <div class="drug-detail-label">Evaluation of Effectiveness</div>
+              <div class="drug-detail-content">
+                Improved motor control, reduced tremors, improved mobility, ability to perform ADLs, reduced bradykinesia.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card amber">
+        <div class="drug-name">Pramipexole (Mirapex)</div>
+        <div class="drug-class">Dopamine Agonist (D2/D3)</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Action</div>
+          <div class="drug-detail-content">Directly stimulates dopamine receptors. Used alone or with levodopa. Also used for restless leg syndrome.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">⚠ KEY Side Effects</div>
+          <div class="drug-detail-content">
+            <span class="warn-red">😴 Sudden "sleep attacks"</span>
+            <span class="warn-red">🎰 Compulsive behaviors</span>
+            <span class="warn-amber">Orthostatic hypotension</span>
+            <span class="warn-amber">Hallucinations</span><br><br>
+            <strong>Nursing:</strong> Warn patients to avoid driving; screen for gambling, hypersexuality, binge eating behaviors.
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card blue">
+        <div class="drug-name">Selegiline (Eldepryl)</div>
+        <div class="drug-class">MAO-B Inhibitor</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Mechanism</div>
+          <div class="drug-detail-content">Selectively inhibits MAO-B enzyme → prevents breakdown of dopamine → more dopamine available in synapse. Used as adjunct to levodopa.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">⚠ Teaching / Contraindications</div>
+          <div class="drug-detail-content">
+            <span class="warn-red">🚫 Tyramine-rich foods → hypertensive crisis</span><br>
+            Avoid: aged cheese, cured meats, wine, soy sauce.<br>
+            <span class="warn-red">🚫 Do NOT combine with SSRIs/meperidine → serotonin syndrome</span><br>
+            <span class="warn-red">🚫 Contraindicated with meperidine (Demerol)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card violet">
+        <div class="drug-name">Benztropine (Cogentin)</div>
+        <div class="drug-class">Anticholinergic (Muscarinic Blocker)</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Mechanism / Use</div>
+          <div class="drug-detail-content">Blocks ACh to restore dopamine-ACh balance in the striatum. Primarily for <strong>tremors &amp; rigidity</strong>. Also used for drug-induced EPS (antipsychotics).</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Side Effects (ANTICHOLINERGIC)</div>
+          <div class="drug-detail-content">
+            <span class="warn-amber">Dry mouth</span>
+            <span class="warn-amber">Blurred vision</span>
+            <span class="warn-red">Urinary retention</span>
+            <span class="warn-amber">Constipation</span>
+            <span class="warn-amber">Confusion</span>
+            <span class="warn-red">Tachycardia</span>
+          </div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Evaluation</div>
+          <div class="drug-detail-content">Reduction in tremors. Monitor for urinary retention (bladder scan, I&amp;O), confusion in elderly. AVOID in elderly (Beers Criteria).</div>
+        </div>
+      </div>
+
+      <div class="drug-card rose">
+        <div class="drug-name">Amantadine</div>
+        <div class="drug-class">Antiviral / Dopaminergic Agent</div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Mechanism</div>
+          <div class="drug-detail-content">Stimulates dopamine release from nerve endings + mild NMDA antagonism + anticholinergic properties. Used for dyskinesia and early PD.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Teaching / Side Effects</div>
+          <div class="drug-detail-content">
+            <span class="warn-amber">Livedo reticularis (mottled skin)</span>
+            <span class="warn-amber">Ankle edema</span>
+            <span class="warn-red">CNS effects: confusion, hallucinations</span>
+            <span class="warn-red">Do NOT stop abruptly → rebound symptoms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= INTRACRANIAL SECTION ======= -->
+<div id="sec-intracranial" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(244,63,94,0.12); border:1px solid rgba(244,63,94,0.3);">⛑️</div>
+    <div>
+      <h2 style="color:var(--accent-rose)">Intracranial Regulation</h2>
+      <p>ICP/TBI · Seizures/Epilepsy · Hemorrhagic Stroke</p>
+    </div>
+  </div>
+
+  <!-- ICP -->
+  <div class="card">
+    <div class="card-title">Increased ICP & TBI — Monro-Kellie Hypothesis <span class="badge badge-rose">Obj 1, 2</span></div>
+    <div class="info-box blue">
+      <div class="info-box-title">Monro-Kellie Doctrine</div>
+      The cranial vault has a <strong>fixed volume</strong>. The total volume of brain + CSF + blood = constant. If one component ↑, the others must ↓ to compensate. When compensation fails → ↑ ICP.
+    </div>
+    <div class="mk-visual">
+      <div class="mk-box brain"><span class="mk-val">80%</span><span class="mk-label">Brain Tissue</span></div>
+      <div class="mk-box eq">+</div>
+      <div class="mk-box csf"><span class="mk-val">10%</span><span class="mk-label">CSF</span></div>
+      <div class="mk-box eq">+</div>
+      <div class="mk-box blood"><span class="mk-val">10%</span><span class="mk-label">Blood</span></div>
+      <div class="mk-box eq">=<br><small style="font-size:11px">Fixed</small></div>
+    </div>
+    <div class="info-box amber">
+      <div class="info-box-title">Normal ICP</div>
+      Normal ICP = <strong>5–15 mmHg</strong>. ICP &gt;20 mmHg is abnormal. CPP (Cerebral Perfusion Pressure) = MAP − ICP. Target CPP: 60–70 mmHg.
+    </div>
+
+    <div class="two-col" style="margin-top:16px">
+      <div>
+        <div class="badge badge-amber" style="margin-bottom:12px">Early Signs of ↑ ICP</div>
+        <ul class="checklist">
+          <li><strong>Change in LOC</strong> — earliest and most sensitive sign</li>
+          <li>Headache (worse in morning)</li>
+          <li>Projectile vomiting (no nausea)</li>
+          <li>Visual changes (papilledema)</li>
+          <li>Behavioral changes / restlessness</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-rose" style="margin-bottom:12px">Cushing's Triad (LATE — CRITICAL)</div>
+        <ul class="checklist">
+          <li>🩺 <strong>Widened pulse pressure</strong> (↑ systolic, ↓ diastolic)</li>
+          <li>❤️ <strong>Bradycardia</strong></li>
+          <li>🫁 <strong>Irregular respirations</strong></li>
+          <li style="color:var(--accent-rose)"><strong>⚠ Cushing's Triad = Impending herniation — EMERGENCY</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GCS -->
+  <div class="card">
+    <div class="card-title">Glasgow Coma Scale (GCS) <span class="badge badge-blue">Obj 1, 2 — Assessment Tool</span></div>
+    <div class="gcs-grid">
+      <div class="gcs-col eye">
+        <div class="gcs-col-header">👁 Eye Opening (E)</div>
+        <div class="gcs-row"><span>Spontaneous</span><span class="gcs-score">4</span></div>
+        <div class="gcs-row"><span>To voice</span><span class="gcs-score">3</span></div>
+        <div class="gcs-row"><span>To pain</span><span class="gcs-score">2</span></div>
+        <div class="gcs-row"><span>None</span><span class="gcs-score">1</span></div>
+      </div>
+      <div class="gcs-col verbal">
+        <div class="gcs-col-header">🗣 Verbal (V)</div>
+        <div class="gcs-row"><span>Oriented</span><span class="gcs-score">5</span></div>
+        <div class="gcs-row"><span>Confused</span><span class="gcs-score">4</span></div>
+        <div class="gcs-row"><span>Words</span><span class="gcs-score">3</span></div>
+        <div class="gcs-row"><span>Sounds</span><span class="gcs-score">2</span></div>
+        <div class="gcs-row"><span>None</span><span class="gcs-score">1</span></div>
+      </div>
+      <div class="gcs-col motor">
+        <div class="gcs-col-header">✋ Motor (M)</div>
+        <div class="gcs-row"><span>Obeys commands</span><span class="gcs-score">6</span></div>
+        <div class="gcs-row"><span>Localizes</span><span class="gcs-score">5</span></div>
+        <div class="gcs-row"><span>Withdraws</span><span class="gcs-score">4</span></div>
+        <div class="gcs-row"><span>Flexion (decorticate)</span><span class="gcs-score">3</span></div>
+        <div class="gcs-row"><span>Extension (decerebrate)</span><span class="gcs-score">2</span></div>
+        <div class="gcs-row"><span>None</span><span class="gcs-score">1</span></div>
+      </div>
+    </div>
+    <div class="info-box rose" style="margin-top:16px">
+      <div class="info-box-title">⚠ Critical Thresholds</div>
+      • Total GCS range: <strong>3–15</strong> (3 = worst, 15 = normal)<br>
+      • GCS ≤ 8 → <span class="highlight-text">intubation typically indicated</span> ("8 = intubate!")<br>
+      • GCS &lt; 13 = significant brain injury
+    </div>
+  </div>
+
+  <!-- SEIZURES -->
+  <div class="card">
+    <div class="card-title">Seizure Disorders — Pathophysiology <span class="badge badge-amber">Obj 1, 2, 3</span></div>
+    <div class="info-box blue">
+      <div class="info-box-title">Etiology</div>
+      Abnormal, excessive, synchronous electrical discharges from neurons. Can be focal (one area) or generalized. Causes: head trauma, brain tumor, infection (meningitis), electrolyte imbalances, stroke, febrile illness.
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="badge badge-amber" style="margin-bottom:12px">During Seizure — Safety Priority</div>
+        <ul class="checklist">
+          <li>Do NOT restrain patient</li>
+          <li>Turn patient to <strong>side-lying position</strong> (prevent aspiration)</li>
+          <li>Padded side rails up</li>
+          <li>Suction at bedside</li>
+          <li>Time the seizure</li>
+          <li>Protect head from injury</li>
+          <li>Do NOT put anything in the mouth</li>
+          <li>Oxygen delivery PRN</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-rose" style="margin-bottom:12px">Status Epilepticus — EMERGENCY</div>
+        <ul class="checklist">
+          <li>Seizure lasting &gt;5 min OR back-to-back seizures</li>
+          <li><strong>Step 1:</strong> IV Benzodiazepine (lorazepam, diazepam) — immediate</li>
+          <li><strong>Step 2:</strong> IV Phenytoin / fosphenytoin — long-acting</li>
+          <li><strong>Step 3:</strong> General anesthesia if refractory</li>
+          <li>Protect airway — high aspiration risk</li>
+          <li>Monitor: O₂ sat, glucose, electrolytes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- STROKE -->
+  <div class="card">
+    <div class="card-title">Hemorrhagic Stroke <span class="badge badge-rose">Obj 1, 2</span></div>
+    <div class="info-box rose">
+      <div class="info-box-title">Etiology / Pathophysiology</div>
+      Rupture of a blood vessel → <strong>bleeding INTO brain tissue</strong> (intracerebral) or subarachnoid space. Causes: hypertension (most common), AVM, aneurysm, coagulopathy. Blood exerts direct pressure → ↑ ICP → ischemia to surrounding tissue.
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="badge badge-blue" style="margin-bottom:12px">Diagnosis</div>
+        <ul class="checklist">
+          <li><strong>Non-contrast CT scan</strong> — GOLD STANDARD (immediate)</li>
+          <li>Blood appears as hyperdense (white) on CT</li>
+          <li>Done BEFORE any treatment</li>
+          <li>MRI for detailed view (slower)</li>
+          <li>LP if subarachnoid suspected and CT negative</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-rose" style="margin-bottom:12px">⛔ Strict Contraindications</div>
+        <ul class="checklist">
+          <li><span class="text-rose"><strong>tPA (alteplase)</strong> — CONTRAINDICATED</span> (will worsen bleed)</li>
+          <li><span class="text-rose"><strong>Anticoagulants</strong> — CONTRAINDICATED</span> (heparin, warfarin)</li>
+          <li><span class="text-rose"><strong>Antiplatelets</strong> — CONTRAINDICATED</span></li>
+          <li>These are for ISCHEMIC stroke only!</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box amber" style="margin-top:14px">
+      <div class="info-box-title">🧠 Ischemic vs Hemorrhagic — The Key Distinction</div>
+      <strong>Ischemic</strong> → blocked vessel → tPA CAN be used (within 4.5 hr, no contraindications)<br>
+      <strong>Hemorrhagic</strong> → bleeding vessel → tPA ABSOLUTELY CONTRAINDICATED<br>
+      ALWAYS get CT FIRST to differentiate! You cannot clinically distinguish them.
+    </div>
+  </div>
+</div>
+
+<!-- ======= IC DRUGS SECTION ======= -->
+<div id="sec-drugs-ic" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3);">💊</div>
+    <div>
+      <h2 style="color:var(--accent-amber)">Intracranial Pharmacology</h2>
+      <p>Antiepileptics · ICP Drugs · Obj 3, 4, 5</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Mannitol (Osmitrol) <span class="badge badge-teal">Osmotic Diuretic</span></div>
+    <div class="two-col">
+      <div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Mechanism</div>
+          <div class="drug-detail-content">Osmotic diuretic → increases serum osmolality → draws water from brain tissue into vascular space → reduces cerebral edema and ↓ ICP.</div>
+        </div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Route</div>
+          <div class="drug-detail-content">IV infusion (use filter needle — crystals can form). Given as bolus or drip.</div>
+        </div>
+      </div>
+      <div>
+        <div class="drug-detail">
+          <div class="drug-detail-label">Evaluation — Monitor</div>
+          <div class="drug-detail-content">
+            <span class="warn-green">✓ Urine output (expect ↑ diuresis)</span><br>
+            <span class="warn-green">✓ Serum osmolality (goal 310–320)</span><br>
+            <span class="warn-green">✓ ICP improvement / neurological status</span><br>
+            <span class="warn-red">⚠ Electrolytes (risk of hyponatremia, hypokalemia)</span><br>
+            <span class="warn-red">⚠ Renal function (BUN/Creatinine)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drug-grid">
+    <div class="drug-card blue">
+      <div class="drug-name">Phenytoin (Dilantin)</div>
+      <div class="drug-class">Antiepileptic · Sodium Channel Blocker</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Mechanism</div>
+        <div class="drug-detail-content">Blocks voltage-gated sodium channels → stabilizes neuronal membranes → reduces rapid firing. Effective for tonic-clonic and focal seizures.</div>
+      </div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">📌 Teaching</div>
+        <div class="drug-detail-content">
+          • <strong>Good oral hygiene</strong> — prevents <span class="text-amber">gingival hyperplasia</span> (gum overgrowth)<br>
+          • Take with food (GI upset)<br>
+          • Do NOT crush/chew extended-release<br>
+          • Avoid abrupt discontinuation<br>
+          • Report rash, ataxia, nystagmus
+        </div>
+      </div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Side Effects</div>
+        <div class="drug-detail-content">
+          <span class="warn-amber">Nystagmus</span>
+          <span class="warn-amber">Ataxia</span>
+          <span class="warn-amber">Gingival hyperplasia</span>
+          <span class="warn-red">Cardiovascular toxicity (IV too fast)</span>
+          <span class="warn-amber">Hirsutism</span>
+          <span class="warn-red">Hepatotoxicity</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card green">
+      <div class="drug-name">Valproic Acid (Depakote)</div>
+      <div class="drug-class">Broad-Spectrum Antiepileptic</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Mechanism</div>
+        <div class="drug-detail-content">Increases GABA, blocks sodium and calcium channels. Broad spectrum — generalized and focal seizures, also used for migraines and bipolar.</div>
+      </div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">⚠ Key Monitoring</div>
+        <div class="drug-detail-content">
+          <span class="warn-red">🚨 Hepatotoxicity — monitor LFTs</span>
+          <span class="warn-red">🚨 Pancreatitis — monitor lipase/amylase</span>
+          <span class="warn-red">🚫 Teratogenic — Neural tube defects (Category D)</span>
+          <span class="warn-amber">Thrombocytopenia</span>
+          <span class="warn-amber">Weight gain</span>
+          <span class="warn-amber">Hair loss</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card rose">
+      <div class="drug-name">Lamotrigine (Lamictal)</div>
+      <div class="drug-class">Antiepileptic · Sodium Channel Blocker</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">⚠ CRITICAL Side Effect</div>
+        <div class="drug-detail-content">
+          <span class="warn-red">🚨 Stevens-Johnson Syndrome (SJS)</span><br>
+          Life-threatening skin rash. Educate patient to <strong>IMMEDIATELY REPORT any rash</strong>. Titrate dose slowly to reduce risk (especially with valproic acid).
+        </div>
+      </div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Other Side Effects</div>
+        <div class="drug-detail-content">
+          <span class="warn-amber">Dizziness</span>
+          <span class="warn-amber">Diplopia</span>
+          <span class="warn-amber">Headache</span>
+          <span class="warn-amber">Nausea</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card violet">
+      <div class="drug-name">Gabapentin (Neurontin)</div>
+      <div class="drug-class">Antiepileptic / Neuropathic Pain</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Teaching / Side Effects</div>
+        <div class="drug-detail-content">
+          <span class="warn-amber">Drowsiness, dizziness</span>
+          <span class="warn-amber">Ataxia</span>
+          <span class="warn-red">Avoid alcohol (↑ CNS depression)</span><br>
+          Do not drive until effects known. Do not abruptly stop. Renally excreted — dose adjust in renal impairment.
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card amber">
+      <div class="drug-name">Carbamazepine (Tegretol)</div>
+      <div class="drug-class">Antiepileptic · Sodium Channel Blocker</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Key Concerns</div>
+        <div class="drug-detail-content">
+          <span class="warn-red">🚨 Agranulocytosis — monitor CBC</span>
+          <span class="warn-red">🚨 Aplastic anemia</span>
+          <span class="warn-red">SJS risk (especially HLA-B*1502 in Asian populations)</span>
+          <span class="warn-amber">Induces CYP450 — many drug interactions</span>
+          <span class="warn-amber">Hyponatremia (SIADH-like)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card blue">
+      <div class="drug-name">Pregabalin (Lyrica)</div>
+      <div class="drug-class">Antiepileptic / Neuropathic Pain</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Side Effects</div>
+        <div class="drug-detail-content">
+          <span class="warn-amber">Dizziness, drowsiness</span>
+          <span class="warn-amber">Weight gain</span>
+          <span class="warn-amber">Peripheral edema</span>
+          <span class="warn-red">Blurred vision</span>
+          Schedule V controlled substance — abuse potential.
+        </div>
+      </div>
+    </div>
+
+    <div class="drug-card rose">
+      <div class="drug-name">Topiramate (Topamax)</div>
+      <div class="drug-class">Broad-Spectrum Antiepileptic</div>
+      <div class="drug-detail">
+        <div class="drug-detail-label">Teaching / Side Effects</div>
+        <div class="drug-detail-content">
+          <span class="warn-red">🚨 Kidney stones — drink plenty of fluids!</span>
+          <span class="warn-amber">Cognitive dulling ("Dopamax")</span>
+          <span class="warn-amber">Word-finding difficulties</span>
+          <span class="warn-amber">Weight loss</span>
+          <span class="warn-red">Angle-closure glaucoma</span>
+          <span class="warn-red">Metabolic acidosis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= CASE STUDIES SECTION ======= -->
+<div id="sec-casestudy" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3);">📋</div>
+    <div>
+      <h2 style="color:var(--accent-green)">Case Studies</h2>
+      <p>Blueprint-focused scenarios with clinical priorities</p>
+    </div>
+  </div>
+
+  <!-- Parkinson's Case Study -->
+  <div class="card">
+    <div class="card-title">🧩 Parkinson's Disease — Complex Patient <span class="badge badge-green">Blueprint Priority</span></div>
+    <div class="info-box teal">
+      <div class="info-box-title">Scenario</div>
+      A patient with Parkinson's disease on Carbidopa-Levodopa and Benztropine is presenting with confusion, elevated blood glucose, and decreased urine output. You need to differentiate symptoms and manage complications.
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="badge badge-teal" style="margin-bottom:12px">PD Signs & Symptoms to Recognize</div>
+        <ul class="checklist">
+          <li>Resting tremor (pill-rolling)</li>
+          <li>Cogwheel rigidity</li>
+          <li>Bradykinesia / akinesia</li>
+          <li>Shuffling gait, festination</li>
+          <li>Postural instability, falls risk</li>
+          <li>Masked facies (flat expression)</li>
+          <li>Micrographia</li>
+          <li>Dysarthria, dysphagia</li>
+          <li>Non-motor: depression, constipation, autonomic dysfunction</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-amber" style="margin-bottom:12px">Differentiating PD vs AD vs Delirium</div>
+        <ul class="checklist">
+          <li><strong>PD:</strong> Motor symptoms + LOC preserved</li>
+          <li><strong>AD:</strong> Memory loss, aphasia, executive dysfunction</li>
+          <li><strong>Delirium:</strong> ACUTE onset, fluctuating LOC, reversible cause</li>
+          <li>A PD patient can develop delirium (new acute confusion) AND can have dementia (Lewy body)</li>
+          <li>Key: Is the confusion NEW and ACUTE? → Think delirium first</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="badge badge-rose" style="margin-bottom:12px">Complications + Medications to Manage</div>
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Complication</th><th>Cause in PD</th><th>Labs to Monitor</th><th>Management</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Constipation</td>
+            <td>Anticholinergic drugs (benztropine), decreased mobility, PD autonomic dysfunction</td>
+            <td>No specific lab; clinical assessment</td>
+            <td>Bulk-forming laxatives, hydration, dietary fiber, stool softeners; reduce anticholinergic load</td>
+          </tr>
+          <tr>
+            <td>Dehydration</td>
+            <td>Dysphagia → decreased PO intake, diaphoresis, constipation</td>
+            <td><strong>↑ BUN, ↑ Creatinine, ↑ BUN:Creatinine ratio</strong>, ↑ Urine specific gravity, ↑ Hct</td>
+            <td>IV fluids, thickened liquids if dysphagia, encourage PO intake; assess for aspiration</td>
+          </tr>
+          <tr>
+            <td>Hyperglycemia</td>
+            <td>Stress response, reduced activity, medications</td>
+            <td><strong>↑ Blood glucose (fasting &gt;126, random &gt;200)</strong>, ↑ HbA1c, ↑ serum glucose</td>
+            <td>Monitor glucose, insulin as needed, dietary management, assess for DM development</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box amber" style="margin-top:16px">
+      <div class="info-box-title">🩺 Benztropine + Carbidopa-Levodopa Side Effect Alert</div>
+      <strong>Benztropine SE:</strong> Dry mouth, urinary retention, constipation, confusion (anticholinergic toxicity)<br>
+      <strong>Carbidopa-Levodopa SE:</strong> Dyskinesia, on-off phenomenon, orthostatic hypotension, dark urine/sweat (harmless), hallucinations<br>
+      Combined: HIGH constipation risk and orthostatic hypotension risk → fall precautions!
+    </div>
+  </div>
+
+  <!-- Hemorrhagic Stroke Case Study -->
+  <div class="card">
+    <div class="card-title">🧠 Hemorrhagic Stroke — Case Study <span class="badge badge-rose">Blueprint Priority</span></div>
+    <div class="info-box rose">
+      <div class="info-box-title">Scenario</div>
+      A 68-year-old hypertensive patient presents with sudden severe headache ("worst headache of my life"), vomiting, nuchal rigidity, and rapid LOC decline. CT scan shows hyperdense area in subarachnoid space.
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="badge badge-blue" style="margin-bottom:12px">Pathophysiology Steps</div>
+        <ul class="checklist">
+          <li>Rupture of blood vessel (aneurysm or AVM)</li>
+          <li>Blood accumulates → direct compression of brain tissue</li>
+          <li>↑ ICP from expanding hematoma</li>
+          <li>Vasospasm → secondary ischemia (3–14 days post-SAH)</li>
+          <li>Cerebral edema worsens → herniation risk</li>
+        </ul>
+      </div>
+      <div>
+        <div class="badge badge-teal" style="margin-bottom:12px">Nursing Assessment / Evaluation</div>
+        <ul class="checklist">
+          <li>Frequent neuro checks (GCS, pupils, motor)</li>
+          <li>Blood pressure management (avoid extreme highs/lows)</li>
+          <li>ICP monitoring (if device in place)</li>
+          <li>CBC, BMP, PT/INR, PTT — coagulation studies</li>
+          <li>CT scan interpretation: blood = bright white (hyperdense)</li>
+          <li>Fall precautions, seizure precautions</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box rose" style="margin-top:14px">
+      <div class="info-box-title">⚠ Treatment — What is CONTRAINDICATED and WHY</div>
+      <strong>tPA (thrombolytic)</strong> → Dissolves clots → WOULD DRAMATICALLY WORSEN BLEEDING → <strong class="text-rose">ABSOLUTELY CONTRAINDICATED</strong><br>
+      <strong>Anticoagulants (heparin, warfarin)</strong> → Prevent clot formation → WOULD WORSEN BLEEDING → <strong class="text-rose">CONTRAINDICATED</strong><br>
+      <strong>Antiplatelets (aspirin, clopidogrel)</strong> → Decrease platelet aggregation → WORSEN BLEEDING → <strong class="text-rose">CONTRAINDICATED</strong><br><br>
+      Treatment instead: Surgical intervention (clipping, coiling), BP control, mannitol for ICP, nimodipine (prevent vasospasm in SAH), supportive care.
+    </div>
+  </div>
+</div>
+
+<!-- ======= CALCULATIONS SECTION ======= -->
+<div id="sec-calc" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3);">🔢</div>
+    <div>
+      <h2 style="color:var(--accent-teal)">Dosage Calculations</h2>
+      <p>IV Pump Rate & Manual Drip Rate Calculators</p>
+    </div>
+  </div>
+
+  <div class="calc-box">
+    <div class="calc-title">💉 IV Pump Rate Calculator <span class="badge badge-teal">mL/hr</span></div>
+    <div class="info-box blue">
+      <div class="info-box-title">Formula</div>
+      <code style="font-family:'DM Mono',monospace;font-size:15px;">Rate (mL/hr) = Total Volume (mL) ÷ Time (hr)</code>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Total Volume (mL)</label>
+        <input type="number" id="iv-vol" placeholder="e.g. 500" oninput="calcIV()">
+      </div>
+      <div class="calc-field">
+        <label>Time (hours)</label>
+        <input type="number" id="iv-time" placeholder="e.g. 8" oninput="calcIV()">
+      </div>
+    </div>
+    <div class="calc-result" id="iv-result"></div>
+  </div>
+
+  <div class="calc-box">
+    <div class="calc-title">💧 Manual Drip Rate Calculator <span class="badge badge-amber">gtts/min</span></div>
+    <div class="info-box amber">
+      <div class="info-box-title">Formula</div>
+      <code style="font-family:'DM Mono',monospace;font-size:14px;">Rate (gtts/min) = [Total Volume (mL) ÷ Time (min)] × Drop Factor (gtts/mL)</code>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Total Volume (mL)</label>
+        <input type="number" id="drip-vol" placeholder="e.g. 250" oninput="calcDrip()">
+      </div>
+      <div class="calc-field">
+        <label>Time (minutes)</label>
+        <input type="number" id="drip-time" placeholder="e.g. 60" oninput="calcDrip()">
+      </div>
+      <div class="calc-field">
+        <label>Drop Factor (gtts/mL)</label>
+        <input type="number" id="drip-factor" placeholder="e.g. 15" oninput="calcDrip()">
+      </div>
+    </div>
+    <div class="calc-result" id="drip-result"></div>
+    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">
+      Common Drop Factors: Macrodrip = 10, 15, or 20 gtts/mL | Microdrip = 60 gtts/mL
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Practice Problems</div>
+    <div id="practice-problems"></div>
+  </div>
+</div>
+
+<!-- ======= FLASHCARDS SECTION ======= -->
+<div id="sec-flashcards" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,142,247,0.12); border:1px solid rgba(79,142,247,0.3);">🃏</div>
+    <div>
+      <h2 style="color:var(--accent-blue)">Flashcards</h2>
+      <p>Click card to flip · Use arrows to navigate</p>
+    </div>
+  </div>
+
+  <div class="filter-group" id="fc-filters"></div>
+  <div class="fc-counter" id="fc-counter"></div>
+
+  <div class="flashcard-wrapper" onclick="flipCard()">
+    <div class="flashcard-inner" id="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <div class="flashcard-q" id="fc-q"></div>
+        <div class="flashcard-hint">Click to reveal answer</div>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <div class="flashcard-a" id="fc-a"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-controls">
+    <button class="btn" onclick="prevCard()">← Prev</button>
+    <button class="btn" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="btn" onclick="nextCard()">Next →</button>
+  </div>
+</div>
+
+<!-- ======= QUIZ SECTION ======= -->
+<div id="sec-quiz" class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3);">✏️</div>
+    <div>
+      <h2 style="color:var(--accent-amber)">Practice Quiz</h2>
+      <p>NCLEX-style questions aligned with the exam blueprint</p>
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="quiz-progress" style="width:0%"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-score" id="quiz-score-display"></div>
+    <div class="quiz-q" id="quiz-question"></div>
+    <div class="quiz-options" id="quiz-options"></div>
+    <div class="quiz-explanation" id="quiz-explanation"></div>
+    <div class="quiz-nav">
+      <div class="quiz-score" id="quiz-tracker"></div>
+      <button class="btn primary" id="quiz-next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// =================== NAVIGATION ===================
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+// =================== CALCULATIONS ===================
+function calcIV() {
+  const vol = parseFloat(document.getElementById('iv-vol').value);
+  const time = parseFloat(document.getElementById('iv-time').value);
+  const result = document.getElementById('iv-result');
+  if (vol && time && time > 0) {
+    const rate = (vol / time).toFixed(2);
+    result.innerHTML = `✓ IV Rate = ${vol} mL ÷ ${time} hr = <strong>${rate} mL/hr</strong>`;
+    result.classList.add('visible');
+  } else {
+    result.classList.remove('visible');
+  }
+}
+
+function calcDrip() {
+  const vol = parseFloat(document.getElementById('drip-vol').value);
+  const time = parseFloat(document.getElementById('drip-time').value);
+  const factor = parseFloat(document.getElementById('drip-factor').value);
+  const result = document.getElementById('drip-result');
+  if (vol && time && factor && time > 0) {
+    const rate = ((vol / time) * factor).toFixed(0);
+    result.innerHTML = `✓ Drip Rate = (${vol} ÷ ${time}) × ${factor} = <strong>${rate} gtts/min</strong>`;
+    result.classList.add('visible');
+  } else {
+    result.classList.remove('visible');
+  }
+}
+
+// Practice problems
+const practiceProbs = [
+  { q: "Ordered: 1000 mL NS over 8 hours via IV pump. What is the rate?", a: "1000 ÷ 8 = 125 mL/hr", type: "IV" },
+  { q: "Ordered: 500 mL D5W over 4 hours via IV pump. What is the rate?", a: "500 ÷ 4 = 125 mL/hr", type: "IV" },
+  { q: "Infuse 250 mL over 30 minutes with a 15 gtts/mL drop factor. Drip rate?", a: "(250 ÷ 30) × 15 = 125 gtts/min", type: "Drip" },
+  { q: "Infuse 100 mL over 60 minutes with a 20 gtts/mL drop factor. Drip rate?", a: "(100 ÷ 60) × 20 = 33 gtts/min", type: "Drip" },
+  { q: "Mannitol 250 mL infused over 30 min. IV pump rate?", a: "250 ÷ 0.5 hr = 500 mL/hr", type: "IV" },
+];
+
+const probDiv = document.getElementById('practice-problems');
+practiceProbs.forEach((p, i) => {
+  probDiv.innerHTML += `
+    <div style="padding: 14px 0; border-bottom: 1px solid var(--border);">
+      <div style="font-size:14px;margin-bottom:8px;line-height:1.6"><span class="badge badge-${p.type==='IV'?'teal':'amber'}">${p.type}</span> &nbsp;${p.q}</div>
+      <button class="btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'" style="font-size:11px;padding:6px 14px">Show Answer</button>
+      <div style="display:none;font-family:'DM Mono',monospace;font-size:14px;color:var(--accent-green);margin-top:8px">→ ${p.a}</div>
+    </div>
+  `;
+});
+
+// =================== FLASHCARDS ===================
+const allFlashcards = [
+  { q: "What is the hallmark pathological finding of Alzheimer's Disease?", a: "Beta-amyloid plaques (outside neurons) + Neurofibrillary tangles from tau protein (inside neurons). Both lead to ACh deficit and progressive neuronal death.", cat: "AD" },
+  { q: "What is the key differentiator between Delirium and Dementia?", a: "ONSET. Delirium = sudden/acute onset with fluctuating LOC. Dementia = gradual, chronic, progressive onset. Delirium is often reversible; dementia is not.", cat: "Delirium" },
+  { q: "Name the TRAP mnemonic for Parkinson's Disease.", a: "T = Tremor (resting, pill-rolling)\nR = Rigidity (cogwheel)\nA = Akinesia/Bradykinesia\nP = Postural Instability → falls risk", cat: "PD" },
+  { q: "What is the mechanism of action of Levodopa/Carbidopa?", a: "Levodopa crosses the BBB → converted to dopamine in CNS. Carbidopa inhibits peripheral decarboxylase → prevents premature conversion in bloodstream → more levodopa reaches the brain.", cat: "PD Drugs" },
+  { q: "What dietary teaching is critical for patients on Levodopa?", a: "Avoid high-protein meals. Amino acids compete with levodopa for transport across the BBB, decreasing drug absorption and effectiveness.", cat: "PD Drugs" },
+  { q: "What is Cushing's Triad and what does it indicate?", a: "1) Widened pulse pressure (↑ systolic, ↓ diastolic)\n2) Bradycardia\n3) Irregular respirations\n→ Indicates impending brain herniation from severe ↑ ICP — EMERGENCY", cat: "ICP" },
+  { q: "At what GCS score is intubation typically indicated?", a: "GCS ≤ 8. Remember: '8, intubate!'. This indicates severe brain injury and inability to protect the airway.", cat: "ICP" },
+  { q: "What is the Monro-Kellie Hypothesis?", a: "The cranial vault has a fixed volume. Brain + CSF + blood = constant. If one component increases, others must compensate. When compensation fails → ↑ ICP.", cat: "ICP" },
+  { q: "What are the FIRST-LINE treatments for Status Epilepticus?", a: "Step 1: IV Benzodiazepine (lorazepam/diazepam) — immediate seizure termination\nStep 2: IV Phenytoin/Fosphenytoin — long-acting maintenance\nStep 3: General anesthesia if refractory", cat: "Seizures" },
+  { q: "Why is tPA contraindicated in hemorrhagic stroke?", a: "tPA is a thrombolytic — it dissolves clots. In hemorrhagic stroke, the problem is BLEEDING not a clot. tPA would dramatically worsen the hemorrhage and increase mortality.", cat: "Stroke" },
+  { q: "What is the gold standard diagnostic test for hemorrhagic stroke?", a: "Non-contrast CT scan of the head. Blood appears hyperdense (bright white) on CT. Must be done BEFORE any treatment to differentiate hemorrhagic from ischemic stroke.", cat: "Stroke" },
+  { q: "What is a major side effect of Donepezil that requires nursing monitoring?", a: "Bradycardia (and other cardiac effects including AV block). Monitor heart rate and assess for other cholinergic symptoms: nausea, diarrhea, muscle cramps, insomnia.", cat: "AD Drugs" },
+  { q: "What is the key teaching for Rivastigmine transdermal patch administration?", a: "Rotate sites daily. Do NOT apply to same site for 14 days. Remove old patch before applying new one. Apply to upper arm, chest, or upper back. Dispose carefully (drug remains in patch).", cat: "AD Drugs" },
+  { q: "What are the contraindications for Galantamine?", a: "Severe hepatic impairment AND severe renal impairment (renally excreted). Dose adjustments needed for mild-moderate impairment.", cat: "AD Drugs" },
+  { q: "What CRITICAL side effect of Lamotrigine must patients report immediately?", a: "Stevens-Johnson Syndrome (SJS) — a life-threatening mucocutaneous skin reaction. ANY rash must be immediately reported. Titrate dose slowly (especially when combined with valproic acid) to reduce risk.", cat: "Seizure Drugs" },
+  { q: "What labs must be monitored with Valproic Acid and why?", a: "LFTs (risk of hepatotoxicity) and lipase/amylase (risk of pancreatitis). Also platelets (thrombocytopenia). Teratogenic — Category D, causes neural tube defects.", cat: "Seizure Drugs" },
+  { q: "What is Mannitol's mechanism and what parameters should be evaluated?", a: "Osmotic diuretic → increases serum osmolality → draws water from brain → ↓ cerebral edema → ↓ ICP. Monitor: urine output, serum osmolality (goal 310-320), ICP, electrolytes, and renal function.", cat: "ICP Drugs" },
+  { q: "What are the classic anticholinergic side effects of Benztropine?", a: "Dry mouth, blurred vision, urinary retention, constipation, confusion, tachycardia. Remember: 'Dry as a bone, blind as a bat, red as a beet, mad as a hatter, hot as a hare'", cat: "PD Drugs" },
+  { q: "What should nurses monitor for with Pramipexole (Mirapex)?", a: "1) Sudden sleep attacks — warn patient not to drive\n2) Compulsive behaviors: gambling, hypersexuality, binge eating\n3) Orthostatic hypotension\n4) Hallucinations", cat: "PD Drugs" },
+  { q: "What are the Selegiline drug interactions to teach the patient?", a: "1) Tyramine-rich foods → hypertensive crisis (aged cheese, cured meats, wine)\n2) SSRIs/SNRIs → serotonin syndrome\n3) Meperidine (Demerol) → ABSOLUTELY CONTRAINDICATED (risk of fatal interaction)", cat: "PD Drugs" },
+  { q: "Name the earliest sign of increased ICP.", a: "Change in Level of Consciousness (LOC). This is the earliest and most sensitive indicator. Any behavioral change, restlessness, or subtle mental status change must be taken seriously.", cat: "ICP" },
+  { q: "What is the key seizure safety nursing intervention during an active seizure?", a: "Turn patient to SIDE-LYING position (prevent aspiration). Do NOT restrain. Do NOT put anything in mouth. Protect head, note seizure time and characteristics, ensure suction available, raise padded side rails.", cat: "Seizures" },
+  { q: "What oral hygiene teaching is required for patients on Phenytoin?", a: "Meticulous oral hygiene and regular dental visits to prevent gingival hyperplasia (gum overgrowth) — a well-known side effect of long-term phenytoin use.", cat: "Seizure Drugs" },
+  { q: "What are the Topiramate teachings a nurse should provide?", a: "1) Drink PLENTY of fluids — prevents kidney stones\n2) Report visual changes (angle-closure glaucoma)\n3) Cognitive dulling ('Dopamax') and word-finding difficulties are common\n4) Weight loss expected\n5) Do not abruptly stop", cat: "Seizure Drugs" },
+  { q: "What labs indicate dehydration in a Parkinson's patient?", a: "↑ BUN, ↑ Creatinine, ↑ BUN:Creatinine ratio (>20:1), ↑ Urine specific gravity (>1.030), ↑ Hematocrit, ↑ Serum sodium (hypernatremia). Caused by dysphagia and decreased PO intake.", cat: "Case Study" },
+];
+
+let currentCards = [...allFlashcards];
+let currentCardIndex = 0;
+let activeCategories = [];
+
+// Build filter buttons
+const cats = [...new Set(allFlashcards.map(c => c.cat))];
+const filterDiv = document.getElementById('fc-filters');
+const allBtn = document.createElement('button');
+allBtn.className = 'filter-btn active';
+allBtn.textContent = 'All';
+allBtn.onclick = () => filterCards('all', allBtn);
+filterDiv.appendChild(allBtn);
+
+cats.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.textContent = cat;
+  btn.onclick = () => filterCards(cat, btn);
+  filterDiv.appendChild(btn);
+});
+
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (cat === 'all') {
+    currentCards = [...allFlashcards];
+  } else {
+    currentCards = allFlashcards.filter(c => c.cat === cat);
+  }
+  currentCardIndex = 0;
+  renderCard();
+}
+
+function renderCard() {
+  if (currentCards.length === 0) return;
+  const card = currentCards[currentCardIndex];
+  document.getElementById('fc-q').textContent = card.q;
+  document.getElementById('fc-a').innerHTML = card.a.replace(/\n/g, '<br>');
+  document.getElementById('fc-counter').textContent = `Card ${currentCardIndex + 1} of ${currentCards.length} · ${card.cat}`;
+  document.getElementById('flashcard-inner').classList.remove('flipped');
+}
+
+function flipCard() {
+  document.getElementById('flashcard-inner').classList.toggle('flipped');
+}
+
+function nextCard() {
+  currentCardIndex = (currentCardIndex + 1) % currentCards.length;
+  renderCard();
+}
+
+function prevCard() {
+  currentCardIndex = (currentCardIndex - 1 + currentCards.length) % currentCards.length;
+  renderCard();
+}
+
+function shuffleCards() {
+  for (let i = currentCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [currentCards[i], currentCards[j]] = [currentCards[j], currentCards[i]];
+  }
+  currentCardIndex = 0;
+  renderCard();
+}
+
+renderCard();
+
+// =================== QUIZ ===================
+const quizData = [
+  {
+    q: "A nurse is caring for an elderly patient who was oriented yesterday but is now confused, agitated, and pulling at their IV line. Vital signs show a temperature of 38.9°C. The MOST likely cause of this presentation is:",
+    opts: ["Alzheimer's Disease progression", "Delirium secondary to infection", "Parkinson's Disease dementia", "Stroke"],
+    correct: 1,
+    explanation: "The ACUTE onset (was oriented yesterday), elevated temperature, and behavioral change are classic for DELIRIUM — specifically from an underlying infection. Alzheimer's and Parkinson's dementia have gradual onset. Delirium is the priority."
+  },
+  {
+    q: "A patient receiving Carbidopa-Levodopa (Sinemet) tells the nurse, 'My sweat has turned dark and my urine is almost black — is this normal?' The nurse's BEST response is:",
+    opts: ["'This indicates liver damage — stop the medication immediately.'", "'Dark discoloration of urine and sweat is a harmless side effect of this medication.'", "'You need to go to the ER — this could be internal bleeding.'", "'Reduce your protein intake to prevent this from worsening.'"],
+    correct: 1,
+    explanation: "Dark urine and sweat are EXPECTED, HARMLESS side effects of Levodopa. Reassure the patient this is not dangerous. Do not stop the medication. This is a common exam question — don't confuse it with hematuria!"
+  },
+  {
+    q: "A patient with Parkinson's Disease is started on Benztropine. Which assessment finding requires IMMEDIATE nursing action?",
+    opts: ["Complaints of dry mouth", "Inability to void despite strong urge for 4 hours", "Report of constipation for 2 days", "Blurred vision when reading"],
+    correct: 1,
+    explanation: "Urinary RETENTION is an anticholinergic side effect of Benztropine that can become a medical emergency (bladder distension, kidney damage). Inability to void for 4 hours requires IMMEDIATE intervention. Dry mouth, constipation, and blurred vision are expected but less urgent."
+  },
+  {
+    q: "Which assessment finding represents a LATE sign of increased intracranial pressure (ICP)?",
+    opts: ["Restlessness and mild agitation", "Complaint of a worsening headache", "Bradycardia with widened pulse pressure and irregular respirations", "Decreased level of consciousness"],
+    correct: 2,
+    explanation: "Cushing's Triad (bradycardia + widened pulse pressure + irregular respirations) is a LATE sign indicating impending herniation — a critical emergency. Change in LOC is the EARLIEST sign. Headache and restlessness are early manifestations."
+  },
+  {
+    q: "A patient is admitted with a hemorrhagic stroke. The physician orders tPA (alteplase). The nurse's PRIORITY action is to:",
+    opts: ["Administer the medication immediately per order", "Confirm the diagnosis with a repeat CT scan first", "Question the order — tPA is contraindicated in hemorrhagic stroke", "Administer half the ordered dose and reassess"],
+    correct: 2,
+    explanation: "tPA is ABSOLUTELY CONTRAINDICATED in hemorrhagic stroke — it would worsen the bleeding and could be fatal. The nurse must question and hold this order. tPA is only for ISCHEMIC stroke (within 4.5 hours, without contraindications)."
+  },
+  {
+    q: "A patient with Alzheimer's Disease is being started on Rivastigmine. Which patient teaching is MOST important regarding the transdermal patch?",
+    opts: ["Apply a new patch to the same site if the old one falls off", "Remove the old patch before applying the new one, and rotate sites every 14 days", "Apply the patch to the same location daily for consistent absorption", "Cut the patch in half if the dose seems too strong"],
+    correct: 1,
+    explanation: "Critical teaching: ALWAYS remove old patch first, then ROTATE sites — do NOT use the same site for 14 days. Apply to intact, clean, dry skin (upper arm, back, chest). Never cut patches."
+  },
+  {
+    q: "Status epilepticus is occurring. What is the nurse's FIRST pharmacological intervention?",
+    opts: ["IV Phenytoin (Dilantin)", "IV Benzodiazepine (Lorazepam)", "IV Mannitol", "IM Haloperidol"],
+    correct: 1,
+    explanation: "IV Benzodiazepine (lorazepam or diazepam) is FIRST-LINE for status epilepticus — immediate seizure termination. IV Phenytoin follows as long-acting anticonvulsant. Mannitol treats ↑ ICP. Haloperidol is an antipsychotic."
+  },
+  {
+    q: "A patient taking Lamotrigine (Lamictal) calls the advice line reporting 'a new rash on my arms.' The nurse should advise the patient to:",
+    opts: ["Apply hydrocortisone cream and follow up at next scheduled appointment", "Take an antihistamine and monitor for 48 hours", "Stop taking the medication and go to the emergency room immediately", "Continue the medication — rash is a minor expected side effect"],
+    correct: 2,
+    explanation: "ANY rash on Lamotrigine is a MEDICAL EMERGENCY until ruled out — Stevens-Johnson Syndrome (SJS) is life-threatening. STOP the drug and seek EMERGENCY care immediately. Never dismiss or delay evaluation of rash in a patient on Lamotrigine."
+  },
+  {
+    q: "What is the MOST important dietary instruction for a patient taking Selegiline (Eldepryl)?",
+    opts: ["Increase protein intake for medication absorption", "Avoid tyramine-rich foods such as aged cheese, cured meats, and wine", "Take the medication on an empty stomach only", "Eat high-carbohydrate meals to improve drug effectiveness"],
+    correct: 1,
+    explanation: "Selegiline is an MAO-B inhibitor. Tyramine-rich foods combined with MAO inhibitors can cause HYPERTENSIVE CRISIS — a potentially fatal emergency. Foods to avoid: aged cheese, cured/smoked meats, red wine, fermented products."
+  },
+  {
+    q: "When evaluating the effectiveness of Mannitol in a patient with elevated ICP from a TBI, the nurse should monitor for which PRIORITY outcome?",
+    opts: ["Decreased urine output and increased blood pressure", "Improved level of consciousness and increased urine output", "Weight gain and improved skin turgor", "Decreased serum osmolality"],
+    correct: 1,
+    explanation: "Mannitol effectiveness = ↑ urine output (osmotic diuresis occurring → fluid being pulled from brain) + improvement in neurological status/LOC. Serum osmolality should INCREASE (goal 310-320). Decreased UO or weight gain would indicate the drug is NOT working."
+  },
+  {
+    q: "A nurse is assessing a Parkinson's patient on Carbidopa-Levodopa and Benztropine who also has not had a bowel movement in 5 days. What is the PRIMARY cause of this complication?",
+    opts: ["Increased dopamine levels causing gut hypermotility", "Anticholinergic effects of Benztropine causing decreased gut motility", "Levodopa-induced vitamin B12 deficiency", "PD-induced excessive serotonin production"],
+    correct: 1,
+    explanation: "Benztropine (anticholinergic) decreases smooth muscle motility → constipation. Additionally, PD itself involves autonomic dysfunction affecting the GI tract, and reduced physical activity worsens it. Increased fluid and fiber intake, and possibly dose adjustment, are indicated."
+  },
+  {
+    q: "A GCS score of 8 is calculated for a trauma patient. The nurse anticipates which intervention?",
+    opts: ["Reassess in 1 hour and document findings", "Prepare patient for intubation", "Administer IV Mannitol and monitor ICP", "Request palliative care consultation"],
+    correct: 1,
+    explanation: "'8, intubate!' GCS ≤ 8 indicates severe neurological impairment with inability to protect the airway. Intubation is the priority to secure the airway and provide mechanical ventilation. This is a standard clinical principle."
+  },
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function renderQuiz() {
+  const q = quizData[currentQ];
+  document.getElementById('quiz-question').textContent = q.q;
+  document.getElementById('quiz-tracker').textContent = `Question ${currentQ + 1} of ${quizData.length}`;
+  document.getElementById('quiz-score-display').textContent = `Score: ${score}/${currentQ} correct`;
+  document.getElementById('quiz-progress').style.width = ((currentQ / quizData.length) * 100) + '%';
+  document.getElementById('quiz-explanation').style.display = 'none';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  answered = false;
+
+  const optDiv = document.getElementById('quiz-options');
+  optDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = `${String.fromCharCode(65+i)}. ${opt}`;
+    btn.onclick = () => selectAnswer(i, btn);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(index, btn) {
+  if (answered) return;
+  answered = true;
+  const q = quizData[currentQ];
+  const opts = document.querySelectorAll('.quiz-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  if (index === q.correct) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    opts[q.correct].classList.add('correct');
+  }
+
+  const expDiv = document.getElementById('quiz-explanation');
+  expDiv.innerHTML = `<strong>Rationale:</strong> ${q.explanation}`;
+  expDiv.style.display = 'block';
+
+  document.getElementById('quiz-score-display').textContent = `Score: ${score}/${currentQ + 1} correct`;
+
+  if (currentQ < quizData.length - 1) {
+    document.getElementById('quiz-next-btn').style.display = 'block';
+  } else {
+    document.getElementById('quiz-next-btn').textContent = '🎉 See Final Score';
+    document.getElementById('quiz-next-btn').style.display = 'block';
+    document.getElementById('quiz-next-btn').onclick = showFinalScore;
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  renderQuiz();
+}
+
+function showFinalScore() {
+  const pct = Math.round((score / quizData.length) * 100);
+  let grade = pct >= 90 ? '🏆 Excellent!' : pct >= 80 ? '✅ Good job!' : pct >= 70 ? '📚 Keep studying!' : '💪 Review the material!';
+  document.querySelector('.quiz-card').innerHTML = `
+    <div style="text-align:center;padding:30px 0">
+      <div style="font-size:4rem;margin-bottom:16px">${pct >= 80 ? '🎉' : '📚'}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent-teal);margin-bottom:8px">${score}/${quizData.length}</div>
+      <div style="font-size:1.5rem;margin-bottom:8px;color:var(--accent-amber)">${pct}%</div>
+      <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--text-muted);margin-bottom:28px">${grade}</div>
+      <button class="btn primary" onclick="resetQuiz()">🔄 Retake Quiz</button>
+    </div>
+  `;
+  document.getElementById('quiz-progress').style.width = '100%';
+}
+
+function resetQuiz() {
+  currentQ = 0;
+  score = 0;
+  answered = false;
+  document.querySelector('.quiz-card').innerHTML = `
+    <div class="quiz-score" id="quiz-score-display"></div>
+    <div class="quiz-q" id="quiz-question"></div>
+    <div class="quiz-options" id="quiz-options"></div>
+    <div class="quiz-explanation" id="quiz-explanation"></div>
+    <div class="quiz-nav">
+      <div class="quiz-score" id="quiz-tracker"></div>
+      <button class="btn primary" id="quiz-next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    </div>
+  `;
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
