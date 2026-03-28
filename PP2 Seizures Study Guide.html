@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pathopharm: Cognition Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #fdf4ff;
+  --bg2:      #f3e8ff;
+  --bg3:      #fce7f3;
+  --surface:  #ffffff;
+  --surface2: rgba(255,255,255,0.82);
+  --border:   rgba(168,85,247,0.16);
+  --border2:  rgba(232,88,154,0.16);
+  --purple:   #7c3aed;
+  --purple2:  #9333ea;
+  --purple3:  #a855f7;
+  --pink:     #db2777;
+  --pink2:    #ec4899;
+  --pink3:    #f9a8d4;
+  --lavender: #c4b5fd;
+  --white:    #ffffff;
+  --text:     #18062e;
+  --text2:    #581c87;
+  --text3:    #7e22ce;
+  --muted:    #a78bca;
+  --muted2:   #c084fc;
+  --red:      #dc2626;
+  --red2:     #ef4444;
+  --green:    #16a34a;
+  --green2:   #22c55e;
+  --orange:   #ea580c;
+  --orange2:  #f97316;
+  --teal:     #0369a1;
+  --teal2:    #0ea5e9;
+  --amber:    #d97706;
+  --card-shadow: 0 2px 20px rgba(124,58,237,0.08), 0 1px 4px rgba(124,58,237,0.04);
+  --card-shadow-hover: 0 8px 40px rgba(124,58,237,0.18), 0 2px 8px rgba(124,58,237,0.08);
+  --glow: 0 0 50px rgba(168,85,247,0.18);
+}
+[data-dark] {
+  --bg:       #09040f;
+  --bg2:      #120820;
+  --bg3:      #150a22;
+  --surface:  #1a0d2e;
+  --surface2: rgba(26,13,46,0.92);
+  --border:   rgba(168,85,247,0.20);
+  --border2:  rgba(232,88,154,0.18);
+  --text:     #f5eeff;
+  --text2:    #d8b4fe;
+  --text3:    #c084fc;
+  --muted:    #7c5faa;
+  --muted2:   #9d6dcc;
+  --pink3:    rgba(219,39,119,0.25);
+  --lavender: rgba(196,181,253,0.20);
+  --card-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  --card-shadow-hover: 0 8px 48px rgba(0,0,0,0.7);
+  --glow: 0 0 60px rgba(168,85,247,0.28);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:background .35s,color .35s;
+  overflow-x:hidden;
+}
+
+/* ─── AMBIENT MESH ─── */
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 55% 35% at 15% 8%,  rgba(219,39,119,.12) 0%,transparent 65%),
+    radial-gradient(ellipse 45% 50% at 85% 88%, rgba(124,58,237,.16) 0%,transparent 65%),
+    radial-gradient(ellipse 35% 55% at 55% 45%, rgba(168,85,247,.07) 0%,transparent 65%),
+    radial-gradient(ellipse 60% 25% at 40% 95%, rgba(219,39,119,.06) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::after {
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+.wrapper{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 20px 80px}
+
+/* ─── DARK TOGGLE ─── */
+.dark-toggle {
+  position:fixed;top:20px;right:20px;z-index:999;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:100px;padding:9px 18px;
+  cursor:pointer;font-size:.84rem;font-weight:600;
+  color:var(--text2);
+  display:flex;align-items:center;gap:7px;
+  box-shadow:var(--card-shadow);
+  transition:all .22s;font-family:'DM Sans',sans-serif;
+  letter-spacing:.01em;
+}
+.dark-toggle:hover{box-shadow:var(--glow);transform:translateY(-1px)}
+
+/* ─── HEADER ─── */
+header {
+  text-align:center;
+  padding:56px 24px 36px;
+  position:relative;
+}
+
+.header-eyebrow {
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pink2);
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.header-eyebrow::before,.header-eyebrow::after{
+  content:'';flex:1;max-width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--pink2));
+}
+.header-eyebrow::after{background:linear-gradient(90deg,var(--pink2),transparent)}
+
+.header-center {
+  display:flex;align-items:center;justify-content:center;gap:28px;
+  margin-bottom:14px;
+}
+
+/* ─── BRAIN SVG WRAPPER ─── */
+.brain-wrap {
+  position:relative;width:90px;height:90px;flex-shrink:0;
+}
+.brain-ring {
+  position:absolute;inset:-8px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg, var(--purple) 0%, var(--pink2) 40%, var(--purple3) 70%, var(--purple) 100%);
+  animation:spinRing 8s linear infinite;
+  mask:radial-gradient(circle at center, transparent 42px, black 43px);
+  -webkit-mask:radial-gradient(circle at center, transparent 42px, black 43px);
+  opacity:.7;
+}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+
+.brain-glow {
+  position:absolute;inset:-16px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(168,85,247,.25) 0%, transparent 70%);
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{transform:scale(1);opacity:.7}
+  50%{transform:scale(1.15);opacity:1}
+}
+
+.brain-svg {
+  width:90px;height:90px;
+  position:relative;z-index:1;
+  filter:drop-shadow(0 0 10px rgba(168,85,247,.4));
+  animation:brainFloat 4s ease-in-out infinite;
+}
+@keyframes brainFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
+
+.site-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5.5vw,3.4rem);
+  font-weight:900;
+  line-height:1.05;
+  background:linear-gradient(135deg,var(--purple) 0%,var(--purple3) 35%,var(--pink2) 65%,var(--purple) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:titleShimmer 6s linear infinite;
+}
+@keyframes titleShimmer{to{background-position:200% center}}
+
+.subtitle {
+  font-size:.95rem;color:var(--muted);
+  margin-top:5px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+.header-meta {
+  display:flex;flex-wrap:wrap;gap:10px;
+  justify-content:center;margin-top:18px;
+}
+.meta-pill {
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--surface2);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:7px 18px;font-size:.8rem;
+  color:var(--text2);font-weight:600;
+  letter-spacing:.03em;
+  transition:all .2s;
+}
+.meta-pill:hover{border-color:var(--purple3);background:rgba(168,85,247,.08)}
+
+/* ─── TAB BAR ─── */
+.tab-wrap {
+  position:sticky;top:0;z-index:50;
+  background:var(--surface2);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:5px;
+  margin-bottom:32px;
+  box-shadow:0 4px 30px rgba(124,58,237,.10);
+}
+.tab-bar{
+  display:flex;gap:3px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.tab-bar::-webkit-scrollbar{display:none}
+
+.tab-btn{
+  flex-shrink:0;
+  padding:10px 17px;
+  border:none;border-radius:15px;
+  background:transparent;
+  cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82rem;font-weight:600;
+  color:var(--muted);
+  transition:all .22s;
+  white-space:nowrap;
+  letter-spacing:.01em;
+  position:relative;
+}
+.tab-btn:hover{color:var(--text2);background:rgba(124,58,237,.07)}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--purple),var(--pink2));
+  color:white;
+  box-shadow:0 4px 18px rgba(124,58,237,.35),0 1px 4px rgba(124,58,237,.2);
+}
+.tab-btn .tab-emoji{margin-right:4px}
+
+.tab-panel{display:none;animation:fadeUp .3s ease}
+.tab-panel.active{display:block}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ─── SECTION HEADERS ─── */
+.sec-head{margin-bottom:28px}
+.sec-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--pink2);
+  margin-bottom:5px;
+}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.9rem;font-weight:900;
+  color:var(--text);
+  display:flex;align-items:center;gap:12px;
+  line-height:1.1;
+}
+.sec-title .ico{font-size:1.6rem}
+.sec-desc{color:var(--muted);font-size:.94rem;margin-top:6px;font-weight:400;line-height:1.5}
+
+/* ─── DIVIDER ─── */
+.divider{
+  height:1px;margin:22px 0;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+}
+
+/* ─── GRID ─── */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px 26px;
+  margin-bottom:20px;
+  box-shadow:var(--card-shadow);
+  transition:box-shadow .25s,transform .25s;
+}
+.card:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px)}
+
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  margin-bottom:14px;color:var(--text);
+  display:flex;align-items:center;gap:8px;
+  padding-bottom:12px;border-bottom:1px solid var(--border);
+}
+.card-title .ci{font-size:1.1rem}
+
+/* Accent Cards */
+.card-purple{background:linear-gradient(145deg,rgba(124,58,237,.07),rgba(168,85,247,.04));border-color:rgba(124,58,237,.2)}
+.card-pink  {background:linear-gradient(145deg,rgba(219,39,119,.07),rgba(249,168,212,.04));border-color:rgba(219,39,119,.2)}
+.card-teal  {background:linear-gradient(145deg,rgba(3,105,161,.07),rgba(14,165,233,.04));border-color:rgba(3,105,161,.2)}
+.card-green {background:linear-gradient(145deg,rgba(22,163,74,.07),rgba(134,239,172,.04));border-color:rgba(22,163,74,.2)}
+.card-orange{background:linear-gradient(145deg,rgba(234,88,12,.07),rgba(253,186,116,.04));border-color:rgba(234,88,12,.2)}
+.card-red   {background:linear-gradient(145deg,rgba(220,38,38,.07),rgba(252,165,165,.04));border-color:rgba(220,38,38,.2)}
+.card-amber {background:linear-gradient(145deg,rgba(217,119,6,.07),rgba(253,230,138,.04));border-color:rgba(217,119,6,.2)}
+
+/* ─── CALLOUTS ─── */
+.callout{
+  border-radius:14px;padding:15px 18px;margin:13px 0;
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:.89rem;line-height:1.6;
+}
+.callout-ico{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.c-body strong{display:block;font-size:.72rem;font-weight:700;margin-bottom:3px;letter-spacing:.08em;text-transform:uppercase}
+.callout-warn  {background:rgba(234,88,12,.09);border-left:3px solid var(--orange);color:var(--text)}
+.callout-warn .c-body strong{color:var(--orange)}
+.callout-danger{background:rgba(220,38,38,.09);border-left:3px solid var(--red);color:var(--text)}
+.callout-danger .c-body strong{color:var(--red)}
+.callout-info  {background:rgba(124,58,237,.09);border-left:3px solid var(--purple);color:var(--text)}
+.callout-info .c-body strong{color:var(--purple)}
+.callout-success{background:rgba(22,163,74,.09);border-left:3px solid var(--green);color:var(--text)}
+.callout-success .c-body strong{color:var(--green)}
+.callout-pink  {background:rgba(219,39,119,.09);border-left:3px solid var(--pink2);color:var(--text)}
+.callout-pink .c-body strong{color:var(--pink2)}
+.callout-teal  {background:rgba(3,105,161,.09);border-left:3px solid var(--teal);color:var(--text)}
+.callout-teal .c-body strong{color:var(--teal)}
+
+/* ─── BADGES ─── */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 11px;border-radius:100px;
+  font-size:.72rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+}
+.b-purple{background:rgba(124,58,237,.12);color:var(--purple);border:1px solid rgba(124,58,237,.22)}
+.b-pink  {background:rgba(219,39,119,.12);color:var(--pink);border:1px solid rgba(219,39,119,.22)}
+.b-green {background:rgba(22,163,74,.12);color:var(--green);border:1px solid rgba(22,163,74,.22)}
+.b-red   {background:rgba(220,38,38,.12);color:var(--red);border:1px solid rgba(220,38,38,.22)}
+.b-orange{background:rgba(234,88,12,.12);color:var(--orange);border:1px solid rgba(234,88,12,.22)}
+.b-teal  {background:rgba(3,105,161,.12);color:var(--teal);border:1px solid rgba(3,105,161,.22)}
+.b-amber {background:rgba(217,119,6,.12);color:var(--amber);border:1px solid rgba(217,119,6,.22)}
+
+/* ─── LISTS ─── */
+.sl{list-style:none}
+.sl li{
+  padding:7px 0 7px 22px;position:relative;
+  font-size:.915rem;color:var(--text);line-height:1.55;
+  border-bottom:1px solid var(--border);
+}
+.sl li:last-child{border-bottom:none}
+.sl li::before{content:'◆';position:absolute;left:0;color:var(--purple3);font-size:.55rem;top:12px}
+
+.dl{list-style:none}
+.dl li{
+  padding:4px 0 4px 16px;position:relative;
+  font-size:.9rem;color:var(--text);line-height:1.55;
+}
+.dl li::before{content:'•';position:absolute;left:0;color:var(--pink2);font-weight:bold}
+
+/* ─── TAGS ─── */
+.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.tag{
+  padding:4px 11px;border-radius:8px;
+  font-size:.79rem;font-weight:500;
+  background:var(--bg2);border:1px solid var(--border);color:var(--text2);
+}
+.t-red   {background:rgba(220,38,38,.09);border-color:rgba(220,38,38,.22);color:var(--red)}
+.t-orange{background:rgba(234,88,12,.09);border-color:rgba(234,88,12,.22);color:var(--orange)}
+.t-green {background:rgba(22,163,74,.09);border-color:rgba(22,163,74,.22);color:var(--green)}
+.t-purple{background:rgba(124,58,237,.09);border-color:rgba(124,58,237,.22);color:var(--purple)}
+.t-pink  {background:rgba(219,39,119,.09);border-color:rgba(219,39,119,.22);color:var(--pink)}
+.t-teal  {background:rgba(3,105,161,.09);border-color:rgba(3,105,161,.22);color:var(--teal)}
+.t-amber {background:rgba(217,119,6,.09);border-color:rgba(217,119,6,.22);color:var(--amber)}
+
+/* ─── DRUG CARDS ─── */
+.drug-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  box-shadow:var(--card-shadow);
+  margin-bottom:24px;
+  transition:all .25s;
+}
+.drug-card:hover{transform:translateY(-3px);box-shadow:var(--card-shadow-hover)}
+
+.drug-header{
+  padding:18px 24px 16px;
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(124,58,237,.05),rgba(219,39,119,.03));
+}
+.drug-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:var(--text);
+}
+.drug-class{font-size:.8rem;color:var(--muted);margin-top:3px;font-weight:500}
+
+.drug-body{padding:20px 24px}
+.drug-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:14px}
+.dsec-label{
+  font-size:.69rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--muted);margin-bottom:7px;
+  padding-bottom:4px;border-bottom:1px solid var(--border);
+}
+.dsec-content{font-size:.88rem;color:var(--text);line-height:1.6}
+
+/* ─── MECHANISM FLOW ─── */
+.flow{
+  display:flex;align-items:center;flex-wrap:nowrap;
+  overflow-x:auto;gap:0;padding:14px 0;scrollbar-width:none;
+}
+.flow::-webkit-scrollbar{display:none}
+.flow-step{
+  flex-shrink:0;min-width:120px;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:12px;padding:11px 14px;
+  text-align:center;font-size:.8rem;font-weight:600;
+  color:var(--text);line-height:1.4;
+  transition:all .2s;
+}
+.flow-step:hover{border-color:var(--purple);background:rgba(124,58,237,.06)}
+.flow-arr{flex-shrink:0;font-size:1.2rem;color:var(--pink2);padding:0 6px;font-weight:700}
+
+/* ─── COMPARISON TABLE ─── */
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--border);margin-bottom:24px;box-shadow:var(--card-shadow)}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+thead tr{background:linear-gradient(135deg,var(--purple),var(--pink))}
+th{padding:13px 16px;color:white;font-weight:600;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+th:first-child{border-radius:14px 0 0 0}
+th:last-child{border-radius:0 14px 0 0}
+td{padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:rgba(124,58,237,.03)}
+tr:hover td{background:rgba(219,39,119,.04)}
+td:first-child{font-weight:700;color:var(--purple2)}
+
+/* ─── STAGES ─── */
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:18px 0}
+.stage{border-radius:14px;padding:14px 15px;border:1px solid var(--border);transition:transform .2s}
+.stage:hover{transform:translateY(-3px)}
+.stage-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;margin-bottom:5px}
+.stage-name{font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:8px}
+.stage-body{font-size:.77rem;color:var(--text);line-height:1.5}
+.s1{background:rgba(22,163,74,.07);border-color:rgba(22,163,74,.2)}.s1 .stage-lbl{color:var(--green)}
+.s2{background:rgba(3,105,161,.07);border-color:rgba(3,105,161,.2)}.s2 .stage-lbl{color:var(--teal)}
+.s3{background:rgba(234,88,12,.07);border-color:rgba(234,88,12,.2)}.s3 .stage-lbl{color:var(--orange)}
+.s4{background:rgba(168,85,247,.07);border-color:rgba(168,85,247,.2)}.s4 .stage-lbl{color:var(--purple3)}
+.s5{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.2)}.s5 .stage-lbl{color:var(--red)}
+
+/* ─── MNEMONIC ─── */
+.mnemonic{
+  background:linear-gradient(135deg,rgba(219,39,119,.08),rgba(124,58,237,.10));
+  border:2px dashed rgba(168,85,247,.28);
+  border-radius:18px;padding:22px 26px;
+  margin:18px 0;text-align:center;
+}
+.mn-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--pink2);margin-bottom:8px}
+.mn-text{
+  font-family:'Playfair Display',serif;font-size:1.5rem;
+  font-weight:900;color:var(--purple);line-height:1.25;
+}
+.mn-sub{font-size:.88rem;color:var(--muted);margin-top:10px;line-height:1.6}
+
+/* ─── OBJECTIVE LIST ─── */
+.obj-list{list-style:none}
+.obj-list li{
+  display:flex;gap:11px;padding:11px 0;
+  border-bottom:1px solid var(--border);
+  font-size:.91rem;line-height:1.6;color:var(--text);
+}
+.obj-list li:last-child{border-bottom:none}
+.oi{color:var(--purple3);font-size:.9rem;flex-shrink:0;margin-top:3px}
+
+/* ─── DETAILS / ACCORDION ─── */
+details{border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s}
+details:hover{box-shadow:var(--card-shadow)}
+details[open]{border-color:rgba(124,58,237,.3);box-shadow:var(--glow)}
+summary{
+  padding:14px 20px;cursor:pointer;font-weight:600;
+  font-size:.9rem;color:var(--text2);
+  display:flex;align-items:center;gap:8px;
+  user-select:none;list-style:none;background:var(--surface);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'▸';margin-left:auto;color:var(--purple3);transition:transform .2s}
+details[open] summary::after{transform:rotate(90deg)}
+.det-body{padding:16px 20px;background:var(--bg2);font-size:.89rem;line-height:1.65;color:var(--text)}
+
+/* ─── QUIZ ─── */
+.quiz-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:18px;padding:22px 26px;margin-bottom:16px;
+  box-shadow:var(--card-shadow);
+}
+.quiz-num{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.quiz-q{font-weight:700;font-size:.97rem;margin-bottom:16px;color:var(--text);line-height:1.5}
+.quiz-opts{list-style:none}
+.quiz-opts li{
+  padding:10px 15px;border-radius:12px;
+  border:1.5px solid var(--border);margin-bottom:9px;
+  cursor:pointer;font-size:.88rem;color:var(--text);
+  transition:all .18s;line-height:1.5;
+}
+.quiz-opts li:hover{border-color:var(--purple);background:rgba(124,58,237,.06)}
+.quiz-opts li.correct{border-color:var(--green);background:rgba(22,163,74,.09);color:var(--green);font-weight:700}
+.quiz-opts li.wrong{border-color:var(--red);background:rgba(220,38,38,.09);color:var(--red)}
+.quiz-explain{display:none;margin-top:14px;padding:14px 18px;background:rgba(124,58,237,.07);border-radius:12px;font-size:.88rem;line-height:1.65;color:var(--text)}
+.quiz-explain.show{display:block}
+
+/* ─── TYPOGRAPHY ─── */
+p{font-size:.93rem;line-height:1.68;color:var(--text);margin-bottom:10px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin:22px 0 12px}
+.hl     {font-weight:700;color:var(--purple2)}
+.hl-pink{font-weight:700;color:var(--pink)}
+.hl-red {font-weight:700;color:var(--red)}
+.hl-g   {font-weight:700;color:var(--green)}
+.hl-o   {font-weight:700;color:var(--orange)}
+
+/* ─── HIGH-YIELD BOX ─── */
+.hy-box{
+  background:linear-gradient(135deg,rgba(124,58,237,.09),rgba(219,39,119,.07));
+  border:1.5px solid rgba(124,58,237,.22);
+  border-radius:16px;padding:18px 22px;margin:16px 0;
+}
+.hy-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--purple);margin-bottom:8px}
+.hy-content{font-size:.9rem;line-height:1.65;color:var(--text)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:620px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .drug-row{grid-template-columns:1fr}
+  .stages{grid-template-columns:1fr 1fr}
+  header{padding:40px 12px 26px}
+  .header-center{flex-direction:column;gap:16px}
+}
+</style>
+</head>
+<body>
+
+<button class="dark-toggle" onclick="document.body.toggleAttribute('data-dark')">
+  🌙 Dark Mode
+</button>
+
+<div class="wrapper">
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-eyebrow">PP2 · UWG Nursing · Spring 2026</div>
+
+  <div class="header-center">
+
+    <!-- REALISTIC BRAIN SVG -->
+    <div class="brain-wrap">
+      <div class="brain-glow"></div>
+      <div class="brain-ring"></div>
+      <svg class="brain-svg" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="brainFill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#9333ea"/>
+            <stop offset="50%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#db2777"/>
+          </linearGradient>
+          <linearGradient id="brainFill2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#c026d3"/>
+          </linearGradient>
+          <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(124,58,237,0.4)"/>
+          </filter>
+          <filter id="innerGlow">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- LEFT HEMISPHERE — main body -->
+        <path d="
+          M 58 18
+          C 50 16, 38 16, 30 22
+          C 20 28, 14 38, 13 48
+          C 12 57, 16 65, 20 71
+          C 24 77, 22 85, 26 90
+          C 30 96, 38 96, 44 92
+          C 48 89, 52 88, 55 90
+          C 57 92, 59 94, 60 90
+          L 60 20
+          Z
+        " fill="url(#brainFill)" filter="url(#softShadow)" opacity=".95"/>
+
+        <!-- RIGHT HEMISPHERE — main body -->
+        <path d="
+          M 62 18
+          C 70 16, 82 16, 90 22
+          C 100 28, 106 38, 107 48
+          C 108 57, 104 65, 100 71
+          C 96 77, 98 85, 94 90
+          C 90 96, 82 96, 76 92
+          C 72 89, 68 88, 65 90
+          C 63 92, 61 94, 60 90
+          L 60 20
+          Z
+        " fill="url(#brainFill2)" filter="url(#softShadow)" opacity=".95"/>
+
+        <!-- CEREBRAL SULCI — Left hemisphere gyri/folds -->
+        <!-- Top crown gyrus left -->
+        <path d="M 28 26 Q 35 22 42 26 Q 38 32 30 30 Z" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.0)"/>
+        <!-- Frontal gyrus 1 left -->
+        <path d="M 17 38 Q 25 33 38 36 Q 34 44 20 42 Z" fill="rgba(255,255,255,0.10)"/>
+        <!-- Frontal gyrus 2 left -->
+        <path d="M 14 50 Q 22 44 36 47 Q 30 55 16 53 Z" fill="rgba(255,255,255,0.09)"/>
+        <!-- Parietal left -->
+        <path d="M 16 62 Q 26 57 40 60 Q 36 68 18 66 Z" fill="rgba(255,255,255,0.10)"/>
+        <!-- Temporal left -->
+        <path d="M 20 74 Q 32 70 44 73 Q 40 80 22 78 Z" fill="rgba(255,255,255,0.09)"/>
+        <!-- Occipital left -->
+        <path d="M 28 83 Q 38 79 50 82 Q 46 90 30 88 Z" fill="rgba(255,255,255,0.08)"/>
+
+        <!-- CEREBRAL SULCI — Right hemisphere gyri/folds -->
+        <!-- Top crown right -->
+        <path d="M 92 26 Q 85 22 78 26 Q 82 32 90 30 Z" fill="rgba(255,255,255,0.12)"/>
+        <!-- Frontal right 1 -->
+        <path d="M 103 38 Q 95 33 82 36 Q 86 44 100 42 Z" fill="rgba(255,255,255,0.10)"/>
+        <!-- Frontal right 2 -->
+        <path d="M 106 50 Q 98 44 84 47 Q 90 55 104 53 Z" fill="rgba(255,255,255,0.09)"/>
+        <!-- Parietal right -->
+        <path d="M 104 62 Q 94 57 80 60 Q 84 68 102 66 Z" fill="rgba(255,255,255,0.10)"/>
+        <!-- Temporal right -->
+        <path d="M 100 74 Q 88 70 76 73 Q 80 80 98 78 Z" fill="rgba(255,255,255,0.09)"/>
+        <!-- Occipital right -->
+        <path d="M 92 83 Q 82 79 70 82 Q 74 90 90 88 Z" fill="rgba(255,255,255,0.08)"/>
+
+        <!-- SULCUS LINES left hemisphere -->
+        <path d="M 22 35 Q 32 30 45 33" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M 16 47 Q 28 42 44 45" fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M 15 59 Q 27 54 43 57" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M 18 70 Q 30 65 46 68" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 23 80 Q 36 75 52 79" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Extra fine sulci left -->
+        <path d="M 24 40 Q 34 36 46 39" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width=".9" stroke-linecap="round"/>
+        <path d="M 17 53 Q 28 49 42 52" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width=".9" stroke-linecap="round"/>
+        <path d="M 19 64 Q 30 60 44 63" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width=".8" stroke-linecap="round"/>
+
+        <!-- SULCUS LINES right hemisphere -->
+        <path d="M 98 35 Q 88 30 75 33" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M 104 47 Q 92 42 76 45" fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M 105 59 Q 93 54 77 57" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M 102 70 Q 90 65 74 68" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 97 80 Q 84 75 68 79" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="M 96 40 Q 86 36 74 39" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width=".9" stroke-linecap="round"/>
+        <path d="M 103 53 Q 92 49 78 52" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width=".9" stroke-linecap="round"/>
+        <path d="M 101 64 Q 90 60 76 63" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width=".8" stroke-linecap="round"/>
+
+        <!-- LONGITUDINAL FISSURE (midline) -->
+        <line x1="60" y1="16" x2="60" y2="94" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-dasharray="3,2.5"/>
+
+        <!-- BRAIN STEM / CEREBELLUM hint -->
+        <path d="M 48 92 Q 52 100 60 102 Q 68 100 72 92" fill="rgba(124,58,237,0.7)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <!-- Cerebellum folds -->
+        <line x1="52" y1="99" x2="68" y2="99" stroke="rgba(255,255,255,0.30)" stroke-width=".8"/>
+        <line x1="54" y1="101" x2="66" y2="101" stroke="rgba(255,255,255,0.20)" stroke-width=".7"/>
+
+        <!-- HIGHLIGHT shimmer on left -->
+        <ellipse cx="30" cy="32" rx="10" ry="6" fill="rgba(255,255,255,0.12)" transform="rotate(-18,30,32)"/>
+        <ellipse cx="34" cy="26" rx="7" ry="3.5" fill="rgba(255,255,255,0.16)" transform="rotate(-20,34,26)"/>
+        <!-- HIGHLIGHT right -->
+        <ellipse cx="90" cy="32" rx="10" ry="6" fill="rgba(255,255,255,0.10)" transform="rotate(18,90,32)"/>
+
+        <!-- NEURAL SPARKLES -->
+        <circle cx="25" cy="44" r="1.2" fill="rgba(249,168,212,0.8)"/>
+        <circle cx="18" cy="56" r="1.0" fill="rgba(196,181,253,0.7)"/>
+        <circle cx="95" cy="44" r="1.2" fill="rgba(249,168,212,0.8)"/>
+        <circle cx="102" cy="56" r="1.0" fill="rgba(196,181,253,0.7)"/>
+        <circle cx="60" cy="50" r="1.5" fill="rgba(255,255,255,0.6)"/>
+      </svg>
+    </div>
+
+    <div>
+      <div class="site-title">Pathopharm: Cognition</div>
+      <div class="subtitle">Delirium · Dementia · Alzheimer's · Parkinson's</div>
+    </div>
+  </div>
+
+  <div class="header-meta">
+    <span class="meta-pill">📚 Dr. Shakia Johnson · PP2</span>
+    <span class="meta-pill">🏫 UWG Nursing — May 2027 Cohort</span>
+    <span class="meta-pill">🧠 NURS 3100 — Spring 2026</span>
+    <span class="meta-pill">⭐ Exam 3 Content</span>
+  </div>
+</header>
+
+<!-- ═══ TAB BAR ═══ -->
+<div class="tab-wrap">
+  <div class="tab-bar" id="tabs">
+    <button class="tab-btn active"    onclick="openTab('overview',this)"><span class="tab-emoji">🎯</span>Objectives</button>
+    <button class="tab-btn"           onclick="openTab('delirium',this)"><span class="tab-emoji">⚡</span>Delirium</button>
+    <button class="tab-btn"           onclick="openTab('dementia',this)"><span class="tab-emoji">🧩</span>Dementia</button>
+    <button class="tab-btn"           onclick="openTab('alzheimer',this)"><span class="tab-emoji">🔬</span>Alzheimer's</button>
+    <button class="tab-btn"           onclick="openTab('parkinson',this)"><span class="tab-emoji">🔄</span>Parkinson's</button>
+    <button class="tab-btn"           onclick="openTab('alzmeds',this)"><span class="tab-emoji">💊</span>Alzheimer's Rx</button>
+    <button class="tab-btn"           onclick="openTab('parkmeds',this)"><span class="tab-emoji">💊</span>Parkinson's Rx</button>
+    <button class="tab-btn"           onclick="openTab('review',this)"><span class="tab-emoji">✅</span>Quick Review</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 1 — OBJECTIVES & OVERVIEW
+══════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-overview">
+  <div class="sec-head">
+    <div class="sec-label">Module Foundation</div>
+    <div class="sec-title"><span class="ico">🎯</span> Learning Objectives & Concept Overview</div>
+    <div class="sec-desc">Master all six course objectives to succeed on your exam. This tab anchors the entire module.</div>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title"><span class="ci">📋</span> Official Course Objectives</div>
+    <ul class="obj-list">
+      <li><span class="oi">◆</span><div><strong>Describe the concept of cognition</strong> — the mental process of acquiring knowledge and understanding through thought, experience, and the senses.</div></li>
+      <li><span class="oi">◆</span><div><strong>List risk factors</strong> for impaired cognition including age, medications, health conditions, and environmental exposures.</div></li>
+      <li><span class="oi">◆</span><div><strong>Apply knowledge of pathophysiology</strong> related to conditions that cause impaired cognition — delirium, dementia, Alzheimer's, and Parkinson's.</div></li>
+      <li><span class="oi">◆</span><div><strong>Identify drugs</strong> used to treat alterations in cognition.</div></li>
+      <li><span class="oi">◆</span><div><strong>Apply the role of drug therapy</strong> in the management of cognitive alterations.</div></li>
+      <li><span class="oi">◆</span><div><strong>Apply knowledge of generic drug names</strong>, classifications, actions, therapeutic uses, adverse effects, contraindications, interactions, administration, nursing interventions, patient education, and evaluation for all key drugs.</div></li>
+    </ul>
+  </div>
+
+  <div class="g2">
+    <div class="card card-pink">
+      <div class="card-title"><span class="ci">🧠</span> What is Cognition?</div>
+      <p>Cognition refers to <span class="hl">all processes involved in thought</span>: how one receives sensory input, processes it, stores it, retrieves it, and uses it. It exists on a <span class="hl-pink">continuum</span> — intact or impaired — and can change over time.</p>
+      <div class="divider"></div>
+      <div class="dsec-label">6 Domains of Cognition</div>
+      <div class="tag-row">
+        <span class="tag t-purple">Perceptual Motor Function</span>
+        <span class="tag t-pink">Language</span>
+        <span class="tag t-purple">Learning & Memory</span>
+        <span class="tag t-pink">Social Cognition</span>
+        <span class="tag t-purple">Complex Attention</span>
+        <span class="tag t-pink">Executive Function</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ci">🧬</span> Cognition Processing in the Brain</div>
+      <ul class="dl">
+        <li><strong>Cerebrum</strong> (frontal, parietal, temporal, occipital lobes) — where most cognitive tasks occur</li>
+        <li><strong>Limbic System</strong> (overlaps cerebrum & diencephalon) — ability to reason, express personality, and interact with environmental stimuli</li>
+        <li><strong>Hippocampus</strong> (within limbic system) — commits information to long-term memory</li>
+      </ul>
+      <div class="callout callout-warn" style="margin-top:12px">
+        <span class="callout-ico">⚠️</span>
+        <div class="c-body"><strong>Critical Exam Concept</strong>Cognitive impairment is <strong>NOT a normal part of aging</strong>. Neuronal atrophy occurs normally with age, but cognitive/intellectual loss is indicative of disease. Committing new information to memory becomes less efficient, but memory functioning itself remains intact in healthy aging.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ci">⚠️</span> Risk Factors for Impaired Cognition</div>
+    <div class="g3">
+      <div>
+        <div class="dsec-label">Intrinsic / Patient Factors</div>
+        <ul class="dl">
+          <li>Advancing age</li>
+          <li>Congenital / genetic conditions</li>
+          <li>Physical disability & reduced mobility</li>
+          <li><span class="hl">Slow gait</span> → predictor of cognitive decline</li>
+          <li>Traumatic brain injury</li>
+          <li>Chemical / environmental exposures</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Reversible Health Conditions</div>
+        <ul class="dl">
+          <li>Fluid & electrolyte imbalances</li>
+          <li>Systemic infection / sepsis / fever</li>
+          <li>Acute pain</li>
+          <li>Hypoglycemia</li>
+          <li>Anoxia / hypoxia</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Chronic Conditions</div>
+        <ul class="dl">
+          <li>Stroke, intracranial tumor</li>
+          <li>Cardiovascular disease / COPD</li>
+          <li>Depression, Type 2 DM</li>
+        </ul>
+        <div class="dsec-label" style="margin-top:10px">High-Risk Medications</div>
+        <ul class="dl">
+          <li>Sedative-hypnotics / narcotics / benzodiazepines</li>
+          <li>Anticholinergics / antihistamines</li>
+          <li>OTC sleep aids / chemotherapy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="hy-box">
+    <div class="hy-lbl">🗺️ Big Picture — Conditions in This Module</div>
+    <div class="hy-content">
+      <strong>Delirium</strong> (acute, hours–days, potentially reversible) →
+      <strong>Dementia</strong> (chronic, progressive, irreversible) →
+      <strong>Alzheimer's Disease</strong> (most common dementia; ↓ ACh) →
+      <strong>Parkinson's Disease</strong> (dopamine deficiency in striatum; ↑ relative ACh)<br><br>
+      Each condition has <em>unique pathophysiology, unique clinical manifestations, and unique pharmacological treatment</em>. Understanding the <strong>mechanism → imbalance → drug fix</strong> chain is the key to mastering this module.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 2 — DELIRIUM
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-delirium">
+  <div class="sec-head">
+    <div class="sec-label">Acute Confusional State</div>
+    <div class="sec-title"><span class="ico">⚡</span> Delirium</div>
+    <div class="sec-desc">Sudden-onset cognitive disturbance — always find and treat the underlying cause</div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-orange">
+      <div class="card-title"><span class="ci">📖</span> Definition</div>
+      <p>A state of <span class="hl">disturbed consciousness and altered cognition</span> with a <span class="hl-pink">rapid onset over hours or a few days</span>. It is a common complication in the <span class="hl">hospitalized elderly</span> population and represents a medical emergency requiring prompt identification of the cause.</p>
+    </div>
+    <div class="card card-purple">
+      <div class="card-title"><span class="ci">🔬</span> Pathophysiology</div>
+      <ul class="dl">
+        <li>Disorder of cognitive function, consciousness, or perception</li>
+        <li><span class="hl">Disruption of widely distributed brain networks</span> — not localized to a single area</li>
+        <li>Metabolic disturbances interfere with <strong>neuronal metabolism or synaptic transmission</strong></li>
+        <li>Neurotransmitter imbalance: <span class="hl-red">↓ Acetylcholine</span> + <span class="hl-pink">↑ Excess Dopamine</span></li>
+        <li>Drugs and toxins may interfere with neurotransmission at the synapse</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ci">🩺</span> Conditions That Cause Delirium</div>
+    <div class="g3">
+      <div>
+        <div class="dsec-label">Substance-Related</div>
+        <ul class="dl">
+          <li>Drug intoxication</li>
+          <li>Alcohol or drug withdrawal</li>
+          <li>Post-anesthesia</li>
+        </ul>
+        <div class="dsec-label" style="margin-top:10px">Key Medication Risk Factors</div>
+        <ul class="dl">
+          <li><strong>Narcotics</strong></li>
+          <li><strong>Benzodiazepines</strong></li>
+          <li><strong>Anticholinergics</strong></li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Metabolic / Systemic</div>
+        <ul class="dl">
+          <li>Hypoglycemia / thyroid storm</li>
+          <li>Electrolyte imbalances</li>
+          <li>Dehydration</li>
+          <li>Hypoxia</li>
+          <li>Heart, kidney, or liver failure</li>
+          <li>F&E imbalances</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Structural / Infectious</div>
+        <ul class="dl">
+          <li>Brain trauma, surgery, tumors</li>
+          <li>Meningoencephalitis</li>
+          <li>Sepsis / systemic infection</li>
+          <li>Fever (febrile state)</li>
+        </ul>
+        <div class="dsec-label" style="margin-top:10px">High-Risk Settings</div>
+        <ul class="dl">
+          <li>ICU patients</li>
+          <li>Post-operative patients</li>
+          <li>CNS depressant withdrawal</li>
+          <li>Elderly hospitalized patients</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-info" style="margin-top:4px">
+      <span class="callout-ico">⏱️</span>
+      <div class="c-body"><strong>Timeline</strong>Delirium develops over <strong>2–3 days</strong> with acute disturbance in attention and awareness (ANS overactivity). Onset may also be sudden.</div>
+    </div>
+  </div>
+
+  <div class="card card-pink">
+    <div class="card-title"><span class="ci">🔴</span> Clinical Manifestations</div>
+    <div class="g2">
+      <div>
+        <div class="dsec-label">Cognitive & Perceptual</div>
+        <ul class="dl">
+          <li>Dulled awareness of environment</li>
+          <li>Reduced ability to focus, sustain, shift attention</li>
+          <li>Memory and judgment impaired</li>
+          <li>Disorientation</li>
+          <li>Difficulty concentrating</li>
+          <li>Hallucinations</li>
+          <li>Delusions</li>
+          <li>Vivid dreams / nightmares</li>
+          <li>Altered perceptions</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Behavioral & Physical</div>
+        <ul class="dl">
+          <li>Rapid, rambling, incoherent speech</li>
+          <li>Intense emotional swings</li>
+          <li>Restlessness / irritability</li>
+          <li>Tremulousness / tremors / restless movements</li>
+          <li>Insomnia / poor appetite</li>
+          <li>Seizures</li>
+          <li>Flushed skin, dilated pupils</li>
+          <li>Tachycardia, fever, diaphoresis</li>
+          <li>Incoherent conversation / distress</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title"><span class="ci">💊</span> Treatment Approach</div>
+    <p><span class="hl">Establish the underlying cause</span> — all treatment is directed at correcting the primary disorder. Delirium is potentially reversible when the trigger is identified and treated promptly.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Delirium</th><th>Dementia</th></tr></thead>
+      <tbody>
+        <tr><td>Onset</td><td>Sudden (hours → few days)</td><td>Slow (months → years)</td></tr>
+        <tr><td>Reversibility</td><td>Often <strong>reversible</strong></td><td><strong>Irreversible</strong> — progressive</td></tr>
+        <tr><td>Consciousness</td><td>Disturbed, fluctuating</td><td>Usually clear in early stages</td></tr>
+        <tr><td>Attention</td><td>Severely impaired (hallmark)</td><td>Less affected early</td></tr>
+        <tr><td>Speech</td><td>Rapid, rambling, incoherent</td><td>Gradual word-finding difficulty</td></tr>
+        <tr><td>Hallucinations</td><td>Common</td><td>Less common early on</td></tr>
+        <tr><td>Common Setting</td><td>ICU, post-op, hospitalized elderly</td><td>Community / long-term care</td></tr>
+        <tr><td>Neurotransmitter</td><td>↓ ACh + ↑ Dopamine</td><td>↓ ACh (AD) / ↓ Dopamine (PD)</td></tr>
+        <tr><td>Treatment Goal</td><td>Treat the cause → resolution</td><td>Slow progression, manage symptoms</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 3 — DEMENTIA
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-dementia">
+  <div class="sec-head">
+    <div class="sec-label">Progressive Neurodegenerative Syndrome</div>
+    <div class="sec-title"><span class="ico">🧩</span> Dementia</div>
+    <div class="sec-desc">Chronic, irreversible deterioration of cerebral function — slow onset, progressive decline</div>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title"><span class="ci">📖</span> Definition & Core Pathophysiology</div>
+    <p>Dementia is a <span class="hl">deterioration and progressive failure of many cerebral functions</span> with impairment of intellectual processes including a decrease in orientation, memory, language, judgment, and decision-making. Behavioral alterations (agitation, wandering, aggression) also occur.</p>
+    <div class="divider"></div>
+    <div class="g2">
+      <div>
+        <div class="dsec-label">Underlying Mechanisms</div>
+        <ul class="dl">
+          <li>Neuron degeneration</li>
+          <li>Compression of brain tissue</li>
+          <li>Atherosclerosis of cerebral vessels</li>
+          <li>Brain trauma or infection</li>
+          <li>Neuroinflammation</li>
+          <li>Genetic predisposition</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">Viral Causes</div>
+        <ul class="dl">
+          <li><strong>HIV</strong> — nerve cell degeneration and brain atrophy</li>
+          <li><strong>Slow-growing viruses</strong> — associated with Creutzfeldt-Jakob disease → nerve cell degeneration and brain atrophy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ci">📚</span> Types of Dementia — Know Them All</div>
+    <div class="g3">
+      <div style="background:rgba(124,58,237,.08);border-radius:14px;padding:15px;border:1px solid rgba(124,58,237,.2)">
+        <div class="badge b-purple" style="margin-bottom:8px">Most Common</div>
+        <strong style="color:var(--purple);display:block;margin-bottom:5px">Alzheimer's Disease</strong>
+        <span style="font-size:.82rem;color:var(--text)">Amyloid plaques + neurofibrillary tau tangles; ↓ acetylcholine; chromosome 19 or 21 association</span>
+      </div>
+      <div style="background:rgba(219,39,119,.08);border-radius:14px;padding:15px;border:1px solid rgba(219,39,119,.2)">
+        <div class="badge b-pink" style="margin-bottom:8px">Prion Disease</div>
+        <strong style="color:var(--pink);display:block;margin-bottom:5px">Creutzfeldt-Jakob Disease</strong>
+        <span style="font-size:.82rem;color:var(--text)">Slow-growing virus; rapid progression; associated with prion proteins</span>
+      </div>
+      <div style="background:rgba(3,105,161,.08);border-radius:14px;padding:15px;border:1px solid rgba(3,105,161,.2)">
+        <div class="badge b-teal" style="margin-bottom:8px">Protein Deposits</div>
+        <strong style="color:var(--teal);display:block;margin-bottom:5px">Dementia with Lewy Body</strong>
+        <span style="font-size:.82rem;color:var(--text)">Alpha-synuclein protein deposits; overlaps with Parkinson's Disease features</span>
+      </div>
+      <div style="background:rgba(234,88,12,.08);border-radius:14px;padding:15px;border:1px solid rgba(234,88,12,.2)">
+        <div class="badge b-orange" style="margin-bottom:8px">Frontal/Temporal</div>
+        <strong style="color:var(--orange);display:block;margin-bottom:5px">Frontotemporal Dementia</strong>
+        <span style="font-size:.82rem;color:var(--text)">Personality and behavior changes predominate early; frontal lobe atrophy</span>
+      </div>
+      <div style="background:rgba(22,163,74,.08);border-radius:14px;padding:15px;border:1px solid rgba(22,163,74,.2)">
+        <div class="badge b-green" style="margin-bottom:8px">Genetic</div>
+        <strong style="color:var(--green);display:block;margin-bottom:5px">Huntington Disease</strong>
+        <span style="font-size:.82rem;color:var(--text)">Autosomal dominant; progressive striatum degeneration; involuntary movements</span>
+      </div>
+      <div style="background:rgba(220,38,38,.08);border-radius:14px;padding:15px;border:1px solid rgba(220,38,38,.2)">
+        <div class="badge b-red" style="margin-bottom:8px">Vascular</div>
+        <strong style="color:var(--red);display:block;margin-bottom:5px">Vascular Dementia</strong>
+        <span style="font-size:.82rem;color:var(--text)">Multiple strokes or reduced cerebral blood flow; step-wise deterioration</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-danger">
+    <span class="callout-ico">🔑</span>
+    <div class="c-body"><strong>Key Clinical Feature: Slow Onset + Irreversible</strong>
+    Dementia has a <strong>slow onset</strong> and is <strong>irreversible</strong> — this is the critical distinction from delirium. Clinical manifestations for specific dementia types (Alzheimer's, Parkinson's) are covered in their respective tabs.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 4 — ALZHEIMER'S
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-alzheimer">
+  <div class="sec-head">
+    <div class="sec-label">Most Common Dementia</div>
+    <div class="sec-title"><span class="ico">🔬</span> Alzheimer's Disease</div>
+    <div class="sec-desc">Progressive amyloid/tau-driven neurodegeneration with acetylcholine deficiency</div>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title"><span class="ci">🧬</span> Pathophysiology — The "What & Why"</div>
+    <p>The cause of AD is <span class="hl">unknown</span>, but genetic associations with <span class="hl">chromosomes 19 or 21</span> have been identified.</p>
+    <div class="divider"></div>
+    <div class="g2">
+      <div>
+        <div class="dsec-label">🔴 Hallmark #1 — Neuritic Plaques</div>
+        <ul class="dl">
+          <li>Extracellular accumulation of <strong>amyloid beta protein</strong></li>
+          <li>Located in <strong>cerebral cortex & hippocampus</strong> (memory region)</li>
+          <li>Disrupt nerve impulse transmission → cause neuron death</li>
+        </ul>
+      </div>
+      <div>
+        <div class="dsec-label">🔴 Hallmark #2 — Neurofibrillary Tangles</div>
+        <ul class="dl">
+          <li>Intraneuronal tangles of <strong>tau protein</strong></li>
+          <li>Destabilize the neuron's internal skeleton</li>
+          <li>Contribute to progressive cell death</li>
+        </ul>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="dsec-label">Disease Progression Cascade</div>
+    <div class="flow">
+      <div class="flow-step">↑ Amyloid Beta<br>Tau Tangles Form</div><div class="flow-arr">→</div>
+      <div class="flow-step">Neuritic Plaques<br>Accumulate</div><div class="flow-arr">→</div>
+      <div class="flow-step">Neuron Death &<br>Synapse Loss</div><div class="flow-arr">→</div>
+      <div class="flow-step">↓ Acetylcholine<br>Levels</div><div class="flow-arr">→</div>
+      <div class="flow-step">Brain Atrophy<br>↑ Sulci / ↓ Gyri</div><div class="flow-arr">→</div>
+      <div class="flow-step">↓ Memory, Attention<br>Cognitive Decline</div>
+    </div>
+    <div class="callout callout-danger" style="margin-top:14px">
+      <span class="callout-ico">⭐</span>
+      <div class="c-body"><strong>Why ACh is Central to Treatment</strong>Loss of synapses and <strong>acetylcholine (ACh)</strong> is responsible for the decline in memory, attention, and cognitive function. This is the pharmacological rationale for cholinesterase inhibitors — they preserve the remaining ACh by blocking the enzyme that degrades it.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ci">📊</span> Five-Stage Progression of Alzheimer's</div>
+    <div class="stages">
+      <div class="stage s1">
+        <div class="stage-lbl">Stage 1</div>
+        <div class="stage-name">Mild Cognitive Impairment</div>
+        <div class="stage-body"><strong>Cognitive:</strong> Mild memory loss<br><strong>Functional:</strong> Possibly depression (vs. apathy); mild anxiety. May still live independently.</div>
+      </div>
+      <div class="stage s2">
+        <div class="stage-lbl">Stage 2</div>
+        <div class="stage-name">Early Stage</div>
+        <div class="stage-body"><strong>Cognitive:</strong> Measurable short-term memory loss; difficulty word-finding; cognition changes compared to previous behavior<br><strong>Functional:</strong> Mild IADL problems</div>
+      </div>
+      <div class="stage s3">
+        <div class="stage-lbl">Stage 3</div>
+        <div class="stage-name">Middle Stage</div>
+        <div class="stage-body"><strong>Cognitive:</strong> Moderate–severe; impaired reasoning/judgment/problem solving; disorientation to time, place, and person; progressive memory loss<br><strong>Functional:</strong> IADL-dependent; some ADL problems</div>
+      </div>
+      <div class="stage s4">
+        <div class="stage-lbl">Stage 4</div>
+        <div class="stage-name">Late Stage</div>
+        <div class="stage-body"><strong>Cognitive:</strong> Little cognitive ability; language not clear<br><strong>Functional:</strong> ADL-dependent; incontinent</div>
+      </div>
+      <div class="stage s5">
+        <div class="stage-lbl">Stage 5</div>
+        <div class="stage-name">End Stage</div>
+        <div class="stage-body"><strong>Cognitive:</strong> No significant function; loss of orientation to self<br><strong>Functional:</strong> Non-ambulatory / bedbound; cannot sense hunger or thirst; difficulty swallowing</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-pink">
+    <div class="card-title"><span class="ci">🔴</span> Clinical Manifestations</div>
+    <div class="g2">
+      <ul class="dl">
+        <li>Progressive memory deficits → loss of cognitive and executive function</li>
+        <li>Forgetfulness (recent events first)</li>
+        <li>Disoriented and confused</li>
+        <li>Inability to concentrate</li>
+        <li>Poor judgment</li>
+        <li>Difficulty with problem-solving, mathematics, language</li>
+        <li>Emotional upset</li>
+      </ul>
+      <ul class="dl">
+        <li>Mental status changes</li>
+        <li>Mood changes (depression, agitation)</li>
+        <li>Motor changes related to <strong>posterior frontal lobe involvement</strong></li>
+        <li>Weight loss</li>
+        <li>Eventual loss of all ADL ability</li>
+        <li>Brain atrophy: widening sulci, shrinking gyri, enlarged ventricles, hippocampal shrinkage</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hy-box">
+    <div class="hy-lbl">⭐ High-Yield Exam Q — Neurotransmitter Deficit in AD</div>
+    <div class="hy-content">
+      <strong>Acetylcholine (ACh)</strong> is the neurotransmitter that appears insufficient in clients with Alzheimer's disease. Loss of synapses and ACh in the cholinergic neuropathways contributes to the decline in memory, attention, and cognitive function. This is why cholinesterase inhibitors (donepezil, rivastigmine, galantamine) are the first-line pharmacological treatment.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 5 — PARKINSON'S
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-parkinson">
+  <div class="sec-head">
+    <div class="sec-label">Dopamine-Deficient Neurodegenerative Disorder</div>
+    <div class="sec-title"><span class="ico">🔄</span> Parkinson's Disease</div>
+    <div class="sec-desc">Too little striatal dopamine + too much acetylcholine = motor dysfunction</div>
+  </div>
+
+  <div class="card card-teal">
+    <div class="card-title"><span class="ci">🔬</span> Pathophysiology — The Core Problem</div>
+    <p>Parkinson's Disease is a <span class="hl">slowly progressive neurodegenerative disorder</span> — non-curative. Motor symptoms result from the <span class="hl">loss of dopaminergic neurons in the substantia nigra</span>, which reduce dopamine levels in the striatum.</p>
+    <div class="callout callout-info" style="margin-top:14px">
+      <span class="callout-ico">⚖️</span>
+      <div class="c-body"><strong>The Fundamental Imbalance — This is EVERYTHING for PD</strong>
+        Normal brain = <strong>Balance</strong> between Dopamine (inhibitory) and Acetylcholine (stimulatory) in basal ganglia cells.<br>
+        PD brain = <strong>↓ Dopamine</strong> in striatum/substantia nigra → <strong>↑ Relative Acetylcholine dominance</strong> → motor dysfunction (tremor, rigidity, bradykinesia, postural instability).<br>
+        <strong>ALL PD medications aim to RESTORE this dopamine/ACh balance.</strong></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-red">
+      <div class="card-title"><span class="ci">🚶</span> Motor Symptoms</div>
+      <p>Caused by loss of dopaminergic neurons in substantia nigra:</p>
+      <div class="tag-row">
+        <span class="tag t-red">Resting Tremor</span>
+        <span class="tag t-red">Bradykinesia</span>
+        <span class="tag t-red">Rigidity</span>
+        <span class="tag t-red">Postural Instability</span>
+        <span class="tag t-red">Gait Disturbance</span>
+        <span class="tag t-red">Loss of Muscle Movement</span>
+      </div>
+      <div class="callout callout-success" style="margin-top:10px">
+        <span class="callout-ico">💊</span>
+        <div class="c-body"><strong>Drug Benefit Target</strong>Drug benefits improve <strong>bradykinesia, gait disturbance,</strong> and <strong>postural instability</strong>. The overarching goal is to improve the patient's ability to perform ADLs.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ci">🧠</span> Non-Motor & Early Symptoms</div>
+      <div class="dsec-label">ANS Disorders</div>
+      <ul class="dl">
+        <li>Sexual dysfunction</li>
+        <li>Swallowing and GI disorders</li>
+        <li>Bowel & bladder abnormalities</li>
+        <li>Sleep disturbances</li>
+        <li>Orthostatic hypotension</li>
+      </ul>
+      <div class="dsec-label" style="margin-top:10px">Early Symptoms (Pre-motor)</div>
+      <ul class="dl">
+        <li>Loss of smell (anosmia)</li>
+        <li>Excessive salivation</li>
+        <li>Worsening handwriting (micrographia)</li>
+        <li>Tremor, slower gait, reduced voice volume</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-orange">
+    <div class="card-title"><span class="ci">⚖️</span> Pharmacological Strategy — Two Approaches</div>
+    <div class="g2">
+      <div class="callout callout-success">
+        <span class="callout-ico">⬆️</span>
+        <div class="c-body"><strong>Type 1 Drugs — Increase Dopamine</strong>
+          (A) Increase dopamine concentration: levodopa, rasagiline<br>
+          (B) Increase dopamine release: amantadine<br>
+          (C) Stimulate dopamine receptors directly: pramipexole, ropinirole</div>
+      </div>
+      <div class="callout callout-pink">
+        <span class="callout-ico">⬇️</span>
+        <div class="c-body"><strong>Type 2 Drugs — Decrease ACh Activity</strong>
+          Anticholinergic drugs block stimulant cholinergic effects:<br>
+          benztropine, diphenhydramine, trihexyphenidyl</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mn-lbl">💡 Conceptual Memory Aid — Carbidopa/Levodopa</div>
+    <div class="mn-text">"Levodopa hitches a ride in CARbidopa's car across the BBB"</div>
+    <div class="mn-sub">Levodopa <strong>cannot</strong> cross the blood-brain barrier alone. Carbidopa acts as the carrier that escorts levodopa across the BBB. <em>Only after crossing</em> does levodopa convert to dopamine and exert its therapeutic effect. Without carbidopa, levodopa has no CNS effect.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 6 — ALZHEIMER'S RX
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-alzmeds">
+  <div class="sec-head">
+    <div class="sec-label">Pharmacology</div>
+    <div class="sec-title"><span class="ico">💊</span> Alzheimer's Disease Medications</div>
+    <div class="sec-desc">Goal: Slow the loss of memory and cognition — NOT a cure. Improve quality of life and ADL performance.</div>
+  </div>
+
+  <div class="callout callout-info">
+    <span class="callout-ico">🎯</span>
+    <div class="c-body"><strong>Treatment Selection by Disease Severity</strong>
+      <strong>Mild to Moderate AD</strong> → Cholinesterase Inhibitors (donepezil, rivastigmine, galantamine)<br>
+      <strong>Moderate to Severe AD</strong> → NMDA Receptor Antagonist (memantine)<br>
+      <strong>Combined</strong> → Memantine can be combined with donepezil for advanced disease<br><br>
+      <em>All medications: No cure — slow progression only. Expected outcomes: improved cognitive function, behavioral symptoms, quality of life, and ADL ability.</em></div>
+  </div>
+
+  <h3>🔵 Class: Cholinesterase Inhibitors (Mild to Moderate AD)</h3>
+
+  <div class="hy-box">
+    <div class="hy-lbl">⚙️ Class Mechanism of Action</div>
+    <div class="hy-content">
+      These drugs <strong>inhibit acetylcholinesterase</strong> — the enzyme that breaks down ACh in the synaptic cleft. More ACh remains available → enhances transmission by neurons not yet destroyed by AD. They do NOT stop the disease; they slow cognitive decline by preserving whatever ACh remains.<br><br>
+      <strong>Side effects = CHOLINERGIC / PARASYMPATHETIC stimulation</strong>: bradycardia (fall risk), bronchoconstriction (caution with asthma/COPD), nausea, diarrhea, vomiting.
+    </div>
+  </div>
+
+  <!-- DONEPEZIL -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Donepezil</div>
+        <div class="drug-class">Cholinesterase Inhibitor · Mild to Severe Alzheimer's Disease</div>
+      </div>
+      <span class="badge b-purple">Prototype Drug</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism of Action</div>
+          <div class="dsec-content">Inhibits acetylcholinesterase → ↑ ACh at cholinergic synapses → enhances transmission by cholinergic neurons not yet destroyed by AD. Does not reverse damage — only supports surviving neurons.</div>
+        </div>
+        <div>
+          <div class="dsec-label">💊 Therapeutic Use</div>
+          <div class="dsec-content">Mild to moderate AD per lecture; mild to severe AD per textbook. Slows cognitive decline. Not a cure. Modestly improves cognition, behavior, and function.</div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects (Cholinergic/Parasympathetic)</div>
+          <div class="tag-row">
+            <span class="tag t-red">Bradycardia → Fall Risk!</span>
+            <span class="tag t-orange">Nausea / Vomiting</span>
+            <span class="tag t-orange">Diarrhea</span>
+            <span class="tag t-red">Bronchoconstriction</span>
+            <span class="tag t-orange">Dizziness / Headache</span>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">🚫 Drug–Drug Interactions</div>
+          <div class="dsec-content">
+            <span class="tag t-red" style="display:inline-block;margin:3px">Anticholinergics → ↓ efficacy (opposing mechanism)</span>
+            <span class="tag t-red" style="display:inline-block;margin:3px">Antihistamines → ↓ efficacy</span>
+            <span class="tag t-red" style="display:inline-block;margin:3px">Antipsychotics → ↓ efficacy</span>
+            <span class="tag t-orange" style="display:inline-block;margin:3px">NSAIDs → ↑ GI bleeding risk</span>
+            <span class="tag t-red" style="display:inline-block;margin:3px">Cholinesterase inhibitors → ↑ toxicity (synergistic)</span>
+          </div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🩺 Nursing Considerations</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li>Titrate slowly to desired dose</li>
+              <li>Administer at <strong>bedtime (HS)</strong></li>
+              <li>Swallow tablets whole</li>
+              <li>Dissolve ODT (oral disintegrating tablet) on tongue, follow with water</li>
+              <li>Monitor heart rate; report dizziness or falls</li>
+              <li>Use cautiously with heart disease</li>
+              <li>Use cautiously with asthma/COPD (bronchoconstriction risk)</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">✅ Expected Outcomes</div>
+          <div class="dsec-content">No cure. Slows progression. Modest improvement in: cognition, behavior, function, quality of life, and ADL performance. Slight delay in disease progression.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIVASTIGMINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Rivastigmine</div>
+        <div class="drug-class">Cholinesterase Inhibitor · Mild to Moderate Alzheimer's Disease</div>
+      </div>
+      <span class="badge b-pink">Oral or Transdermal Patch</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="dsec-content">Same as donepezil, <strong>plus weight loss</strong>. Also: GI effects and bradycardia-related dizziness/falls.</div>
+        </div>
+        <div>
+          <div class="dsec-label">🩺 Administration — Two Routes</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li><strong>Oral:</strong> Twice daily (BID) with meals</li>
+              <li><strong>Transdermal Patch:</strong> Apply q24h to chest, upper arm, or lower back <em>after removing previous patch</em></li>
+              <li><strong>Do NOT repeat application site for 14 days</strong></li>
+              <li>Monitor for dizziness, falls, low pulse, GI intolerance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-danger">
+        <span class="callout-ico">⭐</span>
+        <div class="c-body"><strong>Two Exam-Worthy Clinical Scenarios</strong>
+          1. <strong>Rivastigmine overdose</strong> → expect to give <strong>Atropine</strong> (anticholinergic antidote for cholinergic toxicity: nausea, diaphoresis, bronchoconstriction, bradycardia)<br>
+          2. <strong>Rivastigmine + ibuprofen (NSAID)</strong> → monitor for <strong>GI bleeding</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALANTAMINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Galantamine</div>
+        <div class="drug-class">Cholinesterase Inhibitor · Mild to Moderate Alzheimer's Disease</div>
+      </div>
+      <span class="badge b-teal">Oral BID</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="dsec-content">Same as donepezil, <strong>plus weight loss</strong>.</div>
+        </div>
+        <div>
+          <div class="dsec-label">🩺 Administration</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li>Oral BID — <strong>swallow whole</strong></li>
+              <li>Monitor for cholinergic AEs, dizziness, falls, low pulse, GI intolerance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3>🟣 Class: NMDA Receptor Antagonist (Moderate to Severe AD)</h3>
+
+  <div class="hy-box">
+    <div class="hy-lbl">⚙️ Class Mechanism of Action</div>
+    <div class="hy-content">
+      In AD, excess glutamate pathologically overstimulates NMDA receptors → excessive calcium (Ca²⁺) influx → neuronal damage and death. Memantine blocks NMDA receptors → restricts excessive Ca²⁺ entry → protects neurons. Normal physiological receptor activation can still occur (allows learning/memory signals to proceed normally).
+    </div>
+  </div>
+
+  <!-- MEMANTINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Memantine</div>
+        <div class="drug-class">NMDA Receptor Antagonist · Moderate to Severe Alzheimer's Disease</div>
+      </div>
+      <span class="badge b-purple">Moderate–Severe AD</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Modulates effects of glutamate at NMDA receptors. The receptor regulates calcium entry into neurons. Binding of glutamate to the receptor promotes Ca²⁺ influx, signaling learning and memory processes. In AD, excess glutamate = pathological persistent activation → excessive Ca²⁺ → cell damage. Memantine blocks this excess without preventing normal activation.</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="dsec-content">Generally well tolerated. 5–7% incidence of:
+            <div class="tag-row">
+              <span class="tag t-purple">Dizziness</span>
+              <span class="tag t-purple">Headache</span>
+              <span class="tag t-purple">Confusion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🩺 Nursing Considerations</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li>Swallow whole, OR sprinkle capsule on soft food, OR give as oral elixir (flexible administration for AD patients)</li>
+              <li><strong>Can be combined with donepezil</strong></li>
+              <li>Drug–Drug: other NMDA antagonists → synergistic effects</li>
+              <li>Monitor cognitive function and ADL ability over time</li>
+              <li>Teach patient/family that benefit is limited and variable</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">✅ Expected Outcomes</div>
+          <div class="dsec-content">No cure; slows progression. May help maintain function a few months longer. May improve memory and thinking in some patients. Improves cognitive function, behavioral symptoms, quality of life, and ADLs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Drug</th><th>Class</th><th>AD Severity</th><th>Key Side Effects</th><th>Key NC/Teaching</th></tr></thead>
+      <tbody>
+        <tr><td>Donepezil</td><td>ChEI</td><td>Mild–Severe</td><td>Bradycardia (fall risk!), N/D/V, bronchoconstriction</td><td>Give HS; swallow whole or dissolve ODT; titrate; caution w/ heart/lung disease</td></tr>
+        <tr><td>Rivastigmine</td><td>ChEI</td><td>Mild–Moderate</td><td>Same as donepezil + weight loss</td><td>BID with meals (oral); patch q24h — rotate site; no repeat site for 14 days</td></tr>
+        <tr><td>Galantamine</td><td>ChEI</td><td>Mild–Moderate</td><td>Same as donepezil + weight loss</td><td>BID oral; swallow whole</td></tr>
+        <tr><td>Memantine</td><td>NMDA Antagonist</td><td>Moderate–Severe</td><td>Dizziness, HA, confusion (5–7%)</td><td>Can combine w/ donepezil; swallow, sprinkle, or elixir; synergism w/ NMDA antagonists</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 7 — PARKINSON'S RX
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-parkmeds">
+  <div class="sec-head">
+    <div class="sec-label">Pharmacology</div>
+    <div class="sec-title"><span class="ico">💊</span> Parkinson's Disease Medications</div>
+    <div class="sec-desc">Restore the Dopamine/ACh balance — Not a cure. Goal: improve ADL performance.</div>
+  </div>
+
+  <div class="callout callout-info">
+    <span class="callout-ico">🎯</span>
+    <div class="c-body"><strong>Universal Goal for ALL PD Medications</strong>
+      Not a cure — used to prevent further degeneration and control symptoms. Goal = improve ability to carry out ADLs. Drug benefits improve: <strong>bradykinesia, gait disturbance, and postural instability</strong>.</div>
+  </div>
+
+  <!-- LEVODOPA/CARBIDOPA -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Carbidopa / Levodopa</div>
+        <div class="drug-class">Dopaminergic Agent — Dopamine Replacement · Severe Parkinson's Disease</div>
+      </div>
+      <span class="badge b-purple">1st Line — Severe PD</span>
+    </div>
+    <div class="drug-body">
+      <div class="callout callout-info">
+        <span class="callout-ico">🚗</span>
+        <div class="c-body"><strong>The Key Concept — Why Carbidopa is Essential</strong>
+          Levodopa <strong>cannot cross the blood-brain barrier alone</strong>. Carbidopa serves as the carrier that helps levodopa cross the BBB. Once inside the brain, levodopa is <strong>converted into dopamine</strong>, which then restores the dopamine/ACh balance in the striatum. Without carbidopa, levodopa is therapeutically useless.</div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="tag-row">
+            <span class="tag t-orange">Nausea / Vomiting</span>
+            <span class="tag t-red">Dyskinesia (involuntary movements)</span>
+            <span class="tag t-orange">Hypotension</span>
+            <span class="tag t-purple">Dysthymias / Depression</span>
+            <span class="tag t-red">Anxiety, Agitation to Memory Impairment</span>
+            <span class="tag t-red">Cognitive Impairment</span>
+            <span class="tag t-red">Impulse Control Disorder</span>
+            <span class="tag t-red">Psychosis</span>
+            <span class="tag t-teal">Darkened sweat / urine (harmless)</span>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">🚫 Drug–Drug Interactions</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li><span class="hl-red">Antipsychotics</span> (chlorpromazine, haloperidol) → ↓ levodopa effects</li>
+              <li><span class="hl-red">MAO Inhibitors</span> → Toxicity = <strong>Hypertensive Crisis!</strong></li>
+              <li><span class="hl-o">Anticholinergic agents</span> → Can enhance responses to levodopa (excessive cholinergic stimulation = ↑ dyskinesias)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🩺 Nursing Considerations & Teaching</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li><strong>High-protein foods compete</strong> with levodopa for intestinal absorption → reduce therapeutic effect; space away from high-protein meals</li>
+              <li>Drug takes <strong>several months</strong> to work fully — set realistic expectations</li>
+              <li>If dyskinesia develops: lower dose, add amantadine, or consider surgery / electrical stimulation</li>
+              <li>Warn about <strong>"On-Off" episodes</strong> — unpredictable times when levodopa suddenly stops working → symptoms return even when drug level should be adequate; can last minutes to hours</li>
+              <li>During "Off Times," drugs like pramipexole or ropinirole can help</li>
+              <li>Also available as 3-drug combination: <strong>levodopa/carbidopa/entacapone (Stalevo)</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">✅ Expected Outcomes</div>
+          <div class="dsec-content">Not a cure. Goal: improved ability to carry out ADLs. Benefits improve bradykinesia, gait disturbance, and postural instability.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOPAMINE AGONISTS -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Pramipexole &amp; Ropinirole</div>
+        <div class="drug-class">Dopamine Agonists — Direct Receptor Activation · Mild–Moderate PD</div>
+      </div>
+      <span class="badge b-pink">1st Line (if not levodopa) or Adjunct</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Bind selectively to <strong>dopamine-2 (D2) and dopamine-3 (D3) receptor subtypes</strong>. Directly activate dopamine receptors in the striatum. <strong>Do NOT need carbidopa</strong> — do not need another drug to cross the BBB.</div>
+        </div>
+        <div>
+          <div class="dsec-label">✅ Advantages Over Levodopa</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li>No companion drug needed to cross BBB</li>
+              <li>Lower incidence of response failures</li>
+              <li>Lower incidence of dyskinesia</li>
+              <li>Also used for <strong>restless leg syndrome (RLS)</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="tag-row">
+            <span class="tag t-red">Hallucinations</span>
+            <span class="tag t-orange">Daytime Sleepiness</span>
+            <span class="tag t-red">Compulsive Behaviors (r/t ↑ dopamine)</span>
+            <span class="tag t-orange">Postural Hypotension/Dizziness</span>
+            <span class="tag t-orange">Nausea</span>
+            <span class="tag t-orange">Constipation</span>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">🩺 Nursing Considerations</div>
+          <div class="dsec-content">Benefits take <strong>several weeks</strong> to develop — educate patient. Used for mild-to-moderate symptoms or as supplement to levodopa.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTACAPONE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Entacapone</div>
+        <div class="drug-class">COMT Inhibitor (Catechol-O-Methyltransferase Inhibitor) · Adjunct to Levodopa</div>
+      </div>
+      <span class="badge b-teal">Adjunct — "Wearing Off"</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Inhibits metabolism of levodopa in the intestine and peripheral tissues by blocking the enzyme COMT → <strong>prolongs levodopa availability in the brain</strong>. Beneficial for patients experiencing the "wearing off" effect of levodopa/carbidopa.</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="tag-row">
+            <span class="tag t-red">Dyskinesias</span>
+            <span class="tag t-orange">Sleep Disturbances</span>
+            <span class="tag t-red">Impulse Control Disorder</span>
+            <span class="tag t-orange">Orthostatic Hypotension / Dizziness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELEGILINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Selegiline</div>
+        <div class="drug-class">MAO-B Inhibitor (Monoamine Oxidase B Inhibitor) · Early Treatment</div>
+      </div>
+      <span class="badge b-green">Early PD / Adjunct</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Inhibits breakdown of dopamine by MAO-B → more dopamine remains available in the synaptic cleft. May be combined with levodopa to reduce the <strong>"wearing-off" effect</strong>.</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="tag-row">
+            <span class="tag t-red">Insomnia (CNS excitation)</span>
+            <span class="tag t-orange">Orthostatic Hypotension</span>
+            <span class="tag t-orange">Dizziness</span>
+            <span class="tag t-orange">GI Symptoms</span>
+          </div>
+        </div>
+      </div>
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🚫 Dangerous Drug Interactions — MANY!</div>
+          <div class="dsec-content">
+            <div class="tag-row">
+              <span class="tag t-red">MAOIs (depression) → HTN Crisis!</span>
+              <span class="tag t-red">Opioids → Respiratory Depression!</span>
+              <span class="tag t-red">SSRIs → Serotonin Syndrome!</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="dsec-label">🩺 Nursing Considerations & Teaching</div>
+          <div class="dsec-content">
+            <ul class="dl">
+              <li><strong>Administer before noon</strong> — insomnia is related to CNS excitation; giving later worsens sleep</li>
+              <li>At high doses: avoid <strong>tyramine-containing foods</strong> — especially aged, cured, or fermented foods (cheese, wine, salami)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AMANTADINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Amantadine</div>
+        <div class="drug-class">Dopamine Releaser (also NMDA Receptor Antagonist) · Reduces Dyskinesias</div>
+      </div>
+      <span class="badge b-orange">Dyskinesia Control</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Promotes release of dopamine from neurons AND blocks dopamine reuptake → <strong>more dopamine available in the synaptic cleft</strong>. Also has NMDA receptor antagonist activity (decreases tremors). Primarily used to <strong>reduce dyskinesias caused by levodopa</strong>.</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="dsec-content">
+            <div class="dsec-label">CNS Effects</div>
+            <div class="tag-row">
+              <span class="tag t-red">Confusion</span>
+              <span class="tag t-orange">Lightheadedness</span>
+              <span class="tag t-orange">Anxiety</span>
+            </div>
+            <div class="dsec-label" style="margin-top:8px">Anticholinergic Effects</div>
+            <div class="tag-row">
+              <span class="tag t-red">Blurred Vision</span>
+              <span class="tag t-orange">Urinary Retention</span>
+              <span class="tag t-orange">Dry Mouth</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANTICHOLINERGICS -->
+  <h3>🟤 Class: Anticholinergics — For Tremors / EPS</h3>
+
+  <div class="hy-box">
+    <div class="hy-lbl">⚙️ Class Mechanism</div>
+    <div class="hy-content">
+      Inhibit the actions of acetylcholine in the brain → block ACh receptors → <strong>reduce excessive cholinergic activity</strong> that dominates when dopamine is depleted → improve dopamine/ACh balance.<br><br>
+      Classic anticholinergic side effect mnemonic: <strong>"Can't pee, can't see, can't spit, can't sh*t"</strong><br>
+      = Urinary retention, blurred vision, dry mouth, constipation
+    </div>
+  </div>
+
+  <!-- BENZTROPINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Benztropine</div>
+        <div class="drug-class">Anticholinergic Agent · 2nd Line Treatment for Tremors / EPS</div>
+      </div>
+      <span class="badge b-pink">2nd Line Tremors / EPS</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism & Use</div>
+          <div class="dsec-content">Selectively blocks central cholinergic receptors → balances dopaminergic activity → reduces severity of tremors and rigidity. Used for PD tremors (2nd line) and <strong>drug-induced extrapyramidal symptoms (EPS)</strong>. Routes: PO, IM, or IV (IM/IV used only for dystonia).</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects (Anticholinergic)</div>
+          <div class="tag-row">
+            <span class="tag t-red">Dry Mouth</span>
+            <span class="tag t-orange">Blurred Vision</span>
+            <span class="tag t-orange">Photophobia</span>
+            <span class="tag t-red">Urinary Retention</span>
+            <span class="tag t-orange">Constipation</span>
+            <span class="tag t-red">Tachycardia</span>
+            <span class="tag t-purple">Drowsiness</span>
+            <span class="tag t-orange">Decreased Sweating</span>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-danger">
+        <span class="callout-ico">👵</span>
+        <div class="c-body"><strong>BEERS CRITERIA — Geriatric Safety Alert!</strong>
+          Anticholinergic drugs have been designated as <strong>potentially inappropriate for use in geriatric patients</strong>.<br>
+          Assess elderly clients for: <strong>confusion, disorientation, agitation, and psychotic-like symptoms</strong>.<br>
+          Also use caution (or avoid) in patients with <strong>glaucoma</strong> (anticholinergics increase intraocular pressure).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIPHENHYDRAMINE -->
+  <div class="drug-card">
+    <div class="drug-header">
+      <div>
+        <div class="drug-name">Diphenhydramine</div>
+        <div class="drug-class">Antihistamine with Central Anticholinergic Activity · Acute EPS / Dystonia</div>
+      </div>
+      <span class="badge b-orange">Short-Term / Acute Use</span>
+    </div>
+    <div class="drug-body">
+      <div class="drug-row">
+        <div>
+          <div class="dsec-label">🎯 Mechanism</div>
+          <div class="dsec-content">Blocks histamine H1 receptors AND has central anticholinergic activity. Because it penetrates the CNS, it provides anticholinergic effects → can reduce tremor or help resolve <strong>acute dystonic reactions / EPS</strong>. More commonly a short-term option — not a core long-term PD drug.</div>
+        </div>
+        <div>
+          <div class="dsec-label">⚠️ Adverse Effects</div>
+          <div class="tag-row">
+            <span class="tag t-red">Drowsiness / Sedation</span>
+            <span class="tag t-orange">Dizziness</span>
+            <span class="tag t-orange">Dry Mouth</span>
+            <span class="tag t-orange">Blurred Vision</span>
+            <span class="tag t-red">Confusion (esp. elderly)</span>
+            <span class="tag t-red">Urinary Retention</span>
+            <span class="tag t-orange">Constipation</span>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-danger">
+        <span class="callout-ico">⚠️</span>
+        <div class="c-body"><strong>Caution in Older Adults & Cognitive Patients</strong>
+          Can <strong>worsen confusion and cognition</strong> in older adults or those with memory symptoms. Additive CNS/sedative effects with alcohol or other CNS depressants. Use caution with glaucoma or urinary retention/prostatic hypertrophy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Drug</th><th>Class</th><th>Mechanism</th><th>Key AE</th><th>Critical NC</th></tr></thead>
+      <tbody>
+        <tr><td>Carbidopa/Levodopa</td><td>Dopaminergic</td><td>Levodopa → dopamine (needs carbidopa to cross BBB)</td><td>Dyskinesia, psychosis, hypotension</td><td>↑ protein competes with absorption; takes months; "On-Off" effect; MAOIs = HTN crisis</td></tr>
+        <tr><td>Pramipexole/Ropinirole</td><td>Dopamine Agonist</td><td>Direct D2/D3 receptor activation</td><td>Hallucinations, compulsive behaviors, hypotension</td><td>Benefits take weeks; also for restless legs; no BBB helper needed</td></tr>
+        <tr><td>Entacapone</td><td>COMT Inhibitor</td><td>↓ levodopa breakdown in periphery → more reaches brain</td><td>Dyskinesias, impulse control disorder</td><td>Adjunct only; helps "wearing off"; part of Stalevo combination</td></tr>
+        <tr><td>Selegiline</td><td>MAO-B Inhibitor</td><td>↓ dopamine breakdown by MAO-B</td><td>Insomnia, orthostatic hypotension</td><td>Give BEFORE NOON; tyramine foods at high doses; SSRIs → serotonin syndrome; opioids → resp. depression</td></tr>
+        <tr><td>Amantadine</td><td>Dopamine Releaser/NMDA</td><td>↑ dopamine release + ↓ reuptake; NMDA antagonist</td><td>Confusion, anticholinergic effects</td><td>Reduces levodopa dyskinesias; monitor CNS effects</td></tr>
+        <tr><td>Benztropine</td><td>Anticholinergic</td><td>Blocks ACh receptors → restores dopamine/ACh balance</td><td>Dry mouth, urinary retention, tachycardia</td><td>Beers Criteria — avoid/caution in elderly; CI with glaucoma; assess for confusion</td></tr>
+        <tr><td>Diphenhydramine</td><td>Antihistamine/AntiACh</td><td>H1 blocker + central anticholinergic → ↓ tremor/EPS</td><td>Sedation, confusion, urinary retention</td><td>Worsens cognition in elderly; short-term only; additive CNS depression</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 8 — QUICK REVIEW
+══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-review">
+  <div class="sec-head">
+    <div class="sec-label">Practice & Consolidation</div>
+    <div class="sec-title"><span class="ico">✅</span> Quick Review & Practice Questions</div>
+    <div class="sec-desc">Click any answer choice to reveal the rationale — all questions are based on your course materials</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 1 of 6 — Alzheimer's Pathophysiology</div>
+    <div class="quiz-q">Which neurotransmitter in the cholinergic neuropathways appears insufficient in clients with Alzheimer's disease?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,false,'Epinephrine is a catecholamine involved in the sympathetic fight-or-flight response. It is not part of the cholinergic neuropathways implicated in Alzheimer\'s disease.')">A. Epinephrine</li>
+      <li onclick="ans(this,true,'Correct! Acetylcholine (ACh) is insufficient in AD. Loss of synapses and ACh contributes to the decline in memory, attention, and cognitive function. This is the pharmacological basis for cholinesterase inhibitor therapy.')">B. Acetylcholine ✓</li>
+      <li onclick="ans(this,false,'Norepinephrine is involved in mood and arousal. It is not the primary neurotransmitter deficiency in Alzheimer\'s disease pathophysiology.')">C. Norepinephrine</li>
+      <li onclick="ans(this,false,'Dopamine is the neurotransmitter depleted in Parkinson\'s disease, not Alzheimer\'s. In AD the key deficit is acetylcholine in cholinergic pathways.')">D. Dopamine</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 2 of 6 — Pharmacology: Overdose Management</div>
+    <div class="quiz-q">A client is admitted to the ED with sudden nausea, diaphoresis, and shortness of breath following an accidental overdose of rivastigmine. Which drug should the nurse anticipate administering?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,true,'Correct! Atropine is the anticholinergic antidote. Rivastigmine overdose causes EXCESS cholinergic (parasympathetic) stimulation: nausea, diaphoresis, bronchoconstriction, bradycardia. Atropine blocks muscarinic ACh receptors, reversing this cholinergic toxicity.')">A. Atropine ✓</li>
+      <li onclick="ans(this,false,'Isoflurophate is a cholinesterase inhibitor — it would COMPOUND cholinergic toxicity, not reverse it. This is the wrong direction of pharmacological action.')">B. Isoflurophate (Floropryl)</li>
+      <li onclick="ans(this,false,'Demecarium is also a cholinesterase inhibitor, which would worsen the excess cholinergic stimulation already present from rivastigmine overdose.')">C. Demecarium (Humorsol)</li>
+      <li onclick="ans(this,false,'Physostigmine is a cholinergic agonist (another acetylcholinesterase inhibitor). It would worsen cholinergic excess symptoms, not treat the overdose.')">D. Physostigmine (Antilirium)</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 3 of 6 — Drug Interaction</div>
+    <div class="quiz-q">The nurse would be alert for what in a client taking rivastigmine (a cholinesterase inhibitor for Alzheimer's disease) and ibuprofen?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,false,'Fecal incontinence is not the specific concern with the rivastigmine + NSAID combination. While cholinergic drugs can affect GI motility, this is not the critical interaction.')">A. Fecal incontinence</li>
+      <li onclick="ans(this,false,'Abdominal cramping can occur with cholinergic drugs alone, but is not the primary concern when combined with an NSAID like ibuprofen.')">B. Abdominal cramps</li>
+      <li onclick="ans(this,true,'Correct! NSAIDs combined with cholinesterase inhibitors significantly increase the risk of GI bleeding. This is a documented drug–drug interaction listed in the course materials. Always assess for signs of GI bleeding (melena, hematemesis, hematochezia) in this combination.')">C. Gastrointestinal bleeding ✓</li>
+      <li onclick="ans(this,false,'Diarrhea is a side effect of rivastigmine alone (cholinergic stimulation of GI motility), but the critical combined risk with ibuprofen is GI bleeding — a more serious and priority concern.')">D. Diarrhea</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 4 of 6 — Parkinson's Pathopharmacology</div>
+    <div class="quiz-q">Why must levodopa be combined with carbidopa in the treatment of Parkinson's disease?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,false,'Carbidopa does not reduce the side effects of levodopa — its primary function is to facilitate transport across the blood-brain barrier, not to alter the adverse effect profile.')">A. To reduce the side effects of levodopa in the periphery</li>
+      <li onclick="ans(this,true,'Correct! Levodopa cannot cross the blood-brain barrier alone. Carbidopa acts as the carrier that escorts levodopa across the BBB. Only after crossing can levodopa convert into dopamine within the brain and restore the dopamine/ACh balance. Without carbidopa, levodopa has no CNS therapeutic effect.')">B. To help levodopa cross the blood-brain barrier ✓</li>
+      <li onclick="ans(this,false,'While protein competition at intestinal absorption is an important nursing teaching point for levodopa, that is not the pharmacological reason why carbidopa is required as a co-drug.')">C. To improve intestinal absorption of levodopa</li>
+      <li onclick="ans(this,false,'Levodopa converts to dopamine INSIDE the brain after crossing the BBB — it is not carbidopa that converts it. Carbidopa enables the process by facilitating the BBB crossing; conversion to dopamine happens afterward in the brain.')">D. To directly convert levodopa into dopamine</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 5 of 6 — Nursing Considerations</div>
+    <div class="quiz-q">Which nursing consideration is most critical when administering selegiline to a patient with Parkinson's disease?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,false,'Bedtime administration is actually CONTRAINDICATED for selegiline! The drug causes CNS excitation leading to insomnia — it must be given before noon to prevent sleep disruption.')">A. Administer at bedtime to avoid daytime sedation</li>
+      <li onclick="ans(this,false,'Protein avoidance is the dietary teaching point for levodopa/carbidopa, not selegiline. For selegiline, tyramine-containing foods are avoided at high doses specifically.')">B. Instruct the patient to avoid all protein-containing foods</li>
+      <li onclick="ans(this,true,'Correct! Selegiline must be administered BEFORE NOON because it causes CNS excitation that leads to insomnia. Additional critical points: avoid tyramine foods at high doses; dangerous interactions with MAOIs (HTN crisis), SSRIs (serotonin syndrome), and opioids (respiratory depression).')">C. Administer before noon due to CNS excitation and insomnia risk ✓</li>
+      <li onclick="ans(this,false,'While heart rate monitoring is important for cholinesterase inhibitors (which cause bradycardia), it is not the priority nursing consideration specific to selegiline, a MAO-B inhibitor.')">D. Monitor heart rate for bradycardia before each dose</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num">Question 6 of 6 — Geriatric Safety</div>
+    <div class="quiz-q">Benztropine is prescribed for an 82-year-old patient with Parkinson's disease tremors. What is the nurse's priority safety concern?</div>
+    <ul class="quiz-opts">
+      <li onclick="ans(this,false,'Medication timing is a consideration for some PD drugs (e.g., selegiline before noon) but is not the priority safety concern for benztropine in elderly patients.')">A. Administering the drug at the correct time of day</li>
+      <li onclick="ans(this,false,'Dietary protein intake is relevant to levodopa/carbidopa therapy, not benztropine. The concern with benztropine is its anticholinergic profile in the elderly.')">B. Monitoring dietary protein intake</li>
+      <li onclick="ans(this,true,'Correct! Per the Beers Criteria, anticholinergic drugs like benztropine are designated as potentially inappropriate for use in geriatric patients. The nurse must assess for confusion, disorientation, agitation, and psychotic-like symptoms. Additionally, benztropine is contraindicated in patients with glaucoma (increases IOP). The anticholinergic burden in elderly patients is a serious safety concern.')">C. Risk of confusion, disorientation, agitation, and psychotic symptoms per Beers Criteria ✓</li>
+      <li onclick="ans(this,false,'Dyskinesias are a concern with long-term levodopa therapy, not benztropine. Benztropine\'s primary safety concerns are anticholinergic effects, especially in the elderly.')">D. Development of dyskinesias</li>
+    </ul>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-head" style="margin-top:10px">
+    <div class="sec-label">Consolidation</div>
+    <div class="sec-title" style="font-size:1.5rem"><span class="ico">🧠</span> High-Yield Summary Cards</div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-purple">
+      <div class="card-title"><span class="ci">🔑</span> Alzheimer's Must-Knows</div>
+      <ul class="dl">
+        <li><strong>Patho:</strong> Amyloid plaques + tau tangles → neuron death → ↓ ACh → brain atrophy (widening sulci, shrinking gyri)</li>
+        <li><strong>Location:</strong> Cerebral cortex + hippocampus</li>
+        <li><strong>Key genetic link:</strong> Chromosomes 19 or 21</li>
+        <li><strong>Mild–Moderate:</strong> Cholinesterase inhibitors (donepezil, rivastigmine, galantamine)</li>
+        <li><strong>Moderate–Severe:</strong> Memantine (NMDA receptor antagonist)</li>
+        <li><strong>Can combine:</strong> Memantine + donepezil</li>
+        <li><strong>Goal:</strong> Slow progression — NOT a cure</li>
+        <li><strong>Donepezil:</strong> Give at HS; anticholinergics/antihistamines/antipsychotics reduce efficacy</li>
+        <li><strong>Rivastigmine OD → Give atropine</strong></li>
+        <li><strong>ChEI + NSAIDs → ↑ GI bleeding risk</strong></li>
+        <li><strong>Rivastigmine patch:</strong> No site repeat for 14 days</li>
+      </ul>
+    </div>
+    <div class="card card-pink">
+      <div class="card-title"><span class="ci">🔑</span> Parkinson's Must-Knows</div>
+      <ul class="dl">
+        <li><strong>Patho:</strong> ↓ Dopamine in substantia nigra/striatum → ↑ relative ACh dominance → motor dysfunction</li>
+        <li><strong>Cardinal motor sx:</strong> Tremor, bradykinesia, rigidity, postural instability</li>
+        <li><strong>Levodopa alone = useless</strong> — needs carbidopa to cross BBB</li>
+        <li><strong>High-protein foods:</strong> Compete with levodopa absorption → space from meals</li>
+        <li><strong>MAOIs + levodopa = HTN crisis!</strong></li>
+        <li><strong>Selegiline → give BEFORE NOON</strong> (insomnia); SSRIs = serotonin syndrome; opioids = resp. depression</li>
+        <li><strong>Amantadine:</strong> Reduces levodopa-induced dyskinesias + NMDA activity</li>
+        <li><strong>"On-Off" effect:</strong> Levodopa suddenly stops working; symptoms return unpredictably</li>
+        <li><strong>Benztropine — Beers Criteria:</strong> Caution/avoid in elderly; CI with glaucoma</li>
+        <li><strong>Pramipexole/ropinirole:</strong> Also for restless leg syndrome; benefits take weeks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mn-lbl">🧠 Master Comparison — Delirium vs Dementia vs Alzheimer's vs Parkinson's</div>
+    <div class="mn-text">ACUTE → CHRONIC → ACh ↓ → Dopamine ↓</div>
+    <div class="mn-sub">
+      <strong>Delirium</strong> = ACUTE (hours–days) · Reversible · Disturbed consciousness · ↓ ACh + ↑ Dopamine<br>
+      <strong>Dementia</strong> = CHRONIC (months–years) · Irreversible · Slow onset · Multiple types<br>
+      <strong>Alzheimer's</strong> = Most common dementia · Amyloid/tau · ↓ ACh · Fix: increase ACh (ChEIs) or protect neurons (memantine)<br>
+      <strong>Parkinson's</strong> = ↓ Dopamine in striatum · ↑ relative ACh · Fix: restore dopamine or block excess ACh<br><br>
+      <em>Delirium: Find the cause and fix it. Dementia/AD/PD: Slow progression, manage symptoms — no cure.</em>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrapper -->
+
+<script>
+function openTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function ans(el, isCorrect, explanation) {
+  const card = el.closest('.quiz-card');
+  if (card.querySelector('.correct, .wrong')) return;
+  card.querySelectorAll('.quiz-opts li').forEach(o => { o.style.pointerEvents = 'none'; });
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    card.querySelectorAll('.quiz-opts li').forEach(o => {
+      if (o.textContent.includes('✓')) o.classList.add('correct');
+    });
+  }
+  const exp = card.querySelector('.quiz-explain');
+  exp.textContent = explanation;
+  exp.classList.add('show');
+  exp.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>

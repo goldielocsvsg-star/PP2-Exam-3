@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PP2 Cognition Pharmacology — 60Q Mock Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --pd:#4c1d95;--p:#7c3aed;--pl:#a78bfa;--pp:#ede9fe;
+  --b:#3b82f6;--bl:#93c5fd;--bp:#dbeafe;
+  --pk:#ec4899;--pkl:#f9a8d4;--pkp:#fce7f3;
+  --ok:#10b981;--okb:#d1fae5;--err:#ef4444;--errb:#fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#1e1b4b 0%,#4c1d95 35%,#7c3aed 65%,#3b82f6 100%);min-height:100vh;padding:20px;color:#1e1b4b;}
+.wrap{max-width:920px;margin:0 auto;}
+/* HEADER */
+.hdr{text-align:center;padding:28px 0 20px;}
+.hdr-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:5px 16px;border-radius:999px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.hdr h1{font-family:'Playfair Display',serif;font-size:clamp(22px,3.8vw,38px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.3);margin-bottom:6px;}
+.hdr p{color:rgba(255,255,255,.72);font-size:14px;font-weight:300;}
+/* STATS */
+.sbar{display:flex;gap:10px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.chip{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 16px;border-radius:999px;font-size:12px;font-weight:500;}
+.chip span{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;}
+/* PROGRESS */
+.prog-wrap{background:rgba(255,255,255,.2);border-radius:999px;height:7px;margin-bottom:24px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--pk),var(--pl),var(--bl));border-radius:999px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+/* CARD */
+.card{background:rgba(255,255,255,.97);border-radius:22px;padding:36px 38px;box-shadow:0 22px 55px rgba(76,29,149,.24),0 0 0 1px rgba(255,255,255,.5);margin-bottom:20px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pk),var(--p),var(--b));}
+/* META */
+.qmeta{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.qnum{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--p);background:var(--pp);padding:3px 11px;border-radius:999px;}
+.qbadge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:999px;letter-spacing:.5px;text-transform:uppercase;}
+.bmc{background:#dbeafe;color:#1d4ed8;}.bsata{background:#fce7f3;color:#be185d;}.bmatrix{background:#d1fae5;color:#065f46;}.bbowtie{background:#fef3c7;color:#92400e;}
+.dtag{font-size:10px;font-weight:600;background:linear-gradient(135deg,var(--pp),var(--pkp));color:var(--pd);padding:3px 10px;border-radius:999px;border:1px solid var(--pl);}
+.sinst{font-size:12.5px;font-style:italic;color:var(--pk);background:var(--pkp);border:1px solid var(--pkl);padding:7px 12px;border-radius:9px;margin-bottom:14px;font-weight:500;}
+/* STEM */
+.stem{font-size:16px;line-height:1.72;color:#1e1b4b;font-weight:500;margin-bottom:24px;}
+.stem strong{color:var(--pd);}
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border:2px solid #e5e0f5;border-radius:13px;cursor:pointer;transition:all .18s;background:#fff;}
+.opt:hover:not(.dis){border-color:var(--pl);background:var(--pp);transform:translateX(3px);}
+.opt input{margin-top:3px;flex-shrink:0;accent-color:var(--p);width:17px;height:17px;cursor:pointer;}
+.opt label{cursor:pointer;font-size:14.5px;line-height:1.6;color:#1e1b4b;}
+.opt.cor{border-color:var(--ok)!important;background:var(--okb)!important;}
+.opt.wrg{border-color:var(--err)!important;background:var(--errb)!important;}
+.opt.msd{border-color:var(--ok)!important;background:#ecfdf5!important;}
+.opt.dis{cursor:default;}.opt.dis:hover{transform:none;}
+/* MATRIX */
+.mtbl{width:100%;border-collapse:separate;border-spacing:0;border-radius:13px;overflow:hidden;margin-bottom:8px;}
+.mtbl th{padding:11px 14px;font-size:12px;font-weight:600;letter-spacing:.5px;text-align:center;background:linear-gradient(135deg,var(--p),var(--b));color:#fff;}
+.mtbl th:first-child{text-align:left;}
+.mtbl td{padding:13px 14px;border-bottom:1px solid #e5e0f5;font-size:13.5px;vertical-align:middle;}
+.mtbl td:not(:first-child){text-align:center;}
+.mtbl tr:last-child td{border-bottom:none;}
+.mtbl tr:nth-child(even) td{background:#faf9ff;}
+.mtbl tr:nth-child(odd) td{background:#fff;}
+.mtbl tr.rc td{background:#d1fae5!important;}
+.mtbl tr.rw td{background:#fee2e2!important;}
+.mtbl input[type=radio]{accent-color:var(--p);width:15px;height:15px;cursor:pointer;}
+.mtbl input[type=radio]:disabled{cursor:default;}
+/* BOWTIE */
+.bt-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:start;margin-bottom:10px;}
+.bt-sec{background:var(--pp);border:2px solid var(--pl);border-radius:15px;padding:16px;}
+.bt-ctr{background:linear-gradient(135deg,var(--pkp),var(--pp));border-color:var(--pkl);align-self:center;}
+.bt-arr{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--p);align-self:center;}
+.bt-sec h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--p);margin-bottom:10px;font-family:'Space Mono',monospace;}
+.bt-ctr h4{color:var(--pk);}
+.bt-inf{font-size:11px;color:var(--p);font-style:italic;margin-bottom:8px;}
+.bopt{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:9px;border:1.5px solid rgba(124,58,237,.18);background:#fff;margin-bottom:7px;cursor:pointer;transition:all .15s;}
+.bopt:hover:not(.dis){border-color:var(--p);background:var(--pp);}
+.bopt input{margin-top:2px;accent-color:var(--p);flex-shrink:0;}
+.bopt label{font-size:12.5px;line-height:1.5;cursor:pointer;}
+.bopt.cor{border-color:var(--ok)!important;background:var(--okb)!important;}
+.bopt.wrg{border-color:var(--err)!important;background:var(--errb)!important;}
+.bopt.msd{border-color:var(--ok)!important;background:#ecfdf5!important;}
+.bopt.dis{cursor:default;}
+@media(max-width:620px){.bt-wrap{grid-template-columns:1fr;}.bt-arr{transform:rotate(90deg);}}
+/* SUBMIT */
+.brow{display:flex;justify-content:center;margin-top:24px;}
+.bsub{background:linear-gradient(135deg,var(--p),var(--b));color:#fff;border:none;padding:13px 44px;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.2px;box-shadow:0 7px 22px rgba(124,58,237,.38);transition:all .18s;}
+.bsub:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(124,58,237,.48);}
+.bsub:disabled{opacity:.45;cursor:default;transform:none;}
+/* RATIONALE */
+.rat{background:linear-gradient(135deg,#f5f3ff,#fff);border:2px solid var(--pl);border-radius:16px;padding:26px;margin-top:22px;animation:sli .38s ease;}
+@keyframes sli{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.rat h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--pd);margin-bottom:14px;}
+.rpill{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:999px;font-size:12.5px;font-weight:600;margin-bottom:14px;}
+.rpill.ok{background:var(--okb);color:#065f46;}.rpill.err{background:var(--errb);color:#991b1b;}
+.rtxt{font-size:14px;line-height:1.78;color:#374151;margin-bottom:12px;}
+.rtxt strong{color:var(--pd);}
+.rbd h4{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--p);font-weight:700;margin-bottom:9px;margin-top:14px;}
+.ri{display:flex;gap:9px;padding:9px 13px;border-radius:9px;margin-bottom:7px;font-size:13px;line-height:1.6;}
+.ri.rc{background:#d1fae5;border-left:3px solid var(--ok);}
+.ri.rw{background:#fee2e2;border-left:3px solid var(--err);}
+.rl{font-family:'Space Mono',monospace;font-weight:700;font-size:12px;flex-shrink:0;margin-top:1px;}
+.rl.lc{color:#065f46;}.rl.lw{color:#991b1b;}
+/* MEMORY */
+.mem{background:linear-gradient(135deg,var(--pkp),var(--pp));border:2px solid var(--pkl);border-radius:13px;padding:16px 20px;margin-top:14px;}
+.mem h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--pk);font-weight:700;margin-bottom:7px;font-family:'Space Mono',monospace;}
+.mem p{font-size:13.5px;line-height:1.65;color:#1e1b4b;}
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;}
+.bnav{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:11px 24px;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;}
+.bnav:hover:not(:disabled){background:rgba(255,255,255,.25);transform:translateY(-1px);}
+.bnav:disabled{opacity:.28;cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:420px;}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.22);cursor:pointer;transition:all .18s;flex-shrink:0;}
+.dot.active{background:#fff;transform:scale(1.35);}
+.dot.acor{background:#6ee7b7;}
+.dot.awrg{background:#fca5a5;}
+/* POPUP */
+.pop{position:fixed;inset:0;background:rgba(76,29,149,.6);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;animation:pin .28s ease;}
+@keyframes pin{from{opacity:0;}to{opacity:1;}}
+.popc{background:#fff;border-radius:22px;padding:38px 46px;text-align:center;max-width:360px;width:90%;box-shadow:0 28px 70px rgba(76,29,149,.38);animation:pup .28s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pup{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pe{font-size:50px;margin-bottom:10px;}
+.pt{font-family:'Playfair Display',serif;font-size:24px;color:var(--pd);margin-bottom:7px;}
+.ps{color:#6b7280;font-size:14px;margin-bottom:22px;}
+.pbtn{background:linear-gradient(135deg,var(--p),var(--pk));color:#fff;border:none;padding:12px 34px;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 5px 18px rgba(124,58,237,.38);transition:all .18s;}
+.pbtn:hover{transform:translateY(-1px);}
+/* END */
+#end{display:none;}
+.endc{background:rgba(255,255,255,.97);border-radius:26px;padding:48px 36px;text-align:center;box-shadow:0 28px 70px rgba(76,29,149,.28);}
+.enem{font-size:68px;margin-bottom:14px;}
+.ent{font-family:'Playfair Display',serif;font-size:34px;color:var(--pd);margin-bottom:8px;}
+.ensc{font-size:50px;font-weight:700;background:linear-gradient(135deg,var(--p),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:18px 0;font-family:'Space Mono',monospace;}
+.enbd{display:flex;gap:14px;justify-content:center;margin:22px 0;flex-wrap:wrap;}
+.enst{background:var(--pp);border-radius:13px;padding:14px 22px;min-width:95px;}
+.ensn{font-size:26px;font-weight:700;color:var(--p);font-family:'Space Mono',monospace;}
+.ensl{font-size:11px;color:#6b7280;margin-top:3px;}
+.enmsg{font-size:16px;color:#374151;margin:14px 0;line-height:1.6;}
+.bres{background:linear-gradient(135deg,var(--p),var(--b));color:#fff;border:none;padding:15px 44px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;box-shadow:0 7px 22px rgba(124,58,237,.38);transition:all .18s;font-family:'DM Sans',sans-serif;}
+.bres:hover{transform:translateY(-2px);}
+@media(max-width:580px){.card{padding:22px 18px;}.stem{font-size:14.5px;}.opt{padding:12px 15px;}.opt label{font-size:13.5px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-badge">PP2 ✦ Cognition Pharmacology</div>
+    <h1>Parkinson's &amp; Alzheimer's Pharmacology</h1>
+    <p>60-Question Application-Level Mock Exam · NCLEX-Style</p>
+  </div>
+  <div class="sbar">
+    <div class="chip">Question <span id="qc">1</span> / 60</div>
+    <div class="chip">✅ <span id="cc">0</span> Correct</div>
+    <div class="chip">❌ <span id="wc">0</span> Incorrect</div>
+    <div class="chip">Score <span id="sp">—</span></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="pf" style="width:1.67%"></div></div>
+  <div id="qa"></div>
+  <div class="nav">
+    <button class="bnav" id="bprev" onclick="nav(-1)" disabled>← Prev</button>
+    <div class="dots" id="dots"></div>
+    <button class="bnav" id="bnext" onclick="nav(1)" disabled>Next →</button>
+  </div>
+</div>
+
+<div id="end">
+  <div class="wrap">
+    <div class="endc">
+      <div class="enem" id="ee">🎉</div>
+      <div class="ent">Exam Complete!</div>
+      <div class="ensc" id="esc">0/60</div>
+      <div class="enbd">
+        <div class="enst"><div class="ensn" id="ecc">0</div><div class="ensl">Correct</div></div>
+        <div class="enst"><div class="ensn" id="ewc">0</div><div class="ensl">Incorrect</div></div>
+        <div class="enst"><div class="ensn" id="epc">0%</div><div class="ensl">Score</div></div>
+      </div>
+      <div class="enmsg" id="emsg"></div>
+      <button class="bres" onclick="restart()">🔄 Restart Exam</button>
+    </div>
+  </div>
+</div>
+
+<div id="pop" class="pop" style="display:none;">
+  <div class="popc">
+    <div class="pe" id="pe">🌟</div>
+    <div class="pt" id="pt">Correct!</div>
+    <div class="ps" id="ps">Excellent clinical reasoning!</div>
+    <button class="pbtn" onclick="closePop()">Continue</button>
+  </div>
+</div>
+
+<script>
+const Q=[
+// ════════════════════════════════════════
+// CARBIDOPA / LEVODOPA  Q1–10
+// ════════════════════════════════════════
+{id:1,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease who has been taking carbidopa/levodopa for two weeks calls the clinic stating, "The medication is not doing anything — I feel exactly the same." Which nurse response is most appropriate?',
+opts:[
+{id:'a',text:'Instruct the client to double the current dose until symptoms improve, then return to the prescribed dose'},
+{id:'b',text:'Advise the client that full therapeutic effects may not be apparent for several months and to continue taking the medication as prescribed',correct:true},
+{id:'c',text:'Recommend the client stop carbidopa/levodopa and schedule an appointment to discuss alternative agents'},
+{id:'d',text:'Inform the client that symptom improvement within the first week is the expected response and the dose likely needs adjustment'}
+],
+rat:'<strong>B is correct.</strong> Carbidopa/levodopa requires several months before full therapeutic effects are achieved. Clients who stop the medication prematurely or independently adjust doses risk inadequate symptom control and rebound. Option A is dangerous — self-adjusting doses increases toxicity and dyskinesia risk. Option D is incorrect because early improvement within the first week is not the expected timeline.',
+bd:{a:'❌ Self-adjusting doses is unsafe and not within the nurse\'s scope to recommend.',b:'✅ Several months is the correct therapeutic timeline for carbidopa/levodopa.',c:'❌ Abruptly discontinuing Parkinson\'s medications can precipitate severe rebound symptoms.',d:'❌ Expecting full benefit in the first week is incorrect and sets unrealistic expectations.'},
+mem:'⏳ Carbidopa/levodopa = SLOW BUILD. Think "months, not days." Clients who give up early never get the chance to see the benefit. Always counsel realistic timelines to prevent premature discontinuation!'},
+
+{id:2,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'The nurse is preparing to administer the morning dose of carbidopa/levodopa to a client with Parkinson\'s disease. A review of the client\'s breakfast tray shows a meal of eggs, steak, and a protein supplement shake. Which action should the nurse take?',
+opts:[
+{id:'a',text:'Administer the medication with the meal since food reduces GI upset from levodopa'},
+{id:'b',text:'Hold the medication until after the meal is complete and the tray is removed, then administer with water'},
+{id:'c',text:'Administer the medication with a small amount of water now, and counsel the client to space high-protein foods from medication times',correct:true},
+{id:'d',text:'Contact the dietary department to substitute the protein foods with carbohydrate-based alternatives before administration'}
+],
+rat:'<strong>C is correct.</strong> High-protein meals compete with levodopa for absorption at the intestinal level via the same amino acid transporter. The nurse should administer the medication while educating the client about spacing high-protein foods from medication times — not eliminate protein entirely or delay the scheduled dose without provider direction.',
+bd:{a:'❌ Taking levodopa with high-protein foods is specifically contraindicated due to competitive absorption.',b:'❌ Holding a scheduled medication without provider order is outside nursing scope; this also delays treatment.',c:'✅ Administer as scheduled and reinforce teaching about protein spacing — this addresses both safety and adherence.',d:'❌ Changing the diet without provider or dietitian order is outside nursing scope and overly restrictive.'},
+mem:'🥩 Protein = Levodopa\'s competitor at the gut transporter. They share the same entry point. Administer the drug, then TEACH spacing — don\'t eliminate protein entirely, just separate it from dose times.'},
+
+{id:3,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease on carbidopa/levodopa reports noticing their sweat has turned a dark brownish color and is staining their clothing. The client appears distressed and asks whether this indicates a serious problem. Which nursing response is most accurate?',
+opts:[
+{id:'a',text:'Reassure the client that darkening of sweat and urine is a known, harmless effect of levodopa and does not indicate toxicity or organ damage',correct:true},
+{id:'b',text:'Instruct the client to stop the medication immediately and report to the emergency department for liver function evaluation'},
+{id:'c',text:'Notify the provider that the client may be experiencing signs of renal failure secondary to carbidopa/levodopa therapy'},
+{id:'d',text:'Explain that the discoloration is caused by carbidopa specifically and the provider may need to adjust the carbidopa component of the dose'}
+],
+rat:'<strong>A is correct.</strong> Darkening of sweat, urine, and saliva is a documented, benign side effect of levodopa. It does not indicate toxicity, organ damage, or renal/hepatic failure. Clients should be reassured and taught about this effect proactively to prevent alarm.',
+bd:{a:'✅ Darkened secretions are explicitly listed as a harmless, expected side effect of levodopa.',b:'❌ Stopping the medication abruptly and seeking emergency care is an overreaction to a benign finding.',c:'❌ Dark sweat is not associated with renal failure — this would cause false alarm and unnecessary testing.',d:'❌ The darkening is attributable to levodopa metabolites, not specifically carbidopa, and no dose adjustment is indicated.'},
+mem:'🟤 "Dark sweat = harmless metabolite." Levodopa breaks down into pigmented compounds. Tell clients BEFORE they notice it — proactive teaching prevents panic. It does NOT mean the kidneys or liver are failing!'},
+
+{id:4,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease who has been taking carbidopa/levodopa for three years develops involuntary, writhing movements of the trunk and extremities that occur at peak medication times. The nurse anticipates the provider will address this complication by considering which intervention?',
+opts:[
+{id:'a',text:'Discontinuing carbidopa/levodopa and transitioning to an anticholinergic agent'},
+{id:'b',text:'Adding amantadine to the regimen or reducing the carbidopa/levodopa dose',correct:true},
+{id:'c',text:'Increasing the carbidopa/levodopa dose to overcome the motor fluctuations'},
+{id:'d',text:'Initiating a selective serotonin reuptake inhibitor to manage the involuntary movements'}
+],
+rat:'<strong>B is correct.</strong> The described presentation is levodopa-induced dyskinesia — involuntary movements occurring at peak drug concentration. Management includes dose reduction and/or adding amantadine, which has antidyskinetic properties. Increasing the dose would worsen dyskinesias. SSRIs do not treat motor dyskinesias.',
+bd:{a:'❌ Abruptly discontinuing long-term carbidopa/levodopa is dangerous; anticholinergics are not indicated for dyskinesia.',b:'✅ Amantadine is specifically indicated to reduce levodopa-induced dyskinesias; dose reduction is also a strategy.',c:'❌ Increasing the dose would intensify dyskinesia — more levodopa at peak levels makes peak-dose dyskinesias worse.',d:'❌ SSRIs address mood; they are not used to treat motor dyskinesias and carry serotonin syndrome risk with selegiline.'},
+mem:'💊 Peak-dose dyskinesia = too much dopamine at peak. Solution = reduce the peaks. Amantadine "smooths out" the dyskinesia. Increasing levodopa = making it worse. Decreasing + add amantadine = the classic fix.'},
+
+{id:5,type:'sata',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'The nurse is reviewing a client\'s medication administration record. The client takes carbidopa/levodopa for Parkinson\'s disease. Which co-prescribed medications require the nurse to follow up with the provider before administering? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Risperidone 1 mg orally at bedtime',correct:true},
+{id:'b',text:'Phenelzine 15 mg orally twice daily',correct:true},
+{id:'c',text:'Entacapone 200 mg orally with each levodopa dose'},
+{id:'d',text:'Benztropine 1 mg orally twice daily',correct:true},
+{id:'e',text:'Chlorpromazine 25 mg orally three times daily',correct:true},
+{id:'f',text:'Pramipexole 0.5 mg orally three times daily'}
+],
+rat:'<strong>A, B, D, and E require follow-up.</strong> Risperidone and chlorpromazine are dopamine receptor antagonists — they directly oppose carbidopa/levodopa\'s mechanism. Phenelzine (MAOI) combined with levodopa risks hypertensive crisis. Benztropine (anticholinergic) can enhance levodopa responses excessively, worsening dyskinesias. Entacapone and pramipexole are intended therapeutic adjuncts — no concern.',
+bd:{a:'✅ Risperidone blocks D2 receptors, directly opposing levodopa\'s therapeutic effect.',b:'✅ MAO inhibitor + levodopa = hypertensive crisis risk — a critical interaction.',c:'❌ Entacapone is a COMT inhibitor used therapeutically alongside carbidopa/levodopa.',d:'✅ Anticholinergics can enhance levodopa responses excessively, increasing adverse effects.',e:'✅ Chlorpromazine is a dopamine antagonist — same problem as risperidone.',f:'❌ Pramipexole is a dopamine agonist used as a complementary adjunct.'},
+mem:'🚨 Levodopa enemies: "2 Antipsychotics + MAOIs + too much Anticholinergic." Antipsychotics = dopamine blockers. MAOIs = hypertensive crisis. Anticholinergics = enhance levodopa TOO much. Adjuncts (entacapone, pramipexole) = intended combinations.'},
+
+{id:6,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client on carbidopa/levodopa who also takes a daily vitamin supplement asks whether the vitamin could affect the medication. The nurse is most concerned about which vitamin in the supplement?',
+opts:[
+{id:'a',text:'Vitamin C (ascorbic acid), which can increase levodopa excretion and reduce its plasma levels'},
+{id:'b',text:'Vitamin B6 (pyridoxine), which accelerates peripheral conversion of levodopa to dopamine, reducing the amount that reaches the brain',correct:true},
+{id:'c',text:'Vitamin D, which competes with levodopa for intestinal absorption at calcium-dependent transporters'},
+{id:'d',text:'Vitamin E (tocopherol), which inhibits carbidopa and prevents levodopa from crossing the blood-brain barrier'}
+],
+rat:'<strong>B is correct.</strong> Pyridoxine (vitamin B6) is a cofactor for DOPA decarboxylase — the enzyme that converts levodopa to dopamine. Without carbidopa to block this peripheral conversion, vitamin B6 speeds up the breakdown of levodopa in peripheral tissues, reducing how much reaches the brain. However, carbidopa largely counteracts this interaction.',
+bd:{a:'❌ Vitamin C is not documented to significantly reduce levodopa absorption or accelerate its excretion.',b:'✅ Vitamin B6 is a cofactor for peripheral DOPA decarboxylase — it can enhance peripheral levodopa breakdown. This is why carbidopa\'s role as a decarboxylase inhibitor is so critical.',c:'❌ Vitamin D does not compete with levodopa at intestinal transporters; this is not a documented interaction.',d:'❌ Vitamin E does not affect carbidopa or the BBB crossing mechanism.'},
+mem:'🔬 B6 = DOPA decarboxylase cofactor = breaks down levodopa PERIPHERALLY. More B6 = more peripheral breakdown = less levodopa reaches the brain. Carbidopa blocks this, but high-dose B6 supplementation still warrants caution. Always ask about vitamins!'},
+
+{id:7,type:'sata',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'The nurse is evaluating a client who has been taking carbidopa/levodopa for six months. Which findings indicate the medication is achieving its intended therapeutic effect? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'The client reports improved ability to button clothing and use utensils independently',correct:true},
+{id:'b',text:'The client\'s gait has improved and episodes of "freezing" have decreased in frequency',correct:true},
+{id:'c',text:'The client\'s resting tremor is less severe than documented at the time of diagnosis',correct:true},
+{id:'d',text:'The client has gained 5 pounds and reports increased appetite since starting the medication'},
+{id:'e',text:'The client\'s rigidity and bradykinesia have both improved on physical examination',correct:true},
+{id:'f',text:'The client reports feeling "wound up" and has not been sleeping more than 3 hours nightly'}
+],
+rat:'<strong>A, B, C, and E are correct.</strong> The therapeutic goals of carbidopa/levodopa are reduction of the cardinal signs of Parkinson\'s disease: tremor, rigidity, bradykinesia, and postural instability — resulting in improved ADL performance and function. Weight gain is not a listed therapeutic effect. Insomnia is an adverse effect of some Parkinson\'s medications (e.g., selegiline) and is not a desired outcome.',
+bd:{a:'✅ Improved fine motor control reflects improved dopaminergic function in the striatum.',b:'✅ Reduced freezing episodes and improved gait are key therapeutic outcomes.',c:'✅ Reduction in resting tremor is a cardinal therapeutic goal.',d:'❌ Increased appetite and weight gain are not listed therapeutic effects of carbidopa/levodopa.',e:'✅ Improved rigidity and bradykinesia reflect direct response to dopamine restoration.',f:'❌ Insomnia is not therapeutic — it is an adverse effect (more closely associated with selegiline).'},
+mem:'🎯 Levodopa therapeutic goals = "TRaB" — Tremor reduced, Rigidity reduced, Bradykinesia reduced. All three = improved ADLs. If you see the client buttoning shirts, walking better, freezing less = the drug is WORKING!'},
+
+{id:8,type:'mc',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease reports that their carbidopa/levodopa wears off about two hours before the next scheduled dose, causing a predictable return of tremors and difficulty walking every afternoon. The provider is evaluating management options. Which description best characterizes this phenomenon?',
+opts:[
+{id:'a',text:'Peak-dose dyskinesia, in which excessive dopamine at peak concentration causes involuntary movements'},
+{id:'b',text:'The "on-off" phenomenon, in which unpredictable symptom fluctuations occur with no relationship to dosing schedule'},
+{id:'c',text:'The "wearing-off" effect, in which levodopa\'s duration of action shortens over time causing predictable end-of-dose symptom return',correct:true},
+{id:'d',text:'Levodopa toxicity, in which accumulation over time leads to breakthrough CNS adverse effects between doses'}
+],
+rat:'<strong>C is correct.</strong> The wearing-off effect is characterized by predictable, end-of-dose return of symptoms that correlates with the medication\'s declining plasma level before the next dose. This is different from the true on-off phenomenon, which is unpredictable and not dose-related. Management includes dose adjustment, shorter intervals, or adding adjuncts like entacapone.',
+bd:{a:'❌ Peak-dose dyskinesia occurs at peak drug concentration, not at end-of-dose. Symptoms here are return of tremors, not involuntary movements.',b:'❌ The on-off phenomenon is UNPREDICTABLE and has no reliable relationship to dosing timing — this scenario is predictable and dose-related.',c:'✅ Predictable return of symptoms before the next dose = wearing-off effect. The pattern (every afternoon) and relationship to dosing confirm this.',d:'❌ The client is experiencing symptom return, not toxicity. Toxicity presents with excessive dopaminergic effects, not Parkinson\'s symptom breakthrough.'},
+mem:'⏰ Wearing-off = PREDICTABLE end-of-dose failure. On-Off = UNPREDICTABLE light switch. The key word is PREDICTABLE — if you can set a clock to when symptoms return, it\'s wearing-off! Fix: adjust dose intervals or add entacapone.'},
+
+{id:9,type:'matrix',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'The nurse is caring for a client who was started on carbidopa/levodopa 48 hours ago. For each client finding, indicate whether it represents an <strong>Expected Response</strong> or an <strong>Unexpected Response</strong> requiring follow-up.',
+cols:['Expected Response','Unexpected — Requires Follow-Up'],
+rows:[
+{t:'Client reports mild nausea after taking the morning dose with a small amount of water',c:0},
+{t:'Client appears more alert and engaged but states tremors are not yet improved',c:0},
+{t:'Client\'s blood pressure drops from 128/82 to 92/58 mmHg when moving from lying to standing',c:1},
+{t:'Client reports auditory hallucinations — hearing voices that are not present',c:1},
+{t:'Client notes slight darkening of urine that began two days after starting the medication',c:0},
+{t:'Client\'s spouse reports the client purchased $4,000 worth of lottery tickets online overnight',c:1}
+],
+rat:'<strong>Rows 1, 2, and 5 are expected. Rows 3, 4, and 6 require follow-up.</strong> Nausea, slow therapeutic onset, and darkened urine are expected early findings. A 36-point drop in systolic BP (orthostatic hypotension) is a significant adverse effect requiring provider notification and fall precautions. Hallucinations represent a serious CNS adverse effect. Compulsive buying behavior, while more classic for dopamine agonists, can also occur with levodopa — any impulsive behavior warrants provider notification.',
+bd:{row0:'Expected — Nausea is a common early adverse effect; taking with food can help.',row1:'Expected — Full benefit takes weeks to months; early alertness is a reasonable early response.',row2:'Unexpected — A drop to 92/58 with position change is symptomatic orthostatic hypotension — fall risk and provider notification needed.',row3:'Unexpected — Hallucinations are a serious CNS adverse effect requiring provider evaluation.',row4:'Expected — Darkened urine is a benign metabolite effect of levodopa.',row5:'Unexpected — Compulsive behaviors (gambling, spending) can occur with dopaminergic therapy and require immediate provider notification.'},
+mem:'🔴 Orthostatic hypotension + hallucinations + compulsive behaviors = CALL THE PROVIDER. Nausea + dark urine + slow improvement = EXPECTED. The pattern: anything involving the brain or the BP warrants a second look.'},
+
+{id:10,type:'bowtie',drug:'Carbidopa/Levodopa',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease who takes carbidopa/levodopa three times daily is admitted to the medical unit for a hip fracture repair. The surgical team plans to hold ALL oral medications for 24 hours postoperatively due to NPO status. The nurse on the medical-surgical unit is aware of a potentially serious complication.',
+cond:{label:'The nurse recognizes the client is at risk for:',opts:[
+{id:'c1',text:'Neuroleptic malignant-like syndrome (NMS-like) from abrupt withdrawal of dopaminergic medications',correct:true},
+{id:'c2',text:'Hypertensive crisis from accumulated levodopa in the bloodstream during the NPO period'},
+{id:'c3',text:'Dyskinesias secondary to rebound dopamine accumulation when oral intake is resumed'},
+{id:'c4',text:'Respiratory failure from cholinergic rebound after stopping carbidopa/levodopa'}
+]},
+acts:{label:'Actions to take (Select 2):',opts:[
+{id:'a1',text:'Contact the provider or surgical team to discuss alternative routes of administration or prioritizing reinstatement of carbidopa/levodopa postoperatively',correct:true},
+{id:'a2',text:'Hold all Parkinson\'s medications per the NPO order without further assessment or communication'},
+{id:'a3',text:'Document the concern and advocate for the client by communicating the risk of abrupt levodopa withdrawal to the surgical team',correct:true},
+{id:'a4',text:'Administer a double dose of carbidopa/levodopa once NPO is lifted to compensate for missed doses'}
+]},
+params:{label:'Parameters to monitor (Select 2):',opts:[
+{id:'p1',text:'Temperature and neuromuscular rigidity as early indicators of NMS-like response',correct:true},
+{id:'p2',text:'Level of consciousness and cognitive status for acute changes consistent with withdrawal',correct:true},
+{id:'p3',text:'Serum potassium levels for hypokalemia related to the NPO period'},
+{id:'p4',text:'Urine output for fluid retention caused by halted dopamine activity'}
+]},
+rat:'Abrupt withdrawal of carbidopa/levodopa — even for 24 hours — can precipitate an <strong>NMS-like syndrome</strong> characterized by hyperthermia, severe muscle rigidity, altered consciousness, and autonomic instability. This is a medical emergency. The nurse must advocate for the client by notifying the surgical team and ensuring a plan to minimize the medication gap.',
+bd:{cond:'NMS-like syndrome from abrupt levodopa withdrawal is the most clinically significant risk. Fever + rigidity + altered LOC are the hallmarks.',acts:'Proactive communication with the surgical team and documentation/advocacy are the priority actions. Doubling doses is dangerous. Holding without communication is unsafe.',params:'Temperature and rigidity are the cardinal early warning signs of NMS-like syndrome. Cognitive status changes are also important to monitor.'},
+mem:'🌡️ Abrupt levodopa stop = NMS-like syndrome risk. Hallmarks: HIGH fever, RIGID muscles, ALTERED level of consciousness. This is an emergency. Always advocate to minimize the medication gap — even a 24-hour hold is dangerous!'},
+
+// ════════════════════════════════════════
+// DOPAMINE AGONISTS  Q11–17
+// ════════════════════════════════════════
+{id:11,type:'mc',drug:'Pramipexole / Ropinirole',tag:"Parkinson's",
+stem:'A client taking ropinirole for early Parkinson\'s disease calls the clinic to report falling asleep while driving on the highway and narrowly avoiding a collision. The nurse\'s priority response is to:',
+opts:[
+{id:'a',text:'Instruct the client to take the medication only at bedtime to minimize daytime sedation while driving'},
+{id:'b',text:'Advise the client to avoid driving and other hazardous activities, hold the dose, and contact the provider for evaluation before taking any further doses',correct:true},
+{id:'c',text:'Reassure the client that drowsiness is expected and recommend drinking caffeinated beverages before driving'},
+{id:'d',text:'Reduce the ropinirole dose by half and instruct the client to monitor alertness for 48 hours'}
+],
+rat:'<strong>B is correct.</strong> Dopamine agonists cause excessive daytime sleepiness, including sudden-onset sleep attacks, which are a serious safety hazard. The client who experiences a sleep attack while driving must be advised to stop driving immediately, hold the medication, and contact the provider. Independent dose adjustment or stimulant recommendations are not appropriate nursing actions.',
+bd:{a:'❌ Shifting timing may help with insomnia but does not prevent sudden daytime sleep attacks — and driving remains dangerous.',b:'✅ Patient safety is the priority. Stop driving, hold the medication, and get provider guidance before resuming.',c:'❌ Caffeine cannot reliably prevent sudden sleep attacks from dopamine agonists. Driving with this adverse effect is dangerous.',d:'❌ Independently reducing the dose is outside nursing scope and does not address the immediate safety issue of driving.'},
+mem:'😴 Dopamine agonists + driving = DANGEROUS. Sudden-onset sleep attacks are unpredictable — they cannot be fought with caffeine. The rule: "If you\'ve fallen asleep while driving, stop driving NOW and call the provider BEFORE the next dose."'},
+
+{id:12,type:'mc',drug:'Pramipexole',tag:"Parkinson's",
+stem:'A client\'s family member contacts the clinic reporting that their spouse who is prescribed pramipexole has spent over $15,000 gambling online in the past month and is secretive and defensive about it. The client denies having a gambling problem. Which action by the nurse is most appropriate?',
+opts:[
+{id:'a',text:'Advise the family member that gambling is a personal choice and that the client has the right to privacy regarding their finances'},
+{id:'b',text:'Document the family\'s concern and schedule a routine follow-up appointment within 30 days'},
+{id:'c',text:'Notify the provider of the behavior, as dopamine agonists are associated with impulse control disorders that require medication evaluation',correct:true},
+{id:'d',text:'Reassure the family that compulsive behaviors resolve on their own as the client adjusts to the medication over time'}
+],
+rat:'<strong>C is correct.</strong> Impulse control disorders — including pathological gambling, hypersexuality, compulsive shopping, and binge eating — are well-documented, serious adverse effects of dopamine agonists. The client\'s lack of insight (denial) is consistent with this adverse effect. The provider must be notified for medication evaluation, as this may require dose reduction or medication change.',
+bd:{a:'❌ This is not a lifestyle preference — this is a recognized drug adverse effect causing functional and financial harm that requires clinical action.',b:'❌ A 30-day delay is inappropriate. $15,000 in gambling losses represents a current active harm requiring urgent provider notification.',c:'✅ Impulse control disorders from dopamine agonists require prompt provider notification and medication evaluation.',d:'❌ These behaviors do not resolve with adjustment — they are drug-induced and typically require dose reduction or drug discontinuation.'},
+mem:'🎰 Dopamine agonists → reward circuit stimulation → impulse control disorders. Gambling, hypersexuality, binge eating, compulsive shopping. Lack of insight is common — the FAMILY often notices first. Always document and notify the provider immediately!'},
+
+{id:13,type:'sata',drug:'Pramipexole / Ropinirole',tag:"Parkinson's",
+stem:'A nurse is planning care for a client newly started on pramipexole for Parkinson\'s disease. Which nursing interventions are appropriate to include in the care plan? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Implement fall precautions due to postural hypotension and dizziness risk',correct:true},
+{id:'b',text:'Educate the client to change positions slowly when moving from lying or sitting to standing',correct:true},
+{id:'c',text:'Instruct the client to avoid all driving until the provider clears them after assessing for daytime sedation',correct:true},
+{id:'d',text:'Administer pramipexole with a high-protein meal to reduce the risk of nausea'},
+{id:'e',text:'Assess for new-onset compulsive behaviors at each follow-up contact',correct:true},
+{id:'f',text:'Initiate telemetry monitoring for QT prolongation as a routine precaution'}
+],
+rat:'<strong>A, B, C, and E are correct.</strong> Fall precautions, position-change education, driving restrictions, and compulsive behavior screening are all appropriate nursing interventions for clients on dopamine agonists. High-protein meal interaction is a concern for levodopa — not specifically pramipexole. Routine telemetry for QT prolongation is not a standard monitoring requirement for pramipexole.',
+bd:{a:'✅ Postural hypotension and dizziness are listed adverse effects — fall risk must be addressed.',b:'✅ Slow position changes help prevent orthostatic hypotension-related dizziness and falls.',c:'✅ Daytime sedation and sleep attacks make driving hazardous — this must be addressed before driving resumes.',d:'❌ Protein interaction is specific to levodopa absorption, not pramipexole mechanism.',e:'✅ Impulse control disorders require ongoing surveillance at each contact.',f:'❌ QT prolongation monitoring is not a standard requirement for pramipexole.'},
+mem:'🏥 Pramipexole care plan must-haves: Falls precautions, slow position changes, no driving assessment, compulsive behavior screening. The protein concern belongs to LEVODOPA, not dopamine agonists!'},
+
+{id:14,type:'mc',drug:'Pramipexole / Ropinirole',tag:"Parkinson's",
+stem:'A nurse is reviewing the pathophysiology of Parkinson\'s disease with a student. The student asks why some clients with mild Parkinson\'s disease are started on a dopamine agonist rather than carbidopa/levodopa. Which response by the nurse is most accurate?',
+opts:[
+{id:'a',text:'Dopamine agonists are preferred in older clients because they have fewer cardiac side effects than levodopa'},
+{id:'b',text:'Dopamine agonists have a longer duration of action and can be dosed once weekly, improving medication adherence'},
+{id:'c',text:'Dopamine agonists are preferred in younger clients to delay levodopa use and reduce long-term dyskinesia risk',correct:true},
+{id:'d',text:'Dopamine agonists are preferred in mild disease because they cross the blood-brain barrier more effectively than levodopa'}
+],
+rat:'<strong>C is correct.</strong> Dopamine agonists are often preferred as first-line therapy in younger clients with mild Parkinson\'s disease specifically to delay initiation of levodopa. Long-term levodopa use carries a higher risk of dyskinesias. By using dopamine agonists initially, the cumulative levodopa exposure is reduced, potentially delaying or reducing dyskinesia development.',
+bd:{a:'❌ Older adults are actually more susceptible to the CNS adverse effects of dopamine agonists (hallucinations, confusion). Levodopa may be preferred in the elderly.',b:'❌ Dopamine agonists are not dosed weekly — they require multiple daily doses.',c:'✅ Delaying levodopa in younger patients to reduce long-term dyskinesia risk is the clinical rationale for using dopamine agonists first.',d:'❌ BBB crossing is not the rationale. Dopamine agonists do cross the BBB readily, but this is not why they are preferred in mild disease.'},
+mem:'🧑 Young patient + mild PD = Start with dopamine agonist to DELAY levodopa. Why? Long-term levodopa = dyskinesia risk. Save levodopa for when they really need it. Older patients often skip straight to levodopa because dopamine agonists cause MORE CNS problems in the elderly.'},
+
+{id:15,type:'matrix',drug:'Pramipexole',tag:"Parkinson's",
+stem:'A nurse has completed discharge teaching for a client prescribed pramipexole. During a follow-up call, the client makes the following statements. For each statement, indicate whether it demonstrates <strong>Effective</strong> or <strong>Ineffective</strong> understanding.',
+cols:['Effective Understanding','Ineffective — Needs Reinforcement'],
+rows:[
+{t:'"I\'ve been getting up slowly from my chair because I\'ve noticed some lightheadedness when I stand quickly"',c:0},
+{t:'"I stopped taking pramipexole on my own last week because I felt worse — I figured I\'d restart when I feel ready"',c:1},
+{t:'"I told my doctor that I\'ve been having new urges to shop online constantly — I\'ve been buying things I don\'t need every night"',c:0},
+{t:'"I\'ve been having some nausea after my doses but I\'m managing it by taking the medication with a small snack"',c:0},
+{t:'"The medication should start working fully by the end of this week — I expect my tremors to be gone soon"',c:1},
+{t:'"I know this medication controls symptoms but won\'t reverse the underlying disease"',c:0}
+],
+rat:'<strong>Rows 1, 3, 4, and 6 show effective understanding. Rows 2 and 5 are ineffective.</strong> Stopping pramipexole abruptly without provider guidance is unsafe. Expecting full benefit within one week is incorrect — effects develop over weeks to months. Reporting compulsive behaviors, managing nausea with food, using fall precautions, and maintaining realistic expectations all demonstrate correct teaching integration.',
+bd:{row0:'Effective — Slow position change correctly addresses orthostatic hypotension risk.',row1:'Ineffective — Abruptly stopping Parkinson\'s medications without provider guidance is dangerous.',row2:'Effective — Correctly identifying and reporting compulsive behaviors reflects teaching retention.',row3:'Effective — Nausea with food management is appropriate and does not interfere with pramipexole absorption.',row4:'Ineffective — Full benefit takes weeks to months, not days. Expecting tremor elimination is also unrealistic.',row5:'Effective — Realistic expectations about symptom management vs. cure are correctly understood.'},
+mem:'📚 Two big ineffective understanding red flags: (1) Stopping meds alone = DANGEROUS, (2) Expecting full results in a week = WRONG. Correct understanding = slow stand, report compulsions, take with snack, stay patient, no cure only control.'},
+
+{id:16,type:'mc',drug:'Pramipexole / Ropinirole',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease who is on ropinirole is being evaluated in the clinic. Vital signs show BP 148/86 mmHg lying, 104/62 mmHg standing. The client reports feeling dizzy and nearly falling twice at home. Which intervention should the nurse prioritize first?',
+opts:[
+{id:'a',text:'Initiate a dietary sodium restriction and fluid limit to address the blood pressure differential'},
+{id:'b',text:'Educate the client on fall prevention strategies and assist with identifying modifications to the home environment to reduce fall risk',correct:true},
+{id:'c',text:'Hold ropinirole until the blood pressure values normalize and symptoms resolve without provider notification'},
+{id:'d',text:'Schedule a cardiology referral to rule out structural causes of orthostatic hypotension before continuing ropinirole'}
+],
+rat:'<strong>B is correct.</strong> The BP differential and near-falls indicate symptomatic orthostatic hypotension — a recognized adverse effect of dopamine agonists. The immediate nursing priority is patient safety — fall prevention education and home modification. The provider should also be notified. Holding the medication without provider direction is not appropriate. Sodium/fluid restriction would worsen hypotension.',
+bd:{a:'❌ Sodium restriction and fluid limits would worsen orthostatic hypotension — the opposite of the correct intervention.',b:'✅ Fall prevention is the immediate safety priority. The nurse should also notify the provider, but the first action is ensuring the client\'s safety.',c:'❌ Holding medications without provider order is outside nursing scope. The provider must be notified.',d:'❌ A cardiology referral may be appropriate eventually, but the immediate priority is addressing the active fall risk from a known drug adverse effect.'},
+mem:'⬆️ Orthostatic hypotension = biggest fall risk from dopamine agonists. BP drops significantly with position change → dizziness → falls → injury. Priority: FALL PREVENTION. Then notify provider. Sodium restriction = wrong direction!'},
+
+{id:17,type:'mc',drug:'Pramipexole / Ropinirole',tag:"Parkinson's",
+stem:'A client asks why their provider chose ropinirole instead of carbidopa/levodopa, stating, "My friend with Parkinson\'s takes the other medication and says it works much better." Which nursing response most accurately explains the difference in therapeutic effect profiles?',
+opts:[
+{id:'a',text:'Ropinirole works by the same mechanism as carbidopa/levodopa but is formulated to cause fewer nausea-related side effects'},
+{id:'b',text:'Ropinirole is generally considered less potent than carbidopa/levodopa for motor symptoms but carries a lower risk of dyskinesias with long-term use',correct:true},
+{id:'c',text:'Carbidopa/levodopa is less effective because it requires a longer absorption period, while ropinirole works immediately'},
+{id:'d',text:'Ropinirole is preferred over carbidopa/levodopa because it has no risk of compulsive behaviors or CNS adverse effects'}
+],
+rat:'<strong>B is correct.</strong> Dopamine agonists like ropinirole are generally less effective than carbidopa/levodopa for controlling motor symptoms, but they carry a significantly lower risk of dyskinesias over the long term. This trade-off is why they are often chosen as initial therapy in younger patients. The client\'s friend may experience better motor control on levodopa, but with greater long-term risk.',
+bd:{a:'❌ They work by completely different mechanisms. Carbidopa/levodopa replaces dopamine; ropinirole directly stimulates receptors.',b:'✅ Less motor efficacy but lower dyskinesia risk is the key trade-off with dopamine agonists vs. levodopa.',c:'❌ Onset of action is not the distinguishing factor. Both require weeks for full effect.',d:'❌ Dopamine agonists have MORE risk of compulsive behaviors and hallucinations than levodopa — this statement is incorrect.'},
+mem:'⚖️ Levodopa = STRONGER motor control but higher dyskinesia risk long-term. Dopamine agonists = WEAKER motor control but lower dyskinesia risk. It\'s a trade-off. Young patients often get dopamine agonists FIRST to preserve levodopa\'s power for later.'},
+
+// ════════════════════════════════════════
+// ENTACAPONE  Q18–21
+// ════════════════════════════════════════
+{id:18,type:'mc',drug:'Entacapone',tag:"Parkinson's",
+stem:'The nurse is administering medications to a client prescribed carbidopa/levodopa and entacapone. The client asks why entacapone must be given at the same time as carbidopa/levodopa rather than separately. Which explanation is most accurate?',
+opts:[
+{id:'a',text:'Entacapone requires levodopa to activate its mechanism and cannot work independently'},
+{id:'b',text:'Entacapone works in the intestine and peripheral tissues at the time levodopa is present to prevent its premature breakdown, extending the amount that reaches the brain',correct:true},
+{id:'c',text:'Entacapone enhances carbidopa\'s ability to cross the blood-brain barrier when the two are administered simultaneously'},
+{id:'d',text:'Co-administration is required because entacapone and carbidopa are metabolized by the same hepatic enzyme'}
+],
+rat:'<strong>B is correct.</strong> Entacapone is a COMT inhibitor that works peripherally in the intestinal wall and tissues to prevent COMT-mediated breakdown of levodopa. Its action is most beneficial when levodopa is actively present in the system — which is why it is given WITH each dose of carbidopa/levodopa rather than as a separate standalone dose.',
+bd:{a:'❌ Entacapone does not require activation by levodopa; it independently inhibits COMT enzyme activity.',b:'✅ Peripheral COMT inhibition at the time levodopa is present = more levodopa survives to reach the brain.',c:'❌ Entacapone does not interact with carbidopa\'s BBB mechanism; it acts peripherally on levodopa itself.',d:'❌ Hepatic enzyme competition is not the rationale for co-administration timing.'},
+mem:'🔄 Entacapone = "right-time, right-place" drug. COMT breaks down levodopa in the gut and tissues. Entacapone blocks COMT only while levodopa is present. Take together every time = maximum levodopa survival = more reaches the brain.'},
+
+{id:19,type:'sata',drug:'Entacapone',tag:"Parkinson's",
+stem:'A nurse is providing discharge teaching to a client newly prescribed entacapone. Which teaching points should the nurse include? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Urine may take on an orange or brownish discoloration — this is an expected, harmless effect',correct:true},
+{id:'b',text:'Entacapone may worsen levodopa-related adverse effects such as dyskinesia or hallucinations due to increased levodopa availability',correct:true},
+{id:'c',text:'Entacapone should be taken separately from carbidopa/levodopa to prevent a drug interaction between the two'},
+{id:'d',text:'Entacapone can be safely combined with non-selective MAO inhibitors without additional dietary precautions'},
+{id:'e',text:'Diarrhea is a known adverse effect that, if persistent, should be reported to the provider',correct:true},
+{id:'f',text:'The medication is intended to extend the duration of carbidopa/levodopa, reducing "wearing-off" between doses',correct:true}
+],
+rat:'<strong>A, B, E, and F are correct.</strong> Orange urine discoloration is expected and benign. Because entacapone increases the effective amount of levodopa, existing levodopa adverse effects (dyskinesia, hallucinations) may worsen and should be monitored. Diarrhea is a GI adverse effect. The clinical purpose of entacapone is to extend levodopa duration. Entacapone must be taken WITH each levodopa dose, not separately. MAOI combinations with entacapone carry risk — dietary precautions and provider consultation are needed.',
+bd:{a:'✅ Orange/brown urine is expected and benign — proactive teaching prevents unnecessary alarm.',b:'✅ More levodopa reaching the brain means dopaminergic adverse effects can intensify.',c:'❌ Entacapone is specifically administered WITH each dose of carbidopa/levodopa.',d:'❌ Combining entacapone with non-selective MAOIs is potentially dangerous due to excessive catecholamine activity.',e:'✅ Diarrhea is a listed GI adverse effect requiring provider notification if persistent.',f:'✅ Reducing wearing-off and extending levodopa duration is the primary therapeutic goal of entacapone.'},
+mem:'🟠 Entacapone teaching: "More levodopa = more ADRs possible." Orange urine = fine. Diarrhea = report if persistent. Take WITH each levodopa dose. MAOIs = dangerous combination. If dyskinesias worsen after adding entacapone, it\'s working TOO well — provider needs to reduce levodopa dose!'},
+
+{id:20,type:'mc',drug:'Entacapone',tag:"Parkinson's",
+stem:'A client is prescribed entacapone as an add-on therapy for Parkinson\'s disease. Two weeks after starting the medication, the client calls to report that their involuntary arm movements have become significantly worse since starting the new drug. The nurse correctly interprets this finding as:',
+opts:[
+{id:'a',text:'An allergic reaction to entacapone requiring immediate discontinuation and evaluation'},
+{id:'b',text:'A sign that entacapone is ineffective and the client requires a different COMT inhibitor'},
+{id:'c',text:'A predictable consequence of increased levodopa bioavailability, suggesting the carbidopa/levodopa dose may need reduction',correct:true},
+{id:'d',text:'An indication that the client is not absorbing entacapone properly and the dose should be increased'}
+],
+rat:'<strong>C is correct.</strong> Worsening dyskinesias after adding entacapone are a direct and predictable consequence of the drug working as intended — more levodopa is now reaching the brain, and this increased dopaminergic stimulation can intensify existing levodopa-related dyskinesias. The appropriate clinical response is to reduce the carbidopa/levodopa dose, not to discontinue entacapone.',
+bd:{a:'❌ This is not an allergic reaction; worsening dyskinesia is a pharmacodynamic effect, not an immune response.',b:'❌ The drug is working — the result is increased levodopa effect. This is evidence of efficacy, not failure.',c:'✅ Dyskinesias worsen because MORE levodopa is reaching the brain. Fix: reduce the levodopa dose, not the entacapone.',d:'❌ The problem is too much effectiveness, not inadequate absorption. Increasing the dose would worsen dyskinesias further.'},
+mem:'⚠️ Entacapone works = more levodopa in the brain = dyskinesias can WORSEN. This is expected and manageable — reduce the levodopa dose. Don\'t stop entacapone! Think: "If dyskinesias worsen, you gave too much dopamine — turn the levodopa down."'},
+
+{id:21,type:'mc',drug:'Entacapone',tag:"Parkinson's",
+stem:'The nurse is caring for a client on carbidopa/levodopa and entacapone who develops a new onset of profuse sweating, confusion, and an elevated temperature of 39.8°C (103.6°F). The client has no documented infection. Which action should the nurse take first?',
+opts:[
+{id:'a',text:'Administer acetaminophen per protocol and continue monitoring vital signs every four hours'},
+{id:'b',text:'Assess the client\'s recent medication history and notify the provider of the findings immediately',correct:true},
+{id:'c',text:'Apply cooling blankets to reduce the temperature and reassess the client in two hours'},
+{id:'d',text:'Obtain blood cultures and initiate empiric antibiotics based on infection protocol'}
+],
+rat:'<strong>B is correct.</strong> This presentation — confusion, diaphoresis, and hyperthermia without documented infection — raises concern for a drug-related syndrome, potentially NMS-like syndrome (if medications were recently changed or discontinued) or serotonin syndrome (if serotonergic agents are involved). The nurse\'s FIRST action is to gather a complete medication history and notify the provider to determine the cause before initiating symptomatic treatment.',
+bd:{a:'❌ Treating the symptom (fever) before identifying the cause is not the priority. The underlying drug interaction or withdrawal must be identified first.',b:'✅ The nurse must act like a detective — gather medication history and notify the provider before any symptomatic treatment. The cause must be identified.',c:'❌ Cooling is a symptomatic measure and should not precede identifying the cause of the hyperthermia.',d:'❌ No infection is documented. Initiating antibiotics empirically before determining the cause is premature and potentially harmful.'},
+mem:'🕵️ Mystery fever + confusion + diaphoresis on a complex regimen = MEDICATION HISTORY FIRST. Always ask: "What changed?" Was a drug added, stopped, or missed? NMS-like syndrome and serotonin syndrome both present this way. Assess → Notify BEFORE treating symptoms!'},
+
+// ════════════════════════════════════════
+// SELEGILINE  Q22–27
+// ════════════════════════════════════════
+{id:22,type:'mc',drug:'Selegiline',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease who takes selegiline 10 mg daily is seen in the clinic with a blood pressure of 196/112 mmHg, a pounding headache rated 10/10, and diaphoresis. The client reports eating a dinner of aged cheese, salami, and red wine the previous evening. The nurse recognizes this presentation is consistent with:',
+opts:[
+{id:'a',text:'A hypertensive emergency secondary to tyramine-triggered norepinephrine release with high-dose, non-selective MAO inhibition',correct:true},
+{id:'b',text:'Serotonin syndrome triggered by the dietary tryptophan content in aged cheese and fermented foods'},
+{id:'c',text:'An autonomic dysreflexia episode unrelated to the selegiline therapy'},
+{id:'d',text:'Peak-dose levodopa toxicity potentiated by the concurrent dietary intake of tyramine'}
+],
+rat:'<strong>A is correct.</strong> At higher doses, selegiline loses its selectivity for MAO-B and begins to inhibit both MAO-A and MAO-B. MAO-A normally breaks down tyramine in the gut. When tyramine-rich foods (aged cheese, cured meats, wine) are consumed and MAO is inhibited, tyramine enters the bloodstream, triggering massive norepinephrine release and hypertensive crisis.',
+bd:{a:'✅ High-dose selegiline = non-selective MAOI activity → tyramine accumulates → norepinephrine surge → hypertensive crisis.',b:'❌ Serotonin syndrome is triggered by serotonergic agents (SSRIs + MAOIs), not by dietary tryptophan in the absence of serotonergic drugs.',c:'❌ Autonomic dysreflexia occurs in clients with spinal cord injuries, not in Parkinson\'s disease patients as a drug reaction.',d:'❌ Levodopa toxicity would present with excessive dopaminergic symptoms (dyskinesias, hallucinations) — not hypertensive crisis.'},
+mem:'🧀 High-dose selegiline = loses MAO-B selectivity = becomes a full MAOI. Tyramine-rich foods (aged cheese, cured meats, wine) + full MAOI = HYPERTENSIVE CRISIS. Teach: "At high doses, treat selegiline like a full MAOI — avoid ALL tyramine foods!"'},
+
+{id:23,type:'mc',drug:'Selegiline',tag:"Parkinson's",
+stem:'A client is prescribed selegiline 5 mg orally twice daily for early Parkinson\'s disease. The nurse provides medication teaching. Which client statement requires the nurse to provide additional education?',
+opts:[
+{id:'a',text:'"I will take my second dose before noon to avoid having trouble sleeping at night"'},
+{id:'b',text:'"I know this medication can be combined with my levodopa if needed later in my treatment"'},
+{id:'c',text:'"I should be able to take my prescription tramadol for back pain safely alongside this medication"',correct:true},
+{id:'d',text:'"I understand that at higher doses I would need to watch what I eat more carefully"'}
+],
+rat:'<strong>C requires additional education.</strong> Tramadol is a serotonergic opioid that also has weak MAO inhibitory properties. Combining tramadol with selegiline (an MAO inhibitor) carries risk of serotonin syndrome. The other statements are all accurate: before-noon dosing prevents insomnia, selegiline can be combined with levodopa, and high-dose selegiline requires tyramine dietary caution.',
+bd:{a:'✅ Correct — before-noon dosing is specifically recommended to prevent CNS excitation-related insomnia.',b:'✅ Correct — selegiline is used as an adjunct to levodopa therapy.',c:'❌ Incorrect client statement — tramadol + selegiline risks serotonin syndrome due to combined serotonergic activity.',d:'✅ Correct — high-dose selegiline loses MAO-B selectivity, requiring tyramine dietary precautions.'},
+mem:'💊 Selegiline + Opioids = DANGER. Specifically: tramadol + selegiline = serotonin syndrome risk. Meperidine (Demerol) is a complete contraindication with all MAOIs. Even though selegiline is "just" MAO-B, opioids are always a concern. Always check the pain med list!'},
+
+{id:24,type:'sata',drug:'Selegiline',tag:"Parkinson's",
+stem:'The nurse is reviewing priority discharge teaching for a client newly started on selegiline. Which points are most important to include? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Administer morning and midday doses — avoid late afternoon or evening administration to prevent insomnia',correct:true},
+{id:'b',text:'Report symptoms of serotonin toxicity such as agitation, fever, muscle twitching, or rapid heart rate, particularly if starting any new medications',correct:true},
+{id:'c',text:'Selegiline can be combined with any antidepressant to treat concurrent depression in Parkinson\'s disease'},
+{id:'d',text:'At standard doses, tyramine dietary restrictions are generally less critical but become essential if the dose is increased',correct:true},
+{id:'e',text:'Selegiline may slow disease progression in addition to providing symptomatic benefit, though this has not been definitively proven',correct:true},
+{id:'f',text:'Avoid grapefruit juice when taking selegiline to prevent significant drug accumulation in the bloodstream'}
+],
+rat:'<strong>A, B, D, and E are correct.</strong> Timing before noon prevents insomnia. Reporting signs of serotonin syndrome is critical — especially if antidepressants or other serotonergic drugs are prescribed. Tyramine restriction is dose-dependent. Selegiline may have neuroprotective properties (though not definitively proven). Not all antidepressants are safe — SSRIs and certain opioids carry serotonin syndrome risk. Grapefruit juice interaction with selegiline is not a documented teaching priority.',
+bd:{a:'✅ Before noon is the specific timing recommendation to prevent CNS excitation-related insomnia.',b:'✅ Serotonin syndrome surveillance is critical given the interaction with SSRIs and opioids.',c:'❌ SSRIs combined with selegiline carry serotonin syndrome risk — this statement is incorrect and dangerous.',d:'✅ Standard low doses = MAO-B selective = minimal tyramine concern. High doses = non-selective = tyramine restriction needed.',e:'✅ Selegiline is thought to have potential neuroprotective effects, though definitive proof is lacking.',f:'❌ Grapefruit-selegiline interaction is not a documented priority teaching point.'},
+mem:'🕛 Selegiline teaching priorities: (1) BEFORE NOON — no exceptions. (2) No SSRIs or risky opioids without provider guidance. (3) Tyramine = low concern at low dose, HIGH concern at high dose. (4) May slow progression — maybe. (5) Report fever + agitation + twitching immediately.'},
+
+{id:25,type:'mc',drug:'Selegiline',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease on selegiline is admitted with severe low back pain and rated it 8/10. The nurse reviews the client\'s allergy and medication record before administering analgesics. Which analgesic order should the nurse question before administering?',
+opts:[
+{id:'a',text:'Ketorolac (Toradol) 15 mg IV every 6 hours as needed'},
+{id:'b',text:'Meperidine (Demerol) 50 mg IV every 4 hours as needed for severe pain',correct:true},
+{id:'c',text:'Acetaminophen 650 mg orally every 6 hours scheduled'},
+{id:'d',text:'Ibuprofen 400 mg orally every 8 hours as needed'}
+],
+rat:'<strong>B should be questioned.</strong> Meperidine is absolutely contraindicated with all MAO inhibitors, including selegiline. The combination risks a life-threatening interaction including hyperthermia, hypertension or hypotension, coma, and potentially serotonin syndrome. Ketorolac (NSAID), acetaminophen, and ibuprofen do not carry this interaction and are safer alternatives for pain management.',
+bd:{a:'✅ Ketorolac is an NSAID with no documented MAO inhibitor interaction — no concern.',b:'❌ CRITICAL — meperidine + any MAOI = life-threatening interaction. This order must be questioned before administration.',c:'✅ Acetaminophen has no MAO inhibitor interaction and is safe.',d:'✅ Ibuprofen has no MAO inhibitor interaction relevant to this concern.'},
+mem:'🚫 Meperidine + MAOIs = ABSOLUTE contraindication. Every. Single. Time. This is one of the highest-yield drug interactions in pharmacology. When you see selegiline on the MAR, mentally flag: "NO MEPERIDINE." Also remember: tramadol, SSRIs, and other serotonergic drugs carry risk — but meperidine is the hardest NO.'},
+
+{id:26,type:'mc',drug:'Selegiline',tag:"Parkinson's",
+stem:'A client newly prescribed selegiline asks why they cannot simply take it in the evening with dinner to make it easier to remember. Which nurse response best explains the clinical rationale for the timing restriction?',
+opts:[
+{id:'a',text:'Selegiline must be taken with dinner because food significantly increases its absorption and therapeutic effectiveness'},
+{id:'b',text:'Evening administration increases the risk of dangerous blood pressure fluctuations during sleep when monitoring is reduced'},
+{id:'c',text:'Selegiline causes CNS excitation that can interfere with sleep when administered late in the day, so morning and midday timing is recommended',correct:true},
+{id:'d',text:'Selegiline\'s half-life requires precise 12-hour dosing intervals that can only be achieved with morning and noon administration'}
+],
+rat:'<strong>C is correct.</strong> Selegiline causes CNS excitation as a documented adverse effect. If taken in the afternoon or evening, this excitation disrupts sleep onset and sleep quality. The specific recommendation is to administer selegiline before noon to prevent insomnia.',
+bd:{a:'❌ Food does not specifically increase selegiline absorption to a clinically meaningful degree requiring meal timing.',b:'❌ Blood pressure fluctuations during sleep are not the primary reason for the timing restriction.',c:'✅ CNS excitation from selegiline disrupts sleep when taken late in the day — before noon is the specific recommendation.',d:'❌ Selegiline\'s timing is based on CNS adverse effects, not a strict pharmacokinetic half-life calculation.'},
+mem:'☀️ Selegiline = "Morning Drug Only." The dopamine boost is STIMULATING. Take it late = awake all night. Think of it like caffeine — you wouldn\'t drink a triple espresso at 8 PM. Before NOON = key teaching point that will absolutely be on your exam.'},
+
+{id:27,type:'mc',drug:'Selegiline',tag:"Parkinson's",
+stem:'A client on selegiline for Parkinson\'s disease is started on fluoxetine by their psychiatrist for major depressive disorder. Two days later, the client presents to the emergency department with agitation, diaphoresis, muscle rigidity, temperature 40.1°C, and HR of 138 bpm. Which condition does the nurse suspect?',
+opts:[
+{id:'a',text:'Neuroleptic malignant syndrome caused by dopamine depletion from the addition of fluoxetine'},
+{id:'b',text:'Serotonin syndrome caused by combined serotonergic excess from selegiline and fluoxetine',correct:true},
+{id:'c',text:'Anticholinergic toxicity caused by fluoxetine\'s anticholinergic properties reacting with selegiline'},
+{id:'d',text:'Tyramine-induced hypertensive crisis triggered by the fluoxetine metabolism pathway'}
+],
+rat:'<strong>B is correct.</strong> Fluoxetine (SSRI) increases serotonin availability. Selegiline inhibits MAO-B (and at relevant clinical doses, some MAO-A), reducing serotonin breakdown. The combination leads to excessive serotonergic stimulation — serotonin syndrome. Classic presentation: agitation, diaphoresis, hyperthermia, tachycardia, and muscle rigidity (often with hyperreflexia and clonus).',
+bd:{a:'❌ NMS involves dopamine depletion and antipsychotic use. Fluoxetine is not a dopamine antagonist, and selegiline increases dopamine.',b:'✅ SSRI + selegiline (MAOI) = excess serotonin = serotonin syndrome. Classic presentation matches.',c:'❌ Fluoxetine is not primarily anticholinergic. Anticholinergic toxicity presents with dry skin, urinary retention, and mydriasis — not diaphoresis and rigidity.',d:'❌ Tyramine crisis requires tyramine-containing food intake, not the addition of an SSRI.'},
+mem:'🌡️ Serotonin Syndrome Signs: "Hot, Wet, Twitchy, and Fast." Hot = fever. Wet = diaphoresis. Twitchy = muscle rigidity/clonus. Fast = tachycardia. Cause: SSRI + MAOI = too much serotonin. Selegiline is the MAOI here. Never combine!'},
+
+// ════════════════════════════════════════
+// AMANTADINE  Q28–33
+// ════════════════════════════════════════
+{id:28,type:'mc',drug:'Amantadine',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease is prescribed amantadine. After two weeks, the client\'s daughter calls to report that the client\'s legs and arms show a purplish-red, mottled, net-like skin discoloration, but the client reports no pain, swelling, or numbness. The nurse\'s priority response is to:',
+opts:[
+{id:'a',text:'Advise the daughter to apply warm compresses to the affected areas and monitor for resolution over 48 hours'},
+{id:'b',text:'Instruct the daughter to take the client to the emergency department immediately for evaluation of a potential blood clot'},
+{id:'c',text:'Document the finding, notify the provider, and reassure the client that livedo reticularis is a known adverse effect of amantadine',correct:true},
+{id:'d',text:'Instruct the client to hold amantadine until a dermatology consultation can be completed within the week'}
+],
+rat:'<strong>C is correct.</strong> Livedo reticularis — a purplish, mottled, net-like discoloration of the skin — is a known, specific adverse effect of amantadine. It is benign and cosmetically concerning but not dangerous. The nurse should notify the provider and document the finding, but the client does not need emergency evaluation or immediate medication discontinuation.',
+bd:{a:'❌ Warm compresses treat other skin conditions and won\'t resolve a drug-induced phenomenon; this also doesn\'t notify the provider.',b:'❌ While DVT should always be considered, the described pattern (net-like, mottled, without pain or swelling) is classic livedo reticularis — not DVT.',c:'✅ Livedo reticularis is a documented adverse effect of amantadine. Notify provider and document; no emergency intervention needed.',d:'❌ Holding the medication without provider direction is outside nursing scope and may not even be necessary for this benign finding.'},
+mem:'🟣 Livedo reticularis = "Net-like purple mottling" = AMANTADINE\'s signature skin finding. It looks alarming but is benign. If you see a weird purplish net-pattern on skin in a Parkinson\'s patient — think amantadine first. Notify, document, reassure.'},
+
+{id:29,type:'sata',drug:'Amantadine',tag:"Parkinson's",
+stem:'The nurse is completing an assessment on a client who has been taking amantadine for one month. Which findings should prompt the nurse to follow up? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Client is oriented to person, place, and time but reports having vivid dreams and feeling confused upon waking',correct:true},
+{id:'b',text:'Client reports difficulty starting urination and a sense of incomplete bladder emptying',correct:true},
+{id:'c',text:'Client\'s vision has become blurry when reading, requiring the client to hold books further away',correct:true},
+{id:'d',text:'Client reports improved energy and fewer episodes of freezing since starting the medication'},
+{id:'e',text:'Client\'s mouth is significantly dry and they are drinking 10 glasses of water per day to compensate',correct:true},
+{id:'f',text:'Client reports feeling anxious and restless, which is new since starting the medication',correct:true}
+],
+rat:'<strong>A, B, C, E, and F require follow-up.</strong> Confusion (even upon waking), urinary retention, blurred vision, dry mouth (indicating anticholinergic-like effects), and new anxiety are all listed adverse effects of amantadine. Improved energy and reduced freezing are therapeutic responses — expected and desirable.',
+bd:{a:'✅ Confusion is an adverse effect — even morning confusion or vivid dreams warrant provider follow-up.',b:'✅ Urinary retention is a listed anticholinergic-like adverse effect of amantadine.',c:'✅ Blurred vision is a listed adverse effect requiring follow-up.',d:'❌ Improved energy and reduced freezing episodes are therapeutic responses — no follow-up needed.',e:'✅ Excessive dry mouth indicates significant anticholinergic-like adverse effect requiring provider notification.',f:'✅ Anxiety and restlessness are listed CNS adverse effects of amantadine.'},
+mem:'💊 Amantadine ADRs = "CLABUD" — Confusion, Lightheadedness, Anxiety, Blurred vision, Urinary retention, Dry mouth. These overlap with anticholinergic effects because amantadine has anticholinergic-like activity. Improved freezing = GOOD. The CLABUD findings = FOLLOW-UP.'},
+
+{id:30,type:'mc',drug:'Amantadine',tag:"Parkinson's",
+stem:'A nurse is caring for a client with Parkinson\'s disease who has been on carbidopa/levodopa for four years and has developed significant dyskinesias. The provider adds amantadine to the regimen. The nurse understands this combination is most appropriate because amantadine:',
+opts:[
+{id:'a',text:'Inhibits dopamine breakdown by blocking COMT, effectively reducing peak levodopa concentrations and smoothing dyskinesias'},
+{id:'b',text:'Blocks NMDA glutamate receptors and increases dopamine availability, which reduces levodopa-induced dyskinesias',correct:true},
+{id:'c',text:'Reduces the activity of acetylcholine at muscarinic receptors, which counteracts the involuntary movements caused by excess dopamine'},
+{id:'d',text:'Directly stimulates D1 dopamine receptors to counterbalance the D2 receptor overstimulation that underlies dyskinesia'}
+],
+rat:'<strong>B is correct.</strong> Amantadine has two relevant mechanisms: it promotes dopamine release from presynaptic neurons and blocks NMDA glutamate receptors. The NMDA receptor antagonism is believed to underlie its anti-dyskinesia effect. It is specifically indicated to reduce levodopa-induced dyskinesias.',
+bd:{a:'❌ COMT inhibition is the mechanism of entacapone, not amantadine. COMT inhibitors would increase levodopa levels, potentially worsening dyskinesias.',b:'✅ NMDA antagonism + dopamine release/reuptake inhibition = the dual mechanism that makes amantadine effective against levodopa-induced dyskinesias.',c:'❌ Anticholinergic mechanism reduces tremor and rigidity; it does not specifically address levodopa-induced dyskinesias.',d:'❌ Amantadine does not directly stimulate D1 receptors as its primary mechanism.'},
+mem:'🔑 Amantadine = two jobs: (1) Releases dopamine and blocks reuptake, (2) Blocks NMDA receptors. Job #2 is what treats dyskinesias! The NMDA block is the anti-dyskinesia key. Amantadine is also memantine\'s cousin — both are NMDA antagonists!'},
+
+{id:31,type:'mc',drug:'Amantadine',tag:"Parkinson's",
+stem:'A client taking amantadine for Parkinson\'s disease is scheduled for a follow-up visit. Prior to the appointment, the provider\'s office receives a call from the client\'s caregiver reporting that the client has been increasingly confused and disoriented over the past two days. The caregiver also reports the client recently started a new over-the-counter sleep aid. Which medication is most likely contributing to the confusion?',
+opts:[
+{id:'a',text:'Melatonin, which interacts with dopaminergic receptors and alters amantadine metabolism'},
+{id:'b',text:'Diphenhydramine (Benadryl), which has anticholinergic properties that are additive with amantadine\'s anticholinergic-like effects',correct:true},
+{id:'c',text:'Valerian root, which inhibits amantadine absorption and causes breakthrough Parkinson\'s symptoms'},
+{id:'d',text:'Zinc lozenges, which compete with amantadine at NMDA receptors and enhance CNS toxicity'}
+],
+rat:'<strong>B is correct.</strong> Diphenhydramine is a widely available OTC antihistamine with significant anticholinergic activity. Amantadine itself has anticholinergic-like adverse effects. When combined, the anticholinergic burden is additive — leading to confusion, disorientation, urinary retention, and blurred vision, particularly in older adults.',
+bd:{a:'❌ Melatonin does not significantly interact with amantadine\'s dopaminergic mechanism or its metabolism.',b:'✅ Diphenhydramine + amantadine = additive anticholinergic effect = confusion and cognitive impairment, especially in the elderly.',c:'❌ Valerian root is not documented to significantly inhibit amantadine absorption.',d:'❌ Zinc lozenges do not have a documented pharmacological interaction with amantadine at NMDA receptors.'},
+mem:'💊 OTC sleep aids (diphenhydramine/Benadryl) are anticholinergic. Amantadine is anticholinergic-like. Add them together in an elderly patient = CONFUSION. Always ask: "Are you taking anything over the counter?" Benadryl for sleep is one of the most common hidden anticholinergic exposures!'},
+
+{id:32,type:'mc',drug:'Amantadine',tag:"Parkinson's",
+stem:'A client with Parkinson\'s disease is taking amantadine and has a history of chronic kidney disease (CKD) stage 3 with an eGFR of 42 mL/min. The nurse reviews the medication order and is concerned because:',
+opts:[
+{id:'a',text:'Amantadine requires renal metabolism and CKD accelerates its breakdown, reducing therapeutic blood levels'},
+{id:'b',text:'Amantadine is renally excreted and reduced kidney function can lead to drug accumulation and increased toxicity risk',correct:true},
+{id:'c',text:'CKD causes potassium retention that interacts with amantadine\'s sodium channel blocking properties'},
+{id:'d',text:'Amantadine is nephrotoxic at therapeutic doses and will accelerate the progression of stage 3 CKD to stage 4'}
+],
+rat:'<strong>B is correct.</strong> Amantadine is primarily eliminated by the kidneys. In clients with CKD, reduced glomerular filtration leads to decreased drug clearance and accumulation of amantadine to toxic levels. The provider should be notified about the client\'s renal function, and dose adjustment may be necessary.',
+bd:{a:'❌ Amantadine is excreted unchanged by the kidneys — reduced function SLOWS elimination and increases levels, not decreases them.',b:'✅ Renal excretion of amantadine + reduced GFR = drug accumulation = toxicity risk. This is a clinical concern requiring provider notification.',c:'❌ Potassium retention in CKD is a concern with certain medications but is not the mechanism of concern with amantadine.',d:'❌ Amantadine is not documented as directly nephrotoxic at therapeutic doses.'},
+mem:'🫘 Amantadine = "Kidney-Dependent Excretion." Bad kidneys = amantadine stays in the body = accumulation = toxicity. Always check renal function (BUN/Creatinine/eGFR) before administering. This applies to MANY renally cleared drugs — get in the habit of checking!'},
+
+{id:33,type:'mc',drug:'Amantadine',tag:"Parkinson's",
+stem:'The nurse is reviewing fall risk for a client taking amantadine. Which combination of adverse effects from this medication creates the highest fall risk in this client?',
+opts:[
+{id:'a',text:'Dry mouth and nausea increasing the risk of dehydration and electrolyte imbalance'},
+{id:'b',text:'Lightheadedness and blurred vision impairing the client\'s ability to perceive and respond to balance changes',correct:true},
+{id:'c',text:'Urinary retention and confusion increasing the risk of a fall while attempting to ambulate to the bathroom'},
+{id:'d',text:'Anxiety and vivid dreaming resulting in nighttime agitation and nocturnal wandering'}
+],
+rat:'<strong>B is correct.</strong> While all listed adverse effects can contribute to fall risk, the combination of lightheadedness (dizziness) and blurred vision most directly impairs the sensory and vestibular systems that maintain balance and spatial orientation. This pairing represents the most direct physiological fall risk combination from amantadine\'s adverse effect profile.',
+bd:{a:'❌ Dry mouth and nausea are GI adverse effects that can cause dehydration — a secondary fall risk contributor, but not the most direct.',b:'✅ Dizziness impairs balance sense; blurred vision impairs spatial awareness. Together, they create the most direct, immediate fall risk.',c:'❌ Urinary retention and confusion can contribute to falls (rushing to the bathroom, impaired judgment), but are secondary to the direct sensory impairment from lightheadedness and blurred vision.',d:'❌ Nighttime agitation from anxiety/dreaming contributes to nocturnal fall risk but is less immediately dangerous than the dual sensory impairment during waking hours.'},
+mem:'🏥 Fall risk from amantadine = Lightheaded + Blurry vision = Can\'t sense where they are + Can\'t see clearly. This combo = step off a curb they didn\'t see, lose balance they couldn\'t feel. Always assess these two together when evaluating fall risk on amantadine!'},
+
+// ════════════════════════════════════════
+// BENZTROPINE / TRIHEXYPHENIDYL  Q34–38
+// ════════════════════════════════════════
+{id:34,type:'sata',drug:'Benztropine',tag:"Parkinson's / EPS",
+stem:'The nurse is completing a medication history before administering benztropine to a client. Which findings should prompt the nurse to hold the medication and consult the provider before administration? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Client has a documented history of narrow-angle glaucoma',correct:true},
+{id:'b',text:'Client\'s most recent post-void residual bladder scan showed 380 mL of retained urine',correct:true},
+{id:'c',text:'Client\'s chart shows a diagnosis of benign prostatic hyperplasia with recurrent urinary retention',correct:true},
+{id:'d',text:'Client is 79 years old and prescribed the medication for mild Parkinson\'s tremor'},
+{id:'e',text:'Client has myasthenia gravis documented in their past medical history',correct:true},
+{id:'f',text:'Client takes warfarin 5 mg daily for atrial fibrillation'}
+],
+rat:'<strong>A, B, C, and E are contraindications requiring provider consultation before administration.</strong> Glaucoma is a hard contraindication — anticholinergics raise intraocular pressure. Urinary retention (elevated PVR) and BPH are contraindications due to the anticholinergic effect on the bladder detrusor muscle. Myasthenia gravis is a contraindication as anticholinergics worsen neuromuscular transmission. Age 79 alone triggers Beers Criteria caution but is not a contraindication per se, and warfarin does not significantly interact with benztropine.',
+bd:{a:'✅ Glaucoma is a hard contraindication — anticholinergic pupil dilation can trigger acute angle-closure glaucoma crisis.',b:'✅ A PVR of 380 mL indicates urinary retention — adding an anticholinergic will worsen bladder outlet obstruction.',c:'✅ BPH with urinary retention is a documented contraindication to anticholinergic therapy.',d:'❌ Age alone is a Beers Criteria caution, not a hard contraindication. Additional assessment is needed, but age 79 by itself does not require withholding.',e:'✅ Myasthenia gravis is a neuromuscular disease worsened by anticholinergics — a contraindication.',f:'❌ Warfarin has no significant pharmacodynamic interaction with benztropine.'},
+mem:'🚫 Benztropine contraindications: "GUMB" — Glaucoma, Urinary retention, Myasthenia gravis, BPH. These are hard stops. Age 79 = Beers Criteria FLAG (use caution), not automatic hold. Always assess before administering any anticholinergic!'},
+
+{id:35,type:'mc',drug:'Benztropine',tag:"Parkinson's / EPS",
+stem:'A nurse is administering medications on a medical-surgical unit. A client with schizophrenia who received haloperidol 30 minutes ago begins demonstrating facial grimacing, torticollis (involuntary neck turning), and rigid, dystonic arm posturing. The client appears frightened and in pain. Which is the nurse\'s priority action?',
+opts:[
+{id:'a',text:'Administer a PRN dose of haloperidol to override the extrapyramidal symptoms with additional dopamine blockade'},
+{id:'b',text:'Reposition the client in a supine position with full spinal precautions until the symptoms resolve spontaneously'},
+{id:'c',text:'Administer benztropine as ordered for acute dystonic reaction and notify the provider of the complication',correct:true},
+{id:'d',text:'Hold all further psychiatric medications and initiate a neurology consultation for a new-onset movement disorder'}
+],
+rat:'<strong>C is correct.</strong> The described presentation — acute onset of facial grimacing, torticollis, and dystonic posturing after haloperidol administration — is a classic acute dystonic reaction, an extrapyramidal adverse effect. Benztropine is the treatment of choice for acute dystonic reactions caused by antipsychotics. The nurse should administer as ordered and notify the provider.',
+bd:{a:'❌ Additional haloperidol would worsen dopamine blockade and worsen the dystonic reaction.',b:'❌ Repositioning does not treat drug-induced dystonia — it is involuntary muscle spasm, not a positioning issue.',c:'✅ Acute dystonic reaction = benztropine (anticholinergic) is the antidote. Administer and notify provider.',d:'❌ This is a known, expected adverse effect of haloperidol. A neurology consult is not the immediate priority — treating the reaction is.'},
+mem:'⚡ Haloperidol → blocks dopamine → dopamine-acetylcholine imbalance → EPS/dystonia. Fix: benztropine BLOCKS acetylcholine → restores balance → dystonia resolves. The rule: "Antipsychotic causes dystonia → Anticholinergic is the antidote."'},
+
+{id:36,type:'mc',drug:'Benztropine',tag:"Parkinson's / EPS",
+stem:'A client has been receiving benztropine for one week for Parkinson\'s disease tremor management. The client\'s family reports that the client seems more confused and "not like themselves" compared to before starting the medication. The nurse\'s priority assessment finding that most directly guides the plan of care is:',
+opts:[
+{id:'a',text:'The client\'s last bowel movement was three days ago and the abdomen is distended'},
+{id:'b',text:'The client is oriented to name only, showing new disorientation to place, time, and situation compared to baseline',correct:true},
+{id:'c',text:'The client\'s skin and mucous membranes are dry and the client reports a bitter taste in the mouth'},
+{id:'d',text:'The client\'s heart rate is 98 bpm and blood pressure is 138/88 mmHg'}
+],
+rat:'<strong>B is correct.</strong> New-onset disorientation is the highest-priority finding. Anticholinergic-induced CNS effects — including confusion, disorientation, agitation, and psychotic features — are dangerous, especially in older adults, and require immediate provider notification and potential medication discontinuation. While constipation and dry mouth are also anticholinergic adverse effects, they are secondary to the acute cognitive change.',
+bd:{a:'❌ Constipation and bowel obstruction are concerning but are secondary to an acute change in mental status in terms of clinical priority.',b:'✅ New-onset cognitive impairment is the highest-priority finding. Anticholinergics cause confusion and disorientation — this is the most dangerous adverse effect here and the one driving the clinical decision.',c:'❌ Dry mouth and altered taste are expected, mild anticholinergic effects — not the priority finding.',d:'❌ HR of 98 and BP of 138/88 are within acceptable ranges and are not the priority finding in this context.'},
+mem:'🧠 Anticholinergics + Elderly = CNS TOXICITY risk. The most dangerous sign = CONFUSION and DISORIENTATION. Not dry mouth. Not constipation. The BRAIN changes are the priority. This is exactly why Beers Criteria flags anticholinergics in the elderly — cognitive impairment is the biggest risk.'},
+
+{id:37,type:'sata',drug:'Benztropine / Trihexyphenidyl',tag:"Parkinson's / EPS",
+stem:'A nurse is teaching a client prescribed benztropine for extrapyramidal symptoms. Which points should be included in the teaching? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Avoid activities requiring alertness until response to the medication is known, as sedation can occur',correct:true},
+{id:'b',text:'Report difficulty urinating or a sensation of incomplete bladder emptying',correct:true},
+{id:'c',text:'In hot weather, limit outdoor activity and stay in air-conditioned environments because sweating may be impaired',correct:true},
+{id:'d',text:'This medication will improve all symptoms of Parkinson\'s disease equally, including bradykinesia'},
+{id:'e',text:'Report any new visual blurring or photosensitivity to the provider',correct:true},
+{id:'f',text:'Hard candy or frequent sips of water may help relieve the dry mouth commonly associated with this medication',correct:true}
+],
+rat:'<strong>A, B, C, E, and F are correct.</strong> Anticholinergics cause sedation, urinary retention, decreased sweating (heat intolerance), blurred vision, and dry mouth — all of which require specific teaching. Benztropine/trihexyphenidyl primarily targets tremor and is NOT effective for all Parkinson\'s symptoms equally — it has minimal effect on bradykinesia and rigidity.',
+bd:{a:'✅ Sedation is listed — clients must be cautious with driving and hazardous activities.',b:'✅ Urinary retention is a significant anticholinergic effect requiring provider notification.',c:'✅ Anhidrosis (inability to sweat) causes dangerous heat intolerance — outdoor heat exposure is a safety risk.',d:'❌ Anticholinergics primarily address tremor. They are NOT effective for bradykinesia and are NOT equivalent to levodopa for overall symptom control.',e:'✅ Blurred vision and photosensitivity are expected anticholinergic effects requiring provider notification.',f:'✅ Hard candy and water manage dry mouth — a common and uncomfortable adverse effect.'},
+mem:'🌡️ Anticholinergics = "Can\'t SWEAT." No sweating = overheating in summer. This is a real safety risk! Also: blurred vision, urinary retention, dry mouth. And remember: benztropine is for TREMOR primarily — not a substitute for levodopa\'s broad symptom control.'},
+
+{id:38,type:'matrix3',drug:'Benztropine',tag:"Parkinson's / EPS",
+stem:'The nurse is reviewing medication orders. For each clinical situation, indicate whether administering benztropine is <strong>Indicated</strong>, <strong>Contraindicated</strong>, or <strong>Non-Essential</strong>.',
+cols:['Indicated','Contraindicated','Non-Essential'],
+rows:[
+{t:'Client presents with acute torticollis and dystonia 20 minutes after receiving haloperidol',c:0},
+{t:'Client with Parkinson\'s disease has adequate tremor control on carbidopa/levodopa alone with no residual symptoms',c:2},
+{t:'Client with Parkinson\'s disease has a documented history of urinary retention requiring intermittent catheterization',c:1},
+{t:'Client\'s Parkinson\'s tremor is not adequately controlled on levodopa and the provider considers adjunct therapy',c:0},
+{t:'Client is 82 years old with Parkinson\'s and is currently experiencing delirium in the hospital',c:1},
+{t:'Client has narrow-angle glaucoma and mild Parkinson\'s disease tremor interfering with daily activities',c:1}
+],
+rat:'<strong>Rows 1 and 4 are Indicated. Rows 3, 5, and 6 are Contraindicated. Row 2 is Non-Essential.</strong> Benztropine is indicated for acute EPS/dystonic reactions and as second-line adjunct for inadequately controlled tremors. Urinary retention, delirium in elderly, and glaucoma are all contraindications. When levodopa is already providing adequate control, adding benztropine is unnecessary and adds risk.',
+bd:{row0:'Indicated — Acute dystonic reaction is the primary indication for benztropine.',row1:'Non-Essential — Adequate symptom control already achieved; adding an anticholinergic adds risk without benefit.',row2:'Contraindicated — Anticholinergics worsen urinary retention by reducing detrusor muscle activity.',row3:'Indicated — Second-line adjunct for residual tremor is an appropriate use of benztropine.',row4:'Contraindicated — Anticholinergics worsen delirium; Beers Criteria prohibits anticholinergics in elderly with delirium.',row5:'Contraindicated — Glaucoma is a hard contraindication; anticholinergics elevate intraocular pressure.'},
+mem:'🎯 Benztropine indications: Acute EPS and residual tremor. Hard contraindications: Glaucoma, Urinary retention, Delirium in elderly. Non-essential: when symptoms are already well-controlled. When in doubt, ask: "Does this client have any of the GUMB contraindications first?"'},
+
+// ════════════════════════════════════════
+// DONEPEZIL  Q39–46
+// ════════════════════════════════════════
+{id:39,type:'mc',drug:'Donepezil',tag:"Alzheimer's",
+stem:'A client with mild Alzheimer\'s disease is prescribed donepezil. The client\'s family asks how the medication works and why it cannot simply restore memory. Which nurse response best explains the mechanism and limitation?',
+opts:[
+{id:'a',text:'"Donepezil adds new acetylcholine to the brain to replace what has been lost — but there is a limit to how much can be produced"'},
+{id:'b',text:'"Donepezil prevents the breakdown of acetylcholine in the synaptic cleft, increasing its availability — but it does not repair or regenerate the neurons that have already been destroyed"',correct:true},
+{id:'c',text:'"Donepezil blocks glutamate receptors to prevent further neuron death, which slows memory decline but cannot reverse existing damage"'},
+{id:'d',text:'"Donepezil replaces acetylcholine at receptor sites directly and temporarily improves signaling, but the binding is too brief to permanently restore memory"'}
+],
+rat:'<strong>B is correct.</strong> Donepezil inhibits acetylcholinesterase — the enzyme that breaks down acetylcholine in the synapse. This increases acetylcholine availability in the remaining, functioning synapses. It does not replace neurons, add new neurotransmitter, or regenerate damaged neural tissue — which is why it cannot restore lost memory.',
+bd:{a:'❌ Donepezil does not ADD acetylcholine — it prevents the breakdown of existing acetylcholine. These are fundamentally different mechanisms.',b:'✅ Acetylcholinesterase inhibition = more acetylcholine available in the synapse. But dead neurons cannot be rebuilt — hence no memory restoration.',c:'❌ Blocking glutamate receptors is the mechanism of memantine, not donepezil. These are different classes with different indications.',d:'❌ Donepezil does not directly bind to acetylcholine receptors — it inhibits the enzyme that degrades acetylcholine.'},
+mem:'🔬 Donepezil blocks "AChE" (AcetylCholinEsterase) = enzyme that breaks down ACh. More ACh in the synapse = better signaling in surviving neurons. BUT: dead neurons = dead neurons. The drug can\'t rebuild what Alzheimer\'s destroyed — it can only maximize what\'s left.'},
+
+{id:40,type:'mc',drug:'Donepezil',tag:"Alzheimer's",
+stem:'A client with Alzheimer\'s disease has been taking donepezil for two months. During a routine clinic visit, the nurse observes the client has a new onset of wheezing and shortness of breath with an SpO2 of 91%. The client has a history of mild, well-controlled asthma. The nurse\'s priority action is to:',
+opts:[
+{id:'a',text:'Administer donepezil as scheduled and reassess the client\'s respiratory status in 30 minutes'},
+{id:'b',text:'Document the respiratory findings as a new asthma exacerbation unrelated to the medication and initiate standard asthma protocol'},
+{id:'c',text:'Hold donepezil, provide respiratory support, and notify the provider of possible drug-induced bronchoconstriction',correct:true},
+{id:'d',text:'Reduce donepezil dose and add a maintenance inhaler to the regimen without contacting the provider'}
+],
+rat:'<strong>C is correct.</strong> Donepezil is a cholinesterase inhibitor — increased acetylcholine causes bronchoconstriction via muscarinic receptors in the airways. In a client with pre-existing asthma, this can precipitate significant respiratory compromise. SpO2 of 91% is below the acceptable threshold. The nurse must hold the medication, initiate respiratory support, and notify the provider immediately.',
+bd:{a:'❌ Administering the causative agent while the client is in respiratory distress is unsafe.',b:'❌ While asthma exacerbation is possible, the timing relative to donepezil and the known adverse effect profile requires medication evaluation — not exclusion.',c:'✅ Priority: hold the causative drug, support breathing, notify provider. SpO2 of 91% requires immediate intervention.',d:'❌ Independently adjusting dose and adding inhalers without provider involvement is outside nursing scope.'},
+mem:'💨 Cholinesterase inhibitors → MORE acetylcholine → airway muscarinic stimulation → BRONCHOCONSTRICTION. Clients with asthma or COPD are at HIGH RISK. SpO2 < 90% = emergency. Rule: "Broncho-spasm + Cholinesterase inhibitor + Asthma = HOLD + CALL provider NOW."'},
+
+{id:41,type:'sata',drug:'Donepezil',tag:"Alzheimer's",
+stem:'The nurse is planning discharge education for a client with Alzheimer\'s disease prescribed donepezil. Which teaching points should be included? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Report any episodes of fainting, persistent dizziness, or an unusually slow or irregular heartbeat to the provider',correct:true},
+{id:'b',text:'Administer donepezil at bedtime to minimize gastrointestinal side effects during waking hours',correct:true},
+{id:'c',text:'Avoid concurrent use of NSAIDs such as ibuprofen or naproxen unless provider-approved, due to increased GI bleeding risk',correct:true},
+{id:'d',text:'Expect significant memory restoration within 30 days of starting the medication'},
+{id:'e',text:'Donepezil tablets may be swallowed whole or allowed to dissolve on the tongue followed by water',correct:true},
+{id:'f',text:'Use of over-the-counter antihistamines such as diphenhydramine for sleep or allergy relief can reduce the effectiveness of this medication',correct:true}
+],
+rat:'<strong>A, B, C, E, and F are correct.</strong> Bradycardia requires reporting. Bedtime dosing is the standard recommendation. NSAID co-administration increases GI bleeding risk. Orally disintegrating tablets dissolve on the tongue. Anticholinergic medications including antihistamines oppose donepezil\'s cholinergic mechanism and reduce its effectiveness. Donepezil does not restore memory — it may slow decline.',
+bd:{a:'✅ Bradycardia (from increased vagal tone) is a serious adverse effect requiring provider notification.',b:'✅ Bedtime administration is the specific timing recommendation in the materials.',c:'✅ NSAIDs increase GI bleeding risk in combination with donepezil.',d:'❌ Donepezil does not restore memory. It may modestly slow cognitive decline over months, not weeks.',e:'✅ ODT tablets can dissolve on the tongue — important for clients with swallowing difficulties.',f:'✅ Anticholinergics oppose cholinesterase inhibitors directly — less acetylcholine = less drug benefit.'},
+mem:'💊 Donepezil "anti-enemies": Antihistamines (anticholinergic = opposes it), NSAIDs (GI bleed risk). Donepezil "friends": Bedtime dosing, ODT option for swallowing issues. Always screen for diphenhydramine in elderly Alzheimer\'s clients — it\'s in many OTC sleep/allergy products!'},
+
+{id:42,type:'mc',drug:'Donepezil',tag:"Alzheimer's",
+stem:'A client\'s family member calls the clinic reporting that the client, who has Alzheimer\'s disease and takes donepezil, has been nauseated and had loose stools since starting the medication one week ago. The client is maintaining adequate oral intake. Which is the most appropriate nursing response?',
+opts:[
+{id:'a',text:'Advise the family to hold the donepezil and schedule an urgent office visit within 48 hours'},
+{id:'b',text:'Inform the family that nausea and loose stools are expected early adverse effects that often improve over time, and instruct them to report worsening or inability to maintain oral intake',correct:true},
+{id:'c',text:'Instruct the family to halve the donepezil dose for one week, then resume the full dose if symptoms resolve'},
+{id:'d',text:'Recommend the family add a daily probiotic supplement to resolve the medication-induced GI symptoms before the next appointment'}
+],
+rat:'<strong>B is correct.</strong> Nausea and diarrhea are common early GI adverse effects of cholinesterase inhibitors, including donepezil. They typically improve as the body adjusts over the first few weeks. Because the client is maintaining oral intake, this is a manageable adverse effect requiring monitoring, not an emergency. The family should be educated and told when to escalate.',
+bd:{a:'❌ Holding donepezil is not indicated for mild, expected GI adverse effects when the client maintains oral intake.',b:'✅ Early GI adverse effects are expected and often resolve. Teaching the family when to escalate is the appropriate response.',c:'❌ Independently advising dose reduction is outside nursing scope and is not the appropriate response for expected, mild adverse effects.',d:'❌ Probiotic recommendation for drug-induced GI adverse effects is not evidence-based and does not address the underlying pharmacological cause.'},
+mem:'🤢 Donepezil GI side effects (nausea, diarrhea) = EXPECTED in the first 1-4 weeks. Why? More acetylcholine = more GI motility. If the client is eating and staying hydrated = reassure + monitor. If vomiting, dehydrated, or not eating = escalate. Bedtime dosing helps minimize these during waking hours.'},
+
+{id:43,type:'matrix',drug:'Donepezil',tag:"Alzheimer's",
+stem:'The nurse evaluates outcomes for a client with mild Alzheimer\'s disease who has been taking donepezil for four months. For each finding, indicate whether it represents an <strong>Expected Outcome</strong> or an <strong>Unexpected Outcome</strong> requiring provider follow-up.',
+cols:['Expected Outcome','Unexpected — Requires Follow-Up'],
+rows:[
+{t:'Client\'s family reports modest improvement in short-term memory and the client is more engaged during family visits',c:0},
+{t:'Client\'s apical pulse during assessment is consistently 42–46 bpm across three separate readings',c:1},
+{t:'Client shows no significant cognitive improvement but the family notes the disease has not visibly progressed in four months',c:0},
+{t:'Client develops new-onset bilateral wheezing after a dose increase, with SpO2 dropping from 97% to 88%',c:1},
+{t:'Client reports mild nausea and loose stools in the morning after taking donepezil, which has been consistent since starting',c:0},
+{t:'Client\'s family notes the client is able to manage simple daily tasks such as dressing and simple meal preparation independently',c:0}
+],
+rat:'<strong>Rows 1, 3, 5, and 6 are expected outcomes. Rows 2 and 4 are unexpected and require follow-up.</strong> Modest cognitive improvement or disease stabilization, mild GI adverse effects, and improved ADL function are all expected therapeutic outcomes. A consistent apical pulse of 42-46 bpm represents severe bradycardia (normal = 60-100) and requires immediate provider notification. Acute bronchoconstriction with SpO2 drop to 88% is a respiratory emergency.',
+bd:{row0:'Expected — Modest memory improvement and social engagement are achievable therapeutic goals.',row1:'Unexpected — HR 42–46 bpm is severe bradycardia. Normal is 60–100. This is a critical finding requiring immediate provider notification.',row2:'Expected — Disease stabilization without noticeable progression is a valid and acceptable outcome of cholinesterase inhibitor therapy.',row3:'Unexpected — Acute bronchoconstriction with SpO2 88% is a respiratory emergency. SpO2 below 90% requires immediate intervention.',row4:'Expected — Mild, consistent GI adverse effects that are manageable are expected early in therapy.',row5:'Expected — Maintained functional independence for ADLs is a primary therapeutic goal.'},
+mem:'❤️ Donepezil red flags: HR < 60 = bradycardia concern; HR < 50 = urgent action needed; SpO2 < 90% = EMERGENCY. Expected outcomes: modestly better cognition OR just stable disease. Both count as "working." Mild GI symptoms = expected, especially in the morning.'},
+
+{id:44,type:'mc',drug:'Donepezil',tag:"Alzheimer's",
+stem:'The nurse is reviewing medications for a 74-year-old client with Alzheimer\'s disease who takes donepezil and has a new prescription for oxybutynin (anticholinergic) for overactive bladder. The nurse\'s priority concern about this combination is:',
+opts:[
+{id:'a',text:'The additive effect on heart rate, increasing the risk of tachycardia and cardiac arrhythmias'},
+{id:'b',text:'Oxybutynin\'s anticholinergic mechanism will directly oppose the therapeutic action of donepezil and may worsen cognitive function',correct:true},
+{id:'c',text:'Both medications are renally cleared, creating competition for renal excretion and toxic accumulation of both drugs'},
+{id:'d',text:'Oxybutynin increases the risk of GI bleeding when combined with the cholinergic activity of donepezil'}
+],
+rat:'<strong>B is correct.</strong> Donepezil works by INCREASING acetylcholine (cholinergic). Oxybutynin is an ANTICHOLINERGIC — it works by BLOCKING acetylcholine at muscarinic receptors. These two drugs directly oppose each other\'s mechanisms. Additionally, oxybutynin\'s anticholinergic properties can independently worsen cognitive function in elderly patients. This combination is clinically problematic.',
+bd:{a:'❌ Donepezil causes bradycardia (increased vagal tone). Oxybutynin causes tachycardia (anticholinergic). The concern is pharmacodynamic opposition, not additive heart rate increase.',b:'✅ Cholinesterase inhibitor (increases ACh) + anticholinergic (blocks ACh) = direct pharmacological opposition. Cognitive worsening can result.',c:'❌ Renal competition is not a documented concern for this combination.',d:'❌ GI bleeding risk is associated with NSAIDs combined with donepezil — not anticholinergics.'},
+mem:'⚔️ "ACh drug + anti-ACh drug = WAR." Donepezil INCREASES acetylcholine. Oxybutynin BLOCKS acetylcholine. They directly cancel each other out. Oxybutynin is a BEERS CRITERIA drug in older adults with dementia for exactly this reason. Always flag this combination!'},
+
+{id:45,type:'mc',drug:'Donepezil',tag:"Alzheimer's",
+stem:'A client with moderate Alzheimer\'s disease who takes donepezil is brought to the clinic by family members who are increasingly frustrated. They report the client\'s memory is "no better than before starting the medication" after six months of therapy. Which response by the nurse is most therapeutic?',
+opts:[
+{id:'a',text:'"The medication is probably not working in this client. We should discuss alternative treatment options with the provider."'},
+{id:'b',text:'"Stabilization of symptoms and maintenance of current function can be a positive response — the medication may be preventing further decline that would have otherwise occurred"',correct:true},
+{id:'c',text:'"The dose may need to be increased. Greater doses of donepezil always produce greater memory improvement in clients who are not responding."'},
+{id:'d',text:'"This confirms that Alzheimer\'s disease has progressed to a stage where donepezil is no longer indicated and treatment goals should shift."'}
+],
+rat:'<strong>B is correct.</strong> A key teaching point about Alzheimer\'s medications is that therapeutic success does not always mean improvement — it may mean preventing or slowing decline. A client whose disease has not visibly progressed while on donepezil may, in fact, be responding to the medication. Families need this framing to have realistic expectations.',
+bd:{a:'❌ The absence of improvement does not confirm failure. Stability is a valid and meaningful outcome in progressive neurodegenerative disease.',b:'✅ Slowing or halting progression is a success criterion for Alzheimer\'s medications. Families must be educated about this expectation.',c:'❌ Higher doses of donepezil do not guarantee proportionally greater cognitive benefit, and dose escalation without provider direction is outside nursing scope.',d:'❌ Stability after six months does not indicate disease progression to a stage requiring discontinuation.'},
+mem:'📊 Alzheimer\'s drug success = STABILIZATION counts. Think of it like a treadmill going backward — donepezil slows the treadmill. The client isn\'t moving forward, but they\'re not moving backward as fast. Families need to hear: "Staying the same IS a win."'},
+
+{id:46,type:'bowtie',drug:'Donepezil',tag:"Alzheimer's",
+stem:'A 79-year-old client with Alzheimer\'s disease prescribed donepezil is brought to the emergency department by their family. The family reports the client collapsed at home and is "barely responding." The nurse assesses: BP 88/52 mmHg, HR 36 bpm, respiratory rate 14, SpO2 94% on room air. The client is lethargic but arousable.',
+cond:{label:'The nurse determines the client\'s presentation is most consistent with:',opts:[
+{id:'c1',text:'Severe bradycardia and hypotension secondary to excessive cholinergic activity from donepezil',correct:true},
+{id:'c2',text:'Acute ischemic stroke presenting with hemodynamic instability and depressed consciousness'},
+{id:'c3',text:'Anticholinergic toxicity presenting with paradoxical bradycardia and hypotension'},
+{id:'c4',text:'Serotonin syndrome secondary to a drug interaction between donepezil and a concurrent antidepressant'}
+]},
+acts:{label:'Priority actions to take (Select 2):',opts:[
+{id:'a1',text:'Hold donepezil and ensure IV access is established for emergency cardiac and hemodynamic support',correct:true},
+{id:'a2',text:'Administer an additional dose of donepezil to assess whether the bradycardia is drug-related'},
+{id:'a3',text:'Notify the provider immediately, prepare for possible atropine administration, and connect the client to continuous cardiac monitoring',correct:true},
+{id:'a4',text:'Position the client supine with legs elevated and administer a fluid bolus without first notifying the provider'}
+]},
+params:{label:'Parameters to monitor (Select 2):',opts:[
+{id:'p1',text:'Continuous cardiac monitoring for dysrhythmias associated with severe bradycardia',correct:true},
+{id:'p2',text:'Blood pressure response to interventions, given the risk of cardiovascular collapse with HR of 36',correct:true},
+{id:'p3',text:'Urine specific gravity for dehydration secondary to medication-induced vomiting'},
+{id:'p4',text:'Serum lithium levels for toxicity as a potential confounding cause of bradycardia'}
+]},
+rat:'The client is presenting with <strong>severe drug-induced bradycardia and hypotension</strong> from donepezil. HR of 36 bpm is life-threatening. Cholinesterase inhibitors increase vagal tone, causing bradycardia, which can progress to cardiovascular collapse. The medication must be held, emergency hemodynamic support initiated, and atropine may be required.',
+bd:{cond:'HR 36 + hypotension + lethargy in an Alzheimer\'s patient on donepezil = cholinergic-induced bradycardia. Stroke would not cause isolated bradycardia. Anticholinergic toxicity causes tachycardia, not bradycardia.',acts:'Hold donepezil and establish IV access are emergency priorities. Notify provider and prepare for atropine. Administering more of the causative drug is dangerous. Fluid bolus alone without notification is insufficient.',params:'Continuous cardiac monitoring and BP monitoring are the priority parameters in a hemodynamically unstable client with severe bradycardia.'},
+mem:'❤️‍🔥 HR 36 = EMERGENCY. Donepezil → vagal tone ↑ → heart rate ↓. This is the extreme end of bradycardia risk. Antidote: ATROPINE (anticholinergic). Always monitor HR before and after donepezil administration. Normal = 60-100. Below 60 = concern. Below 50 = urgent. 36 = critical.'},
+
+// ════════════════════════════════════════
+// RIVASTIGMINE  Q47–51
+// ════════════════════════════════════════
+{id:47,type:'mc',drug:'Rivastigmine',tag:"Alzheimer's",
+stem:'The nurse is teaching a client\'s caregiver how to apply a rivastigmine transdermal patch. Which caregiver statement indicates a need for further education?',
+opts:[
+{id:'a',text:'"I will apply the new patch to a different site on the chest, upper arm, or lower back each day"'},
+{id:'b',text:'"I need to remove the old patch completely before applying the new one"'},
+{id:'c',text:'"I will write the date and time on the patch with a marker so we can keep track of when it was applied"'},
+{id:'d',text:'"I can reapply the patch to the same area we used today once it has been 48 hours since the last application there"',correct:true}
+],
+rat:'<strong>D requires further education.</strong> The same application site should not be reused for 14 days — not 48 hours. Reusing a site too soon causes local skin irritation and inconsistent drug absorption. The caregiver must understand the 14-day rotation rule.',
+bd:{a:'✅ Rotating between chest, upper arm, and lower back is correct practice.',b:'✅ Removing the old patch before applying a new one is essential — leaving both on leads to doubled dosing.',c:'✅ Writing the date on the patch is excellent practice to prevent missed or doubled applications.',d:'❌ The caregiver believes 48 hours is sufficient — this is incorrect. The same site should not be used for 14 days to prevent skin irritation.'},
+mem:'📅 Rivastigmine patch rule: 14 DAYS before reusing a site. Not 24 hours. Not 48 hours. FOURTEEN DAYS. Three rotation sites: Chest, Upper arm, Lower back. Date the patch. Remove old before applying new. If you see "48 hours" on an exam — that\'s the wrong answer!'},
+
+{id:48,type:'sata',drug:'Rivastigmine',tag:"Alzheimer's",
+stem:'A client with Alzheimer\'s disease is being transitioned from oral rivastigmine capsules to the transdermal patch formulation. Which nursing considerations apply to this transition? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Apply the first patch on the day following the last oral capsule dose to avoid overlap and potential dosing duplication',correct:true},
+{id:'b',text:'Assess the client\'s skin at the intended patch site for redness, cuts, or irritation before each application',correct:true},
+{id:'c',text:'Inform the caregiver that the patch form eliminates all GI adverse effects previously experienced with the oral capsule',
+},
+{id:'d',text:'Avoid exposing the patch site to prolonged direct heat sources such as heating pads, as heat increases drug absorption and may cause toxicity',correct:true},
+{id:'e',text:'Document the exact location of patch placement to ensure proper site rotation',correct:true},
+{id:'f',text:'Teach the caregiver to fold the used patch in half with the adhesive sides together before disposing of it safely',correct:true}
+],
+rat:'<strong>A, B, D, E, and F are correct.</strong> Timing prevents duplicate dosing. Skin assessment ensures safe application. Heat increases transdermal absorption, risking toxicity. Documentation enables proper rotation. Folding used patches prevents accidental exposure to children or pets. While the patch form reduces GI adverse effects compared to oral, it does not eliminate them completely — so C is incorrect.',
+bd:{a:'✅ Starting the patch the day after the last oral dose prevents overlap dosing and accidental double-dosing.',b:'✅ Skin must be clean, dry, and intact for safe and consistent absorption.',c:'❌ The patch reduces GI side effects compared to oral (no first-pass gastric exposure), but does not eliminate ALL GI effects.',d:'✅ External heat sources increase skin permeability and drug absorption — rivastigmine toxicity risk is real.',e:'✅ Documentation enables the 14-day rotation protocol and prevents site reuse.',f:'✅ Folding the used patch protects against accidental exposure — children and pets can be harmed by adhesive residue.'},
+mem:'♻️ Patch safety: Fold and dispose safely (children/pets!). Heat = dangerous (increases absorption). Start the day AFTER last oral dose. Document the site. Check skin before applying. The patch reduces GI effects but doesn\'t eliminate them — "reduces" ≠ "eliminates."'},
+
+{id:49,type:'mc',drug:'Rivastigmine',tag:"Alzheimer's",
+stem:'A client taking oral rivastigmine for Alzheimer\'s disease vomits shortly after taking the morning dose. The caregiver asks whether they should give another dose. The nurse\'s most appropriate instruction is to:',
+opts:[
+{id:'a',text:'Administer the next scheduled dose at the regular time and do not give a replacement dose for the vomited dose',correct:true},
+{id:'b',text:'Administer the full dose again immediately, since the medication was likely not absorbed'},
+{id:'c',text:'Skip the next two scheduled doses to allow GI irritation to resolve before resuming the medication'},
+{id:'d',text:'Crush and dissolve the next dose in water or juice to reduce the risk of vomiting on re-administration'}
+],
+rat:'<strong>A is correct.</strong> If a dose is vomited, the client should NOT receive a replacement dose — the dose cannot be confirmed as unabsorbed, and doubling could cause toxicity. The caregiver should wait for the next scheduled dose. Additionally, the nurse should notify the provider of persistent vomiting, as medication adjustment may be needed.',
+bd:{a:'✅ Do not re-dose after vomiting — risk of double-dosing and toxicity. Resume at the next scheduled time.',b:'❌ The dose may have been partially absorbed. Re-administering immediately risks toxicity from double dosing.',c:'❌ Skipping two doses disrupts therapeutic continuity. Provider guidance is needed for vomiting management, not blanket dose skipping.',d:'❌ Rivastigmine capsules should not be crushed and dissolved without specific provider order and formulation approval.'},
+mem:'🤮 Vomited a dose? Skip it — never double up. Wait for the NEXT scheduled time. Think: "Did some absorb? Maybe. Did all absorb? Unknown. Is giving double safe? No." When in doubt = wait for the next dose and notify the provider of persistent vomiting.'},
+
+{id:50,type:'mc',drug:'Rivastigmine',tag:"Alzheimer's",
+stem:'A nurse is caring for a client with Parkinson\'s disease dementia. The provider prescribes rivastigmine. The client\'s family asks why the provider chose rivastigmine rather than donepezil. Which nurse response reflects the most accurate understanding?',
+opts:[
+{id:'a',text:'"Rivastigmine has a faster onset of action than donepezil and is therefore preferred when rapid symptom control is needed"'},
+{id:'b',text:'"Rivastigmine is the only cholinesterase inhibitor approved specifically for Parkinson\'s disease dementia, in addition to Alzheimer\'s disease"',correct:true},
+{id:'c',text:'"Rivastigmine causes fewer GI adverse effects than donepezil, making it the preferred choice for clients with pre-existing GI conditions"'},
+{id:'d',text:'"Rivastigmine does not affect the heart rate and is preferred over donepezil in clients with pre-existing cardiac conditions"'}
+],
+rat:'<strong>B is correct.</strong> Rivastigmine is uniquely indicated for both Alzheimer\'s disease and Parkinson\'s disease dementia. Donepezil is primarily indicated for Alzheimer\'s disease. This dual indication makes rivastigmine specifically appropriate for Parkinson\'s disease dementia.',
+bd:{a:'❌ Onset of action is not the distinguishing factor between these agents — they require weeks for full effect.',b:'✅ Rivastigmine has FDA approval for Parkinson\'s disease dementia, in addition to AD. Donepezil is primarily indicated for AD.',c:'❌ Rivastigmine oral formulations actually have a higher GI adverse effect profile than donepezil — the transdermal patch reduces this.',d:'❌ Both cholinesterase inhibitors can cause bradycardia. Cardiac effects are not the distinguishing factor for drug selection.'},
+mem:'🧩 Rivastigmine = dual indication: Alzheimer\'s AND Parkinson\'s dementia. When you see a Parkinson\'s patient with cognitive decline, think rivastigmine first. Donepezil = primarily Alzheimer\'s. This is a high-yield distinction for exams!'},
+
+{id:51,type:'mc',drug:'Rivastigmine',tag:"Alzheimer's",
+stem:'A client taking oral rivastigmine twice daily for Alzheimer\'s disease skips a dose due to severe nausea. The provider later discontinues the medication for two weeks while managing the nausea. When rivastigmine is restarted, the nurse recognizes which action is most appropriate?',
+opts:[
+{id:'a',text:'Restart at the dose the client was taking before discontinuation, since the body quickly re-establishes tolerance'},
+{id:'b',text:'Restart at the lowest available dose and titrate up gradually, as restarting at a previous dose after a break risks significant adverse effects',correct:true},
+{id:'c',text:'Restart at twice the previous dose to re-establish therapeutic levels as quickly as possible'},
+{id:'d',text:'Administer the full previous dose but switch to transdermal delivery to minimize GI risk'}
+],
+rat:'<strong>B is correct.</strong> If rivastigmine has been discontinued for more than several days, restarting requires beginning again at the lowest dose and titrating up gradually. Resuming at a higher previous dose after a treatment gap significantly increases the risk of severe GI adverse effects (nausea, vomiting) and cholinergic toxicity.',
+bd:{a:'❌ Tolerance is lost after extended breaks — the body no longer accommodates the higher dose. Starting at the previous dose risks toxicity.',b:'✅ Re-titrate from the lowest dose after any treatment break longer than several days. This is a clinically important safety principle.',c:'❌ Doubling the dose is dangerous at any point in therapy.',d:'❌ Switching to the patch is not contraindicated, but the titration principle still applies — start low, go slow.'},
+mem:'📈 Rivastigmine gap rule: "Start fresh, start LOW." If treatment breaks for more than a few days, the titration clock resets. This is because GI tolerance is lost with the break. Never restart at the last dose — it risks severe GI toxicity. Slow titration protects the patient!'},
+
+// ════════════════════════════════════════
+// MEMANTINE  Q52–57
+// ════════════════════════════════════════
+{id:52,type:'mc',drug:'Memantine',tag:"Alzheimer's",
+stem:'A nurse is caring for two clients. Client A has mild Alzheimer\'s disease with a MMSE score of 22. Client B has severe Alzheimer\'s disease and cannot perform basic ADLs independently. The provider prescribes memantine for one of the clients. Which client is the most appropriate candidate, and why?',
+opts:[
+{id:'a',text:'Client A, because memantine is most effective early in the disease course when the most neurons remain functional'},
+{id:'b',text:'Client B, because memantine is indicated for moderate to severe Alzheimer\'s disease and targets glutamate-mediated neuronal damage at this stage',correct:true},
+{id:'c',text:'Client B, because clients with severe Alzheimer\'s cannot take oral cholinesterase inhibitors and memantine is the only available route'},
+{id:'d',text:'Client A, because memantine must be started before significant neuronal loss occurs to prevent NMDA receptor damage'}
+],
+rat:'<strong>B is correct.</strong> Memantine is FDA-indicated for moderate to severe Alzheimer\'s disease — not mild. It works by blocking NMDA receptors to reduce glutamate-mediated excitotoxicity, which becomes more clinically relevant as the disease advances. Client A (MMSE 22 = mild) would typically receive a cholinesterase inhibitor first.',
+bd:{a:'❌ Memantine is not first-line for mild disease. Cholinesterase inhibitors are used for mild-to-moderate AD.',b:'✅ Moderate to severe AD = memantine\'s indication. NMDA receptor antagonism reduces glutamate excitotoxicity that damages remaining neurons.',c:'❌ Cholinesterase inhibitors are available in multiple routes including transdermal. Route limitations are not the reason to select memantine.',d:'❌ Memantine is not used in early/mild disease — this contradicts the evidence-based staging of Alzheimer\'s pharmacotherapy.'},
+mem:'📊 Alzheimer\'s staging for drugs: MILD → Cholinesterase inhibitors first. MODERATE-SEVERE → Add or switch to memantine. SEVERE → Can combine both classes. Think: "Donepezil starts the journey; memantine kicks in when the disease gets harder."'},
+
+{id:53,type:'sata',drug:'Memantine',tag:"Alzheimer's",
+stem:'A nurse is providing discharge teaching to the family of a client with moderate-to-severe Alzheimer\'s disease starting memantine. Which points should be included in the teaching? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'The medication can be mixed with soft foods such as applesauce for clients who have difficulty swallowing',correct:true},
+{id:'b',text:'Memantine may be combined with donepezil for complementary benefit since they work by different mechanisms',correct:true},
+{id:'c',text:'Expect a full reversal of memory loss within the first 60 days of treatment'},
+{id:'d',text:'Monitor for dizziness, confusion, or headache, which are potential adverse effects of this medication',correct:true},
+{id:'e',text:'Inform the provider of any other medications that block NMDA receptors, as additive effects may cause adverse reactions',correct:true},
+{id:'f',text:'The therapeutic goal is to maintain current functional ability for as long as possible, not to reverse existing cognitive deficits',correct:true}
+],
+rat:'<strong>A, B, D, E, and F are correct.</strong> Memantine can be sprinkled on soft food or given as an oral liquid. It can be safely combined with donepezil. Dizziness, confusion, and headache are listed adverse effects. NMDA antagonist combinations (e.g., ketamine) can cause synergistic adverse effects. The therapeutic goal is functional maintenance — not reversal of deficits. Memory reversal does not occur with any Alzheimer\'s medication.',
+bd:{a:'✅ Mixing with soft foods is an explicit administration option for memantine.',b:'✅ Memantine + donepezil = complementary combination with different mechanisms.',c:'❌ Memory reversal does not occur. Memantine may slow further cognitive decline — it cannot restore what has been lost.',d:'✅ CNS adverse effects (dizziness, confusion, headache) are listed and require monitoring.',e:'✅ Other NMDA antagonists (ketamine, dextromethorphan) create additive adverse effects and must be disclosed to the provider.',f:'✅ Functional maintenance and slowing decline are the achievable and appropriate goals.'},
+mem:'🧩 Memantine = "Hold the Line." It can\'t rebuild Alzheimer\'s damage. It holds the current line as long as possible. Combinations with donepezil = OK. NMDA + NMDA = RISK. Soft food mixing = helpful for dysphagia. Dizziness and headache = common side effects to watch for.'},
+
+{id:54,type:'mc',drug:'Memantine',tag:"Alzheimer's",
+stem:'A client with severe Alzheimer\'s disease has been on both memantine and donepezil for six months. The client\'s family reports increased agitation and confusion over the past two weeks. The provider evaluates the client and determines the confusion is a possible adverse effect of memantine. Which action does the nurse anticipate the provider will take?',
+opts:[
+{id:'a',text:'Immediately discontinue both memantine and donepezil and initiate a different drug class'},
+{id:'b',text:'Evaluate whether the memantine dose should be reduced or whether an alternative drug is causing the confusion, and adjust accordingly',correct:true},
+{id:'c',text:'Add a benzodiazepine to the regimen to manage the agitation while continuing both Alzheimer\'s medications unchanged'},
+{id:'d',text:'Increase the memantine dose to achieve a more complete NMDA blockade, which may resolve the confusion'}
+],
+rat:'<strong>B is correct.</strong> Confusion is a documented adverse effect of memantine. The provider must evaluate the clinical picture — including medication timing, dose, and other potential causes — before making a management decision. Immediate discontinuation of both medications is too aggressive. Increasing the dose of the potentially causative agent is contraindicated. Adding a benzodiazepine adds sedation risk in a cognitively impaired elder.',
+bd:{a:'❌ Discontinuing both without further evaluation is overly aggressive. Only the causative agent should be addressed first.',b:'✅ Evaluate first, then adjust accordingly. Dose reduction, drug change, or identification of another cause are all reasonable options to explore.',c:'❌ Benzodiazepines in elderly patients with Alzheimer\'s carry high risk for paradoxical agitation, falls, and respiratory depression.',d:'❌ Increasing the dose of the medication suspected of causing confusion would worsen the adverse effect.'},
+mem:'🔍 Adverse effect management rule: "Evaluate FIRST, then adjust." Never jump to stopping everything or increasing the suspect drug. The provider must confirm the cause before acting. Benzodiazepines in elderly dementia patients = Beers Criteria concern. Always the systematic approach!'},
+
+{id:55,type:'matrix',drug:'Memantine',tag:"Alzheimer's",
+stem:'A nurse evaluates a family\'s understanding of memantine therapy after teaching. For each family statement, indicate whether it reflects <strong>Effective</strong> or <strong>Ineffective</strong> understanding.',
+cols:['Effective Understanding','Ineffective — Needs Reinforcement'],
+rows:[
+{t:'"We understand this medication may help maintain her ability to dress and feed herself for longer"',c:0},
+{t:'"We read that dextromethorphan cough syrup has a similar mechanism — we\'ve been giving it along with memantine to help more"',c:1},
+{t:'"We know she can take memantine and donepezil at the same time since they work differently"',c:0},
+{t:'"We expect her to recognize us by name again once she has been on this medication for a few weeks"',c:1},
+{t:'"We\'ve been giving the tablet crushed in her oatmeal since she has trouble swallowing pills"',c:0},
+{t:'"We watch for signs of dizziness or increased confusion and report them to her doctor"',c:0}
+],
+rat:'<strong>Rows 1, 3, 5, and 6 reflect effective understanding. Rows 2 and 4 reflect ineffective understanding.</strong> Dextromethorphan is an NMDA receptor antagonist — combining it with memantine creates additive adverse effects and is not recommended without provider guidance. Expecting cognitive restoration (recognizing family members by name) reflects unrealistic expectations — memantine cannot reverse established deficits.',
+bd:{row0:'Effective — Maintaining functional independence (ADLs) is a realistic and appropriate therapeutic goal.',row1:'Ineffective — Dextromethorphan is an NMDA antagonist. Combining two NMDA antagonists without provider guidance risks synergistic adverse effects.',row2:'Effective — Memantine + donepezil is a supported combination with complementary mechanisms.',row3:'Ineffective — Expecting cognitive restoration (name recognition recovery) is unrealistic. Memantine slows progression but cannot reverse established losses.',row4:'Effective — Crushing and mixing with soft food is an appropriate administration method for memantine.',row5:'Effective — Monitoring for dizziness and confusion reflects correct adverse effect teaching.'},
+mem:'⚗️ Dextromethorphan is in every cough syrup and is an NMDA antagonist — same class as memantine! Teach families: "No OTC cough/cold drugs without checking with the provider first." And: "This drug SLOWS decline — it doesn\'t REVERSE it. Recognizing faces again? Not a realistic goal."'},
+
+{id:56,type:'mc',drug:'Memantine',tag:"Alzheimer's",
+stem:'A client with Alzheimer\'s disease is currently prescribed donepezil and will be starting memantine. The client\'s daughter asks whether her mother needs to stop the donepezil when starting memantine. Which response by the nurse is most accurate?',
+opts:[
+{id:'a',text:'"Yes, one medication must be stopped because taking both simultaneously causes excessive cholinergic stimulation"'},
+{id:'b',text:'"Yes, donepezil should be tapered over two weeks before starting memantine to prevent an overlap interaction"'},
+{id:'c',text:'"No, the two medications can be taken together — they have different mechanisms of action and are complementary in Alzheimer\'s management"',correct:true},
+{id:'d',text:'"No, both should be continued, but memantine must always be given at a different time of day than donepezil to prevent absorption competition"'}
+],
+rat:'<strong>C is correct.</strong> Memantine (NMDA antagonist) and donepezil (cholinesterase inhibitor) work by completely different mechanisms. They can be safely combined and are, in fact, commonly prescribed together for clients with moderate-to-severe Alzheimer\'s disease — providing complementary therapeutic effects.',
+bd:{a:'❌ There is no excessive cholinergic stimulation from this combination. Memantine does not affect cholinergic activity.',b:'❌ No taper or washout is required. The two agents are complementary.',c:'✅ Different mechanisms, no adverse interaction — combination is supported and commonly used.',d:'❌ There is no absorption competition or timing requirement. This combination can be taken on any schedule.'},
+mem:'✅ Donepezil + Memantine = DREAM TEAM for moderate-severe AD. Donepezil = boosts ACh (cholinergic). Memantine = blocks NMDA (glutamate). Different systems, complementary actions, no adverse interaction. No need to stop one before starting the other!'},
+
+{id:57,type:'mc',drug:'Galantamine',tag:"Alzheimer's",
+stem:'A client with mild Alzheimer\'s disease is prescribed galantamine. The nurse understands galantamine is differentiated from other cholinesterase inhibitors because it also:',
+opts:[
+{id:'a',text:'Inhibits COMT, providing additional protection of dopamine pathways in the Alzheimer\'s brain'},
+{id:'b',text:'Blocks NMDA glutamate receptors in addition to inhibiting acetylcholinesterase'},
+{id:'c',text:'Modulates nicotinic acetylcholine receptors in addition to inhibiting acetylcholinesterase activity',correct:true},
+{id:'d',text:'Directly stimulates muscarinic acetylcholine receptors in the hippocampus and cortex'}
+],
+rat:'<strong>C is correct.</strong> Galantamine has a dual mechanism that distinguishes it from donepezil and rivastigmine. In addition to inhibiting acetylcholinesterase (like other agents in the class), galantamine also modulates nicotinic acetylcholine receptors, potentially providing an additional avenue for enhancing cholinergic neurotransmission in Alzheimer\'s disease.',
+bd:{a:'❌ Galantamine does not affect COMT — that is the mechanism of entacapone, a Parkinson\'s drug.',b:'❌ NMDA receptor antagonism is the mechanism of memantine, not galantamine.',c:'✅ Nicotinic acetylcholine receptor modulation is galantamine\'s distinguishing feature within the cholinesterase inhibitor class.',d:'❌ Galantamine does not directly stimulate muscarinic receptors; it modulates nicotinic receptors.'},
+mem:'🔑 Galantamine = "Double ACh action." Like all cholinesterase inhibitors, it blocks AChE. But it ALSO modulates nicotinic receptors (nAChR). Think: Donepezil = one action, Galantamine = two actions. For mild-moderate AD — same indication, slightly different mechanism.'},
+
+{id:58,type:'sata',drug:'Galantamine',tag:"Alzheimer's",
+stem:'A nurse is providing teaching for a client newly prescribed galantamine for mild Alzheimer\'s disease. Which points should the nurse include in the teaching? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Administer galantamine with food to reduce GI adverse effects',correct:true},
+{id:'b',text:'Report any new onset of slow or irregular heartbeat or episodes of dizziness',correct:true},
+{id:'c',text:'Do not take with other medications that slow the heart, such as beta-blockers, without first notifying the provider',correct:true},
+{id:'d',text:'Galantamine will restore the client\'s ability to form and retain new long-term memories with consistent use'},
+{id:'e',text:'The medication should not be discontinued abruptly without provider guidance — a gradual reduction is preferred if stopping is needed',correct:true},
+{id:'f',text:'Clients with severe renal or hepatic impairment may require dose adjustments or avoidance of the medication',correct:true}
+],
+rat:'<strong>A, B, C, E, and F are correct.</strong> Galantamine is taken with food to reduce GI adverse effects. Bradycardia is a class-wide adverse effect of cholinesterase inhibitors requiring monitoring. Additive bradycardia with beta-blockers and other agents requires provider awareness. Gradual dose reduction is preferred over abrupt discontinuation. Renal and hepatic function affect galantamine metabolism and dose. Galantamine does not restore the ability to form new long-term memories.',
+bd:{a:'✅ Food administration reduces the nausea and GI effects common to cholinesterase inhibitors.',b:'✅ Bradycardia is a class-wide adverse effect — patients must monitor and report.',c:'✅ Beta-blockers + cholinesterase inhibitors = additive bradycardia risk.',d:'❌ Galantamine improves or maintains cognitive function modestly but does not restore the ability to form new long-term memories.',e:'✅ Abrupt discontinuation may cause rapid disease symptom worsening — gradual reduction is preferred.',f:'✅ Galantamine dose adjustments are required for significant renal or hepatic impairment.'},
+mem:'🍽️ Galantamine = "Take with food!" This is the most commonly tested administration point. Why? Food reduces GI adverse effects (nausea, vomiting). Also: beta-blockers + galantamine = heart rate drops faster. Renal and liver impairment = reduce the dose. Same bradycardia monitoring as all AChEIs.'},
+
+// ════════════════════════════════════════
+// CLINICAL INTEGRATION  Q59–60
+// ════════════════════════════════════════
+{id:59,type:'bowtie',drug:'Multiple Agents',tag:'Clinical Integration',
+stem:'A 68-year-old client with Parkinson\'s disease is brought to the ED by a family member. The family reports the client was started on haloperidol four days ago by a new psychiatrist for behavioral symptoms. Since then, the client\'s Parkinson\'s symptoms have become dramatically worse — the client now has severe rigidity, is barely able to walk, and cannot button clothing. Current medications also include carbidopa/levodopa and selegiline.',
+cond:{label:'The nurse concludes the most likely cause of the acute deterioration is:',opts:[
+{id:'c1',text:'Haloperidol opposing the therapeutic mechanism of carbidopa/levodopa by blocking dopamine receptors',correct:true},
+{id:'c2',text:'Selegiline interacting with haloperidol to cause severe extrapyramidal symptoms via MAO pathway activation'},
+{id:'c3',text:'Serotonin syndrome caused by the combination of haloperidol and selegiline'},
+{id:'c4',text:'Progression of Parkinson\'s disease that coincidentally aligned with the timing of the medication change'}
+]},
+acts:{label:'Priority actions to take (Select 2):',opts:[
+{id:'a1',text:'Contact the prescribing psychiatrist and neurology provider to discuss the haloperidol\'s pharmacodynamic opposition to carbidopa/levodopa',correct:true},
+{id:'a2',text:'Hold carbidopa/levodopa to reduce the drug interaction burden until the haloperidol is cleared from the system'},
+{id:'a3',text:'Document the clinical timeline correlating haloperidol initiation with symptom worsening and advocate for medication review',correct:true},
+{id:'a4',text:'Increase carbidopa/levodopa dosing to overcome the dopamine blockade caused by haloperidol'}
+]},
+params:{label:'Parameters to monitor (Select 2):',opts:[
+{id:'p1',text:'Motor function — assess rigidity, bradykinesia, and ADL performance before and after medication changes',correct:true},
+{id:'p2',text:'Temperature and muscle rigidity for early signs of neuroleptic malignant syndrome given the antipsychotic use',correct:true},
+{id:'p3',text:'INR for coagulopathy risk in a client on multiple neurological medications'},
+{id:'p4',text:'Serum sodium levels for hyponatremia secondary to dopaminergic stimulation'}
+]},
+rat:'<strong>Haloperidol is blocking dopamine receptors</strong> — the same receptors that carbidopa/levodopa is trying to stimulate. This direct pharmacological opposition dramatically worsens Parkinson\'s motor symptoms. Additionally, antipsychotic use in Parkinson\'s patients carries a risk of neuroleptic malignant syndrome (NMS), which requires vigilant monitoring.',
+bd:{cond:'Haloperidol = D2 blocker. Carbidopa/levodopa = D2 stimulator. Direct opposition = Parkinson\'s symptoms worsen dramatically.',acts:'Communication between the prescribing team is critical. Documenting the timeline creates the evidence base for medication change advocacy. Increasing levodopa without addressing the blocker is ineffective. Holding levodopa makes Parkinson\'s worse.',params:'Motor function assessment tracks the clinical impact of the drug interaction. Temperature + rigidity monitoring catches early NMS in a patient on an antipsychotic.'},
+mem:'⚔️ The ultimate drug interaction: Antipsychotic (D2 blocker) + Levodopa (D2 stimulator) = Parkinson\'s symptoms EXPLODE. The antipsychotic wins at the receptor level. No amount of levodopa can overcome complete receptor blockade. Plus: antipsychotics in PD = NMS risk. Always screen PD patients\' full medication lists for antipsychotics!'},
+
+{id:60,type:'sata',drug:'Multiple Agents',tag:'Clinical Integration',
+stem:'A nurse is preparing to discharge a client with both Parkinson\'s disease and early Alzheimer\'s disease. The client is prescribed carbidopa/levodopa, donepezil, and has a PRN order for diphenhydramine for sleep. Which priority nursing actions should be completed before discharge? <em>Select all that apply.</em>',
+opts:[
+{id:'a',text:'Educate the client and family that diphenhydramine opposes donepezil\'s mechanism and worsens cognition — and recommend provider review of this PRN order',correct:true},
+{id:'b',text:'Review fall risk given that both carbidopa/levodopa and donepezil carry adverse effects that increase fall risk',correct:true},
+{id:'c',text:'Reinforce that diphenhydramine is safe for sleep in this client because it is an over-the-counter medication'},
+{id:'d',text:'Educate the family that high-protein meals should be spaced away from carbidopa/levodopa doses',correct:true},
+{id:'e',text:'Ensure the client and family understand that neither condition will be cured by these medications and clarify realistic therapeutic goals for each drug',correct:true},
+{id:'f',text:'Confirm that the client should contact the provider before taking any new OTC medications, including sleep aids, antacids, and antihistamines',correct:true}
+],
+rat:'<strong>A, B, D, E, and F are correct.</strong> Diphenhydramine (anticholinergic) directly opposes donepezil (cholinergic) and should be flagged for provider review before discharge — not endorsed as safe. Fall risk is heightened by both carbidopa/levodopa (orthostatic hypotension) and donepezil (bradycardia-related dizziness). Protein spacing for levodopa, realistic therapeutic goals, and OTC medication checking are all priority discharge teaching points.',
+bd:{a:'✅ Diphenhydramine + donepezil = pharmacological opposition + cognitive worsening in Alzheimer\'s. This PRN order needs provider review before discharge.',b:'✅ Carbidopa/levodopa causes orthostatic hypotension; donepezil causes bradycardia. Both increase fall risk — fall prevention education is priority.',c:'❌ "OTC" does not mean "safe in all situations." Diphenhydramine is specifically problematic in this client given the Alzheimer\'s diagnosis and donepezil therapy.',d:'✅ Protein-levodopa absorption competition is a critical and often forgotten discharge teaching point.',e:'✅ Setting realistic expectations for both conditions prevents frustration, nonadherence, and inappropriate expectations of cure.',f:'✅ OTC medications have significant interactions in Alzheimer\'s and Parkinson\'s care — provider consultation before any new OTC use is essential.'},
+mem:'🎓 The ultimate discharge checklist for PD + AD: (1) No diphenhydramine with donepezil. (2) Fall precautions for both conditions. (3) Protein spacing for levodopa. (4) Realistic goals — no cures. (5) Check ALL OTC meds with the provider. These five cover the most high-yield real-world discharge teaching points for this population!'}
+
+]; // END Q array
+
+// ══════════════════════════════
+// STATE
+// ══════════════════════════════
+let cur=0;
+let ans=new Array(Q.length).fill(null);
+let popIdx=0;
+const POPS=[
+  {e:'🌟',t:'Outstanding!',s:'Excellent clinical reasoning!'},
+  {e:'🎯',t:'Bullseye!',s:'You nailed it — keep going!'},
+  {e:'✨',t:'Correct!',s:'Your pharmacology skills are showing!'},
+  {e:'🏆',t:'Perfect!',s:'That\'s NCLEX-level thinking right there!'},
+  {e:'💜',t:'Yes!',s:'Your cohort would be proud!'},
+  {e:'🎉',t:'Right!',s:'Another one down — you\'ve got this!'},
+  {e:'🌸',t:'Nailed It!',s:'Hard work is paying off!'},
+  {e:'⭐',t:'Brilliant!',s:'Clinical reasoning on point!'},
+  {e:'🔥',t:'On Fire!',s:'That\'s exactly the right answer!'},
+  {e:'💪',t:'Correct!',s:'Strong nursing judgment!'}
+];
+
+function score(){let c=0,w=0;for(let a of ans){if(a!==null){if(a.correct)c++;else w++;}}return{c,w};}
+
+// ══════════════════════════════
+// RENDER
+// ══════════════════════════════
+function render(){
+  const q=Q[cur];
+  const area=document.getElementById('qa');
+  area.innerHTML='';
+  const {c,w}=score();
+  document.getElementById('qc').textContent=cur+1;
+  document.getElementById('cc').textContent=c;
+  document.getElementById('wc').textContent=w;
+  const tot=c+w;
+  document.getElementById('sp').textContent=tot>0?Math.round(c/tot*100)+'%':'—';
+  document.getElementById('pf').style.width=((cur+1)/Q.length*100)+'%';
+
+  // dots
+  const dotsEl=document.getElementById('dots');
+  dotsEl.innerHTML='';
+  Q.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot';
+    if(i===cur)d.classList.add('active');
+    if(ans[i]!==null)d.classList.add(ans[i].correct?'acor':'awrg');
+    d.onclick=()=>{cur=i;render();};
+    dotsEl.appendChild(d);
+  });
+  document.getElementById('bprev').disabled=cur===0;
+  document.getElementById('bnext').disabled=ans[cur]===null;
+
+  const card=document.createElement('div');card.className='card';
+  const typeLbl=q.type==='mc'?'Multiple Choice':q.type==='sata'?'SATA':q.type.startsWith('matrix')?'Matrix / Grid':'Bowtie';
+  const typeCls=q.type==='mc'?'bmc':q.type==='sata'?'bsata':q.type.startsWith('matrix')?'bmatrix':'bbowtie';
+  card.innerHTML=`<div class="qmeta"><span class="qnum">Q${cur+1} / ${Q.length}</span><span class="qbadge ${typeCls}">${typeLbl}</span><span class="dtag">💊 ${q.drug}</span></div>`;
+  const stemD=document.createElement('div');stemD.className='stem';stemD.innerHTML=q.stem;card.appendChild(stemD);
+  if(q.type==='sata'){const si=document.createElement('div');si.className='sinst';si.textContent='⚠️ Select ALL that apply — you must choose every correct option.';card.appendChild(si);}
+  if(q.type==='mc')buildMC(card,q);
+  else if(q.type==='sata')buildSATA(card,q);
+  else if(q.type==='matrix'||q.type==='matrix3')buildMatrix(card,q,q.type==='matrix3'?3:2);
+  else if(q.type==='bowtie')buildBowtie(card,q);
+  const br=document.createElement('div');br.className='brow';
+  const sb=document.createElement('button');sb.className='bsub';sb.id='sb';sb.textContent='✓ Submit Answer';sb.onclick=()=>submit(q);
+  if(ans[cur]!==null)sb.disabled=true;
+  br.appendChild(sb);card.appendChild(br);
+  area.appendChild(card);
+  if(ans[cur]!==null){markAns(q);showRat(q,area);}
+}
+
+function buildMC(c,q){
+  const d=document.createElement('div');d.className='opts';
+  q.opts.forEach(o=>{
+    const div=document.createElement('div');div.className='opt';div.dataset.id=o.id;
+    div.innerHTML=`<input type="radio" name="mc${q.id}" id="o${o.id}" value="${o.id}"/><label for="o${o.id}">${o.text}</label>`;
+    div.onclick=()=>{if(ans[cur]!==null)return;div.querySelector('input').checked=true;};
+    d.appendChild(div);
+  });
+  c.appendChild(d);
+}
+function buildSATA(c,q){
+  const d=document.createElement('div');d.className='opts';
+  q.opts.forEach(o=>{
+    const div=document.createElement('div');div.className='opt';div.dataset.id=o.id;
+    div.innerHTML=`<input type="checkbox" id="o${o.id}" value="${o.id}"/><label for="o${o.id}">${o.text}</label>`;
+    d.appendChild(div);
+  });
+  c.appendChild(d);
+}
+function buildMatrix(c,q,nc){
+  const t=document.createElement('table');t.className='mtbl';
+  const th=document.createElement('thead');const hr=document.createElement('tr');
+  hr.innerHTML='<th>Finding / Statement</th>';
+  q.cols.forEach(col=>hr.innerHTML+=`<th>${col}</th>`);
+  th.appendChild(hr);t.appendChild(th);
+  const tb=document.createElement('tbody');
+  q.rows.forEach((row,ri)=>{
+    const tr=document.createElement('tr');tr.dataset.row=ri;
+    tr.innerHTML=`<td>${row.t}</td>`;
+    for(let ci=0;ci<nc;ci++)tr.innerHTML+=`<td><input type="radio" name="mx${q.id}r${ri}" value="${ci}" data-row="${ri}" data-col="${ci}"/></td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);c.appendChild(t);
+}
+function buildBowtie(c,q){
+  const bt=document.createElement('div');bt.className='bt-wrap';
+  // Left: Actions
+  const ls=document.createElement('div');ls.className='bt-sec';
+  ls.innerHTML=`<h4>🔧 Actions to Take</h4><div class="bt-inf">Select exactly 2</div>`;
+  q.acts.opts.forEach(o=>{
+    const d=document.createElement('div');d.className='bopt';d.dataset.id=o.id;d.dataset.sec='acts';
+    d.innerHTML=`<input type="checkbox" id="ba${o.id}" value="${o.id}" data-sec="acts"/><label for="ba${o.id}">${o.text}</label>`;
+    ls.appendChild(d);
+  });
+  const a1=document.createElement('div');a1.className='bt-arr';a1.innerHTML='◀▶';
+  // Center: Condition
+  const cs=document.createElement('div');cs.className='bt-sec bt-ctr';
+  cs.innerHTML=`<h4>🎯 Condition / Cause</h4><div class="bt-inf">Select 1</div><p style="font-size:12px;font-style:italic;color:#6b7280;margin-bottom:10px;">${q.cond.label}</p>`;
+  q.cond.opts.forEach(o=>{
+    const d=document.createElement('div');d.className='bopt';d.dataset.id=o.id;d.dataset.sec='cond';
+    d.innerHTML=`<input type="radio" name="bc${q.id}" id="bc${o.id}" value="${o.id}" data-sec="cond"/><label for="bc${o.id}">${o.text}</label>`;
+    cs.appendChild(d);
+  });
+  const a2=document.createElement('div');a2.className='bt-arr';a2.innerHTML='◀▶';
+  // Right: Parameters
+  const rs=document.createElement('div');rs.className='bt-sec';
+  rs.innerHTML=`<h4>📊 Parameters to Monitor</h4><div class="bt-inf">Select exactly 2</div>`;
+  q.params.opts.forEach(o=>{
+    const d=document.createElement('div');d.className='bopt';d.dataset.id=o.id;d.dataset.sec='params';
+    d.innerHTML=`<input type="checkbox" id="bp${o.id}" value="${o.id}" data-sec="params"/><label for="bp${o.id}">${o.text}</label>`;
+    rs.appendChild(d);
+  });
+  bt.appendChild(ls);bt.appendChild(a1);bt.appendChild(cs);bt.appendChild(a2);bt.appendChild(rs);
+  c.appendChild(bt);
+}
+
+// ══════════════════════════════
+// SUBMIT
+// ══════════════════════════════
+function submit(q){
+  let ok=false,sels=[];
+  if(q.type==='mc'){
+    const s=document.querySelector(`input[name="mc${q.id}"]:checked`);
+    if(!s){alert('Please select an answer.');return;}
+    sels=[s.value];ok=q.opts.find(o=>o.id===s.value)?.correct===true;
+  }else if(q.type==='sata'){
+    sels=[...document.querySelectorAll(`input[type=checkbox]:checked`)].map(e=>e.value);
+    if(!sels.length){alert('Select at least one option.');return;}
+    const cor=q.opts.filter(o=>o.correct).map(o=>o.id).sort();
+    ok=JSON.stringify([...sels].sort())===JSON.stringify(cor);
+  }else if(q.type==='matrix'||q.type==='matrix3'){
+    const rads=[...document.querySelectorAll('input[type=radio][data-row]')];
+    sels=[];let allA=true,allC=true;
+    for(let ri=0;ri<q.rows.length;ri++){
+      const ch=rads.find(r=>r.dataset.row==ri&&r.checked);
+      if(!ch){allA=false;break;}
+      sels.push({row:ri,col:parseInt(ch.value)});
+      if(parseInt(ch.value)!==q.rows[ri].c)allC=false;
+    }
+    if(!allA){alert('Please answer all rows.');return;}
+    ok=allC;
+  }else if(q.type==='bowtie'){
+    const ac=[...document.querySelectorAll('input[data-sec="acts"]:checked')].map(e=>e.value);
+    const co=[...document.querySelectorAll('input[data-sec="cond"]:checked')].map(e=>e.value);
+    const pa=[...document.querySelectorAll('input[data-sec="params"]:checked')].map(e=>e.value);
+    if(ac.length!==2||co.length!==1||pa.length!==2){alert('Select 2 actions, 1 condition, 2 parameters.');return;}
+    sels={acts:ac,cond:co,params:pa};
+    const cAc=q.acts.opts.filter(o=>o.correct).map(o=>o.id).sort();
+    const cCo=q.cond.opts.filter(o=>o.correct).map(o=>o.id);
+    const cPa=q.params.opts.filter(o=>o.correct).map(o=>o.id).sort();
+    ok=JSON.stringify([...ac].sort())===JSON.stringify(cAc)&&co[0]===cCo[0]&&JSON.stringify([...pa].sort())===JSON.stringify(cPa);
+  }
+  ans[cur]={correct:ok,sels};
+  document.getElementById('sb').disabled=true;
+  document.getElementById('bnext').disabled=false;
+  markAns(q);
+  showRat(q,document.getElementById('qa'));
+  if(ok)showPop();
+  updStats();
+}
+
+// ══════════════════════════════
+// MARK ANSWERS
+// ══════════════════════════════
+function markAns(q){
+  const a=ans[cur];if(!a)return;
+  if(q.type==='mc'){
+    document.querySelectorAll('.opt').forEach(d=>{
+      d.classList.add('dis');d.querySelector('input').disabled=true;
+      const o=q.opts.find(x=>x.id===d.dataset.id);
+      if(o?.correct)d.classList.add('cor');
+      else if(a.sels.includes(d.dataset.id))d.classList.add('wrg');
+    });
+  }else if(q.type==='sata'){
+    document.querySelectorAll('.opt').forEach(d=>{
+      d.classList.add('dis');d.querySelector('input').disabled=true;
+      const o=q.opts.find(x=>x.id===d.dataset.id);
+      const sel=a.sels.includes(d.dataset.id);
+      if(o?.correct&&sel)d.classList.add('cor');
+      else if(o?.correct&&!sel)d.classList.add('msd');
+      else if(!o?.correct&&sel)d.classList.add('wrg');
+    });
+  }else if(q.type==='matrix'||q.type==='matrix3'){
+    document.querySelectorAll('input[type=radio][data-row]').forEach(r=>r.disabled=true);
+    if(a.sels)a.sels.forEach(s=>{
+      const tr=document.querySelector(`tr[data-row="${s.row}"]`);
+      if(tr)tr.classList.add(s.col===q.rows[s.row].c?'rc':'rw');
+    });
+  }else if(q.type==='bowtie'){
+    document.querySelectorAll('.bopt input').forEach(i=>i.disabled=true);
+    document.querySelectorAll('.bopt').forEach(d=>d.classList.add('dis'));
+    ['acts','cond','params'].forEach(sec=>{
+      const src=sec==='acts'?q.acts.opts:sec==='cond'?q.cond.opts:q.params.opts;
+      const sels=a.sels?.[sec]||[];
+      src.forEach(o=>{
+        const d=document.querySelector(`.bopt[data-id="${o.id}"][data-sec="${sec}"]`);
+        if(!d)return;
+        const sel=sels.includes(o.id);
+        if(o.correct&&sel)d.classList.add('cor');
+        else if(o.correct&&!sel)d.classList.add('msd');
+        else if(!o.correct&&sel)d.classList.add('wrg');
+      });
+    });
+  }
+}
+
+// ══════════════════════════════
+// SHOW RATIONALE
+// ══════════════════════════════
+function showRat(q,cont){
+  const a=ans[cur];
+  const r=document.createElement('div');r.className='rat';
+  r.innerHTML=`<h3>📖 Rationale</h3><div class="rpill ${a.correct?'ok':'err'}">${a.correct?'✅ Correct!':'❌ Incorrect — review below'}</div><div class="rtxt">${q.rat}</div>`;
+  // breakdown
+  if(q.bd){
+    const bd=document.createElement('div');bd.className='rbd';bd.innerHTML='<h4>Answer Breakdown</h4>';
+    if(q.type==='mc'||q.type==='sata'){
+      Object.entries(q.bd).forEach(([k,v])=>{
+        const isc=v.startsWith('✅');
+        const itm=document.createElement('div');itm.className=`ri ${isc?'rc':'rw'}`;
+        itm.innerHTML=`<span class="rl ${isc?'lc':'lw'}">${k.toUpperCase()}.</span><span>${v}</span>`;
+        bd.appendChild(itm);
+      });
+    }else if(q.type==='matrix'||q.type==='matrix3'){
+      Object.entries(q.bd).forEach(([k,v])=>{
+        const ri=parseInt(k.replace('row',''));
+        const sel=a.sels?.find?.(s=>s.row===ri);
+        const ok2=sel&&sel.col===q.rows[ri].c;
+        const itm=document.createElement('div');itm.className=`ri ${ok2?'rc':'rw'}`;
+        itm.innerHTML=`<span class="rl ${ok2?'lc':'lw'}">R${ri+1}.</span><span>${v}</span>`;
+        bd.appendChild(itm);
+      });
+    }else if(q.type==='bowtie'){
+      ['cond','acts','params'].forEach(sec=>{
+        const itm=document.createElement('div');itm.className='ri rc';
+        const lbl=sec==='cond'?'Condition':sec==='acts'?'Actions':'Parameters';
+        itm.innerHTML=`<span class="rl lc">${lbl.charAt(0)}.</span><span><strong>${lbl}:</strong> ${q.bd[sec]}</span>`;
+        bd.appendChild(itm);
+      });
+    }
+    r.appendChild(bd);
+  }
+  // memory
+  const m=document.createElement('div');m.className='mem';
+  m.innerHTML=`<h4>🧠 Memory Aid / Quick Tip</h4><p>${q.mem}</p>`;
+  r.appendChild(m);
+  cont.appendChild(r);
+}
+
+// ══════════════════════════════
+// POPUP
+// ══════════════════════════════
+function showPop(){
+  const p=POPS[popIdx%POPS.length];popIdx++;
+  document.getElementById('pe').textContent=p.e;
+  document.getElementById('pt').textContent=p.t;
+  document.getElementById('ps').textContent=p.s;
+  document.getElementById('pop').style.display='flex';
+}
+function closePop(){document.getElementById('pop').style.display='none';}
+
+// ══════════════════════════════
+// NAV
+// ══════════════════════════════
+function nav(d){
+  cur+=d;
+  if(cur<0)cur=0;
+  if(cur>=Q.length){showEnd();return;}
+  render();
+}
+function updStats(){
+  const {c,w}=score();const tot=c+w;
+  document.getElementById('cc').textContent=c;
+  document.getElementById('wc').textContent=w;
+  document.getElementById('sp').textContent=tot>0?Math.round(c/tot*100)+'%':'—';
+}
+
+// ══════════════════════════════
+// END
+// ══════════════════════════════
+function showEnd(){
+  document.querySelector('.wrap').style.display='none';
+  document.getElementById('end').style.display='block';
+  const {c,w}=score();const pct=Math.round(c/Q.length*100);
+  let em='🎉',msg='';
+  if(pct>=90){em='🏆';msg='Exceptional! You have mastered Cognition Pharmacology at an application level. You are ready for your exam!';}
+  else if(pct>=80){em='🌟';msg='Great work! Strong command of the content. Review your missed questions\' rationales to fill any remaining gaps.';}
+  else if(pct>=70){em='📚';msg='Solid foundation! You understand the major concepts — focused review on the specific drugs you struggled with will get you there.';}
+  else if(pct>=60){em='💪';msg='Keep going! Re-read the rationales carefully, especially for drug interactions and adverse effects. Repetition builds mastery.';}
+  else{em='🔄';msg='This content takes multiple passes. Review your Fun Facts sheet, read each rationale, and try again. Each attempt builds real understanding!';}
+  document.getElementById('ee').textContent=em;
+  document.getElementById('esc').textContent=`${c}/60`;
+  document.getElementById('ecc').textContent=c;
+  document.getElementById('ewc').textContent=w;
+  document.getElementById('epc').textContent=pct+'%';
+  document.getElementById('emsg').textContent=msg;
+}
+function restart(){
+  ans=new Array(Q.length).fill(null);cur=0;
+  document.getElementById('end').style.display='none';
+  document.querySelector('.wrap').style.display='block';
+  render();
+}
+render();
+</script>
+</body>
+</html>

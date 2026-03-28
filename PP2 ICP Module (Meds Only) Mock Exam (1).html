@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PP2 Intracranial Meds — 60Q Dark Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bl:#1a2d42;--bm:#5ba3f5;--bd:#8ec5ff;--gl:#0f2820;--gm:#4cc38a;--gd:#7eddb0;--yl:#2a2000;--ym:#f0c929;--yd:#ffe066;--bg:#0d1117;--card:#161c26;--tx:#e2eaf6;--tl:#90aecb;--tm:#556d87;--br:#243347;--co:#4cc38a;--in:#f06b6b;--cbg:#0f2820;--ibg:#2d1212;--sh:0 4px 32px rgba(0,0,0,.5);--r:18px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;background-image:radial-gradient(ellipse at 10% 0%,rgba(58,123,213,.12) 0%,transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(76,195,138,.09) 0%,transparent 55%),radial-gradient(ellipse at 80% 5%,rgba(240,201,41,.07) 0%,transparent 40%)}
+.hdr{background:linear-gradient(135deg,#0f1e30 0%,#162a45 60%,#0f2820 100%);color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(44,111,173,.25)}
+.hdr h1{font-family:'Outfit',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:-.01em}
+.hdr .sub{font-size:.75rem;opacity:.85;margin-top:2px;font-weight:300}
+.sbadge{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:30px;padding:5px 16px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:600}
+.pw{padding:12px 28px 0}
+.pi{display:flex;justify-content:space-between;font-size:.78rem;color:var(--tl);margin-bottom:5px;font-weight:600}
+.pbg{background:var(--br);border-radius:99px;height:7px;overflow:hidden}
+.pf{background:linear-gradient(90deg,var(--bm),var(--gm));height:100%;border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.dn{display:flex;justify-content:center;gap:4px;padding:10px 28px 2px;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--br);cursor:pointer;transition:all .2s;border:none}
+.dot.active{background:var(--bm);transform:scale(1.4)}
+.dot.answered{background:var(--gm)}
+.dot.wrong{background:#fc8181}
+.main{max-width:860px;margin:0 auto;padding:16px 16px 80px}
+.qc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1.5px solid var(--br);overflow:hidden;animation:sIn .32s cubic-bezier(.4,0,.2,1)}
+@keyframes sIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.qtr{display:flex;align-items:center;gap:9px;padding:13px 22px 0;flex-wrap:wrap}
+.qn{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;color:var(--bd);background:var(--bl);border-radius:7px;padding:3px 10px}
+.qtag{font-size:.7rem;font-weight:700;border-radius:7px;padding:3px 9px;letter-spacing:.04em}
+.tmc{background:#2a2000;color:var(--yd)}
+.tsa{background:#1e1a35;color:#a78bfa}
+.tma{background:var(--gl);color:var(--gd)}
+.tbt{background:#2d0f1e;color:#f9a8d4}
+.tic{background:#2d1500;color:#fb923c}
+.dchip{margin-left:auto;font-size:.7rem;font-weight:700;background:linear-gradient(135deg,var(--bm),var(--gm));color:#fff;border-radius:7px;padding:3px 11px}
+.qscn{background:linear-gradient(135deg,#1a2d42,rgba(26,45,66,.55));border-left:4px solid var(--bm);margin:12px 22px 0;padding:13px 15px;border-radius:9px;font-size:.95rem;line-height:1.55;color:var(--tx)}
+.qst{padding:13px 22px 0;font-size:1.03rem;font-weight:600;line-height:1.5;color:var(--tx)}
+.qi{font-size:.77rem;color:var(--tm);font-style:italic;margin-top:3px;padding:0 22px}
+.opts{padding:14px 22px;display:flex;flex-direction:column;gap:9px}
+.ob{display:flex;align-items:flex-start;gap:12px;padding:12px 15px;border-radius:11px;border:2px solid var(--br);background:#1a2535;cursor:pointer;transition:all .18s;text-align:left;font-size:.94rem;color:var(--tx);font-family:'Source Sans 3',sans-serif}
+.ob:hover:not(:disabled){border-color:#3a7bd5;background:var(--bl)}
+.ob .ol{flex-shrink:0;width:25px;height:25px;border-radius:50%;background:var(--bl);color:var(--bd);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;font-family:'Outfit',sans-serif}
+.ob.correct{border-color:var(--co);background:var(--cbg)}.ob.correct .ol{background:var(--co);color:#fff}
+.ob.incorrect{border-color:var(--in);background:var(--ibg)}.ob.incorrect .ol{background:var(--in);color:#fff}
+.ob.selected{border-color:var(--bm);background:var(--bl)}.ob.selected .ol{background:var(--bm);color:#fff}
+.saopts{padding:14px 22px;display:flex;flex-direction:column;gap:8px}
+.sao{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-radius:11px;border:2px solid var(--br);background:#1a2535;cursor:pointer;transition:all .18s;text-align:left;font-size:.93rem;color:var(--tx);font-family:'Source Sans 3',sans-serif}
+.sao:hover:not(.locked){border-color:#3a7bd5;background:var(--bl)}
+.sao.selected{border-color:var(--bm);background:var(--bl)}.sao.selected .sb{background:var(--bm);border-color:var(--bm)}
+.sao.correct{border-color:var(--co);background:var(--cbg)}.sao.correct .sb{background:var(--co);border-color:var(--co)}
+.sao.incorrect{border-color:var(--in);background:var(--ibg)}.sao.incorrect .sb{background:var(--in);border-color:var(--in)}
+.sao.missed{border-color:var(--ym);background:var(--yl)}.sao.missed .sb{border-color:var(--ym)}
+.sb{flex-shrink:0;width:21px;height:21px;border-radius:5px;border:2.5px solid var(--br);background:#1a2535;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.sb svg{display:none}.sao.selected .sb svg,.sao.correct .sb svg,.sao.incorrect .sb svg{display:block}
+.mwrap{padding:14px 22px;overflow-x:auto}
+.mt{width:100%;border-collapse:separate;border-spacing:0;font-size:.89rem}
+.mt thead tr th{background:linear-gradient(135deg,var(--bm),var(--gm));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;padding:10px 13px;text-align:center;font-size:.82rem}
+.mt thead tr th:first-child{text-align:left;border-radius:9px 0 0 0}.mt thead tr th:last-child{border-radius:0 9px 0 0}
+.mt tbody tr:nth-child(even) td{background:#1a2535}
+.mt tbody td{padding:9px 13px;border-bottom:1.5px solid var(--br);vertical-align:middle}
+.mt tbody td:first-child{font-weight:500;color:var(--tx);line-height:1.4}
+.mt tbody tr.rc td{background:var(--cbg)!important}.mt tbody tr.ri td{background:var(--ibg)!important}.mt tbody tr.rm td{background:var(--yl)!important}
+.mrg{display:flex;justify-content:center;gap:9px}
+.mr{display:flex;align-items:center;justify-content:center;padding:5px 13px;border-radius:18px;cursor:pointer;border:2px solid var(--br);background:#1a2535;font-size:.78rem;font-weight:600;color:var(--tl);transition:all .15s;white-space:nowrap;font-family:'Outfit',sans-serif}
+.mr:hover{border-color:#3a7bd5;background:var(--bl)}
+.mr.selected{border-color:var(--bm);background:var(--bm);color:#fff}
+.mr.csel{border-color:var(--co);background:var(--co);color:#fff}
+.mr.isel{border-color:var(--in);background:var(--in);color:#fff}
+.mr.scor{border-style:dashed;border-color:var(--co);color:var(--co)}
+.irg{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.ir{padding:4px 9px;border-radius:14px;cursor:pointer;border:2px solid var(--br);background:#1a2535;font-size:.73rem;font-weight:700;color:var(--tl);transition:all .15s;white-space:nowrap;font-family:'Outfit',sans-serif}
+.ir:hover{border-color:#3a7bd5;background:var(--bl)}
+.ir.selected{border-color:var(--bm);background:var(--bm);color:#fff}
+.ir.csel{border-color:var(--co);background:var(--co);color:#fff}
+.ir.isel{border-color:var(--in);background:var(--in);color:#fff}
+.ir.scor{border-style:dashed;border-color:var(--co);color:var(--co)}
+.btwrap{padding:9px 22px 14px}
+.btscn{background:#1a2535;border-left:4px solid var(--bm);padding:11px 13px;border-radius:9px;margin-bottom:12px;font-size:.9rem;line-height:1.5}
+.btg{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:start}
+.btcol{display:flex;flex-direction:column;gap:0}
+.btct{font-family:'Outfit',sans-serif;font-weight:700;font-size:.75rem;text-align:center;padding:7px;border-radius:9px 9px 0 0;letter-spacing:.03em;text-transform:uppercase}
+.btct.left{background:linear-gradient(135deg,#1a4a80,#0d2a50);color:#8ec5ff}
+.btct.center{background:linear-gradient(135deg,#0f3d26,#092518);color:#7eddb0}
+.btct.right{background:linear-gradient(135deg,#3d2c00,#251b00);color:#ffe066}
+.btopts{border:2px solid var(--br);border-top:none;border-radius:0 0 9px 9px;overflow:hidden}
+.bto{padding:9px 11px;cursor:pointer;border-bottom:1.5px solid var(--br);transition:all .15s;font-size:.85rem;color:var(--tx);line-height:1.3;display:flex;align-items:center;gap:8px;background:var(--card)}
+.bto:last-child{border-bottom:none}
+.bto:hover:not(.locked){background:#1a2d42}
+.bto.selected{background:#1a2d42;border-left:3px solid var(--bm)}
+.bto.correct{background:var(--cbg);border-left:3px solid var(--co)}
+.bto.incorrect{background:var(--ibg);border-left:3px solid var(--in)}
+.bto.missed{background:var(--yl);border-left:3px solid var(--ym)}
+.btck{flex-shrink:0;width:17px;height:17px;border-radius:4px;border:2px solid var(--br);background:#1a2535}
+.btarr{display:flex;align-items:center;justify-content:center;padding-top:30px}
+.btarr svg{width:26px;height:26px;color:var(--tm)}
+.btnote{font-size:.72rem;color:var(--tm);text-align:center;margin-top:5px;font-style:italic}
+.swrap{padding:0 22px 16px}
+.bsub{width:100%;padding:13px;border-radius:11px;background:linear-gradient(135deg,var(--bm),var(--gm));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.97rem;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(74,144,217,.28);letter-spacing:.02em}
+.bsub:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,144,217,.38)}
+.bsub:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.rat{margin:0 22px 18px;border-radius:11px;overflow:hidden;border:2px solid transparent;display:none;animation:fIn .3s ease}
+@keyframes fIn{from{opacity:0}to{opacity:1}}
+.rat.show{display:block}
+.rh{padding:10px 15px;display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.87rem}
+.rb{padding:11px 15px;font-size:.89rem;line-height:1.6}
+.rat.cr{border-color:var(--co)}.rat.cr .rh{background:var(--co);color:#fff}.rat.cr .rb{background:var(--cbg);color:var(--gd)}
+.rat.ir2{border-color:#e53e3e}.rat.ir2 .rh{background:#e53e3e;color:#fff}.rat.ir2 .rb{background:var(--ibg);color:#fca5a5}
+.rat.pr{border-color:var(--ym)}.rat.pr .rh{background:var(--ym);color:#fff}.rat.pr .rb{background:var(--yl);color:var(--yd)}
+.nvb{display:flex;gap:11px;padding:0 22px 22px}
+.bn{flex:1;padding:11px;border-radius:11px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.92rem;border:2.5px solid var(--br);cursor:pointer;transition:all .18s;background:#1a2535;color:var(--tx)}
+.bn:hover{border-color:#3a7bd5;background:var(--bl)}
+.bn.p{background:var(--bm);color:#fff;border-color:var(--bm)}.bn.p:hover{background:var(--bd);border-color:var(--bd)}
+.cel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:500;pointer-events:none}
+.cel.show{display:flex}
+.celc{background:#161c26;border-radius:22px;padding:26px 38px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);border:3px solid var(--gm);animation:pIn .4s cubic-bezier(.4,0,.2,1);pointer-events:all}
+@keyframes pIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.cem{font-size:2.8rem;margin-bottom:7px}.cet{font-family:'Outfit',sans-serif;font-size:1.35rem;font-weight:800;color:var(--gm)}.ces{color:var(--tl);font-size:.87rem;margin-top:3px}
+.cp{position:fixed;width:10px;height:10px;top:-10px;border-radius:2px;animation:cf linear forwards;z-index:499;pointer-events:none}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.sc{display:none;text-align:center;padding:36px 22px}
+.sc.show{display:block}
+.scir{width:155px;height:155px;border-radius:50%;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;position:relative}
+.scir::before{content:'';position:absolute;inset:13px;border-radius:50%;background:#161c26}
+.scin{position:relative;z-index:1;text-align:center}
+.scp{font-family:'Outfit',sans-serif;font-size:2.1rem;font-weight:800;color:var(--tx)}.scl{font-size:.72rem;color:var(--tm);font-weight:600}
+.sctit{font-family:'Outfit',sans-serif;font-size:1.7rem;font-weight:800;color:var(--tx);margin-bottom:7px}
+.scsub{color:var(--tl);margin-bottom:26px}
+.scgr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-bottom:26px}
+.scst{background:#1a2535;border-radius:13px;padding:13px}.scst .num{font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;color:var(--bm)}.scst .lbl{font-size:.75rem;color:var(--tm);font-weight:600;margin-top:2px}
+.brst{padding:13px 34px;border-radius:11px;background:linear-gradient(135deg,var(--bm),var(--gm));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.97rem;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(74,144,217,.28)}
+.brst:hover{transform:translateY(-2px)}
+@media(max-width:600px){.hdr{padding:12px 14px}.main{padding:10px 8px 60px}.qscn,.qst,.opts,.saopts,.mwrap,.btwrap,.swrap,.nvb,.rat{padding-left:12px;padding-right:12px}.btg{grid-template-columns:1fr}.btarr{display:none}.scgr{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><h1>🧠 Intracranial Medications Mock Exam</h1><div class="sub">PP2 · Pathopharm · 60 Application Questions · Dark Mode</div></div>
+  <div class="sbadge" id="liveScore">Score: 0/0</div>
+</div>
+<div id="examArea">
+  <div class="pw"><div class="pi"><span id="progressText">Question 1 of 60</span><span id="progressPct">0%</span></div><div class="pbg"><div class="pf" id="progressFill" style="width:0%"></div></div></div>
+  <div class="dn" id="dotNav"></div>
+  <div class="main"><div id="questionContainer"></div></div>
+</div>
+<div class="main" id="scoreArea" style="display:none">
+  <div class="qc"><div class="sc show" id="scoreScreen">
+    <div class="scir" id="scoreCircle"><div class="scin"><div class="scp" id="scorePct">0%</div><div class="scl">Score</div></div></div>
+    <div class="sctit" id="scoreTitle">Exam Complete!</div>
+    <div class="scsub" id="scoreSub"></div>
+    <div class="scgr">
+      <div class="scst"><div class="num" id="statCorrect">0</div><div class="lbl">✅ Correct</div></div>
+      <div class="scst"><div class="num" id="statWrong">0</div><div class="lbl">❌ Incorrect</div></div>
+      <div class="scst"><div class="num" id="statTotal">0</div><div class="lbl">📝 Total</div></div>
+    </div>
+    <button class="brst" onclick="restartExam()">🔄 Retake Exam</button>
+  </div></div>
+</div>
+<div class="cel" id="celebration"><div class="celc"><div class="cem" id="celEmoji">🎉</div><div class="cet" id="celTitle">Correct!</div><div class="ces" id="celSub">Keep it up!</div></div></div>
+<script>
+const QUESTIONS=[
+{type:'mc',drug:'Phenytoin',tag:'Nursing Considerations',
+stem:'A client receives phenytoin via nasogastric tube. The tube feeding is currently infusing. Which action should the nurse take FIRST?',
+options:['Flush the NG tube with saline and administer phenytoin directly through the running tube feed.','Hold the tube feeding, flush with saline, administer phenytoin, then wait 1 hour before resuming the feed.','Crush the phenytoin capsule and dissolve in 30 mL of sterile water before administration.','Contact pharmacy to switch to a liquid phenytoin formulation before giving any dose.'],
+correct:[1],
+rationale:'Phenytoin binds to proteins in tube feeding formulas, drastically reducing its bioavailability. Correct sequence: STOP feeding, FLUSH tube, ADMINISTER phenytoin, WAIT 1 hour, FLUSH again, then RESUME feeding. Option A is wrong — administering through running feeds causes binding failure. Option C is wrong — extended-release capsules must NEVER be crushed. Option D delays needed treatment.'},
+
+{type:'mc',drug:'Lorazepam',tag:'Priority Action',
+stem:'A client has been seizing continuously for 6 minutes. IV access is in place. Which medication and route does the nurse prepare FIRST?',
+options:['Phenytoin IV because it has a longer half-life and prevents seizure recurrence more effectively.','Phenobarbital IV because it raises the seizure threshold better than any other anticonvulsant.','Lorazepam IV because benzodiazepines are the initial treatment for status epilepticus.','Diazepam rectal gel because it is faster acting than IV lorazepam in adult patients.'],
+correct:[2],
+rationale:'LORAZEPAM IV is FIRST-LINE for status epilepticus (greater than or equal to 5 minutes). Phenytoin is SECOND-LINE used after benzodiazepines fail. Phenobarbital is THIRD-LINE. Rectal diazepam is for out-of-hospital settings without IV access.'},
+
+{type:'mc',drug:'Valproic Acid',tag:'Mechanism of Action',
+stem:'Which statement BEST describes how valproic acid suppresses seizure activity?',
+options:['Valproic acid inhibits burst firing of neurons without affecting normal neuronal excitability.','Valproic acid blocks voltage-gated sodium channels to stabilize hyperexcitable neuronal membranes.','Valproic acid increases levels of GABA, the primary inhibitory neurotransmitter in the CNS.','Valproic acid binds to the alpha-2-delta subunit of calcium channels to reduce neurotransmitter release.'],
+correct:[2],
+rationale:'Valproic acid increases levels of GABA, raising the seizure threshold. This is unique to valproic acid among the listed drugs. Inhibiting burst firing = levetiracetam. Blocking sodium channels = topiramate, carbamazepine, phenytoin. Calcium channel binding = pregabalin.'},
+
+{type:'mc',drug:'Carbamazepine',tag:'Mechanism of Action',
+stem:'The nurse teaches a student about carbamazepine\'s anticonvulsant mechanism. Which description is MOST accurate?',
+options:['Carbamazepine increases inhibitory GABA neurotransmission to reduce neuronal excitability.','Carbamazepine suppresses high-frequency neuronal discharge by affecting sodium channels in and around seizure foci.','Carbamazepine inhibits burst firing selectively while preserving normal neuronal function throughout the brain.','Carbamazepine binds calcium channels in CNS tissues to regulate excitatory neurotransmitter release.'],
+correct:[1],
+rationale:'Carbamazepine suppresses high-frequency neuronal discharge by affecting sodium channels in and around seizure foci. Option A describes valproic acid. Option C describes levetiracetam. Option D describes pregabalin.'},
+
+{type:'mc',drug:'Pregabalin',tag:'Mechanism of Action',
+stem:'The nurse explains pregabalin\'s mechanism of action. Which statement is accurate?',
+options:['Pregabalin blocks voltage-gated sodium channels to stabilize neuronal membranes.','Pregabalin inhibits burst firing of neurons without affecting normal neuronal excitability.','Pregabalin increases GABA activity while simultaneously decreasing glutamate synthesis in the CNS.','Pregabalin binds to voltage-gated calcium channels in CNS tissues to reduce neurotransmitter release.'],
+correct:[3],
+rationale:'Pregabalin binds to the alpha-2-delta subunit of voltage-gated calcium channels in CNS tissues, reducing neurotransmitter release. Sodium channel blockade = phenytoin, topiramate, carbamazepine. Burst firing inhibition = levetiracetam. Option C is a fabricated mechanism.'},
+
+{type:'mc',drug:'Gabapentin',tag:'Patient Teaching',
+stem:'A client prescribed gabapentin also takes calcium carbonate daily. Which medication timing instruction is correct?',
+options:['Take gabapentin and the antacid together with a full glass of water.','Take the antacid at least 1 hour before gabapentin.','Take gabapentin at least 2 hours before or after taking the antacid.','Antacids are not systemically absorbed so timing has no impact on gabapentin.'],
+correct:[2],
+rationale:'Antacids reduce gabapentin absorption by binding to it in the GI tract. The client must not take gabapentin within 2 hours of an antacid. Option B (1 hour) is insufficient. Option D is wrong — even without systemic absorption, antacids physically bind gabapentin in the gut.'},
+
+{type:'mc',drug:'Phenobarbital',tag:'Patient Teaching',
+stem:'A client newly started on phenobarbital asks when to expect full seizure control. The nurse\'s BEST response is:',
+options:['"Phenobarbital works rapidly and you should expect full seizure control within 24 to 48 hours of starting."','"It typically takes 3 to 5 days for phenobarbital to reach maximum anticonvulsant effect."','"Maximum anticonvulsant effects may take several weeks to develop with phenobarbital."','"Full effects occur once steady state is reached, which takes approximately 5 half-lives."'],
+correct:[2],
+rationale:'Several weeks are required for maximum anticonvulsant effect with phenobarbital. Option A dramatically underestimates the timeline. Option B (3-5 days) is also wrong. Option D is a plausible distractor invoking pharmacokinetics, but steady-state timing and maximum anticonvulsant effect are distinct concepts.'},
+
+{type:'mc',drug:'Mannitol',tag:'Therapeutic Response',
+stem:'After 90 minutes of mannitol IV, which finding BEST indicates a therapeutic response?',
+options:['Urine output of 28 mL/hr with ICP decreased from 30 to 22 mmHg.','Urine output of 48 mL/hr with ICP decreased from 30 to 14 mmHg and improved level of consciousness.','Urine output of 65 mL/hr with serum sodium of 154 mEq/L and bilateral crackles on auscultation.','Blood pressure improved from 86/54 to 112/72 mmHg with decreased urine output of 12 mL/hr.'],
+correct:[1],
+rationale:'Therapeutic mannitol response includes urine output of 30-50 mL/hr, reduction in ICP, and neurological improvement. Option A is a trap: UO of 28 mL/hr is below goal and ICP of 22 mmHg remains elevated. Option C shows adverse effects. Option D shows cardiovascular changes but critically low urine output.'},
+
+{type:'mc',drug:'Phenytoin',tag:'Therapeutic Range',
+stem:'A client\'s phenytoin level comes back as 22 mcg/mL. The client denies symptoms. Which action is MOST appropriate?',
+options:['Document the result as therapeutic and administer the next scheduled dose as ordered.','Administer the next scheduled dose as ordered because the level is close enough to the expected range.','Notify the provider of the current phenytoin level.','Hold all further phenytoin doses permanently because any level above this threshold indicates toxicity.'],
+correct:[2],
+rationale:'Phenytoin therapeutic range is 10-20 mcg/mL. A level of 22 mcg/mL is supratherapeutic and the provider must be notified even if asymptomatic. Option A is wrong because documenting as therapeutic when it is not is dangerous. Option D is excessive because management decisions belong to the provider.'},
+
+{type:'mc',drug:'Carbamazepine',tag:'Drug Interaction',
+stem:'A client taking carbamazepine reports drinking grapefruit juice daily. The nurse explains this is dangerous because:',
+options:['Grapefruit juice is acidic and binds carbamazepine in the GI tract, reducing its absorption.','Grapefruit juice inhibits CYP3A4 enzymes, preventing carbamazepine metabolism and raising blood levels.','Grapefruit juice accelerates carbamazepine metabolism through enzyme induction, reducing therapeutic efficacy.','Grapefruit juice contains furanocoumarins that compete with carbamazepine at neuronal receptors.'],
+correct:[1],
+rationale:'Grapefruit juice inhibits CYP3A4, increasing carbamazepine blood levels and risking toxicity. Option A describes how antacids affect gabapentin, not this interaction. Option C is the opposite because grapefruit inhibits, it does not induce. Option D is fabricated.'},
+
+{type:'mc',drug:'Mannitol',tag:'Nursing Considerations',
+stem:'Before administering mannitol IV to a client with elevated ICP, which assessment is the nurse\'s HIGHEST priority?',
+options:['Serum potassium level before the first dose.','Blood glucose level before administration.','Neurological status and current ICP baseline.','Urine culture and sensitivity before administration.'],
+correct:[2],
+rationale:'The priority pre-mannitol assessment is neurological status and a current ICP baseline so that effectiveness can be evaluated after administration. Electrolytes should be monitored but are not the priority pre-assessment. Options B and D are not primary concerns for ICP management.'},
+
+{type:'mc',drug:'Phenytoin',tag:'Drug Interactions',
+stem:'A female client with epilepsy asks if her oral contraceptive pills remain effective while on phenytoin. The nurse\'s BEST response is:',
+options:['"Yes, oral contraceptives remain fully effective because phenytoin does not affect reproductive hormones."','"Oral contraceptives are safe with phenytoin but take them 2 hours apart to avoid absorption issues."','"Oral contraceptives are unreliable with phenytoin and you should discuss alternative contraception with your provider."','"Oral contraceptives are actually preferred because estrogen helps stabilize seizure threshold in women."'],
+correct:[2],
+rationale:'Phenytoin is a hepatic enzyme inducer that significantly reduces OCP effectiveness. It is also a teratogen. Women must use alternative contraception. Option B describes a gabapentin-antacid interaction, not an enzyme induction issue.'},
+
+{type:'mc',drug:'Topiramate',tag:'Adverse Effects',
+stem:'A child on topiramate for juvenile epilepsy arrives in summer with temperatures of 101-103°F on three recent occasions. The parent notes the child rarely sweats anymore. Which adverse effect does the nurse suspect?',
+options:['Gingival hyperplasia causing oral infection with secondary bacteremia and fever.','Aplastic anemia causing immunosuppression and recurrent febrile illness.','Hyperthermia related to oligohidrosis.','Pancreatitis causing a systemic inflammatory response with elevated temperature.'],
+correct:[2],
+rationale:'Hyperthermia from oligohidrosis is a rare but serious topiramate adverse effect, especially in children in warm climates. Gingival hyperplasia is phenytoin. Aplastic anemia is carbamazepine. Pancreatitis is valproic acid.'},
+
+{type:'mc',drug:'Levetiracetam',tag:'Mechanism of Action',
+stem:'Which statement BEST distinguishes levetiracetam\'s mechanism from all other antiseizure drugs in this class?',
+options:['Levetiracetam blocks voltage-gated sodium channels to prevent high-frequency neuronal firing.','Levetiracetam increases inhibitory GABA levels via a pathway distinct from valproic acid.','Levetiracetam inhibits burst firing without affecting normal neuronal excitability.','Levetiracetam binds to calcium channels in CNS tissues at a receptor subunit distinct from other anticonvulsants.'],
+correct:[2],
+rationale:'Levetiracetam inhibits burst firing without affecting normal neuronal excitability, which is distinct from all other listed AEDs. Sodium channel blockade = phenytoin, topiramate, carbamazepine. Increasing GABA = valproic acid. Calcium channel binding = pregabalin.'},
+
+{type:'mc',drug:'Valproic Acid',tag:'Adverse Effects',
+stem:'A client on valproic acid presents with fatigue, right upper quadrant pain, anorexia, and yellow discoloration of the eyes. Which condition is the nurse MOST concerned about?',
+options:['Pancreatitis, which can cause abdominal pain, nausea, and elevated inflammatory markers.','Hepatic failure, which can present with jaundice and abdominal discomfort.','Peripheral edema, which can cause tissue swelling and skin discoloration in severe cases.','Aplastic anemia, which causes thrombocytopenic bleeding into hepatic tissue resulting in pain.'],
+correct:[1],
+rationale:'Jaundice plus RUQ pain plus anorexia indicates hepatic failure, a serious valproic acid adverse effect. Option A is a trap because pancreatitis is also a valproic acid concern but jaundice specifically points to hepatic involvement. Option C does not cause jaundice. Option D is a carbamazepine adverse effect.'},
+
+{type:'mc',drug:'Oxcarbazepine',tag:'Adverse Effects',
+stem:'Which adverse effect associated with BOTH oxcarbazepine AND carbamazepine is commonly mistaken as unique to only carbamazepine?',
+options:['Purple glove syndrome seen at injection sites.','Gingival hyperplasia caused by fibroblast proliferation.','Aplastic anemia caused by bone marrow suppression.','Rash and risk of Stevens-Johnson syndrome.'],
+correct:[3],
+rationale:'Rash and SJS risk applies to both oxcarbazepine and carbamazepine because they are structurally related. Purple glove syndrome = IV phenytoin only. Gingival hyperplasia = phenytoin only. Aplastic anemia is primarily carbamazepine; oxcarbazepine does not carry the same level of risk.'},
+
+{type:'mc',drug:'Phenobarbital',tag:'Adverse Effects',
+stem:'A client receiving phenobarbital IV develops BP 80/48 mmHg and RR 7 breaths/min. What is the nurse\'s PRIORITY action?',
+options:['Document findings and monitor vital signs every 15 minutes.','Slow the infusion rate by 50% and reassess vital signs in 10 minutes before notifying the provider.','Stop the infusion immediately, notify the provider, and prepare to support airway and respiration.','Administer 500 mL IV normal saline rapidly to reverse hypotension and then resume the infusion.'],
+correct:[2],
+rationale:'BP 80/48 and RR 7 are life-threatening adverse effects of phenobarbital IV requiring immediate drug cessation and provider notification. Option A is dangerous because these are not mild changes. Option B is inadequate for these extreme values. Option D perpetuates danger by not stopping the causative drug first.'},
+
+{type:'mc',drug:'Gabapentin',tag:'Adverse Effects',
+stem:'Which gingival adverse effect of gabapentin is DISTINCTLY DIFFERENT from the gingival adverse effect caused by phenytoin?',
+options:['Gabapentin causes gingival hyperplasia while phenytoin causes gingivitis.','Gabapentin causes gingivitis while phenytoin causes gingival hyperplasia.','Both gabapentin and phenytoin cause gingival hyperplasia but gabapentin\'s presentation is milder.','Neither drug causes gingival adverse effects because gingival changes only result from immunosuppressants.'],
+correct:[1],
+rationale:'Gabapentin causes gingivitis (gum inflammation) while phenytoin causes gingival hyperplasia (gum overgrowth). These are fundamentally different conditions requiring different interventions. Option A reverses the correct assignment.'},
+
+{type:'mc',drug:'Lamotrigine',tag:'Priority Action',
+stem:'A client on lamotrigine calls reporting thoughts of self-harm for the past 2 days. Which response is the PRIORITY?',
+options:['"Thoughts like these are a known risk with antiseizure medications so monitor at home and call back in a week if it worsens."','"Stop lamotrigine immediately and come to the clinic first thing tomorrow morning for an assessment."','"I need you to ensure your immediate safety right now and I am notifying the provider immediately."','"Keep taking the lamotrigine as prescribed because stopping abruptly can be more dangerous."'],
+correct:[2],
+rationale:'Lamotrigine carries an increased risk of suicidal ideation compared to other antiseizure drugs. Client safety is the immediate priority and the provider must be notified at once. Option A minimizes a mental health emergency. Option B delays care until the next day. Option D ignores the crisis entirely.'},
+
+{type:'sata',drug:'Phenytoin',tag:'Adverse Effects',
+stem:'The nurse reviews phenytoin adverse effects with a newly hired nurse. Which adverse effects are documented for phenytoin? (Select all that apply)',
+options:['Gingival hyperplasia','Purple glove syndrome','Significant weight gain','Nystagmus, ataxia, and sedation','Dysrhythmias and hypotension','Rash that may progress to Stevens-Johnson syndrome','Aplastic anemia'],
+correct:[0,1,3,4,5],
+rationale:'Phenytoin causes gingival hyperplasia, purple glove syndrome with IV administration, nystagmus/ataxia/sedation at toxic levels, dysrhythmias and hypotension with IV use, and rash that may progress to SJS. Significant weight gain is characteristic of pregabalin. Aplastic anemia is the hallmark bone marrow complication of carbamazepine.'},
+
+{type:'sata',drug:'Valproic Acid',tag:'Adverse Effects',
+stem:'The nurse monitors a client on long-term valproic acid therapy for which adverse effects? (Select all that apply)',
+options:['Pancreatitis','Hepatic failure','Thrombocytopenia and leukopenia','Aplastic anemia','Peripheral edema','Hypothermia','Gingival hyperplasia'],
+correct:[0,1,2,4,5],
+rationale:'Valproic acid causes pancreatitis, hepatic failure, blood dyscrasias including thrombocytopenia and leukopenia, peripheral edema, and hypothermia. Aplastic anemia is the hallmark bone marrow complication of carbamazepine, not valproic acid. Gingival hyperplasia is phenytoin only.'},
+
+{type:'sata',drug:'Carbamazepine',tag:'Adverse Effects',
+stem:'A client starts carbamazepine. Which adverse effects does the nurse include in teaching? (Select all that apply)',
+options:['CNS depression including dizziness, unsteadiness, and headache','Nystagmus, diplopia, and visual disturbances','Aplastic anemia','Fluid retention causing peripheral edema','Gingival hyperplasia','Purple glove syndrome','Ataxia and vertigo'],
+correct:[0,1,2,3,6],
+rationale:'Carbamazepine causes CNS depression, nystagmus and diplopia, aplastic anemia, fluid retention and edema, and ataxia. Gingival hyperplasia is phenytoin only. Purple glove syndrome is IV phenytoin only and carbamazepine has no IV formulation.'},
+
+{type:'sata',drug:'Levetiracetam',tag:'Adverse Effects',
+stem:'A nurse monitors a client on levetiracetam for which adverse effects? (Select all that apply)',
+options:['Drowsiness and generalized weakness','Agitation and behavioral changes','Hypertension','Bone marrow suppression','Gingival hyperplasia','Stevens-Johnson syndrome','Pancreatitis'],
+correct:[0,1,2,3,5],
+rationale:'Levetiracetam causes drowsiness, weakness, agitation and behavioral changes, hypertension, bone marrow suppression, and SJS. Gingival hyperplasia is phenytoin only. Pancreatitis is valproic acid.'},
+
+{type:'sata',drug:'Pregabalin',tag:'Adverse Effects',
+stem:'The nurse teaches a client about pregabalin\'s adverse effects prior to discharge. Which should be included? (Select all that apply)',
+options:['Significant weight gain','Peripheral edema','Somnolence','Respiratory depression','Rhabdomyolysis','Vision changes and dizziness','Suicidal ideation and behavioral changes'],
+correct:[0,1,2,3,5,6],
+rationale:'Pregabalin causes significant weight gain, peripheral edema, somnolence, respiratory depression, vision changes, dizziness, and behavioral changes with suicidal ideation risk. Rhabdomyolysis is an adverse effect of gabapentin, not pregabalin.'},
+
+{type:'sata',drug:'Lorazepam / Diazepam',tag:'Adverse Effects',
+stem:'The nurse administers IV lorazepam to a client in status epilepticus. Which adverse effects require IMMEDIATE intervention? (Select all that apply)',
+options:['Respiratory depression and bradypnea','Apnea','Cardiac arrest','Constipation and abdominal distension','Nystagmus after seizure cessation','Palpitations and cardiac dysrhythmias'],
+correct:[0,1,2,4,5],
+rationale:'Benzodiazepines IV can cause respiratory depression, bradypnea, apnea, cardiac arrest in severe cases, nystagmus, and palpitations. Emergency equipment must be at bedside. Constipation is characteristic of phenobarbital, not benzodiazepines.'},
+
+{type:'sata',drug:'Phenobarbital',tag:'Adverse Effects',
+stem:'The nurse monitors a client receiving long-term phenobarbital for which adverse effects? (Select all that apply)',
+options:['Hypotension','Constipation','Delirium','Depression','Rash and skin reactions','Nausea, vomiting, and diarrhea','Purple glove syndrome'],
+correct:[0,1,2,3,4,5],
+rationale:'Phenobarbital causes hypotension, constipation, delirium, depression, rash, and GI disturbances. Several weeks are required for maximum anticonvulsant effect. Purple glove syndrome is IV phenytoin only.'},
+
+{type:'sata',drug:'Mannitol',tag:'Nursing Considerations',
+stem:'The nurse administers mannitol IV to a client with traumatic brain injury. Which nursing actions are appropriate? (Select all that apply)',
+options:['Monitor ICP readings and neurological status continuously','Assess urine output every hour','Assess for bilateral lung crackles and respiratory changes','Restrict all IV fluid intake to 300 mL per day','Monitor serum electrolytes','Assess for chest pain','Monitor for sudden changes in level of consciousness'],
+correct:[0,1,2,4,5,6],
+rationale:'Mannitol nursing care includes continuous ICP and neuro monitoring, hourly urine output assessment, pulmonary monitoring for fluid shift, electrolyte monitoring, chest pain monitoring, and neuro deterioration monitoring. Restricting IV fluids to 300 mL/day is not a standard for mannitol and could cause hemodynamic compromise.'},
+
+{type:'sata',drug:'Topiramate',tag:'Adverse Effects',
+stem:'A client begins topiramate for seizure management. Which adverse effects does the nurse teach the client to monitor for? (Select all that apply)',
+options:['Somnolence and dizziness','Anorexia and weight loss','Ataxia and nervousness','Hyperthermia with decreased sweating','Significant weight gain','Visual changes including sudden eye pain','Stevens-Johnson syndrome'],
+correct:[0,1,2,3,5,6],
+rationale:'Topiramate causes somnolence, dizziness, ataxia, nervousness, anorexia and weight loss, hyperthermia with decreased sweating, visual changes, and SJS. Significant weight gain is a pregabalin feature; topiramate causes weight loss.'},
+
+{type:'sata',drug:'Gabapentin',tag:'Adverse Effects',
+stem:'A client is prescribed gabapentin for partial seizures. Which adverse effects does the nurse include in discharge teaching? (Select all that apply)',
+options:['Stevens-Johnson syndrome','Nystagmus','Gingivitis','Rhabdomyolysis','Ataxia and confusion','Gingival hyperplasia','Behavioral changes'],
+correct:[0,1,2,3,4,6],
+rationale:'Gabapentin causes SJS, nystagmus, gingivitis, rhabdomyolysis, ataxia, confusion, and behavioral changes. Gingival hyperplasia is phenytoin only. Gabapentin causes gingivitis, which is a different gingival condition.'},
+
+{type:'sata',drug:'Oxcarbazepine',tag:'Adverse Effects',
+stem:'A client prescribed oxcarbazepine asks about adverse effects to watch for. The nurse includes which? (Select all that apply)',
+options:['Rash and Stevens-Johnson syndrome risk','Aplastic anemia','Diplopia and nystagmus','Dizziness and headache','Nausea, vomiting, and GI disturbances','Purple glove syndrome','CNS and behavioral changes'],
+correct:[0,2,3,4,6],
+rationale:'Oxcarbazepine causes rash and SJS risk, diplopia, nystagmus, dizziness, headache, GI disturbances, and CNS behavioral changes. Aplastic anemia is the hallmark adverse effect of carbamazepine. Purple glove syndrome is IV phenytoin only and oxcarbazepine is oral only.'},
+
+{type:'sata',drug:'Lamotrigine',tag:'Adverse Effects',
+stem:'Which serious adverse effects of lamotrigine require IMMEDIATE provider notification? (Select all that apply)',
+options:['Stevens-Johnson syndrome','Cardiac arrest','Hepatic failure with jaundice','Gingival hyperplasia and bleeding gums','Blurred vision','Suicidal ideation','Constipation and bowel obstruction'],
+correct:[0,1,2,4,5],
+rationale:'Serious lamotrigine adverse effects requiring immediate notification include SJS, cardiac arrest, hepatic failure, blurred vision, and suicidal ideation. Lamotrigine carries higher suicidal ideation risk than other AEDs. Gingival hyperplasia is phenytoin only. Constipation is a phenobarbital adverse effect.'},
+
+{type:'sata',drug:'Lamotrigine',tag:'Patient Teaching',
+stem:'A client is discharged on lamotrigine for seizure management and bipolar disorder. Which points should the nurse include in teaching? (Select all that apply)',
+options:['Report any new rash to the provider immediately','This medication carries a higher risk of suicidal ideation than other antiseizure drugs','Monitor yourself for mood changes or thoughts of self-harm and report to the provider','Avoid grapefruit juice while taking this medication','Never stop lamotrigine abruptly without provider guidance','Lamotrigine is used for both seizure management and bipolar disorder'],
+correct:[0,1,2,4,5],
+rationale:'Correct lamotrigine teaching includes reporting any rash, monitoring for suicidal ideation, monitoring mood changes, never stopping abruptly, and understanding its dual indication. Grapefruit avoidance is required for carbamazepine, not lamotrigine.'},
+
+{type:'sata',drug:'Phenytoin',tag:'Patient Teaching',
+stem:'A client prescribed phenytoin is being discharged. Which teaching points are correct? (Select all that apply)',
+options:['Brush and floss teeth daily to protect gum tissue','Report any development of a rash to the provider immediately','Avoid all alcohol while taking phenytoin','Avoid grapefruit juice while taking phenytoin','Women of childbearing age cannot rely on oral contraceptives while taking phenytoin','Keep all follow-up appointments for serum level monitoring','Pause tube feeding 1 hour before and 1 hour after each phenytoin dose'],
+correct:[0,1,2,4,5,6],
+rationale:'Correct phenytoin teaching includes daily oral hygiene, reporting rash, no alcohol, OCP unreliability, level monitoring, and tube feed pausing. Grapefruit avoidance is a carbamazepine teaching, not phenytoin.'},
+
+{type:'sata',drug:'Carbamazepine',tag:'Patient Teaching',
+stem:'A client is discharged on carbamazepine for epilepsy. Which teaching points are correct? (Select all that apply)',
+options:['Avoid grapefruit juice while taking carbamazepine','Report any new rash or skin changes to the provider immediately','Regular CBC and serum level monitoring are required throughout therapy','It is safe to stop carbamazepine if seizures are controlled for 2 consecutive months without consulting a provider','Report significant swelling in the legs or feet to the provider','Oral contraceptive pills remain fully effective while taking carbamazepine'],
+correct:[0,1,2,4],
+rationale:'Correct carbamazepine teaching includes grapefruit avoidance, reporting rash, regular CBC and levels, and reporting edema. Never stop without provider guidance because abrupt discontinuation causes status epilepticus. OCP effectiveness is also reduced because carbamazepine is a hepatic enzyme inducer.'},
+
+{type:'sata',drug:'Mannitol',tag:'Adverse Effects',
+stem:'A client receiving mannitol IV develops new findings. Which are documented adverse effects of mannitol requiring immediate action? (Select all that apply)',
+options:['Bilateral crackles in lung bases','Client reports acute chest pain','ICP decreases from 28 to 16 mmHg','Serum sodium drops to 128 mEq/L','Urine output 45 mL/hr over the past 2 hours','Blurred vision','Sudden decrease in level of consciousness'],
+correct:[0,1,3,5,6],
+rationale:'Mannitol adverse effects requiring action include pulmonary edema, chest pain, electrolyte imbalances, blurred vision, and sudden neurological deterioration. ICP decreasing from 28 to 16 mmHg is a therapeutic response. Urine output of 45 mL/hr is within the expected therapeutic range and does not require action.'},
+
+{type:'sata',drug:'Pregabalin',tag:'Patient Teaching',
+stem:'A client is discharged on pregabalin. Which discharge teaching points are correct? (Select all that apply)',
+options:['Report significant weight gain to the provider','Report new leg or ankle swelling to the provider','Do not drive or operate machinery until you know how this medication affects you','Report any new thoughts of self-harm or behavioral changes to the provider immediately','Separate pregabalin from antacids by at least 2 hours','Report difficulty breathing or shortness of breath to the provider','Avoid grapefruit juice while taking pregabalin'],
+correct:[0,1,2,3,5],
+rationale:'Correct pregabalin teaching includes reporting weight gain, edema, impaired driving, suicidal ideation, and dyspnea. Antacid separation by 2 hours is a gabapentin teaching because both are gabapentinoids but the interaction applies specifically to gabapentin. Grapefruit avoidance is a carbamazepine teaching.'},
+
+{type:'sata',drug:'Valproic Acid',tag:'Patient Teaching',
+stem:'A client is being discharged on valproic acid. Which teaching points should the nurse include? (Select all that apply)',
+options:['Report abdominal pain, nausea, or vomiting that is new or worsening','Report yellowing of skin or eyes to the provider immediately','Monitor for unusual bruising or bleeding and report to provider','Avoid grapefruit juice while taking valproic acid','Do not stop this medication abruptly without provider guidance','Report leg or foot swelling to the provider','Contact provider if you feel unusually cold or your temperature seems low'],
+correct:[0,1,2,4,5,6],
+rationale:'Valproic acid teaching includes reporting GI changes, jaundice, bleeding and bruising, never stopping abruptly, reporting edema, and reporting hypothermia. Grapefruit avoidance belongs to carbamazepine only.'},
+
+{type:'sata',drug:'Phenobarbital',tag:'Nursing Considerations',
+stem:'The nurse cares for a client receiving phenobarbital. Which nursing actions are appropriate? (Select all that apply)',
+options:['Monitor respiratory status, pulse, and blood pressure before and during administration','Monitor for signs and symptoms of angioedema','Expect that maximum anticonvulsant effects may take several weeks to develop','Administer phenobarbital IV as a rapid bolus to achieve fastest seizure control','Monitor for behavioral changes including delirium and depression','Assess for rash and skin reactions throughout therapy'],
+correct:[0,1,2,4,5],
+rationale:'Phenobarbital nursing actions include monitoring vital signs and respiratory status, angioedema monitoring, educating about delayed onset, monitoring for CNS adverse effects, and skin monitoring. Rapid IV bolus is contraindicated and must be given slowly to prevent cardiovascular and respiratory collapse.'},
+
+{type:'sata',drug:'Phenytoin',tag:'Nursing Considerations',
+stem:'Before administering IV phenytoin, which nursing assessments and actions are appropriate? (Select all that apply)',
+options:['Verify the current phenytoin serum level if recently drawn','Assess blood pressure and cardiac rhythm before and during infusion','Administer phenytoin IV diluted in a glucose solution for compatibility','Assess current neurological status and seizure activity','Confirm tube feeding is paused if client is on enteral nutrition','Monitor IV site closely for signs of extravasation','Administer IV phenytoin at no faster than 50 mg/min in adults'],
+correct:[0,1,3,4,5,6],
+rationale:'IV phenytoin preparation includes verifying level, monitoring BP and cardiac rhythm, assessing neuro status, pausing tube feeding, monitoring IV site, and maintaining max rate of 50 mg/min. Phenytoin is incompatible with glucose solutions and must be administered in normal saline only.'},
+
+{type:'sata',drug:'Multiple',tag:'SJS Risk Across AEDs',
+stem:'The nurse is teaching a client who asks which of their medications carry a documented risk for Stevens-Johnson syndrome. Which carry SJS risk? (Select all that apply)',
+options:['Lamotrigine','Carbamazepine','Oxcarbazepine','Phenytoin','Pregabalin','Topiramate','Mannitol'],
+correct:[0,1,2,3,4,5],
+rationale:'SJS risk is documented for lamotrigine, carbamazepine, oxcarbazepine, phenytoin, pregabalin, and topiramate. Clients on any of these must report any new rash immediately. Mannitol is an osmotic diuretic with no documented SJS risk.'},
+
+{type:'sata',drug:'Phenytoin',tag:'Toxicity Assessment',
+stem:'The nurse assesses a client for phenytoin toxicity. Which clinical findings are consistent with phenytoin toxicity? (Select all that apply)',
+options:['Nystagmus','Ataxia','Sedation and cognitive impairment','Significant peripheral edema and weight gain','Diplopia','Dysrhythmias','Hypotension'],
+correct:[0,1,2,4,5,6],
+rationale:'Phenytoin toxicity at levels above 20 mcg/mL presents with nystagmus, ataxia, sedation, diplopia, and at very high levels dysrhythmias and hypotension. Significant peripheral edema and weight gain are pregabalin adverse effects, not phenytoin toxicity.'},
+
+{type:'sata',drug:'Diazepam / Lorazepam',tag:'Nursing Considerations',
+stem:'The nurse prepares to administer IV lorazepam to a client in status epilepticus. Which nursing actions are appropriate? (Select all that apply)',
+options:['Have resuscitation equipment immediately at bedside','Administer IV lorazepam as a rapid bolus for the fastest possible seizure cessation','Monitor respiratory rate and oxygen saturation continuously during and after administration','Monitor cardiac rhythm for dysrhythmias during administration','Administer IV lorazepam slowly','Document seizure duration, characteristics, and response to the medication'],
+correct:[0,2,3,4,5],
+rationale:'Correct IV lorazepam actions include having emergency equipment ready, continuous respiratory monitoring, cardiac monitoring, slow administration, and seizure documentation. Rapid bolus is contraindicated even in emergencies because it causes apnea and cardiac arrest.'},
+
+{type:'matrix_eu',drug:'Phenobarbital',tag:'Expected vs. Unexpected',
+stem:'A client is receiving phenobarbital for seizure management. Indicate whether each finding is EXPECTED or UNEXPECTED.',
+rows:[
+{finding:'Client reports no seizures in the past 3 weeks',correct:'expected'},
+{finding:'Respiratory rate of 7 breaths/min after IV dose',correct:'unexpected'},
+{finding:'Client reports mild drowsiness during the first week of therapy',correct:'expected'},
+{finding:'Blood pressure drops to 76/44 mmHg after IV administration',correct:'unexpected'},
+{finding:'Client states medication has not fully controlled seizures after only 4 days',correct:'expected'},
+{finding:'Client develops generalized rash with facial swelling',correct:'unexpected'},
+],
+rationale:'Expected findings include seizure reduction, initial drowsiness, and incomplete control in the first days because several weeks are needed for maximum anticonvulsant effect. Unexpected findings requiring immediate action include RR of 7 (critical respiratory depression), BP 76/44 (critical hypotension), and generalized rash with facial swelling (angioedema).'},
+
+{type:'matrix_eu',drug:'Lorazepam',tag:'Expected vs. Unexpected',
+stem:'A client received IV lorazepam 4 mg for status epilepticus 10 minutes ago. The seizure has stopped. Indicate whether each finding is EXPECTED or UNEXPECTED.',
+rows:[
+{finding:'Seizure activity has completely ceased',correct:'expected'},
+{finding:'Client is drowsy but responds to verbal stimulation',correct:'expected'},
+{finding:'Respiratory rate 7 breaths/min with SpO2 dropping to 83%',correct:'unexpected'},
+{finding:'Blood pressure 88/52 mmHg after IV administration',correct:'unexpected'},
+{finding:'Client exhibits nystagmus on post-ictal assessment',correct:'expected'},
+{finding:'SpO2 remains stable at 96% on 2L nasal cannula',correct:'expected'},
+],
+rationale:'Expected findings after IV lorazepam include seizure cessation, drowsiness, nystagmus, and stable SpO2 with supplemental oxygen. Unexpected findings requiring immediate intervention include RR 7 with SpO2 83% (severe respiratory depression) and BP 88/52 (significant hypotension).'},
+
+{type:'matrix_eu',drug:'Topiramate',tag:'Expected vs. Unexpected',
+stem:'A client has been on topiramate for seizure management for 3 months. Indicate whether each finding is EXPECTED or UNEXPECTED.',
+rows:[
+{finding:'Client reports 9 lbs weight loss over 3 months',correct:'expected'},
+{finding:'Weight gain of 13 lbs noted on today\'s assessment',correct:'unexpected'},
+{finding:'Client reports dizziness and somnolence',correct:'expected'},
+{finding:'Temperature 104°F with decreased sweating reported by family',correct:'unexpected'},
+{finding:'Client reports decreased appetite and eating less than before',correct:'expected'},
+{finding:'Client reports sudden onset severe eye pain and blurred vision',correct:'unexpected'},
+],
+rationale:'Expected findings include weight loss, decreased appetite, dizziness, and somnolence. Unexpected findings requiring immediate action include weight gain (topiramate causes loss not gain), temperature 104 with decreased sweating (hyperthermia from oligohidrosis), and sudden severe eye pain (possible acute angle-closure glaucoma requiring urgent evaluation).'},
+
+{type:'matrix_eu',drug:'Carbamazepine',tag:'Expected vs. Unexpected',
+stem:'A client has been on carbamazepine for 4 months. The nurse reviews assessment data. Indicate whether each finding is EXPECTED or UNEXPECTED.',
+rows:[
+{finding:'Reduction in seizure frequency and severity',correct:'expected'},
+{finding:'CBC shows WBC 1.6 K/uL and platelets 42,000',correct:'unexpected'},
+{finding:'Client reports persistent diplopia and some unsteadiness',correct:'expected'},
+{finding:'Bilateral lower extremity edema in a client with heart failure',correct:'unexpected'},
+{finding:'Carbamazepine serum level within therapeutic range',correct:'expected'},
+{finding:'Client reports drinking grapefruit juice daily with breakfast',correct:'unexpected'},
+],
+rationale:'Expected findings include seizure reduction, diplopia and unsteadiness, and a therapeutic drug level. Unexpected findings requiring immediate intervention include severely low WBC and platelets (possible aplastic anemia), bilateral edema worsening heart failure, and daily grapefruit juice use which raises carbamazepine levels through CYP3A4 inhibition.'},
+
+{type:'matrix_eu',drug:'Valproic Acid',tag:'Expected vs. Unexpected',
+stem:'A client on valproic acid for 2 months is assessed. Indicate whether each finding is EXPECTED or UNEXPECTED.',
+rows:[
+{finding:'Decreased frequency and severity of seizures',correct:'expected'},
+{finding:'ALT/AST elevated at 9 times the upper limit of normal with jaundice',correct:'unexpected'},
+{finding:'Client reports mild bilateral ankle swelling',correct:'expected'},
+{finding:'Platelet count of 58,000/uL with spontaneous bruising on arms',correct:'unexpected'},
+{finding:'Client reports occasional nausea that has improved from week 1',correct:'expected'},
+{finding:'Client temperature is 35.0°C with subjective report of feeling very cold',correct:'unexpected'},
+],
+rationale:'Expected findings include seizure reduction, mild peripheral edema, and transient nausea that improves. Unexpected findings requiring immediate action include severely elevated liver enzymes with jaundice (hepatic failure), critically low platelets with bruising (severe thrombocytopenia), and temperature of 35.0°C (hypothermia).'},
+
+{type:'matrix_ei',drug:'Phenytoin',tag:'Effective / Ineffective Teaching',
+stem:'A client prescribed phenytoin makes the following statements. Indicate whether each reflects Effective or Ineffective teaching.',
+rows:[
+{finding:'"I brush and floss my teeth twice daily to protect my gums."',correct:'effective'},
+{finding:'"I can have one glass of wine with dinner because alcohol in moderation is fine."',correct:'ineffective'},
+{finding:'"I will call my doctor right away if I notice any rash anywhere on my body."',correct:'effective'},
+{finding:'"I stop tube feeding 1 hour before and 1 hour after taking my phenytoin."',correct:'effective'},
+{finding:'"My birth control pills will still protect me from pregnancy while I am on this medication."',correct:'ineffective'},
+{finding:'"I avoid grapefruit juice because it raises my phenytoin levels."',correct:'ineffective'},
+],
+rationale:'Effective statements include daily oral hygiene, reporting any rash, and pausing tube feeds before and after doses. Ineffective statements include drinking alcohol (completely contraindicated, not a moderation issue), relying on OCP (unreliable due to enzyme induction and teratogen risk), and avoiding grapefruit (a carbamazepine teaching incorrectly applied to phenytoin).'},
+
+{type:'matrix_ei',drug:'Carbamazepine',tag:'Effective / Ineffective Teaching',
+stem:'A client discharged on carbamazepine makes the following statements. Indicate whether each reflects Effective or Ineffective teaching.',
+rows:[
+{finding:'"I will avoid grapefruit juice while taking this medication."',correct:'effective'},
+{finding:'"I can stop taking this medication once I go 2 months without a seizure."',correct:'ineffective'},
+{finding:'"I need regular blood tests to check my levels and blood count."',correct:'effective'},
+{finding:'"I should report any new skin rash or blistering to my doctor right away."',correct:'effective'},
+{finding:'"My oral contraceptive pill remains fully effective while on carbamazepine."',correct:'ineffective'},
+{finding:'"I will report if my legs or feet start to swell significantly."',correct:'effective'},
+],
+rationale:'Effective statements include grapefruit avoidance, regular lab monitoring, reporting rash, and reporting edema. Ineffective statements include stopping without provider guidance (risks status epilepticus) and believing OCP remains effective (carbamazepine is an enzyme inducer that reduces OCP efficacy just as phenytoin does).'},
+
+{type:'matrix_ei',drug:'Levetiracetam',tag:'Effective / Ineffective Teaching',
+stem:'A client discharged on levetiracetam makes the following statements. Indicate whether each reflects Effective or Ineffective teaching.',
+rows:[
+{finding:'"I will tell my doctor immediately if I feel more irritable or aggressive than usual."',correct:'effective'},
+{finding:'"This medication does not need any monitoring since it is a newer and safer drug."',correct:'ineffective'},
+{finding:'"I should report any rash or skin blistering right away."',correct:'effective'},
+{finding:'"Weight gain is a major side effect I need to monitor for with this medication."',correct:'ineffective'},
+{finding:'"I will contact my doctor if I notice unusual bruising or signs of infection."',correct:'effective'},
+{finding:'"I can take an extra dose if I feel a breakthrough seizure coming on."',correct:'ineffective'},
+],
+rationale:'Effective statements include reporting mood and behavioral changes, reporting rash, and reporting bleeding or infection signs. Ineffective statements include dismissing all monitoring, expecting weight gain (a pregabalin feature, not levetiracetam), and self-dosing for breakthrough seizures.'},
+
+{type:'matrix_ei',drug:'Gabapentin',tag:'Effective / Ineffective Teaching',
+stem:'A client discharged on gabapentin makes the following statements. Indicate whether each reflects Effective or Ineffective teaching.',
+rows:[
+{finding:'"I take my gabapentin and antacid at the same time each morning for convenience."',correct:'ineffective'},
+{finding:'"I wait at least 2 hours after my antacid before taking my gabapentin."',correct:'effective'},
+{finding:'"I will call my doctor if I notice muscle aching and my urine looks dark or tea-colored."',correct:'effective'},
+{finding:'"Gabapentin requires the same strict blood level monitoring as phenytoin."',correct:'ineffective'},
+{finding:'"I will report any skin rash or blistering to my doctor right away."',correct:'effective'},
+{finding:'"Gingival hyperplasia is a gum side effect I should watch for with gabapentin."',correct:'ineffective'},
+],
+rationale:'Effective statements include antacid separation of 2 hours, reporting muscle pain and dark urine, and reporting rash. Ineffective statements include taking antacid together (causes absorption failure), expecting the same level monitoring as phenytoin (gabapentin has no equivalent monitoring protocol), and expecting gingival hyperplasia (gabapentin causes gingivitis, not hyperplasia).'},
+
+{type:'matrix_ei',drug:'Phenobarbital',tag:'Effective / Ineffective Teaching',
+stem:'A client discharged on phenobarbital makes the following statements. Indicate whether each reflects Effective or Ineffective teaching.',
+rows:[
+{finding:'"This medication may take several weeks before I see full seizure control."',correct:'effective'},
+{finding:'"This medication should control my seizures completely within the first day or two."',correct:'ineffective'},
+{finding:'"I should let my doctor know if I feel very dizzy or my blood pressure seems low."',correct:'effective'},
+{finding:'"I can safely stop phenobarbital on my own if my seizures are controlled."',correct:'ineffective'},
+{finding:'"I will report any rash or facial swelling to my doctor immediately."',correct:'effective'},
+{finding:'"Maximum anticonvulsant effect usually happens within 3 to 5 days of starting this medication."',correct:'ineffective'},
+],
+rationale:'Effective statements include expecting several weeks for full effect, reporting dizziness and low BP, and reporting rash or facial swelling. Ineffective statements all incorrectly underestimate the onset timeline and stopping independently risks barbiturate withdrawal and seizure rebound.'},
+
+{type:'matrix_icn',drug:'Phenobarbital IV',tag:'Indicated / Contraindicated / Not Indicated',
+stem:'A client with a seizure disorder is prescribed phenobarbital IV. For each nursing action, indicate whether it is Indicated, Contraindicated, or Not Indicated.',
+rows:[
+{finding:'Monitor respiratory rate, pulse, and BP before and continuously during administration',correct:'indicated'},
+{finding:'Administer phenobarbital IV as a rapid bolus for fastest seizure control',correct:'contraindicated'},
+{finding:'Educate client that full anticonvulsant effect may take several weeks',correct:'indicated'},
+{finding:'Monitor for signs and symptoms of angioedema during and after administration',correct:'indicated'},
+{finding:'Instruct client to avoid grapefruit juice to prevent phenobarbital toxicity',correct:'not indicated'},
+{finding:'Document seizure activity, duration, characteristics, and response to medication',correct:'indicated'},
+],
+rationale:'Indicated actions include vital sign monitoring, delayed onset education, angioedema monitoring, and seizure documentation. Rapid IV bolus is contraindicated because phenobarbital must be given slowly. Grapefruit juice avoidance is a carbamazepine teaching and is not indicated for phenobarbital.'},
+
+{type:'matrix_icn',drug:'Valproic Acid',tag:'Indicated / Contraindicated / Not Indicated',
+stem:'A client with epilepsy and a history of liver disease is starting valproic acid. For each nursing action, indicate whether it is Indicated, Contraindicated, or Not Indicated.',
+rows:[
+{finding:'Assess baseline and ongoing liver function tests',correct:'indicated'},
+{finding:'Monitor for signs of pancreatitis including abdominal pain and nausea',correct:'indicated'},
+{finding:'Reassure client that a history of liver disease poses no additional risk with valproic acid',correct:'contraindicated'},
+{finding:'Monitor CBC for thrombocytopenia and leukopenia',correct:'indicated'},
+{finding:'Instruct client to avoid grapefruit juice to prevent valproic acid toxicity',correct:'not indicated'},
+{finding:'Teach client to report any yellowing of skin or eyes immediately',correct:'indicated'},
+],
+rationale:'Indicated actions include LFT monitoring, pancreatitis monitoring, CBC monitoring, and jaundice teaching. Reassuring the client that liver disease poses no additional risk is contraindicated because pre-existing liver disease significantly increases hepatotoxicity risk. Grapefruit avoidance is a carbamazepine teaching and is not indicated for valproic acid.'},
+
+{type:'matrix_icn',drug:'Lorazepam IV',tag:'Indicated / Contraindicated / Not Indicated',
+stem:'A client in status epilepticus is receiving IV lorazepam. For each action, indicate whether it is Indicated, Contraindicated, or Not Indicated.',
+rows:[
+{finding:'Have oxygen, suction, bag-mask, and flumazenil immediately available at bedside',correct:'indicated'},
+{finding:'Administer IV lorazepam as a rapid bolus push for immediate seizure cessation',correct:'contraindicated'},
+{finding:'Monitor respiratory rate and SpO2 continuously throughout administration',correct:'indicated'},
+{finding:'Prepare for possible second dose or escalation to phenytoin if lorazepam does not stop the seizure',correct:'indicated'},
+{finding:'Switch to oral lorazepam after the IV dose if seizure continues',correct:'contraindicated'},
+{finding:'Document time, duration, and characteristics of seizure activity',correct:'indicated'},
+],
+rationale:'Indicated actions include having emergency equipment ready, continuous respiratory monitoring, preparation for escalating treatment, and documentation. Rapid IV bolus is contraindicated because it causes apnea and cardiac arrest. Switching to oral lorazepam in active status epilepticus is contraindicated because the client may be unconscious and the oral route is too slow and unreliable.'},
+
+{type:'bowtie',drug:'Valproic Acid',tag:'Bowtie',
+scenario:'A 42-year-old client on valproic acid for 3 months presents with fatigue, RUQ abdominal pain, and anorexia for 5 days. Assessment reveals scleral icterus. Vital signs: BP 102/64, HR 98, Temp 38.1°C. Labs: ALT 620 U/L, AST 540 U/L, Total bilirubin 4.8 mg/dL.',
+leftLabel:'Priority Assessment Findings (Select 2)',
+leftOptions:['Scleral icterus with total bilirubin of 4.8 mg/dL','ALT 620 and AST 540 on current lab results','Client reports fatigue lasting 5 days','Blood pressure of 102/64 mmHg','Client has been taking valproic acid for 3 months'],
+leftCorrect:[0,1],
+centerLabel:'Priority Nursing Action',
+centerOptions:['Hold valproic acid immediately and notify the provider','Administer the next scheduled valproic acid dose and recheck labs next week','Reduce the valproic acid dose by half and monitor for improvement over 3 days','Encourage increased fluid intake and allow labs to self-correct'],
+centerCorrect:[0],
+rightLabel:'Priority Post-Intervention Monitoring (Select 2)',
+rightOptions:['Serial liver function tests to track hepatic injury progression','Assess for confusion, asterixis, and changes in level of consciousness','Review client grapefruit juice intake as the primary cause of this presentation','Assess visitor schedule and family communication preferences','Perform dental assessment for gingival changes related to medication'],
+rightCorrect:[0,1],
+rationale:'Priority findings are scleral icterus with bilirubin of 4.8 and severely elevated liver enzymes, indicating hepatic failure from valproic acid. The priority action is to hold the drug and notify the provider immediately because continuing administration during hepatic failure is life-threatening. Priority monitoring includes serial liver function tests and neurological assessment for hepatic encephalopathy. Grapefruit juice is a carbamazepine interaction and does not cause valproic acid hepatotoxicity.'},
+
+{type:'bowtie',drug:'Carbamazepine',tag:'Bowtie',
+scenario:'A 55-year-old client on carbamazepine for epilepsy returns for a 4-month follow-up. CBC: WBC 1.6 K/uL, Hemoglobin 7.2 g/dL, Platelets 28,000/uL. The client reports fatigue, pallor, and a recent infection that will not resolve.',
+leftLabel:'Priority Assessment Findings (Select 2)',
+leftOptions:['WBC 1.6, Hgb 7.2, and Platelets 28,000 on today\'s CBC','Recent persistent infection and pallor on assessment','Client\'s carbamazepine dose has remained unchanged for 4 months','Client reports eating grapefruit twice this past week','Client\'s last documented seizure was 8 weeks ago'],
+leftCorrect:[0,1],
+centerLabel:'Priority Nursing Action',
+centerOptions:['Do not administer the next carbamazepine dose and notify the provider immediately','Administer the next dose as scheduled and recheck CBC in one month','Reduce the carbamazepine dose by half and recheck CBC in 2 weeks before notifying the provider','Reassure the client that CBC variations are common with long-term anticonvulsants'],
+centerCorrect:[0],
+rightLabel:'Priority Monitoring and Interventions (Select 2)',
+rightOptions:['Monitor for active infection, spontaneous bleeding, and signs of severe anemia','Educate client on infection and bleeding precautions pending provider evaluation','Identify grapefruit juice intake as the primary cause of the CBC abnormalities','Determine which alternative anticonvulsants are available for transition','Perform dental assessment for gingival hyperplasia as the primary concern'],
+rightCorrect:[0,1],
+rationale:'Priority findings are severe pancytopenia (WBC 1.6, Hgb 7.2, platelets 28,000) consistent with possible aplastic anemia and active infection with pallor confirming immune compromise. The priority action is to hold the drug and notify the provider immediately. Priority monitoring includes infection, bleeding, and anemia signs along with precaution education. Grapefruit juice affects carbamazepine drug levels, not bone marrow function, so it is not the cause of aplastic anemia.'},
+
+{type:'bowtie',drug:'Topiramate',tag:'Bowtie',
+scenario:'An 8-year-old on topiramate for juvenile epilepsy is brought to clinic in summer. The parent reports temperatures of 101-103°F on 3 occasions with decreased sweating, sudden onset eye pain and vision changes for 2 days, and 6 lbs weight loss over 2 months.',
+leftLabel:'Priority Assessment Findings (Select 2)',
+leftOptions:['Recurrent elevated temperatures with absent or decreased sweating','Sudden onset eye pain and vision changes for 2 days','Weight loss of 6 lbs over 2 months','Parent reports child seems different socially lately','Seizures have been well-controlled on topiramate'],
+leftCorrect:[0,1],
+centerLabel:'Priority Nursing Action',
+centerOptions:['Report both findings to the provider immediately for urgent evaluation','Continue topiramate as scheduled and recheck vital signs at the next routine monthly visit','Encourage increased fluids for the hyperthermia and plan eye exam at next available appointment in 2 weeks','Reassure parent that all findings are expected in children on topiramate'],
+centerCorrect:[0],
+rightLabel:'Priority Post-Notification Monitoring (Select 2)',
+rightOptions:['Assess temperature, hydration status, and sweating pattern','Arrange urgent ophthalmology referral for eye assessment','Address weight loss as the primary priority with dietary counseling','Confirm the child\'s immunization schedule is up to date','Plan a seizure frequency tracking chart for the next calendar month'],
+rightCorrect:[0,1],
+rationale:'Priority findings are recurrent hyperthermia with decreased sweating (oligohidrosis from topiramate, especially dangerous in children in warm weather) and sudden onset eye pain with vision changes (possible acute angle-closure glaucoma requiring emergency ophthalmology). Weight loss is an expected topiramate adverse effect and is not a priority emergency finding. Both priority findings require immediate provider notification and urgent evaluation because neither can safely wait for a routine appointment.'}
+];
+// STATE
+let current=0;
+let answers=new Array(QUESTIONS.length).fill(null);
+let submitted=new Array(QUESTIONS.length).fill(false);
+let results=new Array(QUESTIONS.length).fill(null);
+let score={correct:0,incorrect:0};
+
+// shuffle & cache order
+const qOrders=QUESTIONS.map((q)=>{
+  if(q.type==='mc'||q.type==='sata'){
+    const a=q.options.map((_,i)=>i);
+    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+    return a;
+  }
+  return null;
+});
+
+function typeLabel(t){return{mc:'Multiple Choice',sata:'SATA',matrix_eu:'Matrix',matrix_ei:'Matrix',matrix_icn:'Matrix',bowtie:'Bowtie'}[t]||t;}
+function typeClass(t){return{mc:'tmc',sata:'tsa',matrix_eu:'tma',matrix_ei:'tma',matrix_icn:'tic',bowtie:'tbt'}[t]||'tmc';}
+
+function renderDots(){
+  const nav=document.getElementById('dotNav');
+  nav.innerHTML='';
+  QUESTIONS.forEach((q,i)=>{
+    const d=document.createElement('button');
+    d.className='dot'+(i===current?' active':'')+(submitted[i]?(results[i]==='correct'?' answered':' wrong'):'');
+    d.onclick=()=>{current=i;render();};
+    nav.appendChild(d);
+  });
+}
+
+function updateProgress(){
+  const pct=Math.round(((current+1)/QUESTIONS.length)*100);
+  document.getElementById('progressText').textContent=`Question ${current+1} of ${QUESTIONS.length}`;
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('progressFill').style.width=pct+'%';
+  const s=submitted.filter(Boolean).length;
+  const c=results.filter(r=>r==='correct'||r==='partial').length;
+  document.getElementById('liveScore').textContent=`Score: ${c}/${s}`;
+}
+
+function render(){
+  updateProgress();renderDots();
+  const q=QUESTIONS[current];
+  const con=document.getElementById('questionContainer');
+  let html=`<div class="qc"><div class="qtr"><span class="qn">Q${current+1}</span><span class="qtag ${typeClass(q.type)}">${typeLabel(q.type)}</span><span class="qtag tmc" style="background:#1a2535;color:#7ab8f5">${q.tag}</span><span class="dchip">${q.drug}</span></div>`;
+  if(q.type==='mc'||q.type==='sata') html+=renderMCSATA(q);
+  else if(q.type==='matrix_eu'||q.type==='matrix_ei') html+=renderMatrixEU(q);
+  else if(q.type==='matrix_icn') html+=renderMatrixICN(q);
+  else if(q.type==='bowtie') html+=renderBowtie(q);
+  html+=renderRat(q);
+  html+=`<div class="swrap"><button class="bsub" id="submitBtn" onclick="submitAnswer()" ${submitted[current]?'disabled':''}>
+    ${submitted[current]?'✓ Submitted':'Submit Answer'}</button></div>`;
+  html+=`<div class="nvb"><button class="bn" onclick="goTo(${current-1})" ${current===0?'disabled':''}>← Previous</button>
+    <button class="bn p" onclick="goTo(${current+1})">${current===QUESTIONS.length-1?'See Score →':'Next →'}</button></div>`;
+  html+='</div>';
+  con.innerHTML=html;
+  if(submitted[current]) applyVisuals();
+}
+
+function renderMCSATA(q){
+  const sa=q.type==='sata';
+  const ord=qOrders[current];
+  let h=`<div class="qst">${q.stem}</div>`;
+  if(sa) h+=`<div class="qi">Select all that apply. Click Submit when done.</div>`;
+  h+=`<div class="${sa?'saopts':'opts'}">`;
+  const sel=answers[current]||[];
+  ord.forEach((oi,di)=>{
+    const ltr=String.fromCharCode(65+di);
+    const txt=q.options[oi];
+    const isSel=sel.includes(oi);
+    if(sa){
+      h+=`<div class="sao${isSel?' selected':''}" data-idx="${oi}" onclick="toggleSATA(${oi})"><div class="sb"><svg width="11" height="11" viewBox="0 0 11 11"><polyline points="1.5,5.5 4,8.5 9.5,2.5" fill="none" stroke="white" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${txt}</span></div>`;
+    } else {
+      h+=`<button class="ob${isSel?' selected':''}" data-idx="${oi}" onclick="selectMC(${oi})"><span class="ol">${ltr}</span><span>${txt}</span></button>`;
+    }
+  });
+  h+='</div>';return h;
+}
+
+function renderMatrixEU(q){
+  const ei=q.type==='matrix_ei';
+  const opts=ei?['Effective','Ineffective']:['Expected','Unexpected'];
+  const sel=answers[current]||{};
+  let h=`<div class="qst">${q.stem}</div><div class="mwrap"><table class="mt"><thead><tr><th>Finding / Statement</th>`;
+  opts.forEach(o=>h+=`<th>${o}</th>`);
+  h+=`</tr></thead><tbody>`;
+  q.rows.forEach((row,ri)=>{
+    h+=`<tr id="mrow${ri}"><td>${row.finding}</td>`;
+    opts.forEach(opt=>{
+      const v=opt.toLowerCase();const isSel=sel[ri]===v;
+      h+=`<td><div class="mrg"><div class="mr${isSel?' selected':''}" data-row="${ri}" data-val="${v}" onclick="selectMatrix(${ri},'${v}')">${opt}</div></div></td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';return h;
+}
+
+function renderMatrixICN(q){
+  const opts=['Indicated','Contraindicated','Not Indicated'];
+  const sel=answers[current]||{};
+  let h=`<div class="qst">${q.stem}</div><div class="mwrap"><table class="mt"><thead><tr><th>Action / Intervention</th>`;
+  opts.forEach(o=>h+=`<th>${o}</th>`);
+  h+=`</tr></thead><tbody>`;
+  q.rows.forEach((row,ri)=>{
+    h+=`<tr id="mrow${ri}"><td>${row.finding}</td>`;
+    opts.forEach(opt=>{
+      const v=opt.toLowerCase().replace(' ','_');const isSel=sel[ri]===v;
+      h+=`<td><div class="irg"><div class="ir${isSel?' selected':''}" data-row="${ri}" data-val="${v}" onclick="selectICN(${ri},'${v}')">${opt}</div></div></td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';return h;
+}
+
+function renderBowtie(q){
+  const sel=answers[current]||{left:[],center:null,right:[]};
+  let h=`<div class="btwrap"><div class="btscn">${q.scenario}</div><div class="btg">
+    <div class="btcol"><div class="btct left">${q.leftLabel}</div><div class="btopts">`;
+  q.leftOptions.forEach((opt,i)=>{
+    h+=`<div class="bto${sel.left.includes(i)?' selected':''}" id="bl${i}" onclick="toggleBT('left',${i})"><div class="btck"></div>${opt}</div>`;
+  });
+  h+=`</div><div class="btnote">Select 2</div></div>
+    <div class="btarr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="btcol"><div class="btct center">${q.centerLabel}</div><div class="btopts">`;
+  q.centerOptions.forEach((opt,i)=>{
+    h+=`<div class="bto${sel.center===i?' selected':''}" id="bc${i}" onclick="selectBTCenter(${i})"><div class="btck"></div>${opt}</div>`;
+  });
+  h+=`</div><div class="btnote">Select 1</div></div>
+    <div style="display:flex;flex-direction:column"><div class="btct right" style="border-radius:9px 9px 0 0">${q.rightLabel}</div><div class="btopts">`;
+  q.rightOptions.forEach((opt,i)=>{
+    h+=`<div class="bto${sel.right.includes(i)?' selected':''}" id="br${i}" onclick="toggleBT('right',${i})"><div class="btck"></div>${opt}</div>`;
+  });
+  h+=`</div><div class="btnote">Select 2</div></div></div></div>`;return h;
+}
+
+function renderRat(q){
+  if(!submitted[current]) return`<div class="rat" id="rationale"></div>`;
+  const r=results[current];
+  const cls=r==='correct'?'cr':r==='partial'?'pr':'ir2';
+  const icon=r==='correct'?'🌟':r==='partial'?'⚡':'📖';
+  const title=r==='correct'?'Excellent! 🌟':r==='partial'?'Partially Correct ⚡':'Review This Concept 📖';
+  return`<div class="rat show ${cls}"><div class="rh">${icon} ${title}</div><div class="rb">${q.rationale}</div></div>`;
+}
+
+function selectMC(idx){if(submitted[current])return;answers[current]=[idx];render();}
+function toggleSATA(idx){
+  if(submitted[current])return;
+  if(!answers[current])answers[current]=[];
+  const p=answers[current].indexOf(idx);
+  if(p>=0)answers[current].splice(p,1);else answers[current].push(idx);
+  const el=document.querySelector(`[data-idx="${idx}"]`);
+  if(el)el.classList.toggle('selected',answers[current].includes(idx));
+}
+function selectMatrix(row,val){
+  if(submitted[current])return;
+  if(!answers[current])answers[current]={};
+  answers[current][row]=val;
+  document.querySelectorAll(`[data-row="${row}"]`).forEach(el=>el.classList.toggle('selected',el.dataset.val===val));
+}
+function selectICN(row,val){
+  if(submitted[current])return;
+  if(!answers[current])answers[current]={};
+  answers[current][row]=val;
+  document.querySelectorAll(`[data-row="${row}"]`).forEach(el=>el.classList.toggle('selected',el.dataset.val===val));
+}
+function toggleBT(side,idx){
+  if(submitted[current])return;
+  if(!answers[current])answers[current]={left:[],center:null,right:[]};
+  const arr=answers[current][side];
+  const p=arr.indexOf(idx);
+  if(p>=0)arr.splice(p,1);else if(arr.length<2)arr.push(idx);
+  const pre=side==='left'?'bl':'br';
+  const q=QUESTIONS[current];
+  const opts=side==='left'?q.leftOptions:q.rightOptions;
+  opts.forEach((_,i)=>{const el=document.getElementById(pre+i);if(el)el.classList.toggle('selected',arr.includes(i));});
+}
+function selectBTCenter(idx){
+  if(submitted[current])return;
+  if(!answers[current])answers[current]={left:[],center:null,right:[]};
+  answers[current].center=idx;
+  QUESTIONS[current].centerOptions.forEach((_,i)=>{const el=document.getElementById('bc'+i);if(el)el.classList.toggle('selected',i===idx);});
+}
+
+function submitAnswer(){
+  const q=QUESTIONS[current];const ans=answers[current];
+  if(!ans&&(q.type==='mc'||q.type==='sata'))return toast('Please select an answer first!');
+  if((q.type==='matrix_eu'||q.type==='matrix_ei'||q.type==='matrix_icn')&&(!ans||Object.keys(ans).length<q.rows.length))return toast('Please answer all rows!');
+  if(q.type==='bowtie'&&(!ans||ans.left.length<2||ans.center===null||ans.right.length<2))return toast('Please complete all sections!');
+  submitted[current]=true;
+  const res=evaluate(q,ans);
+  results[current]=res;
+  if(res==='correct')score.correct++;else score.incorrect++;
+  render();
+  if(res==='correct')celebrate();
+}
+
+function evaluate(q,ans){
+  if(q.type==='mc') return ans[0]===q.correct[0]?'correct':'incorrect';
+  if(q.type==='sata'){
+    const a=new Set(ans||[]),c=new Set(q.correct);
+    if([...a].every(x=>c.has(x))&&[...c].every(x=>a.has(x)))return'correct';
+    if([...a].some(x=>c.has(x)))return'partial';
+    return'incorrect';
+  }
+  if(q.type==='matrix_eu'||q.type==='matrix_ei'){
+    let all=true,any=false;
+    q.rows.forEach((row,i)=>{if(ans[i]===row.correct)any=true;else all=false;});
+    return all?'correct':any?'partial':'incorrect';
+  }
+  if(q.type==='matrix_icn'){
+    let all=true,any=false;
+    q.rows.forEach((row,i)=>{const cv=row.correct.replace(' ','_');if(ans[i]===cv)any=true;else all=false;});
+    return all?'correct':any?'partial':'incorrect';
+  }
+  if(q.type==='bowtie'){
+    const ls=new Set(ans.left),lc=new Set(q.leftCorrect);
+    const rs=new Set(ans.right),rc=new Set(q.rightCorrect);
+    const lOk=[...ls].every(a=>lc.has(a))&&[...lc].every(c=>ls.has(c));
+    const cOk=ans.center===q.centerCorrect[0];
+    const rOk=[...rs].every(a=>rc.has(a))&&[...rc].every(c=>rs.has(c));
+    if(lOk&&cOk&&rOk)return'correct';
+    if(lOk||cOk||rOk)return'partial';
+    return'incorrect';
+  }
+  return'incorrect';
+}
+
+function applyVisuals(){
+  const q=QUESTIONS[current];const ans=answers[current];
+  if(q.type==='mc'){
+    qOrders[current].forEach(oi=>{
+      const el=document.querySelector(`[data-idx="${oi}"]`);if(!el)return;
+      const isC=q.correct.includes(oi),isS=ans&&ans.includes(oi);
+      if(isC)el.classList.add('correct');else if(isS&&!isC)el.classList.add('incorrect');
+    });
+  }
+  if(q.type==='sata'){
+    qOrders[current].forEach(oi=>{
+      const el=document.querySelector(`[data-idx="${oi}"]`);if(!el)return;
+      const isC=q.correct.includes(oi),isS=ans&&ans.includes(oi);
+      el.classList.remove('selected');
+      if(isC&&isS)el.classList.add('correct');else if(!isC&&isS)el.classList.add('incorrect');else if(isC&&!isS)el.classList.add('missed');
+    });
+  }
+  if(q.type==='matrix_eu'||q.type==='matrix_ei'){
+    const ei=q.type==='matrix_ei';
+    const opts=ei?['effective','ineffective']:['expected','unexpected'];
+    q.rows.forEach((row,ri)=>{
+      const rowEl=document.getElementById('mrow'+ri);
+      const uv=ans&&ans[ri],cv=row.correct;
+      if(uv===cv)rowEl&&rowEl.classList.add('rc');else if(uv)rowEl&&rowEl.classList.add('ri');else rowEl&&rowEl.classList.add('rm');
+      opts.forEach(v=>{
+        document.querySelectorAll(`[data-row="${ri}"][data-val="${v}"]`).forEach(el=>{
+          el.classList.remove('selected');
+          if(v===cv&&v===uv)el.classList.add('csel');else if(v===cv)el.classList.add('scor');else if(v===uv&&v!==cv)el.classList.add('isel');
+        });
+      });
+    });
+  }
+  if(q.type==='matrix_icn'){
+    q.rows.forEach((row,ri)=>{
+      const rowEl=document.getElementById('mrow'+ri);
+      const uv=ans&&ans[ri],cv=row.correct.replace(' ','_');
+      if(uv===cv)rowEl&&rowEl.classList.add('rc');else if(uv)rowEl&&rowEl.classList.add('ri');else rowEl&&rowEl.classList.add('rm');
+      ['indicated','contraindicated','not_indicated'].forEach(v=>{
+        document.querySelectorAll(`[data-row="${ri}"][data-val="${v}"]`).forEach(el=>{
+          el.classList.remove('selected');
+          if(v===cv&&v===uv)el.classList.add('csel');else if(v===cv)el.classList.add('scor');else if(v===uv&&v!==cv)el.classList.add('isel');
+        });
+      });
+    });
+  }
+  if(q.type==='bowtie'){
+    q.leftOptions.forEach((_,i)=>{
+      const el=document.getElementById('bl'+i);if(!el)return;
+      const isSel=ans.left.includes(i),isC=q.leftCorrect.includes(i);
+      el.classList.remove('selected');
+      if(isSel&&isC)el.classList.add('correct');else if(isSel&&!isC)el.classList.add('incorrect');else if(!isSel&&isC)el.classList.add('missed');
+    });
+    q.centerOptions.forEach((_,i)=>{
+      const el=document.getElementById('bc'+i);if(!el)return;
+      const isSel=ans.center===i,isC=q.centerCorrect.includes(i);
+      el.classList.remove('selected');
+      if(isSel&&isC)el.classList.add('correct');else if(isSel&&!isC)el.classList.add('incorrect');else if(!isSel&&isC)el.classList.add('missed');
+    });
+    q.rightOptions.forEach((_,i)=>{
+      const el=document.getElementById('br'+i);if(!el)return;
+      const isSel=ans.right.includes(i),isC=q.rightCorrect.includes(i);
+      el.classList.remove('selected');
+      if(isSel&&isC)el.classList.add('correct');else if(isSel&&!isC)el.classList.add('incorrect');else if(!isSel&&isC)el.classList.add('missed');
+    });
+  }
+}
+
+const msgs=[['🌟','Brilliant!','Clinical reasoning on point!'],['🎉','Correct!','You\'re crushing it!'],['💪','Nailed It!','That knowledge is solid!'],['🧠','Excellent!','Your brain is a sponge!'],['✨','Perfect!','NCLEX ready!'],['🎯','Bull\'s-eye!','Spot on!'],['🔥','On Fire!','Keep it going!'],['⚡','Sharp!','Nothing gets past you!']];
+let ci=0;
+function celebrate(){
+  const m=msgs[ci%msgs.length];ci++;
+  document.getElementById('celEmoji').textContent=m[0];
+  document.getElementById('celTitle').textContent=m[1];
+  document.getElementById('celSub').textContent=m[2];
+  document.getElementById('celebration').classList.add('show');
+  confetti();
+  setTimeout(()=>document.getElementById('celebration').classList.remove('show'),1700);
+}
+function confetti(){
+  const cols=['#5ba3f5','#4cc38a','#f0c929','#f472b6','#a78bfa','#fb923c'];
+  for(let i=0;i<26;i++){
+    const c=document.createElement('div');c.className='cp';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=cols[Math.floor(Math.random()*cols.length)];
+    c.style.width=(7+Math.random()*8)+'px';c.style.height=(7+Math.random()*8)+'px';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    c.style.animationDuration=(1.1+Math.random()*1.3)+'s';
+    c.style.animationDelay=(Math.random()*.4)+'s';
+    document.body.appendChild(c);setTimeout(()=>c.remove(),2400);
+  }
+}
+
+function toast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#5ba3f5;color:#0d1117;padding:11px 20px;border-radius:9px;font-family:Outfit,sans-serif;font-weight:600;font-size:.88rem;z-index:999;animation:fIn .2s ease;';
+  t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2400);
+}
+
+function goTo(n){
+  if(n>=QUESTIONS.length){showScore();return;}
+  if(n<0)return;
+  current=n;render();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showScore(){
+  document.getElementById('examArea').style.display='none';
+  document.getElementById('scoreArea').style.display='block';
+  const total=submitted.filter(Boolean).length;
+  const correct=results.filter(r=>r==='correct').length;
+  const partial=results.filter(r=>r==='partial').length;
+  const ts=correct+Math.round(partial*.5);
+  const pct=total>0?Math.round((ts/QUESTIONS.length)*100):0;
+  document.getElementById('scorePct').textContent=pct+'%';
+  document.getElementById('scoreCircle').style.background=`conic-gradient(${pct>=70?'var(--gm)':'#e53e3e'} ${pct*3.6}deg, var(--br) 0%)`;
+  const titles=[[90,'Outstanding! 🏆'],[80,'Excellent! 🌟'],[70,'Good Work! 💪'],[60,'Keep Studying! 📚'],[0,'Let\'s Review! 🔄']];
+  document.getElementById('scoreTitle').textContent=(titles.find(([t])=>pct>=t)||titles[4])[1];
+  document.getElementById('scoreSub').textContent=`You answered ${total} of ${QUESTIONS.length} questions. Review rationales for weak areas.`;
+  document.getElementById('statCorrect').textContent=correct+(partial>0?` (+${partial} partial)`:'');
+  document.getElementById('statWrong').textContent=results.filter(r=>r==='incorrect').length;
+  document.getElementById('statTotal').textContent=QUESTIONS.length;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function restartExam(){
+  current=0;
+  answers=new Array(QUESTIONS.length).fill(null);
+  submitted=new Array(QUESTIONS.length).fill(false);
+  results=new Array(QUESTIONS.length).fill(null);
+  score={correct:0,incorrect:0};ci=0;
+  document.getElementById('examArea').style.display='block';
+  document.getElementById('scoreArea').style.display='none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cognition Pharmacology Examination</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:        #f4f6f9;
+  --surface:   #ffffff;
+  --surface2:  #f8f9fb;
+  --border:    #dde2ea;
+  --border2:   #c8d0dc;
+  --navy:      #1a2d4a;
+  --teal:      #0e7490;
+  --teal-lt:   #cffafe;
+  --teal-md:   #a5f3fc;
+  --slate:     #475569;
+  --muted:     #8898aa;
+  --txt:       #1e293b;
+  --txt2:      #475569;
+  --correct:   #15803d;
+  --correct-bg:#f0fdf4;
+  --correct-br:#86efac;
+  --wrong:     #b91c1c;
+  --wrong-bg:  #fef2f2;
+  --wrong-br:  #fca5a5;
+  --miss-bg:   #fffbeb;
+  --miss-br:   #fcd34d;
+  --rat-bg:    #f0f9ff;
+  --rat-br:    #bae6fd;
+  --sata-bg:   #f5f3ff;
+  --sata-br:   #c4b5fd;
+  --sata-txt:  #5b21b6;
+  --accent:    #0e7490;
+  --prog-bg:   #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+  --radius:    12px;
+  --radius-sm: 8px;
+}
+[data-theme="dark"] {
+  --bg:        #0f172a;
+  --surface:   #1e293b;
+  --surface2:  #162032;
+  --border:    #2d3f55;
+  --border2:   #3d5268;
+  --navy:      #93c5fd;
+  --teal:      #22d3ee;
+  --teal-lt:   #0c4a6e;
+  --teal-md:   #075985;
+  --slate:     #94a3b8;
+  --muted:     #64748b;
+  --txt:       #e2e8f0;
+  --txt2:      #94a3b8;
+  --correct:   #4ade80;
+  --correct-bg:#052e16;
+  --correct-br:#166534;
+  --wrong:     #f87171;
+  --wrong-bg:  #1f0707;
+  --wrong-br:  #7f1d1d;
+  --miss-bg:   #1c1500;
+  --miss-br:   #854d0e;
+  --rat-bg:    #082032;
+  --rat-br:    #0369a1;
+  --sata-bg:   #1a0e35;
+  --sata-br:   #5b21b6;
+  --sata-txt:  #a78bfa;
+  --accent:    #22d3ee;
+  --prog-bg:   #1e293b;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+  --shadow:    0 4px 12px rgba(0,0,0,.35);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.45);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  transition: background .25s, color .25s;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ── SHELL ─────────────────────────────── */
+.shell { max-width: 780px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* ── TOP BAR ─────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.topbar-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: var(--txt);
+  letter-spacing: -.01em;
+}
+.topbar-brand span { color: var(--teal); }
+.btn-dark {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--txt2);
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .02em;
+}
+.btn-dark:hover { background: var(--surface2); color: var(--txt); }
+
+/* ── START SCREEN ─────────────────────────── */
+.start-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 52px 48px;
+}
+.start-eyebrow {
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+.start-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  color: var(--txt);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.start-sub {
+  font-size: 0.95rem; color: var(--txt2); font-weight: 400;
+  margin-bottom: 36px; max-width: 540px;
+}
+.start-meta {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 36px;
+}
+.meta-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+}
+.meta-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+.meta-val { font-size: 0.95rem; font-weight: 600; color: var(--txt); }
+.topic-grid {
+  display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 38px;
+}
+.topic-tag {
+  font-size: 0.76rem; font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--txt2);
+}
+.btn-start {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 600;
+  background: var(--navy);
+  color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  padding: 14px 36px; cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .02em;
+}
+[data-theme="dark"] .btn-start { background: var(--teal); color: #0c4a6e; }
+.btn-start:hover { opacity: .87; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(14,116,144,.35); }
+
+/* ── STATS BAR ─────────────────────────── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-bottom: 18px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-label { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.stat-val { font-size: 1.1rem; font-weight: 700; color: var(--txt); margin-top: 2px; }
+.stat-val.correct { color: var(--correct); }
+.stat-val.wrong { color: var(--wrong); }
+
+/* ── PROGRESS ─────────────────────────── */
+.progress-row { margin-bottom: 20px; }
+.progress-info {
+  display: flex; justify-content: space-between;
+  font-size: 0.75rem; font-weight: 600; color: var(--muted);
+  margin-bottom: 7px;
+}
+.progress-track {
+  height: 4px; background: var(--prog-bg);
+  border-radius: 99px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--teal), var(--navy));
+  transition: width .45s cubic-bezier(.4,0,.2,1);
+  min-width: 4px;
+}
+[data-theme="dark"] .progress-fill { background: linear-gradient(90deg, var(--teal), #60a5fa); }
+
+/* ── QUESTION CARD ─────────────────────── */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: cardIn .3s cubic-bezier(.4,0,.2,1);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.q-header {
+  padding: 20px 28px 0;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+.q-header-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.q-counter { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+.q-type-badge {
+  font-size: 0.67rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 3px 9px; border-radius: 4px;
+}
+.badge-mc   { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.badge-sata { background: var(--sata-bg); color: var(--sata-txt); border: 1px solid var(--sata-br); }
+[data-theme="dark"] .badge-mc { background: #0c2942; color: #7dd3fc; border-color: #0369a1; }
+.q-topic {
+  font-size: 0.67rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted); background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 9px; border-radius: 4px;
+}
+
+.q-body { padding: 24px 28px 8px; }
+.q-text {
+  font-size: 1rem; font-weight: 500; color: var(--txt);
+  line-height: 1.65; margin-bottom: 18px;
+}
+.sata-directive {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--sata-txt);
+  background: var(--sata-bg);
+  border-left: 3px solid var(--sata-br);
+  padding: 8px 14px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 16px;
+}
+
+/* ── OPTIONS ─────────────────────────── */
+.options { display: flex; flex-direction: column; gap: 8px; padding: 0 28px 24px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--surface2);
+  transition: border-color .15s, background .15s, transform .1s;
+  user-select: none;
+}
+.opt:hover:not(.locked) {
+  border-color: var(--teal); background: var(--surface);
+  transform: translateX(3px);
+}
+.opt.selected { border-color: var(--teal); background: var(--rat-bg); }
+[data-theme="dark"] .opt.selected { background: var(--teal-lt); }
+.opt.correct-opt { border-color: var(--correct); background: var(--correct-bg); }
+.opt.wrong-opt   { border-color: var(--wrong);   background: var(--wrong-bg); }
+.opt.missed-opt  { border-color: var(--miss-br); background: var(--miss-bg); }
+.opt.locked { cursor: default; }
+
+.opt-marker {
+  width: 22px; height: 22px; min-width: 22px;
+  border: 1.5px solid var(--border2);
+  border-radius: 5px; /* checkbox */
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: var(--muted);
+  background: var(--surface);
+  transition: all .15s;
+  margin-top: 1px;
+}
+.opt-mc .opt-marker { border-radius: 50%; }
+.opt.selected  .opt-marker { border-color: var(--teal);    background: var(--teal);    color: #fff; }
+.opt.correct-opt .opt-marker { border-color: var(--correct); background: var(--correct); color: #fff; }
+.opt.wrong-opt   .opt-marker { border-color: var(--wrong);   background: var(--wrong);   color: #fff; }
+.opt.missed-opt  .opt-marker { border-color: #d97706; background: #d97706; color: #fff; }
+
+.opt-label { font-size: 0.92rem; font-weight: 400; color: var(--txt); line-height: 1.55; flex: 1; }
+.opt-icon { margin-left: 8px; font-size: 0.85rem; min-width: 18px; text-align: right; }
+
+/* ── FOOTER ACTIONS ─────────────────────── */
+.q-footer { padding: 0 28px 24px; }
+.btn-submit {
+  width: 100%; font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  background: var(--navy); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  padding: 13px 24px; cursor: pointer;
+  transition: all .2s; letter-spacing: .02em;
+}
+[data-theme="dark"] .btn-submit { background: var(--teal); color: #0c4a6e; }
+.btn-submit:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+
+/* ── FEEDBACK ─────────────────────────── */
+.feedback {
+  display: none; margin-top: 14px;
+  padding: 13px 16px; border-radius: var(--radius-sm);
+  border: 1px solid;
+  font-size: 0.88rem; font-weight: 600;
+  animation: fadeUp .25s ease;
+}
+.feedback.show { display: block; }
+.feedback-correct { background: var(--correct-bg); border-color: var(--correct-br); color: var(--correct); }
+.feedback-wrong   { background: var(--wrong-bg);   border-color: var(--wrong-br);   color: var(--wrong); }
+
+/* ── RATIONALE ─────────────────────────── */
+.rationale {
+  display: none; margin-top: 12px;
+  background: var(--rat-bg); border: 1px solid var(--rat-br);
+  border-radius: var(--radius-sm); padding: 16px 18px;
+  animation: fadeUp .25s ease;
+}
+.rationale.show { display: block; }
+.rat-label {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em;
+  color: var(--teal); margin-bottom: 8px;
+}
+.rat-text {
+  font-size: 0.88rem; font-weight: 400; color: var(--txt); line-height: 1.65;
+}
+.rat-text strong { color: var(--teal); font-weight: 700; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn-next {
+  display: none; margin-top: 12px; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  background: var(--surface2); color: var(--teal);
+  border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  padding: 13px 24px; cursor: pointer;
+  transition: all .2s; letter-spacing: .02em;
+}
+.btn-next.show { display: block; }
+.btn-next:hover { background: var(--surface); border-color: var(--teal); }
+
+/* ── SCORE SCREEN ─────────────────────── */
+.score-card {
+  display: none;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  padding: 56px 48px; text-align: center;
+  animation: cardIn .35s ease;
+}
+.score-card.show { display: block; }
+.score-eyebrow { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); margin-bottom: 12px; }
+.score-title { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--txt); margin-bottom: 28px; }
+.score-pct {
+  font-family: 'DM Serif Display', serif; font-size: 4rem;
+  color: var(--txt); margin-bottom: 6px;
+}
+.score-grade {
+  display: inline-block; font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 5px 16px; border-radius: 4px; margin-bottom: 18px;
+}
+.score-detail { font-size: 0.92rem; color: var(--txt2); margin-bottom: 36px; }
+.score-divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.btn-restart {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  background: var(--navy); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  padding: 13px 36px; cursor: pointer;
+  transition: all .2s;
+}
+[data-theme="dark"] .btn-restart { background: var(--teal); color: #0c4a6e; }
+.btn-restart:hover { opacity: .87; transform: translateY(-1px); }
+
+@media (max-width: 580px) {
+  .start-card, .q-header, .q-body, .options, .q-footer, .score-card { padding-left: 18px; padding-right: 18px; }
+  .start-meta { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-brand">Cognition <span>Pharmacology</span> Examination</div>
+    <button class="btn-dark" onclick="toggleDark()" id="darkBtn">Dark Mode</button>
+  </div>
+
+  <!-- Start Screen -->
+  <div class="start-card" id="startScreen">
+    <div class="start-eyebrow">PP2 · Module 5 · NCLEX-Style</div>
+    <div class="start-title">Cognition Pharmacology<br>Practice Examination</div>
+    <div class="start-sub">Application-based questions covering Parkinson's disease medications, Alzheimer's disease medications, and cholinergic versus anticholinergic pharmacology. Questions emphasize clinical reasoning, patient safety, and nursing judgment.</div>
+    <div class="start-meta">
+      <div class="meta-item"><div class="meta-label">Total Questions</div><div class="meta-val">50 Questions</div></div>
+      <div class="meta-item"><div class="meta-label">Format</div><div class="meta-val">Multiple Choice &amp; SATA</div></div>
+      <div class="meta-item"><div class="meta-label">SATA Weight</div><div class="meta-val">~55% of Exam</div></div>
+      <div class="meta-item"><div class="meta-label">Focus</div><div class="meta-val">Application / Safety</div></div>
+    </div>
+    <div class="topic-grid">
+      <span class="topic-tag">Carbidopa / Levodopa</span>
+      <span class="topic-tag">Dopamine Agonists</span>
+      <span class="topic-tag">COMT Inhibitors</span>
+      <span class="topic-tag">MAO-B Inhibitors</span>
+      <span class="topic-tag">Dopamine Releasers</span>
+      <span class="topic-tag">Anticholinergics (EPS)</span>
+      <span class="topic-tag">Cholinesterase Inhibitors</span>
+      <span class="topic-tag">NMDA Antagonists</span>
+      <span class="topic-tag">Cholinergic Effects</span>
+      <span class="topic-tag">Anticholinergic Effects</span>
+      <span class="topic-tag">Drug Interactions</span>
+      <span class="topic-tag">Patient Teaching</span>
+    </div>
+    <button class="btn-start" onclick="startExam()">Begin Examination</button>
+  </div>
+
+  <!-- Quiz Area -->
+  <div id="quizArea" style="display:none">
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-label">Question</div>
+        <div class="stat-val" id="statQ">1 / 50</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Correct</div>
+        <div class="stat-val correct" id="statC">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Incorrect</div>
+        <div class="stat-val wrong" id="statW">0</div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-info">
+        <span>Progress</span><span id="pctLbl">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div id="qMount"></div>
+  </div>
+
+  <!-- Score Screen -->
+  <div class="score-card" id="scoreScreen">
+    <div class="score-eyebrow">Examination Complete</div>
+    <div class="score-title">Your Results</div>
+    <div class="score-pct" id="sPct">—</div>
+    <div><span class="score-grade" id="sGrade"></span></div>
+    <div class="score-detail" id="sDetail"></div>
+    <hr class="score-divider"/>
+    <button class="btn-restart" onclick="restartExam()">Retake Examination</button>
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  QUESTION BANK  (50 questions, ~55% SATA)
+// ═══════════════════════════════════════════════════════════════
+const Q = [
+
+/* 1 */ {
+  type:"sata", topic:"Cholinergic Effects",
+  text:"A nurse is reviewing the expected effects of cholinergic (parasympathomimetic) stimulation with a student. Which of the following assessment findings are consistent with cholinergic activation? Select all that apply.",
+  opts:[
+    "Miosis (pinpoint, constricted pupils)",
+    "Diaphoresis (increased sweating)",
+    "Tachycardia",
+    "Increased salivation and lacrimation",
+    "Urinary retention",
+    "Hyperactive bowel sounds and increased GI motility",
+    "Bradycardia"
+  ],
+  correct:[0,1,3,5,6],
+  rat:"<strong>Cholinergic (parasympathomimetic) effects</strong> result from acetylcholine (ACh) activation: miosis ✓, diaphoresis ✓, increased salivation ✓, hyperactive bowel sounds ✓, and bradycardia ✓. <strong>Tachycardia and urinary retention are anticholinergic effects</strong> — the opposite of ACh stimulation. A useful mnemonic is <strong>SLUDGE</strong>: Salivation, Lacrimation, Urination (increased), Defecation, GI distress, Emesis."
+},
+
+/* 2 */ {
+  type:"sata", topic:"Anticholinergic Effects",
+  text:"A patient is admitted with suspected anticholinergic toxidrome. Which of the following findings would the nurse expect? Select all that apply.",
+  opts:[
+    "Dilated pupils (mydriasis)",
+    "Dry, flushed skin",
+    "Bradycardia",
+    "Urinary retention",
+    "Absent or decreased bowel sounds",
+    "Excessive diaphoresis",
+    "Tachycardia",
+    "Confusion and agitation"
+  ],
+  correct:[0,1,3,4,6,7],
+  rat:"The <strong>anticholinergic toxidrome</strong> includes: mydriasis ✓, dry/flushed skin ✓ (decreased sweating), urinary retention ✓, decreased/absent bowel sounds ✓, tachycardia ✓, and confusion/agitation ✓. <strong>Bradycardia and diaphoresis are cholinergic findings</strong>, not anticholinergic. Classic teaching: <em>'Blind as a bat, dry as a bone, red as a beet, mad as a hatter, hot as a hare, full as a flask, fast as a fidget.'</em>"
+},
+
+/* 3 */ {
+  type:"mc", topic:"Cholinergic vs Anticholinergic",
+  text:"A nurse assesses a patient and notes: heart rate of 52 bpm, excessive drooling, active bowel sounds with cramping, and pinpoint pupils. These findings are MOST consistent with which type of drug effect?",
+  opts:[
+    "Anticholinergic toxidrome",
+    "Adrenergic (sympathomimetic) stimulation",
+    "Cholinergic (parasympathomimetic) excess",
+    "Dopaminergic overstimulation"
+  ],
+  correct:[2],
+  rat:"Bradycardia, excessive salivation, hyperactive bowel sounds, and miosis (pinpoint pupils) are hallmark <strong>cholinergic (parasympathomimetic) findings</strong> — the SLUDGE pattern. This may occur with overdose of cholinesterase inhibitors (donepezil, rivastigmine), organophosphate poisoning, or direct cholinergic agonists. Anticholinergic toxidrome is the opposite: tachycardia, dry mouth, decreased bowel sounds, and dilated pupils."
+},
+
+/* 4 */ {
+  type:"mc", topic:"Anticholinergic Effects",
+  text:"Which pupillary finding would the nurse anticipate when assessing a patient who has received atropine for bradycardia?",
+  opts:[
+    "Bilateral miosis (pinpoint pupils)",
+    "Unequal pupils with sluggish response",
+    "Bilateral mydriasis (dilated pupils)",
+    "No change from baseline"
+  ],
+  correct:[2],
+  rat:"Atropine is a classic <strong>anticholinergic drug</strong> that blocks muscarinic receptors in the iris sphincter muscle. Without ACh-mediated constriction, the radial (dilator) muscle goes unopposed → <strong>bilateral mydriasis (dilated pupils)</strong>. Conversely, cholinergic drugs (physostigmine, donepezil) cause miosis. Pupil assessment is a key clinical tool when evaluating for cholinergic or anticholinergic drug effects."
+},
+
+/* 5 */ {
+  type:"sata", topic:"Carbidopa/Levodopa",
+  text:"A nurse is providing education to a patient newly prescribed carbidopa/levodopa for Parkinson's disease. Which of the following teaching points should the nurse include? Select all that apply.",
+  opts:[
+    "The medication may take several months to reach its full therapeutic effect",
+    "Darkening of urine and sweat is a harmless expected side effect",
+    "High-protein meals can compete with levodopa for intestinal absorption and reduce effectiveness",
+    "This medication provides a permanent cure for Parkinson's disease",
+    "Report development of involuntary writhing or twisting movements to the provider",
+    "Antipsychotic medications such as haloperidol may reduce the drug's effectiveness",
+    "The drug's goal is to improve the ability to perform activities of daily living"
+  ],
+  correct:[0,1,2,4,5,6],
+  rat:"Key teaching for carbidopa/levodopa: takes several months to work ✓; dark urine/sweat is harmless ✓; high-protein foods compete with levodopa absorption ✓; report dyskinesia (involuntary movements) — dose may need adjustment ✓; antipsychotics (haloperidol, chlorpromazine) block dopamine receptors and reduce levodopa effectiveness ✓; goal is improved ADLs, not cure ✓. <strong>Carbidopa/levodopa is NOT a cure</strong> — this statement is incorrect and must be corrected."
+},
+
+/* 6 */ {
+  type:"sata", topic:"Carbidopa/Levodopa",
+  text:"Which of the following are documented adverse effects of carbidopa/levodopa therapy? Select all that apply.",
+  opts:[
+    "Nausea and vomiting",
+    "Dyskinesia (involuntary movements)",
+    "Orthostatic hypotension",
+    "Impulse control disorders",
+    "Darkened urine and sweat",
+    "Psychosis and cognitive impairment",
+    "Hypertension as a direct pharmacologic effect",
+    "Depression and anxiety"
+  ],
+  correct:[0,1,2,3,4,5,7],
+  rat:"Adverse effects of carbidopa/levodopa include: nausea/vomiting ✓, dyskinesia ✓, orthostatic hypotension ✓, impulse control disorders ✓, darkened urine/sweat (harmless) ✓, psychosis/cognitive impairment ✓, and dysthymias including depression and anxiety ✓. <strong>Hypertension is not a direct pharmacologic effect</strong> of the drug — hypertensive crisis is a <em>drug-drug interaction</em> with MAOIs, not a standalone adverse effect of carbidopa/levodopa itself."
+},
+
+/* 7 */ {
+  type:"mc", topic:"Carbidopa/Levodopa",
+  text:"A patient on carbidopa/levodopa experiences unpredictable episodes in which the medication suddenly stops controlling symptoms for minutes to hours, even when drug levels are expected to be therapeutic. The nurse documents this as which phenomenon?",
+  opts:[
+    "End-of-dose wearing-off from COMT activity",
+    "Tardive dyskinesia from long-term dopaminergic exposure",
+    "The 'on-off' phenomenon",
+    "Neuroleptic malignant syndrome"
+  ],
+  correct:[2],
+  rat:"The <strong>'on-off' phenomenon</strong> describes unpredictable, sudden fluctuations in levodopa effectiveness — the drug inexplicably stops working even when blood levels are expected to remain adequate. Episodes last minutes to hours. Management options include adding adjunct dopaminergic agents during 'off times.' This differs from <strong>end-of-dose wearing-off</strong>, which is predictable and occurs as each dose depletes."
+},
+
+/* 8 */ {
+  type:"mc", topic:"Carbidopa/Levodopa",
+  text:"A patient with Parkinson's disease asks why they need both carbidopa AND levodopa rather than levodopa alone. Which explanation by the nurse is most accurate?",
+  opts:[
+    "Carbidopa increases dopamine production in the body",
+    "Carbidopa prevents levodopa from being metabolized peripherally, allowing more to cross the blood-brain barrier",
+    "Carbidopa prevents the breakdown of dopamine once it has been synthesized in the brain",
+    "Carbidopa enhances the receptor sensitivity to dopamine in the striatum"
+  ],
+  correct:[1],
+  rat:"Without carbidopa, levodopa is extensively metabolized in the peripheral circulation before it can reach the brain. <strong>Carbidopa inhibits peripheral decarboxylase</strong>, blocking this breakdown and allowing a much higher proportion of levodopa to cross the <strong>blood-brain barrier (BBB)</strong> intact. Once inside the CNS, levodopa is then converted to dopamine where it is needed. Carbidopa does not itself cross the BBB."
+},
+
+/* 9 */ {
+  type:"sata", topic:"Carbidopa/Levodopa Drug Interactions",
+  text:"A nurse is reviewing the medication reconciliation for a patient on carbidopa/levodopa. Which co-medications should be flagged as potentially problematic? Select all that apply.",
+  opts:[
+    "Haloperidol",
+    "Chlorpromazine",
+    "MAO inhibitors (non-selective)",
+    "Memantine",
+    "Vitamin B6 (pyridoxine) in high doses",
+    "Donepezil"
+  ],
+  correct:[0,1,2],
+  rat:"Problematic combinations with levodopa: <strong>haloperidol ✓ and chlorpromazine ✓</strong> — these antipsychotics block dopamine receptors, directly reducing levodopa's therapeutic effect. <strong>Non-selective MAO inhibitors ✓</strong> — risk of <strong>hypertensive crisis</strong>. Memantine (Alzheimer's drug, NMDA antagonist) and donepezil (cholinesterase inhibitor) are not typically flagged in this material. High-dose pyridoxine can interfere with levodopa when given <em>without</em> carbidopa, but with carbidopa present this interaction is minimized."
+},
+
+/* 10 */ {
+  type:"sata", topic:"Dopamine Agonists",
+  text:"A nurse is educating a patient starting pramipexole for Parkinson's disease. Which adverse effects should the nurse include in the teaching? Select all that apply.",
+  opts:[
+    "Hallucinations and delusions",
+    "Excessive daytime sleepiness and sudden 'sleep attacks'",
+    "Impulse control behavioral disorders (e.g., compulsive gambling, hypersexuality)",
+    "Higher incidence of dyskinesia compared to levodopa",
+    "Postural hypotension and dizziness",
+    "Nausea and constipation",
+    "Cognitive changes"
+  ],
+  correct:[0,1,2,4,5,6],
+  rat:"Dopamine agonist side effects: hallucinations/delusions ✓, excessive daytime sleepiness and 'sleep attacks' ✓, impulse control disorders ✓, postural hypotension ✓, nausea/constipation ✓, and cognitive changes ✓. <strong>Dopamine agonists have a LOWER incidence of dyskinesia compared to levodopa</strong> — this is actually a key advantage. Option D is incorrect. Benefits take several weeks to develop."
+},
+
+/* 11 */ {
+  type:"mc", topic:"Dopamine Agonists",
+  text:"A family member reports that their loved one on pramipexole has spent over $5,000 on online gambling in the past month and cannot stop. The nurse recognizes this as which type of adverse effect?",
+  opts:[
+    "Parkinson's disease dementia progressing independently of the medication",
+    "An expected therapeutic response indicating adequate dopamine receptor activation",
+    "An impulse control disorder — a documented adverse effect of dopamine agonists",
+    "Psychosis from levodopa accumulation requiring dose reduction"
+  ],
+  correct:[2],
+  rat:"<strong>Impulse control disorders (ICD)</strong> — including compulsive gambling, shopping, eating, and sexual behavior — are well-documented adverse effects of <strong>dopamine agonists (pramipexole, ropinirole)</strong>. Activation of D3 receptors in the limbic/reward pathways disinhibits impulse control. Patients and families must be counseled about this risk before starting therapy and instructed to report any behavioral changes promptly."
+},
+
+/* 12 */ {
+  type:"sata", topic:"Dopamine Agonists",
+  text:"Which of the following statements correctly distinguish dopamine agonists from carbidopa/levodopa? Select all that apply.",
+  opts:[
+    "Dopamine agonists do not require a co-drug to cross the blood-brain barrier",
+    "Dopamine agonists directly activate D2/D3 dopamine receptors in the striatum",
+    "Dopamine agonists have a higher incidence of dyskinesia than levodopa",
+    "Dopamine agonists have a lower incidence of response failures and dyskinesia",
+    "Pramipexole can also be used for restless leg syndrome",
+    "Therapeutic benefit from dopamine agonists is seen within the first 24 hours"
+  ],
+  correct:[0,1,3,4],
+  rat:"Compared to levodopa: dopamine agonists cross the BBB without requiring carbidopa ✓; they directly activate D2/D3 receptors (rather than converting to dopamine) ✓; they have a <strong>lower</strong> — not higher — incidence of dyskinesia ✓; and pramipexole is indicated for restless leg syndrome ✓. Benefits take <strong>several weeks</strong>, not 24 hours ✗."
+},
+
+/* 13 */ {
+  type:"mc", topic:"Entacapone",
+  text:"Which of the following BEST describes the mechanism by which entacapone provides therapeutic benefit in Parkinson's disease?",
+  opts:[
+    "It directly activates D2/D3 dopamine receptors in the striatum",
+    "It inhibits MAO-B, reducing dopamine breakdown in the synapse",
+    "It inhibits COMT in the intestine and peripheral tissues, prolonging levodopa availability for the brain",
+    "It promotes dopamine release from presynaptic neurons and blocks reuptake"
+  ],
+  correct:[2],
+  rat:"Entacapone is a <strong>COMT (Catechol-O-Methyltransferase) inhibitor</strong>. COMT breaks down levodopa in the gut and periphery before it reaches the brain. By blocking COMT, entacapone <strong>extends the duration and bioavailability of levodopa</strong>, prolonging its 'on time.' Entacapone is used as an <strong>adjunct to carbidopa/levodopa</strong> — it is not effective as monotherapy."
+},
+
+/* 14 */ {
+  type:"sata", topic:"Entacapone",
+  text:"A patient on carbidopa/levodopa is prescribed entacapone as an adjunct. Which of the following statements regarding entacapone are correct? Select all that apply.",
+  opts:[
+    "Entacapone is particularly beneficial for patients experiencing wearing-off of levodopa effects",
+    "Entacapone can be used as a standalone therapy without levodopa",
+    "Entacapone inhibits COMT, reducing levodopa's peripheral metabolism",
+    "Adverse effects may include dyskinesias and orthostatic hypotension",
+    "Impulse control disorder is a potential adverse effect",
+    "Entacapone directly crosses the blood-brain barrier to inhibit central COMT"
+  ],
+  correct:[0,2,3,4],
+  rat:"Entacapone is beneficial for wearing-off ✓; it inhibits peripheral COMT ✓; adverse effects include dyskinesias and orthostatic hypotension ✓; and impulse control disorder is listed ✓. <strong>Entacapone cannot be used as monotherapy</strong> — it requires levodopa ✗. Entacapone primarily acts <strong>peripherally</strong> (intestine and peripheral tissues), not centrally ✗."
+},
+
+/* 15 */ {
+  type:"mc", topic:"Selegiline",
+  text:"A nurse is scheduling medications for a patient taking selegiline. At which time should the nurse administer this medication to prevent the most common adverse effect?",
+  opts:[
+    "At bedtime with a glass of milk to improve absorption",
+    "Before noon to prevent insomnia from CNS excitation",
+    "In the late afternoon to align with peak dopamine production",
+    "With the evening meal to reduce GI adverse effects"
+  ],
+  correct:[1],
+  rat:"Selegiline inhibits MAO-B and causes <strong>CNS excitation</strong>, which can interfere with sleep and cause <strong>insomnia</strong>. To minimize this effect, selegiline should be administered <strong>before noon</strong>. Giving it in the afternoon or at bedtime significantly increases the risk of nighttime wakefulness. Always document and communicate medication timing when insomnia is a concern."
+},
+
+/* 16 */ {
+  type:"sata", topic:"Selegiline Drug Interactions",
+  text:"A nurse is reviewing the medication profile of a patient taking selegiline for Parkinson's disease. Which of the following drug or food interactions should the nurse flag as potentially dangerous? Select all that apply.",
+  opts:[
+    "Selegiline + non-selective MAO inhibitors → hypertensive crisis",
+    "Selegiline + opioids → respiratory depression",
+    "Selegiline + SSRIs → serotonin syndrome",
+    "Selegiline + carbidopa/levodopa → renal failure",
+    "High-dose selegiline + tyramine-rich foods (aged cheese, cured meats) → hypertensive crisis"
+  ],
+  correct:[0,1,2,4],
+  rat:"Dangerous selegiline interactions: MAOIs (for depression) → <strong>hypertensive crisis</strong> ✓; opioids → <strong>respiratory depression</strong> ✓; SSRIs → <strong>serotonin syndrome</strong> ✓; high-dose selegiline + tyramine foods → <strong>hypertensive crisis</strong> ✓ (at high doses, MAO-B selectivity is lost; MAO-A is also inhibited, preventing tyramine breakdown). <strong>Renal failure is not a documented interaction</strong> between selegiline and levodopa ✗."
+},
+
+/* 17 */ {
+  type:"sata", topic:"Selegiline",
+  text:"A patient on high-dose selegiline asks about dietary restrictions. Which foods should the nurse instruct the patient to avoid? Select all that apply.",
+  opts:[
+    "Aged cheeses (e.g., cheddar, brie)",
+    "Cured and fermented meats (e.g., salami, pepperoni)",
+    "Fresh fruits and vegetables",
+    "Fermented products (e.g., soy sauce, sauerkraut)",
+    "Red wine and tap beer",
+    "Plain cooked chicken or fish"
+  ],
+  correct:[0,1,3,4],
+  rat:"At high doses, selegiline also inhibits MAO-A (not just MAO-B). MAO-A normally breaks down <strong>tyramine</strong> absorbed from food. Without MAO-A, tyramine accumulates → massive norepinephrine release → <strong>hypertensive crisis</strong>. High-tyramine foods to avoid: aged/fermented cheeses ✓, cured/fermented meats ✓, fermented condiments ✓, red wine and tap beer ✓. Fresh fruits/vegetables and plain cooked proteins are safe ✗."
+},
+
+/* 18 */ {
+  type:"sata", topic:"Amantadine",
+  text:"A nurse is reviewing amantadine for a student. Which of the following statements about amantadine are correct? Select all that apply.",
+  opts:[
+    "Amantadine promotes dopamine release from presynaptic neurons",
+    "Amantadine blocks dopamine reuptake at the synapse",
+    "Amantadine is specifically indicated to reduce levodopa-induced dyskinesias",
+    "Amantadine also functions as an NMDA receptor antagonist",
+    "Amantadine directly activates D2 and D3 dopamine receptors",
+    "Adverse effects include confusion, blurred vision, and urinary retention"
+  ],
+  correct:[0,1,2,3,5],
+  rat:"Amantadine: promotes dopamine release ✓, blocks dopamine reuptake ✓, reduces levodopa-induced dyskinesias ✓, and has NMDA receptor antagonist properties ✓. Adverse effects include confusion, lightheadedness, anxiety, blurred vision, urinary retention, and dry mouth ✓. <strong>Amantadine does NOT directly activate D2/D3 receptors</strong> — that is the mechanism of dopamine agonists (pramipexole, ropinirole) ✗."
+},
+
+/* 19 */ {
+  type:"mc", topic:"Amantadine",
+  text:"A patient on carbidopa/levodopa develops significant, disabling involuntary movements. Which medication would the nurse anticipate being added to specifically target this complication?",
+  opts:[
+    "Entacapone",
+    "Selegiline",
+    "Amantadine",
+    "Benztropine"
+  ],
+  correct:[2],
+  rat:"<strong>Amantadine</strong> is specifically used to <strong>reduce dyskinesias caused by levodopa</strong>. It promotes dopamine release, blocks reuptake, and its NMDA antagonist properties reduce involuntary movements. Entacapone extends levodopa duration; selegiline reduces wearing-off; benztropine treats tremor/EPS via anticholinergic mechanisms. Neither of the others specifically targets levodopa-induced dyskinesia."
+},
+
+/* 20 */ {
+  type:"sata", topic:"Benztropine / EPS",
+  text:"A nurse is preparing to administer benztropine for extrapyramidal symptoms. Which of the following should the nurse include in the assessment and teaching? Select all that apply.",
+  opts:[
+    "Benztropine blocks acetylcholine receptors to restore dopamine-acetylcholine balance",
+    "Benztropine is considered first-line therapy for tremor in Parkinson's disease",
+    "Anticholinergic drugs appear on the Beers Criteria as potentially inappropriate in older adults",
+    "Assess for confusion, disorientation, agitation, and psychotic-like symptoms in elderly patients",
+    "Use with caution in patients with glaucoma due to risk of increased intraocular pressure",
+    "Benztropine commonly causes bradycardia as an expected side effect"
+  ],
+  correct:[0,2,3,4],
+  rat:"Benztropine blocks muscarinic ACh receptors, restoring dopamine-ACh balance ✓. It is <strong>second-line</strong> for tremor (not first-line) ✗. Anticholinergics are on the <strong>Beers Criteria</strong> as potentially inappropriate in elderly patients ✓ — assess for confusion, agitation, and psychotic-like symptoms ✓. Use with caution in <strong>glaucoma</strong> (may increase IOP) ✓. Benztropine causes <strong>tachycardia</strong>, not bradycardia, as an anticholinergic effect ✗."
+},
+
+/* 21 */ {
+  type:"sata", topic:"Anticholinergic EPS Drugs",
+  text:"A nurse reviews the adverse effects expected with anticholinergic agents used to treat EPS (benztropine, trihexyphenidyl, diphenhydramine). Which findings should the nurse monitor for? Select all that apply.",
+  opts:[
+    "Dry mouth",
+    "Urinary retention",
+    "Increased bowel sounds and diarrhea",
+    "Blurred vision and photophobia",
+    "Tachycardia",
+    "Constipation",
+    "Bradycardia"
+  ],
+  correct:[0,1,3,4,5],
+  rat:"Anticholinergic adverse effects: dry mouth ✓ (decreased secretions), urinary retention ✓ (decreased bladder contractility), blurred vision/photophobia ✓ (mydriasis and impaired accommodation), tachycardia ✓ (SA node released from vagal tone), constipation ✓ (reduced GI motility). <strong>Increased bowel sounds and bradycardia are cholinergic effects</strong> — the opposite ✗."
+},
+
+/* 22 */ {
+  type:"mc", topic:"Anticholinergic EPS",
+  text:"A patient with Parkinson's disease who has narrow-angle glaucoma is prescribed benztropine for tremor management. What is the nurse's priority action?",
+  opts:[
+    "Administer the drug and monitor intraocular pressure every 4 hours",
+    "Contact the provider before administering — anticholinergics are contraindicated with glaucoma",
+    "Administer the drug since glaucoma is only a concern with diphenhydramine",
+    "Substitute with a dopamine agonist and proceed without contacting the provider"
+  ],
+  correct:[1],
+  rat:"Anticholinergic drugs block muscarinic receptors in the trabecular meshwork → impaired aqueous humor drainage → <strong>increased intraocular pressure (IOP)</strong>. In <strong>narrow-angle glaucoma</strong>, elevated IOP can cause acute vision loss and optic nerve damage. Benztropine is <strong>contraindicated or used with extreme caution</strong> in this population. The nurse must <strong>contact the provider before administering</strong> and document the safety concern."
+},
+
+/* 23 */ {
+  type:"sata", topic:"Diphenhydramine",
+  text:"A nurse is assessing an 80-year-old patient who received IV diphenhydramine for acute dystonia. Which nursing concerns are appropriate for this patient? Select all that apply.",
+  opts:[
+    "Assess baseline cognition before and after administration",
+    "Monitor for urinary retention, especially in males with BPH",
+    "Anticipate that diphenhydramine will stimulate bowel activity",
+    "Use caution with CNS depressants due to additive sedative effects",
+    "Diphenhydramine is appropriate for long-term tremor management in older adults",
+    "Monitor for worsening confusion due to central anticholinergic effects"
+  ],
+  correct:[0,1,3,5],
+  rat:"Diphenhydramine has significant anticholinergic and sedative effects — especially problematic in elderly patients. Assess cognitive baseline before/after ✓; monitor for urinary retention ✓ (particularly in BPH); avoid combining with other CNS depressants ✓; monitor for confusion ✓. <strong>Diphenhydramine does NOT stimulate bowel activity</strong> — it decreases motility (anticholinergic) ✗. <strong>Diphenhydramine is a short-term option</strong> for acute EPS/dystonia — it is not appropriate for long-term tremor management in elderly patients ✗."
+},
+
+/* 24 */ {
+  type:"mc", topic:"Donepezil",
+  text:"Which mechanism BEST explains how donepezil produces a therapeutic effect in Alzheimer's disease?",
+  opts:[
+    "Blocks NMDA receptors to reduce glutamate-mediated neurotoxicity",
+    "Inhibits acetylcholinesterase, preventing the breakdown of acetylcholine at synapses in surviving cholinergic neurons",
+    "Stimulates dopamine receptor subtypes D2 and D3 in the limbic system",
+    "Promotes acetylcholine release directly from presynaptic nerve terminals"
+  ],
+  correct:[1],
+  rat:"Donepezil is a <strong>cholinesterase (acetylcholinesterase) inhibitor</strong>. Alzheimer's disease destroys cholinergic neurons, reducing ACh. Donepezil prevents the enzyme acetylcholinesterase from breaking down ACh → <strong>ACh accumulates at surviving synapses</strong> → improved cholinergic transmission. This does not restore lost neurons but maximizes function in those remaining. NMDA blockade = memantine. Dopamine receptor agonism = Parkinson's drugs."
+},
+
+/* 25 */ {
+  type:"sata", topic:"Donepezil",
+  text:"A nurse is reviewing the adverse effects of donepezil. Which of the following are expected adverse effects related to the drug's mechanism? Select all that apply.",
+  opts:[
+    "Bradycardia",
+    "Bronchoconstriction",
+    "Diarrhea",
+    "Hypertension",
+    "Dizziness and fall risk",
+    "Weight gain",
+    "Increased GI bleeding risk when used with NSAIDs"
+  ],
+  correct:[0,1,2,4,6],
+  rat:"Donepezil's <strong>cholinergic adverse effects</strong>: bradycardia ✓ (ACh slows SA node), bronchoconstriction ✓ (ACh contracts airway smooth muscle — caution in asthma/COPD), diarrhea ✓ (increased GI motility), dizziness/fall risk ✓ (bradycardia, orthostatic effects). NSAIDs combined with donepezil ↑ GI bleeding risk ✓. <strong>Hypertension is not a side effect</strong> ✗. <strong>Weight loss — not weight gain</strong> — is noted with rivastigmine and galantamine ✗."
+},
+
+/* 26 */ {
+  type:"sata", topic:"Donepezil Administration",
+  text:"Which of the following are correct statements regarding the administration and monitoring of donepezil? Select all that apply.",
+  opts:[
+    "Administer at bedtime",
+    "Tablets may be swallowed whole or dissolved on the tongue followed by water",
+    "Monitor heart rate and report significant bradycardia or dizziness",
+    "Administer with the morning meal for optimal absorption",
+    "Use caution in patients with asthma or COPD due to cholinergic bronchoconstriction",
+    "Anticholinergic drugs reduce the therapeutic effect of donepezil"
+  ],
+  correct:[0,1,2,4,5],
+  rat:"Donepezil administration: give at <strong>bedtime</strong> ✓; tablets may be swallowed whole OR dissolved on tongue with water ✓; monitor HR and fall risk ✓; caution in asthma/COPD (bronchoconstriction) ✓; anticholinergic drugs, antihistamines, and antipsychotics <strong>reduce therapeutic effect</strong> ✓. <strong>Donepezil is not given with meals</strong> as the primary timing consideration ✗ — the bedtime schedule is the key instruction."
+},
+
+/* 27 */ {
+  type:"mc", topic:"Donepezil Drug Interactions",
+  text:"A patient with Alzheimer's disease taking donepezil is prescribed ibuprofen for arthritis. Which complication should the nurse prioritize monitoring for?",
+  opts:[
+    "Additive bradycardia from NSAID-mediated vagal stimulation",
+    "Reduced effectiveness of donepezil due to enzyme competition",
+    "Increased risk of GI bleeding from the drug interaction",
+    "Hypertensive crisis from catecholamine accumulation"
+  ],
+  correct:[2],
+  rat:"The combination of <strong>donepezil + NSAIDs increases the risk of GI bleeding</strong>. Donepezil's cholinergic effect increases gastric acid secretion; NSAIDs damage the GI mucosal barrier and inhibit prostaglandins. Together, they significantly elevate bleeding risk. The nurse should monitor for signs of GI bleed: dark/tarry stools, hematemesis, abdominal pain, and falling hemoglobin."
+},
+
+/* 28 */ {
+  type:"sata", topic:"Rivastigmine",
+  text:"A nurse is teaching a patient about rivastigmine for Alzheimer's disease. Which of the following statements are correct? Select all that apply.",
+  opts:[
+    "The transdermal patch may be applied to the chest, upper arm, or lower back",
+    "Rotate the patch application site and do not repeat the same site for 14 days",
+    "The oral formulation is taken once daily on an empty stomach",
+    "Rivastigmine will not cure Alzheimer's disease but may slow progression",
+    "Weight loss is a noted adverse effect of rivastigmine",
+    "Remove the old patch before applying a new one"
+  ],
+  correct:[0,1,3,4,5],
+  rat:"Rivastigmine patch: sites are chest, upper arm, or lower back ✓; rotate with at least 14 days before repeating a site ✓; remove prior patch before applying new one ✓ (otherwise drug accumulates). Rivastigmine slows progression but is not a cure ✓. Weight loss is a noted adverse effect ✓. <strong>The oral form is taken TWICE DAILY with meals</strong> — not once daily on an empty stomach ✗."
+},
+
+/* 29 */ {
+  type:"sata", topic:"Galantamine",
+  text:"Which of the following statements regarding galantamine therapy are correct? Select all that apply.",
+  opts:[
+    "Galantamine is a cholinesterase inhibitor used for mild-to-moderate Alzheimer's disease",
+    "Galantamine is the preferred agent for moderate-to-severe Alzheimer's disease",
+    "Adverse effects are similar to those of donepezil, including bradycardia and GI disturbance",
+    "Weight loss is a noted adverse effect",
+    "Oral formulation is typically taken twice daily",
+    "Galantamine cures Alzheimer's disease with consistent long-term use"
+  ],
+  correct:[0,2,3,4],
+  rat:"Galantamine is a <strong>cholinesterase inhibitor</strong> for <strong>mild-to-moderate</strong> Alzheimer's disease ✓; adverse effects mirror other drugs in class: bradycardia, GI disturbance ✓; weight loss is noted ✓; oral galantamine is given twice daily ✓. <strong>Moderate-to-severe Alzheimer's is treated with memantine</strong> (NMDA antagonist) ✗. <strong>No Alzheimer's drug provides a cure</strong> ✗."
+},
+
+/* 30 */ {
+  type:"mc", topic:"Memantine",
+  text:"Which of the following patients would MOST appropriately receive memantine as the primary pharmacologic intervention for Alzheimer's disease?",
+  opts:[
+    "A patient with newly diagnosed, mild Alzheimer's disease",
+    "A patient with mild-to-moderate Alzheimer's disease who cannot tolerate donepezil",
+    "A patient with moderate-to-severe Alzheimer's disease requiring additional symptom management",
+    "A patient with early Parkinson's disease dementia requiring dopamine replacement"
+  ],
+  correct:[2],
+  rat:"<strong>Memantine</strong> is an NMDA receptor antagonist indicated for <strong>moderate-to-severe Alzheimer's disease</strong>. Cholinesterase inhibitors (donepezil, rivastigmine, galantamine) are used for mild-to-moderate disease. Memantine may be <strong>combined with donepezil</strong> for added benefit in moderate-to-severe stages. It is not a dopamine-related drug and is not used for Parkinson's disease (amantadine has NMDA antagonism for Parkinson's)."
+},
+
+/* 31 */ {
+  type:"sata", topic:"Memantine",
+  text:"Which of the following statements about memantine are correct? Select all that apply.",
+  opts:[
+    "Memantine blocks NMDA receptors, reducing excessive glutamate-mediated calcium entry into neurons",
+    "Memantine can be combined with donepezil for additive benefit in moderate-to-severe Alzheimer's",
+    "Memantine is classified as a cholinesterase inhibitor",
+    "Adverse effects include dizziness, headache, and confusion",
+    "Memantine may be given as a tablet swallowed whole, sprinkled on soft food, or as an oral liquid",
+    "Memantine provides a cure for moderate-to-severe Alzheimer's disease"
+  ],
+  correct:[0,1,3,4],
+  rat:"Memantine: NMDA receptor antagonist reducing excess glutamate/calcium neurotoxicity ✓; can be combined with donepezil ✓; adverse effects include dizziness, headache, confusion ✓; can be given whole, sprinkled on food, or as elixir ✓. <strong>Memantine is NOT a cholinesterase inhibitor</strong> ✗ — that is the mechanism of donepezil/rivastigmine/galantamine. <strong>There is no cure for Alzheimer's disease</strong> ✗."
+},
+
+/* 32 */ {
+  type:"mc", topic:"Memantine",
+  text:"A nurse is explaining memantine's mechanism to a patient's family. Which explanation is MOST accurate?",
+  opts:[
+    "It prevents acetylcholine from being broken down, making more available at brain synapses",
+    "It replaces dopamine that has been lost due to neuronal degeneration in the striatum",
+    "It blocks NMDA receptors, reducing excessive glutamate activity that damages brain cells",
+    "It blocks histamine receptors, reducing brain inflammation associated with Alzheimer's"
+  ],
+  correct:[2],
+  rat:"In Alzheimer's disease, excess glutamate chronically overstimulates NMDA receptors → excessive calcium influx → <strong>neuronal excitotoxicity and cell death</strong>. Memantine <strong>blocks NMDA receptors</strong>, reducing this abnormal calcium entry and slowing cell damage. This is a fundamentally different mechanism from cholinesterase inhibitors (prevent ACh breakdown) and from dopaminergic drugs (replace dopamine in Parkinson's)."
+},
+
+/* 33 */ {
+  type:"sata", topic:"Alzheimer's Disease — Drug Class Matching",
+  text:"A nurse is reviewing Alzheimer's pharmacology. Which of the following correctly match the drug to its pharmacologic class? Select all that apply.",
+  opts:[
+    "Donepezil — Cholinesterase inhibitor",
+    "Memantine — NMDA receptor antagonist",
+    "Rivastigmine — Dopamine agonist",
+    "Galantamine — Cholinesterase inhibitor",
+    "Memantine — Cholinesterase inhibitor",
+    "Donepezil — NMDA receptor antagonist"
+  ],
+  correct:[0,1,3],
+  rat:"Correct drug-class pairings from the study material: <strong>donepezil → cholinesterase inhibitor</strong> ✓; <strong>memantine → NMDA receptor antagonist</strong> ✓; <strong>galantamine → cholinesterase inhibitor</strong> ✓. Rivastigmine is also a cholinesterase inhibitor — not a dopamine agonist ✗. Memantine and donepezil are in completely different classes ✗."
+},
+
+/* 34 */ {
+  type:"sata", topic:"Parkinson's Disease — Pharmacology Overview",
+  text:"Which of the following medications are used in the pharmacologic management of Parkinson's disease? Select all that apply.",
+  opts:[
+    "Carbidopa/levodopa",
+    "Pramipexole",
+    "Memantine",
+    "Entacapone",
+    "Selegiline",
+    "Amantadine",
+    "Donepezil",
+    "Benztropine"
+  ],
+  correct:[0,1,3,4,5,7],
+  rat:"Parkinson's disease medications from the study material: carbidopa/levodopa ✓, pramipexole ✓, entacapone ✓, selegiline ✓, amantadine ✓, benztropine ✓ (and trihexyphenidyl, diphenhydramine for EPS). <strong>Memantine</strong> is used for Alzheimer's disease (NMDA antagonist) ✗. <strong>Donepezil</strong> is used for Alzheimer's disease (cholinesterase inhibitor) ✗."
+},
+
+/* 35 */ {
+  type:"mc", topic:"Parkinson's Disease Pathophysiology",
+  text:"Parkinson's disease symptoms arise primarily because of which underlying pathophysiologic mechanism?",
+  opts:[
+    "Excess dopamine production in the basal ganglia leading to uninhibited motor activity",
+    "Progressive degeneration of dopaminergic neurons in the substantia nigra, depleting dopamine in the striatum",
+    "Overproduction of glutamate that overstimulates the striatum and causes tremor",
+    "Accumulation of acetylcholine in the synapse due to cholinesterase deficiency"
+  ],
+  correct:[1],
+  rat:"Parkinson's disease results from the progressive <strong>degeneration of dopaminergic neurons in the substantia nigra</strong>, leading to <strong>dopamine depletion in the striatum</strong>. Normally, dopamine and acetylcholine exist in balance in the basal ganglia. Without dopamine, <strong>ACh becomes relatively dominant</strong> → tremor, rigidity, bradykinesia, and postural instability. Treatment therefore targets either restoring dopamine or reducing ACh."
+},
+
+/* 36 */ {
+  type:"sata", topic:"Parkinson's Treatment Goals",
+  text:"A patient newly diagnosed with Parkinson's disease asks what they can expect from their medications. Which of the following accurately reflect the expected therapeutic outcomes? Select all that apply.",
+  opts:[
+    "Improvement in bradykinesia",
+    "Improvement in gait disturbance and postural instability",
+    "Permanent cure of Parkinson's disease with long-term adherence",
+    "Improved ability to carry out activities of daily living (ADLs)",
+    "Complete elimination of all motor symptoms",
+    "Slowing of symptom progression and improved quality of life"
+  ],
+  correct:[0,1,3,5],
+  rat:"Expected outcomes of Parkinson's pharmacotherapy: improved bradykinesia ✓, improved gait and postural stability ✓, improved ability to perform ADLs ✓, and slowed progression with improved quality of life ✓. <strong>No current medication cures Parkinson's disease</strong> ✗. Medications manage symptoms — they do not completely eliminate all motor symptoms ✗, particularly as the disease progresses."
+},
+
+/* 37 */ {
+  type:"mc", topic:"Donepezil vs Anticholinergics",
+  text:"A patient with Alzheimer's disease taking donepezil asks if they can use diphenhydramine at night for sleep. Why would the nurse advise against this combination?",
+  opts:[
+    "Both drugs increase ACh and risk causing a cholinergic crisis",
+    "Diphenhydramine blocks acetylcholine receptors, directly counteracting donepezil's therapeutic effect and worsening cognition",
+    "Both drugs cause tachycardia, significantly increasing cardiac risk",
+    "Diphenhydramine increases GI bleeding risk when combined with cholinesterase inhibitors"
+  ],
+  correct:[1],
+  rat:"Donepezil <strong>increases ACh</strong> to improve cognitive function. Diphenhydramine is an <strong>anticholinergic antihistamine that blocks muscarinic ACh receptors</strong> — the exact opposite mechanism. This combination: (1) directly undermines donepezil's therapeutic benefit, and (2) <strong>worsens cognition and confusion</strong> in Alzheimer's patients, who are already vulnerable to anticholinergic effects. The study material explicitly states that <em>anticholinergic agents, antihistamines, and antipsychotics reduce donepezil's therapeutic effect.</em>"
+},
+
+/* 38 */ {
+  type:"sata", topic:"Cholinergic vs Anticholinergic — Clinical Comparison",
+  text:"A nurse is comparing cholinergic and anticholinergic drug effects at a body-systems level. Which of the following comparisons are correct? Select all that apply.",
+  opts:[
+    "Cholinergic drugs → miosis; Anticholinergic drugs → mydriasis",
+    "Cholinergic drugs → bradycardia; Anticholinergic drugs → tachycardia",
+    "Cholinergic drugs → dry mouth; Anticholinergic drugs → increased salivation",
+    "Cholinergic drugs → increased GI motility; Anticholinergic drugs → decreased GI motility",
+    "Cholinergic drugs → urinary urgency/frequency; Anticholinergic drugs → urinary retention",
+    "Cholinergic drugs → diaphoresis; Anticholinergic drugs → decreased sweating"
+  ],
+  correct:[0,1,3,4,5],
+  rat:"All comparisons are correct EXCEPT C: <strong>Cholinergic drugs → INCREASED salivation; Anticholinergic → dry mouth</strong>. Option C has the effects reversed ✗. All other pairs are accurate: pupils (miosis vs mydriasis) ✓, heart rate (brady vs tachy) ✓, GI motility (increased vs decreased) ✓, bladder (urgency vs retention) ✓, sweating (increased vs decreased) ✓."
+},
+
+/* 39 */ {
+  type:"sata", topic:"Cholinesterase Inhibitors — Class Properties",
+  text:"Which of the following statements are true of ALL cholinesterase inhibitors used for Alzheimer's disease (donepezil, rivastigmine, galantamine)? Select all that apply.",
+  opts:[
+    "They decrease the breakdown of acetylcholine, increasing its availability at cholinergic synapses",
+    "They are used for mild-to-moderate Alzheimer's disease",
+    "They cure Alzheimer's disease with consistent use",
+    "They may cause bradycardia due to increased cholinergic activity",
+    "They should be used with caution in patients with asthma or COPD",
+    "Expected outcomes include improved cognitive function and ADL performance"
+  ],
+  correct:[0,1,3,4,5],
+  rat:"All three cholinesterase inhibitors: inhibit ACh breakdown ✓, indicated for mild-to-moderate Alzheimer's ✓, cause bradycardia ✓, require caution in asthma/COPD (bronchoconstriction risk) ✓, expected outcomes include modest improvement in cognition and ADLs ✓. <strong>None of them cure Alzheimer's disease</strong> ✗ — they slow progression and improve function, but the underlying neurodegeneration continues."
+},
+
+/* 40 */ {
+  type:"mc", topic:"Drug Safety",
+  text:"A nurse is assessing an elderly patient prescribed benztropine for tremor management. Which of the following findings would be MOST concerning and require immediate provider notification?",
+  opts:[
+    "Heart rate of 88 bpm after a dose of benztropine",
+    "Mild dry mouth reported after initiating therapy",
+    "Onset of acute confusion, disorientation, and visual hallucinations",
+    "Constipation requiring a scheduled bowel regimen"
+  ],
+  correct:[2],
+  rat:"Confusion, disorientation, and hallucinations in an elderly patient on benztropine represent <strong>serious anticholinergic CNS toxicity</strong> requiring immediate provider notification. Elderly patients are extremely vulnerable to central anticholinergic effects. The Beers Criteria specifically warns that anticholinergic drugs are potentially inappropriate in geriatric patients. Dry mouth and constipation are expected, manageable adverse effects. Mild tachycardia (HR 88) is an expected anticholinergic cardiac effect."
+},
+
+/* 41 */ {
+  type:"sata", topic:"Donepezil — Clinical Application",
+  text:"A nurse receives new orders for a patient with moderate Alzheimer's disease and a history of asthma who is starting donepezil. Which actions are appropriate? Select all that apply.",
+  opts:[
+    "Administer at bedtime as prescribed",
+    "Assess baseline heart rate and document",
+    "Monitor respiratory status and breath sounds closely given the history of asthma",
+    "Hold the medication if the patient's systolic blood pressure is below 130 mmHg",
+    "Teach the patient/family that this medication is not a cure but may slow progression",
+    "Flag the interaction with any concurrent NSAID therapy for GI bleeding risk"
+  ],
+  correct:[0,1,2,4,5],
+  rat:"Appropriate actions: administer at bedtime ✓, assess baseline HR ✓ (bradycardia risk), monitor respiratory status ✓ (cholinergic bronchoconstriction — serious in asthma), teach that this is not a cure ✓, flag NSAID interaction ✓. <strong>Holding for low blood pressure alone is not the appropriate criterion</strong> ✗ — the primary vital sign concern is bradycardia (heart rate), not systolic blood pressure threshold of 130."
+},
+
+/* 42 */ {
+  type:"mc", topic:"Parkinson's Disease — Dopamine Balance",
+  text:"A patient with Parkinson's disease is taking carbidopa/levodopa. A provider newly prescribes haloperidol for behavioral symptoms. The nurse recognizes this order as potentially problematic because:",
+  opts:[
+    "Haloperidol causes levodopa toxicity by inhibiting its renal clearance",
+    "Haloperidol blocks dopamine receptors, directly opposing the therapeutic goal of carbidopa/levodopa",
+    "The combination causes irreversible MAO inhibition and hypertensive crisis",
+    "Haloperidol accelerates levodopa metabolism, causing subtherapeutic drug levels"
+  ],
+  correct:[1],
+  rat:"<strong>Haloperidol blocks D2 dopamine receptors</strong> — the same receptors that carbidopa/levodopa is trying to stimulate with the dopamine it produces. These drugs have <strong>directly opposing mechanisms</strong>. The study material explicitly states that antipsychotics (chlorpromazine, haloperidol) lessen the effects of levodopa. This interaction can significantly worsen Parkinson's motor symptoms. The nurse must contact the provider before administration."
+},
+
+/* 43 */ {
+  type:"sata", topic:"Nursing Safety — Parkinson's Medications",
+  text:"A nurse is performing a comprehensive medication review for a patient with Parkinson's disease. Which of the following represent important safety considerations? Select all that apply.",
+  opts:[
+    "Monitor for orthostatic hypotension with dopamine agonists and levodopa",
+    "Assess for impulse control disorders in patients on pramipexole or ropinirole",
+    "High-protein meals should be timed carefully relative to carbidopa/levodopa doses",
+    "Selegiline should be scheduled in the afternoon for best CNS effect",
+    "Report new involuntary movements (dyskinesia) to the provider",
+    "Educate patients and families that Parkinson's medications treat symptoms, not the disease cause"
+  ],
+  correct:[0,1,2,4,5],
+  rat:"Parkinson's safety priorities: orthostatic hypotension risk with dopamine agonists and levodopa ✓; impulse control disorder screening on dopamine agonists ✓; protein meal timing with levodopa ✓; report dyskinesia ✓; educate that no medication cures Parkinson's ✓. <strong>Selegiline is scheduled BEFORE NOON — not afternoon</strong> — to prevent insomnia from CNS excitation ✗."
+},
+
+/* 44 */ {
+  type:"sata", topic:"Cholinergic Effects — Body Systems",
+  text:"A nurse is reviewing cholinergic drug effects by body system for an exam. Which of the following correctly describe effects of cholinergic stimulation? Select all that apply.",
+  opts:[
+    "Eyes: pupillary constriction (miosis)",
+    "Heart: decreased heart rate and blood pressure",
+    "Temperature: increased body temperature",
+    "GI: active bowel sounds and increased motility",
+    "Salivation and urination: both increased",
+    "Skin: diaphoresis (increased sweating)"
+  ],
+  correct:[0,1,3,4,5],
+  rat:"Cholinergic effects by system: eyes → miosis ✓; heart → bradycardia and decreased BP ✓; GI → active bowel sounds/increased motility ✓; salivation increased and urination increased ✓; skin → diaphoresis ✓. <strong>Temperature has no change with pure cholinergic stimulation</strong> ✗ — elevated temperature is an <em>anticholinergic</em> finding (decreased sweating leads to heat retention). This distinguishes the two toxidromes."
+},
+
+/* 45 */ {
+  type:"sata", topic:"Anticholinergic Effects — Body Systems",
+  text:"Using the reference image of cholinergic vs anticholinergic effects, identify which of the following correctly describe anticholinergic drug effects by body system. Select all that apply.",
+  opts:[
+    "Pupils: dilated (mydriasis)",
+    "Heart rate and blood pressure: increased",
+    "Temperature: increased",
+    "GI motility: slowed",
+    "Salivation and urination: both decreased",
+    "Skin: increased sweating (diaphoresis)"
+  ],
+  correct:[0,1,2,3,4],
+  rat:"Anticholinergic body-system effects: mydriasis ✓, increased HR and BP ✓, increased temperature ✓ (no sweating → heat retention), slowed GI motility ✓, decreased salivation and urination ✓. <strong>Anticholinergic drugs decrease sweating</strong> — diaphoresis is a <em>cholinergic</em> effect. Option F is incorrect ✗."
+},
+
+/* 46 */ {
+  type:"mc", topic:"Physostigmine",
+  text:"A patient presents with a suspected anticholinergic overdose: dilated pupils, delirium, hyperthermia, urinary retention, and tachycardia. Which medication would the nurse anticipate being used as an antidote?",
+  opts:[
+    "Atropine",
+    "Diphenhydramine",
+    "Physostigmine",
+    "Haloperidol"
+  ],
+  correct:[2],
+  rat:"<strong>Physostigmine</strong> is a cholinesterase inhibitor (increases ACh) and is used as the antidote for <strong>anticholinergic toxidrome</strong>. By increasing ACh, it counteracts the muscarinic blockade — reversing delirium, tachycardia, urinary retention, and dry skin. Atropine is itself an anticholinergic drug and would worsen the toxidrome. Diphenhydramine is also anticholinergic. Haloperidol is an antipsychotic unrelated to this mechanism."
+},
+
+/* 47 */ {
+  type:"sata", topic:"Drug Class Summary",
+  text:"A nurse is preparing for a pharmacology examination and reviews how each Parkinson's drug class achieves its effect. Which drug-to-mechanism pairings are correct? Select all that apply.",
+  opts:[
+    "Carbidopa/levodopa — Dopamine precursor; levodopa crosses BBB with carbidopa's help and converts to dopamine",
+    "Pramipexole — Directly activates D2/D3 dopamine receptors",
+    "Entacapone — Inhibits COMT, prolonging levodopa's availability",
+    "Selegiline — Inhibits MAO-B, reducing dopamine breakdown",
+    "Amantadine — Promotes dopamine release and has NMDA antagonist properties",
+    "Benztropine — Inhibits dopamine reuptake to restore balance"
+  ],
+  correct:[0,1,2,3,4],
+  rat:"Correct pairings: carbidopa/levodopa (dopamine precursor) ✓, pramipexole (D2/D3 agonist) ✓, entacapone (COMT inhibitor) ✓, selegiline (MAO-B inhibitor) ✓, amantadine (dopamine releaser + NMDA antagonist) ✓. <strong>Benztropine is an anticholinergic agent that blocks ACh receptors</strong> — it does NOT inhibit dopamine reuptake ✗. That mechanism belongs to amantadine."
+},
+
+/* 48 */ {
+  type:"sata", topic:"NCLEX Clinical Reasoning",
+  text:"A nurse is evaluating four patients on Parkinson's medications. Which findings require the nurse to notify the provider? Select all that apply.",
+  opts:[
+    "Patient on carbidopa/levodopa with new-onset uncontrollable writhing limb movements",
+    "Patient on carbidopa/levodopa whose urine has turned dark brown",
+    "Patient on pramipexole who has started gambling online compulsively",
+    "Patient on selegiline who took the medication at 8 PM and now cannot sleep",
+    "Patient on donepezil with a heart rate of 48 bpm and new onset dizziness"
+  ],
+  correct:[0,2,3,4],
+  rat:"Reportable findings: new-onset dyskinesia ✓ (dose adjustment or amantadine may be needed); new compulsive gambling on a dopamine agonist ✓ (impulse control disorder — requires evaluation); selegiline given at 8 PM causing insomnia ✓ (should have been given before noon — medication error/timing issue); HR of 48 bpm with dizziness on donepezil ✓ (significant bradycardia and fall risk). <strong>Dark urine with carbidopa/levodopa is a harmless expected side effect</strong> — reassurance is appropriate, provider notification is not required ✗."
+},
+
+/* 49 */ {
+  type:"sata", topic:"Parkinson's vs Alzheimer's Drug Targets",
+  text:"A nursing student asks: 'How does the neurotransmitter focus differ between Parkinson's and Alzheimer's pharmacology?' Which of the following statements accurately reflect these differences? Select all that apply.",
+  opts:[
+    "Parkinson's pharmacotherapy primarily targets dopamine deficiency in the striatum",
+    "Alzheimer's pharmacotherapy primarily targets acetylcholine deficiency in the cortex",
+    "Memantine targets glutamate excess via NMDA receptor blockade in Alzheimer's disease",
+    "Anticholinergic drugs are used in Parkinson's to reduce excess acetylcholine activity",
+    "Dopamine replacement is the primary strategy used for Alzheimer's disease"
+  ],
+  correct:[0,1,2,3],
+  rat:"Correct statements: Parkinson's → dopamine deficiency target ✓; Alzheimer's → ACh deficiency addressed by cholinesterase inhibitors ✓; memantine targets glutamate/NMDA excess in Alzheimer's ✓; anticholinergics used in Parkinson's to reduce excess ACh relative to depleted dopamine ✓. <strong>Dopamine replacement is NOT a strategy for Alzheimer's disease</strong> ✗ — Alzheimer's is characterized by cholinergic and glutamate pathway disruption, not dopamine loss."
+},
+
+/* 50 */ {
+  type:"sata", topic:"Comprehensive Safety Review",
+  text:"A nurse is completing a medication safety review before administering a full shift of medications. Which of the following actions reflect safe, evidence-based practice? Select all that apply.",
+  opts:[
+    "Holding donepezil and notifying the provider when a patient's heart rate is 46 bpm with dizziness",
+    "Scheduling selegiline at 10:00 PM for ease of administration",
+    "Counseling a patient on pramipexole and family that new behavioral changes such as gambling must be reported",
+    "Reassuring a patient on carbidopa/levodopa that dark urine is a harmless side effect",
+    "Flagging benztropine as a potentially inappropriate medication for an 81-year-old patient per Beers Criteria",
+    "Withholding donepezil from a patient with asthma without a provider order simply due to the asthma history",
+    "Teaching a patient on high-dose selegiline to avoid aged cheeses and cured meats"
+  ],
+  correct:[0,2,3,4,6],
+  rat:"Safe practice: hold donepezil and notify for HR 46 with symptoms ✓; counsel about ICD on dopamine agonists ✓; reassure regarding dark urine (harmless) ✓; flag benztropine per Beers Criteria for elderly ✓; teach tyramine avoidance on high-dose selegiline ✓. <strong>Scheduling selegiline at 10 PM is incorrect</strong> ✗ — it should be given before noon to prevent insomnia. <strong>Withholding donepezil without a provider order solely due to asthma history is inappropriate</strong> ✗ — the nurse should monitor respiratory status and use caution, but must follow the prescribed orders and report concerns to the provider."
+}
+
+]; // end Q array
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let cur = 0, correct = 0, incorrect = 0, selected = [], submitted = false, dark = false;
+
+function toggleDark() {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('darkBtn').textContent = dark ? 'Light Mode' : 'Dark Mode';
+}
+
+function startExam() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  renderQ();
+}
+
+function renderQ() {
+  submitted = false; selected = [];
+  const q = Q[cur];
+  const pct = Math.round((cur / Q.length) * 100);
+  document.getElementById('statQ').textContent = `${cur + 1} / ${Q.length}`;
+  document.getElementById('statC').textContent = correct;
+  document.getElementById('statW').textContent = incorrect;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('pctLbl').textContent = pct + '%';
+
+  const isSata = q.type === 'sata';
+  const letters = 'ABCDEFGHIJ';
+
+  const opts = q.opts.map((o, i) => `
+    <div class="opt ${isSata ? '' : 'opt-mc'}" id="opt${i}" onclick="pick(${i})">
+      <div class="opt-marker" id="mrk${i}">${letters[i]}</div>
+      <div class="opt-label">${o}</div>
+      <div class="opt-icon" id="ico${i}"></div>
+    </div>`).join('');
+
+  document.getElementById('qMount').innerHTML = `
+    <div class="q-card">
+      <div class="q-header">
+        <div class="q-header-left">
+          <span class="q-counter">Question ${cur + 1} of ${Q.length}</span>
+          <span class="q-type-badge ${isSata ? 'badge-sata' : 'badge-mc'}">${isSata ? 'Select All That Apply' : 'Multiple Choice'}</span>
+          <span class="q-topic">${q.topic}</span>
+        </div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">${q.text}</div>
+        ${isSata ? '<div class="sata-directive">Select all options that apply. Choose each correct answer before submitting.</div>' : ''}
+      </div>
+      <div class="options">${opts}</div>
+      <div class="q-footer">
+        <button class="btn-submit" id="btnSub" onclick="submit()" disabled>Submit Answer</button>
+        <div class="feedback" id="fb"></div>
+        <div class="rationale" id="rat"></div>
+        <button class="btn-next" id="btnNxt" onclick="next()">${cur < Q.length - 1 ? 'Next Question' : 'View Results'}</button>
+      </div>
+    </div>`;
+}
+
+function pick(i) {
+  if (submitted) return;
+  const q = Q[cur];
+  const isSata = q.type === 'sata';
+  const opt = document.getElementById('opt' + i);
+
+  if (isSata) {
+    if (selected.includes(i)) {
+      selected = selected.filter(x => x !== i);
+      opt.classList.remove('selected');
+      document.getElementById('mrk' + i).textContent = 'ABCDEFGHIJ'[i];
+    } else {
+      selected.push(i);
+      opt.classList.add('selected');
+      document.getElementById('mrk' + i).textContent = '✓';
+    }
+  } else {
+    selected.forEach(s => {
+      document.getElementById('opt' + s).classList.remove('selected');
+      document.getElementById('mrk' + s).textContent = 'ABCDEFGHIJ'[s];
+    });
+    selected = [i];
+    opt.classList.add('selected');
+    document.getElementById('mrk' + i).textContent = '●';
+  }
+  document.getElementById('btnSub').disabled = selected.length === 0;
+}
+
+function submit() {
+  if (submitted || selected.length === 0) return;
+  submitted = true;
+  document.getElementById('btnSub').disabled = true;
+  document.querySelectorAll('.opt').forEach(o => o.classList.add('locked'));
+
+  const q = Q[cur];
+  const isCorrect = [...selected].sort().join(',') === [...q.correct].sort().join(',');
+  if (isCorrect) correct++; else incorrect++;
+
+  q.opts.forEach((_, i) => {
+    const isC = q.correct.includes(i);
+    const isS = selected.includes(i);
+    const el = document.getElementById('opt' + i);
+    const mrk = document.getElementById('mrk' + i);
+    const ico = document.getElementById('ico' + i);
+    mrk.textContent = 'ABCDEFGHIJ'[i];
+    if (isC && isS)  { el.classList.remove('selected'); el.classList.add('correct-opt'); ico.textContent = '✓'; }
+    else if (!isC && isS) { el.classList.remove('selected'); el.classList.add('wrong-opt');   ico.textContent = '✗'; }
+    else if (isC && !isS) { el.classList.add('missed-opt'); ico.textContent = '★'; }
+  });
+
+  const fb = document.getElementById('fb');
+  fb.className = `feedback ${isCorrect ? 'feedback-correct' : 'feedback-wrong'} show`;
+  fb.textContent = isCorrect
+    ? 'Correct — well done.'
+    : 'Incorrect — review the rationale below.';
+
+  const rat = document.getElementById('rat');
+  rat.innerHTML = `<div class="rat-label">Rationale</div><div class="rat-text">${q.rat}</div>`;
+  rat.className = 'rationale show';
+
+  document.getElementById('btnNxt').classList.add('show');
+  setTimeout(() => fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+
+  document.getElementById('statC').textContent = correct;
+  document.getElementById('statW').textContent = incorrect;
+}
+
+function next() {
+  cur++;
+  if (cur >= Q.length) showScore();
+  else { renderQ(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+}
+
+function showScore() {
+  document.getElementById('quizArea').style.display = 'none';
+  const scr = document.getElementById('scoreScreen');
+  scr.classList.add('show');
+  const pct = Math.round((correct / Q.length) * 100);
+  document.getElementById('sPct').textContent = pct + '%';
+  document.getElementById('sDetail').textContent = `${correct} correct out of ${Q.length} questions`;
+
+  const g = document.getElementById('sGrade');
+  if (pct >= 90) { g.textContent = 'A — Excellent'; g.style.cssText = 'background:#f0fdf4;color:#15803d'; }
+  else if (pct >= 80) { g.textContent = 'B — Proficient'; g.style.cssText = 'background:#eff6ff;color:#1d4ed8'; }
+  else if (pct >= 70) { g.textContent = 'C — Satisfactory'; g.style.cssText = 'background:#faf5ff;color:#6d28d9'; }
+  else if (pct >= 60) { g.textContent = 'D — Needs Improvement'; g.style.cssText = 'background:#fffbeb;color:#b45309'; }
+  else { g.textContent = 'Below Passing — Continue Reviewing'; g.style.cssText = 'background:#fef2f2;color:#b91c1c'; }
+}
+
+function restartExam() {
+  cur = 0; correct = 0; incorrect = 0; selected = []; submitted = false;
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('quizArea').style.display = 'block';
+  renderQ();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cholinergic vs Anticholinergic Practice Quiz</title>
+  <style>
+    :root{
+      --bg1:#f8f7ff;
+      --bg2:#eef6ff;
+      --card:#ffffff;
+      --text:#1f2440;
+      --muted:#66708f;
+      --accent:#8a5cff;
+      --accent2:#3aa9ff;
+      --good:#1f9d63;
+      --bad:#d94b4b;
+      --border:#dde4f2;
+      --shadow:0 12px 30px rgba(72, 84, 156, 0.14);
+    }
+    body.dark{
+      --bg1:#14172a;
+      --bg2:#1c2140;
+      --card:#202544;
+      --text:#f7f8ff;
+      --muted:#c7cdef;
+      --accent:#bb98ff;
+      --accent2:#6acfff;
+      --good:#5ad693;
+      --bad:#ff8a8a;
+      --border:#363d6c;
+      --shadow:0 14px 32px rgba(0,0,0,0.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      line-height:1.5;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .hero{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+    .hero h1{margin:0 0 10px 0;font-size:2rem}
+    .hero p{margin:6px 0;max-width:900px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    button{
+      border:none;border-radius:14px;padding:10px 14px;font-weight:700;cursor:pointer;
+      background:white;color:#24304d;
+    }
+    button.secondary{
+      background:rgba(255,255,255,0.16);
+      color:white;border:1px solid rgba(255,255,255,0.28);
+    }
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+    @media (max-width: 850px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    h2,h3{margin-top:0}
+    .mini{color:var(--muted);font-size:0.96rem}
+    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.95rem}
+    th,td{border:1px solid var(--border);padding:10px;vertical-align:top}
+    th{background:rgba(138,92,255,0.09)}
+    .memory{
+      margin-top:12px;padding:14px;border-radius:16px;
+      background:rgba(58,169,255,0.08);border:1px solid var(--border);
+    }
+    .quiz-controls{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .jumpers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .jumpers button{
+      min-width:42px;background:rgba(138,92,255,0.1);color:var(--text);border:1px solid var(--border);
+    }
+    .question{display:none}
+    .question.active{display:block}
+    .qnum{font-size:0.9rem;color:var(--muted);margin-bottom:8px;font-weight:700}
+    .prompt{font-size:1.08rem;font-weight:700;margin-bottom:12px}
+    .option{
+      display:block;margin:10px 0;padding:12px;border:1px solid var(--border);
+      border-radius:14px;background:rgba(255,255,255,0.03);
+    }
+    .option input{margin-right:10px}
+    .feedback{
+      margin-top:14px;padding:12px;border-radius:14px;display:none;font-weight:700;
+    }
+    .feedback.show{display:block}
+    .feedback.good{
+      background:rgba(31,157,99,0.12);border:1px solid rgba(31,157,99,0.35);color:var(--good);
+    }
+    .feedback.bad{
+      background:rgba(217,75,75,0.1);border:1px solid rgba(217,75,75,0.35);color:var(--bad);
+    }
+    .rationale{margin-top:10px;font-weight:500;color:var(--text)}
+    .navbtns{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .navbtns button{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;
+    }
+    .scorebox{font-weight:700}
+    .footer-note{margin-top:18px;color:var(--muted);font-size:0.92rem}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>Cholinergic vs Anticholinergic MC + SATA Quiz</h1>
+      <p>This practice set is built to help you recognize symptom patterns fast. Every question focuses on body-system effects like pupils, saliva, pulse, lungs, GI, bladder, and secretions.</p>
+      <div class="toolbar">
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <button class="secondary" onclick="document.getElementById('study').scrollIntoView({behavior:'smooth'})">Quick Review</button>
+        <button class="secondary" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Start Quiz</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card" id="study">
+        <h2>Quick Review Table</h2>
+        <table>
+          <tr>
+            <th>Body System</th>
+            <th>Cholinergic</th>
+            <th>Anticholinergic</th>
+          </tr>
+          <tr><td><strong>Eyes</strong></td><td>Miosis, small pupils</td><td>Mydriasis, dilated pupils, blurred vision</td></tr>
+          <tr><td><strong>Oral</strong></td><td>More salivation</td><td>Dry mouth</td></tr>
+          <tr><td><strong>Heart</strong></td><td>Bradycardia</td><td>Tachycardia</td></tr>
+          <tr><td><strong>Lungs</strong></td><td>Bronchoconstriction, more secretions</td><td>Bronchodilation, fewer secretions</td></tr>
+          <tr><td><strong>GI</strong></td><td>Increased motility, cramping, diarrhea</td><td>Decreased motility, constipation</td></tr>
+          <tr><td><strong>Bladder</strong></td><td>Urination promoted</td><td>Urinary retention</td></tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Fast Memory Cues</h2>
+        <div class="memory"><strong>Cholinergic:</strong> wet, slow, moving. Think saliva, diarrhea, urination, small pupils, slow heart.</div>
+        <div class="memory"><strong>Anticholinergic:</strong> dry, fast, backed up. Think dry mouth, constipation, retention, big pupils, fast heart.</div>
+        <div class="memory"><strong>Question trick:</strong> ask yourself whether the patient looks more like “rest and digest” or more like “dried out and revved up.”</div>
+      </section>
+    </div>
+
+    <section class="card" id="quiz">
+      <div class="quiz-controls">
+        <div>
+          <h2 style="margin-bottom:6px;">Practice Questions</h2>
+          <div class="mini">20 questions total, mixed multiple choice and SATA.</div>
+        </div>
+        <div class="scorebox" id="scoreBox">Score: 0 / 20</div>
+      </div>
+
+      <div class="jumpers" id="jumpers"></div>
+      <div id="questions"></div>
+
+      <div class="navbtns">
+        <button onclick="prevQuestion()">Back</button>
+        <button onclick="nextQuestion()">Next</button>
+      </div>
+
+      <div class="footer-note">
+        Tip: the question is often really asking whether acetylcholine is being increased or blocked.
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const questions = [
+      {type:"mc",prompt:"Which finding is most consistent with cholinergic stimulation?",options:["Dry mouth","Constipation","Bradycardia","Urinary retention"],answer:[2],rationale:"Cholinergic effects slow the heart and promote secretions, GI activity, and urination."},
+      {type:"mc",prompt:"Which finding is most consistent with an anticholinergic effect?",options:["Miosis","Increased salivation","Tachycardia","Diarrhea"],answer:[2],rationale:"Anticholinergic effects often include tachycardia, dry mouth, constipation, retention, and mydriasis."},
+      {type:"sata",prompt:"Which findings would the nurse expect with cholinergic effects? Select all that apply.",options:["Small pupils","Increased salivation","Bronchoconstriction","Constipation","Urinary retention"],answer:[0,1,2],rationale:"Cholinergic effects include miosis, salivation, and bronchoconstriction. Constipation and urinary retention are anticholinergic."},
+      {type:"sata",prompt:"Which findings would the nurse associate with anticholinergic drugs? Select all that apply.",options:["Dry mouth","Blurred vision","Constipation","Urinary retention","Diarrhea"],answer:[0,1,2,3],rationale:"These are classic anticholinergic effects. Diarrhea is more cholinergic."},
+      {type:"mc",prompt:"A patient has cramping, loose stools, and increased salivation. Which pattern best fits?",options:["Cholinergic","Anticholinergic","Adrenergic vasoconstriction only","No clear pattern"],answer:[0],rationale:"Cramping, diarrhea, and increased salivation are classic cholinergic findings."},
+      {type:"mc",prompt:"A patient reports inability to urinate and very dry mouth after a medication. Which pattern best fits?",options:["Cholinergic","Anticholinergic","Pure parasympathetic stimulation","No autonomic involvement"],answer:[1],rationale:"Urinary retention and dry mouth point strongly to anticholinergic effects."},
+      {type:"sata",prompt:"The nurse is teaching about cholinergic stimulation. Which statements are correct? Select all that apply.",options:["It may slow the heart rate.","It may increase GI motility.","It may promote urination.","It usually causes big pupils.","It decreases secretions."],answer:[0,1,2],rationale:"Cholinergic stimulation slows the heart, increases GI motility, and promotes urination. It causes small pupils and increased secretions."},
+      {type:"mc",prompt:"Which pupil change is expected with anticholinergic drugs?",options:["Miosis","Pinpoint pupils","Mydriasis","No change in vision"],answer:[2],rationale:"Anticholinergic drugs commonly cause mydriasis and blurred vision."},
+      {type:"mc",prompt:"Which lung effect matches cholinergic stimulation?",options:["Bronchodilation","Decreased secretions","Bronchoconstriction","Hyperventilation only"],answer:[2],rationale:"Cholinergic stimulation narrows bronchi and increases bronchial secretions."},
+      {type:"sata",prompt:"Which are good memory clues for anticholinergic effects? Select all that apply.",options:["Dry","Fast heart","Backed up bowel or bladder","Small pupils","Blurred vision"],answer:[0,1,2,4],rationale:"Anticholinergic effects are dry, fast, backed up, and blurry. Small pupils are cholinergic."},
+      {type:"mc",prompt:"A patient has bradycardia, urinary frequency, and active bowel sounds. Which classification best fits?",options:["Cholinergic","Anticholinergic","Sympathetic only","Central nervous system depression"],answer:[0],rationale:"Bradycardia, more urination, and active bowels reflect cholinergic activity."},
+      {type:"mc",prompt:"Which GI effect is expected with anticholinergic drugs?",options:["Diarrhea","Cramping","Constipation","Hyperactive bowel sounds"],answer:[2],rationale:"Anticholinergic drugs reduce GI motility and can cause constipation."},
+      {type:"sata",prompt:"A medication is causing more acetylcholine activity. Which responses might occur? Select all that apply.",options:["Increased tears or saliva","Bradycardia","Diarrhea","Urinary retention","Bronchoconstriction"],answer:[0,1,2,4],rationale:"More acetylcholine means more secretions, slower heart rate, more GI activity, and bronchoconstriction. Urinary retention is not expected."},
+      {type:"mc",prompt:"Which finding would be unexpected if a patient is experiencing cholinergic effects?",options:["Miosis","Dry mouth","Salivation","Diarrhea"],answer:[1],rationale:"Dry mouth is anticholinergic, not cholinergic."},
+      {type:"sata",prompt:"Which findings may increase fall risk in a patient taking anticholinergics? Select all that apply.",options:["Blurred vision","Confusion","Dizziness from medication burden","Urinary retention discomfort","Improved near vision"],answer:[0,1,2,3],rationale:"Blurred vision, confusion, dizziness, and discomfort can all increase fall risk. Improved near vision would not fit."},
+      {type:"mc",prompt:"Which statement best summarizes cholinergic effects?",options:["Dry up secretions and speed up the heart","Promote rest-and-digest functions","Block bowel and bladder emptying","Dilate pupils and open the lungs"],answer:[1],rationale:"Cholinergic effects support rest-and-digest functions."},
+      {type:"mc",prompt:"Which statement best summarizes anticholinergic effects?",options:["Increase salivation and diarrhea","Promote urination and slow the pulse","Dry up secretions and reduce bowel/bladder activity","Cause pinpoint pupils and bradycardia"],answer:[2],rationale:"Anticholinergic drugs dry secretions and reduce bowel and bladder activity."},
+      {type:"sata",prompt:"The nurse suspects anticholinergic toxicity. Which findings support this concern? Select all that apply.",options:["Dry mouth","Dilated pupils","Tachycardia","Constipation","Profuse salivation"],answer:[0,1,2,3],rationale:"Dry mouth, mydriasis, tachycardia, and constipation fit anticholinergic toxicity. Profuse salivation does not."},
+      {type:"mc",prompt:"A patient is wheezing with copious secretions, has small pupils, and is bradycardic. Which pattern is most likely?",options:["Cholinergic","Anticholinergic","No autonomic issue","Pure adrenergic stimulation"],answer:[0],rationale:"More secretions, wheezing from bronchoconstriction, miosis, and bradycardia point to cholinergic effects."},
+      {type:"sata",prompt:"Which body-system findings should make the nurse think 'anticholinergic'? Select all that apply.",options:["Dry oral mucosa","Big pupils","Slow GI tract","Urinary retention","Increased salivation"],answer:[0,1,2,3],rationale:"Dry mouth, dilated pupils, slowed GI function, and urinary retention are anticholinergic. Increased salivation is cholinergic."}
+    ];
+
+    let current = 0;
+    let score = 0;
+    const answered = Array(questions.length).fill(false);
+    const awarded = Array(questions.length).fill(false);
+
+    function toggleDarkMode(){ document.body.classList.toggle('dark'); }
+
+    function renderJumpers(){
+      const container = document.getElementById("jumpers");
+      container.innerHTML = "";
+      questions.forEach((q, i) => {
+        const b = document.createElement("button");
+        b.textContent = i + 1;
+        b.onclick = () => showQuestion(i);
+        if(answered[i]) b.style.fontWeight = "900";
+        if(i === current) b.style.outline = "2px solid var(--accent)";
+        container.appendChild(b);
+      });
+    }
+
+    function renderQuestions(){
+      const wrap = document.getElementById("questions");
+      wrap.innerHTML = "";
+      questions.forEach((q, idx) => {
+        const div = document.createElement("div");
+        div.className = "question" + (idx === 0 ? " active" : "");
+        div.id = "q" + idx;
+
+        let optionsHtml = "";
+        q.options.forEach((opt, i) => {
+          const inputType = q.type === "mc" ? "radio" : "checkbox";
+          optionsHtml += `
+            <label class="option">
+              <input type="${inputType}" name="question-${idx}" value="${i}">
+              ${opt}
+            </label>
+          `;
+        });
+
+        div.innerHTML = `
+          <div class="qnum">Question ${idx + 1} of ${questions.length}</div>
+          <div class="prompt">${q.prompt}</div>
+          ${optionsHtml}
+          <button onclick="checkAnswer(${idx})">Submit</button>
+          <div class="feedback" id="feedback-${idx}"></div>
+        `;
+        wrap.appendChild(div);
+      });
+    }
+
+    function getSelected(idx){
+      return [...document.querySelectorAll(`#q${idx} input:checked`)].map(el => Number(el.value)).sort((a,b)=>a-b);
+    }
+
+    function arraysEqual(a,b){
+      return a.length === b.length && a.every((v,i) => v === b[i]);
+    }
+
+    function checkAnswer(idx){
+      const q = questions[idx];
+      const selected = getSelected(idx);
+      const fb = document.getElementById(`feedback-${idx}`);
+      answered[idx] = true;
+
+      if(selected.length === 0){
+        fb.className = "feedback bad show";
+        fb.innerHTML = "Pick at least one answer before submitting.";
+        renderJumpers();
+        return;
+      }
+
+      const correct = arraysEqual(selected, [...q.answer].sort((a,b)=>a-b));
+
+      if(correct){
+        fb.className = "feedback good show";
+        fb.innerHTML = `Nice job. You got it right.<div class="rationale">${q.rationale}</div>`;
+        if(!awarded[idx]){
+          score += 1;
+          awarded[idx] = true;
+        }
+      } else {
+        const answerText = q.answer.map(i => q.options[i]).join("; ");
+        fb.className = "feedback bad show";
+        fb.innerHTML = `Not quite. Correct answer: ${answerText}<div class="rationale">${q.rationale}</div>`;
+      }
+
+      document.getElementById("scoreBox").textContent = `Score: ${score} / ${questions.length}`;
+      renderJumpers();
+    }
+
+    function showQuestion(idx){
+      document.querySelectorAll(".question").forEach(q => q.classList.remove("active"));
+      document.getElementById("q" + idx).classList.add("active");
+      current = idx;
+      renderJumpers();
+      window.scrollTo({top: document.getElementById("quiz").offsetTop - 10, behavior: "smooth"});
+    }
+
+    function nextQuestion(){ if(current < questions.length - 1) showQuestion(current + 1); }
+    function prevQuestion(){ if(current > 0) showQuestion(current - 1); }
+
+    renderQuestions();
+    renderJumpers();
+  </script>
+</body>
+</html>

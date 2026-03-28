@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Module 5 Intracranial Regulation Mock Quiz</title>
+<style>
+  :root {
+    --bg: #f5f8fc;
+    --panel: #ffffff;
+    --panel-2: #eef5ff;
+    --text: #18314f;
+    --muted: #5f7287;
+    --blue: #2d6cdf;
+    --blue-soft: #dce9ff;
+    --green: #1e9f6e;
+    --green-soft: #d9f5ea;
+    --yellow: #f5c84c;
+    --yellow-soft: #fff6d8;
+    --danger: #b93b3b;
+    --danger-soft: #fde3e3;
+    --shadow: 0 14px 40px rgba(22, 50, 90, 0.12);
+    --radius: 22px;
+  }
+  body.dark {
+    --bg: #0f1722;
+    --panel: #152234;
+    --panel-2: #1b2b41;
+    --text: #edf4ff;
+    --muted: #b3c4d8;
+    --blue: #79abff;
+    --blue-soft: #1d3353;
+    --green: #5bd2a0;
+    --green-soft: #173d32;
+    --yellow: #ffd86f;
+    --yellow-soft: #4a3f14;
+    --danger: #ff8f8f;
+    --danger-soft: #4a2020;
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(45,108,223,.10), transparent 28%),
+      radial-gradient(circle at top right, rgba(30,159,110,.10), transparent 32%),
+      linear-gradient(180deg, var(--bg), var(--bg));
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .shell { max-width: 1100px; margin: 0 auto; padding: 20px 18px 40px; }
+  .topbar { display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .brand { display:flex; flex-direction:column; gap:6px; }
+  .eyebrow { font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700; }
+  h1 { margin:0; font-size:clamp(1.5rem,3vw,2.3rem); line-height:1.1; }
+  .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  button, .btn {
+    border:none; border-radius:999px; padding:12px 18px; cursor:pointer; font-weight:700;
+    transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease; box-shadow:var(--shadow);
+  }
+  button:hover, .btn:hover { transform: translateY(-1px); }
+  button:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+  .btn-primary { background:linear-gradient(135deg, var(--blue), #4fa4ff); color:white; }
+  .btn-secondary { background:var(--panel); color:var(--text); }
+  .btn-success { background:linear-gradient(135deg, var(--green), #46c890); color:white; }
+  .btn-warning { background:linear-gradient(135deg, var(--yellow), #ffd96c); color:#2f2a15; }
+  .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; margin-bottom:18px; }
+  .card { background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; }
+  .stat-row { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; margin-top:14px; }
+  .stat { background:rgba(255,255,255,.35); border-radius:18px; padding:14px; min-height:96px; }
+  body.dark .stat { background:rgba(255,255,255,.04); }
+  .stat .label { font-size:.82rem; color:var(--muted); margin-bottom:8px; font-weight:700; }
+  .stat .value { font-size:1.35rem; font-weight:800; }
+  .progress-wrap { margin-top:10px; }
+  .progress-bar { width:100%; height:14px; background:rgba(127,127,127,.16); border-radius:999px; overflow:hidden; }
+  .progress-fill { height:100%; width:0%; background:linear-gradient(90deg, var(--blue), var(--green), var(--yellow)); transition:width .3s ease; }
+  .mini { color:var(--muted); font-size:.95rem; line-height:1.5; }
+  .quiz-wrap { display:grid; grid-template-columns:1fr 320px; gap:18px; align-items:start; }
+  .question-card { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:28px; }
+  .q-head { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+  .pill { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:7px 12px; font-size:.84rem; font-weight:800; }
+  .pill-blue { background:var(--blue-soft); color:var(--blue); }
+  .pill-green { background:var(--green-soft); color:var(--green); }
+  .pill-yellow { background:var(--yellow-soft); color:#6e5600; }
+  .question-text { font-size:clamp(1.15rem, 2.2vw, 1.45rem); line-height:1.5; font-weight:700; margin:12px 0 20px; text-align:center; }
+  .instructions { text-align:center; color:var(--muted); margin-bottom:22px; font-size:.96rem; }
+  .options { display:grid; gap:12px; max-width:850px; width:100%; margin:0 auto; }
+  .option {
+    border:2px solid transparent; background:rgba(255,255,255,.55); border-radius:18px; padding:14px 16px;
+    display:flex; gap:12px; align-items:flex-start; cursor:pointer; transition:.15s ease;
+  }
+  body.dark .option { background:rgba(255,255,255,.04); }
+  .option:hover { border-color:rgba(45,108,223,.38); transform:translateY(-1px); }
+  .option.selected { border-color:var(--blue); box-shadow:0 0 0 4px rgba(45,108,223,.12); }
+  .option.correct { border-color:var(--green); background:var(--green-soft); }
+  .option.incorrect { border-color:var(--danger); background:var(--danger-soft); }
+  .marker {
+    width:28px; min-width:28px; height:28px; border-radius:999px; display:grid; place-items:center;
+    font-size:.9rem; font-weight:800; background:var(--blue-soft); color:var(--blue);
+  }
+  .option-text { line-height:1.45; }
+  .rationale { margin-top:18px; border-radius:18px; padding:16px; background:rgba(127,127,127,.09); display:none; }
+  .rationale.show { display:block; }
+  .rationale h3 { margin:0 0 8px; }
+  .nav { margin-top:24px; display:flex; gap:12px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+  .side-card h3 { margin:0 0 10px; }
+  .question-list { display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; }
+  .q-jump { aspect-ratio:1 / 1; border-radius:14px; border:none; font-weight:800; background:rgba(127,127,127,.15); color:var(--text); cursor:pointer; box-shadow:none; padding:0; }
+  .q-jump.current { outline:3px solid var(--blue); }
+  .q-jump.answered { background:var(--green-soft); color:var(--green); }
+  .q-jump.graded-wrong { background:var(--danger-soft); color:var(--danger); }
+  .legend { display:grid; gap:8px; margin-top:12px; color:var(--muted); font-size:.92rem; }
+  .legend span { display:inline-flex; gap:8px; align-items:center; }
+  .dot { width:12px; height:12px; border-radius:999px; display:inline-block; }
+  .matrix-grid { display:grid; gap:14px; max-width:900px; width:100%; margin:0 auto; }
+  .matrix-row { background:rgba(255,255,255,.45); border-radius:18px; padding:14px; }
+  body.dark .matrix-row { background:rgba(255,255,255,.04); }
+  .matrix-row-title { font-weight:700; margin-bottom:10px; }
+  .matrix-choices { display:flex; flex-wrap:wrap; gap:10px; }
+  .chip { padding:10px 14px; border-radius:999px; background:rgba(127,127,127,.12); cursor:pointer; border:2px solid transparent; font-weight:700; }
+  .chip.selected { border-color:var(--blue); }
+  .chip.correct { border-color:var(--green); background:var(--green-soft); color:var(--green); }
+  .chip.incorrect { border-color:var(--danger); background:var(--danger-soft); color:var(--danger); }
+  .bowtie-wrap { display:grid; gap:16px; max-width:850px; width:100%; margin:0 auto; }
+  .bowtie-box { border-radius:20px; padding:16px; background:rgba(255,255,255,.45); }
+  body.dark .bowtie-box { background:rgba(255,255,255,.04); }
+  .bowtie-box h4 { margin:0 0 10px; font-size:1rem; }
+  .select { width:100%; padding:13px 14px; border-radius:14px; border:2px solid rgba(127,127,127,.22); background:var(--panel); color:var(--text); font-size:1rem; font-weight:600; }
+  .toast {
+    position:fixed; right:18px; bottom:18px; width:min(360px, calc(100vw - 36px)); padding:16px 18px;
+    border-radius:18px; box-shadow:var(--shadow); color:white; opacity:0; transform:translateY(10px);
+    pointer-events:none; transition:.2s ease; z-index:999;
+  }
+  .toast.show { opacity:1; transform:translateY(0); }
+  .toast.success { background:linear-gradient(135deg, var(--green), #43c78f); }
+  .toast.info { background:linear-gradient(135deg, var(--blue), #58aaff); }
+  .toast.warn { background:linear-gradient(135deg, #b93b3b, #e56b6b); }
+  .final-card { display:none; text-align:center; padding:30px; }
+  .final-card.show { display:block; }
+  .final-score { font-size:clamp(2rem, 5vw, 3.4rem); font-weight:900; margin:14px 0; }
+  .review-note { color:var(--muted); line-height:1.6; }
+  @media (max-width: 920px) {
+    .hero-grid, .quiz-wrap { grid-template-columns:1fr; }
+    .question-card { min-height:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <div class="eyebrow">PP2 Module 5 • Intracranial Regulation</div>
+      <h1>Module 5 Intracranial Regulation Mock Quiz</h1>
+    </div>
+    <div class="controls">
+      <button class="btn-secondary" id="themeToggle">Toggle Dark / Light</button>
+      <button class="btn-warning" id="resetQuiz">Reset Quiz</button>
+    </div>
+  </div>
+
+  <div class="hero-grid">
+    <div class="card">
+      <div class="eyebrow">Exam style</div>
+      <h2 style="margin:8px 0 0;">Application-heavy, question-stem style, one item at a time</h2>
+      <p class="mini">Built to feel like a nursing-school exam: prioritization, immediate follow-up, therapeutic vs adverse effects, seizure safety, increased ICP recognition, hemorrhagic stroke cues, diagnostics, and med teaching. Submit each question to grade it, review the rationale, then move on.</p>
+      <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div></div>
+      <div class="stat-row">
+        <div class="stat"><div class="label">Questions</div><div class="value" id="totalCount">60</div></div>
+        <div class="stat"><div class="label">Answered</div><div class="value" id="answeredCount">0</div></div>
+        <div class="stat"><div class="label">Correct</div><div class="value" id="correctCount">0</div></div>
+        <div class="stat"><div class="label">Score</div><div class="value" id="scorePct">0%</div></div>
+      </div>
+    </div>
+    <div class="card side-card">
+      <div class="eyebrow">You've got this</div>
+      <h3>Professional feedback built in</h3>
+      <p class="mini">Every correctly graded question triggers a supportive professional popup. Incorrect answers show a calm correction prompt so you can tighten clinical reasoning without losing momentum.</p>
+      <div class="legend">
+        <span><i class="dot" style="background: var(--blue);"></i> Current question</span>
+        <span><i class="dot" style="background: var(--green);"></i> Correctly graded</span>
+        <span><i class="dot" style="background: var(--danger);"></i> Graded, needs review</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-wrap">
+    <div>
+      <div class="card question-card" id="questionCard"></div>
+      <div class="card final-card" id="finalCard">
+        <div class="eyebrow">Completed</div>
+        <h2>Module 5 quiz complete</h2>
+        <div class="final-score" id="finalScore"></div>
+        <p class="review-note" id="finalMessage"></p>
+        <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="goToQuestion(0)">Review from Question 1</button>
+          <button class="btn-secondary" onclick="resetQuiz()">Start Fresh</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card side-card">
+      <div class="eyebrow">Question map</div>
+      <h3>Jump to any item</h3>
+      <div class="question-list" id="questionList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast info" id="toast"></div>
+
+<script>
+const questions = [{"type":"mcq","prompt":"A nurse is assessing a client after a head injury. Which finding should the nurse recognize as the earliest indicator of increasing intracranial pressure?","options":["Projectile vomiting","Widened pulse pressure with bradycardia","Change in level of consciousness","Decerebrate posturing"],"answer":2,"rationale":"The earliest and most sensitive sign of increasing ICP is a change in level of consciousness. Cushing triad and abnormal posturing are later, more ominous findings.","stem":"first / priority assessment","topic":"ICP"},{"type":"mcq","prompt":"A client with suspected increased ICP is restless and increasingly confused. Which action should the nurse take first?","options":["Lower the head of the bed flat to improve perfusion","Cluster all nursing care to let the client rest later","Reduce environmental stimulation and continue frequent neurologic checks","Encourage coughing and deep breathing every 15 minutes"],"answer":2,"rationale":"Restlessness and confusion suggest early neurologic deterioration. Reducing stimulation and continuing focused neurologic assessment help limit ICP rises and detect worsening. Flat positioning and frequent coughing can worsen ICP, and clustering care may overstimulate the client.","stem":"priority action","topic":"ICP"},{"type":"mcq","prompt":"Which statement by a student nurse best explains why cerebral edema is dangerous?","options":["It allows extra room for the brain to expand in the skull","It can raise intracranial pressure and restrict cerebral blood flow","It only affects the peripheral nervous system","It causes neurons to fire more effectively"],"answer":1,"rationale":"Cerebral edema increases fluid within brain tissue, which raises ICP and can reduce cerebral perfusion, leading to ischemia and herniation risk.","stem":"pathophysiology application","topic":"Cerebral edema"},{"type":"mcq","prompt":"A client with a head injury now has bradycardia, widened pulse pressure, and irregular respirations. How should the nurse interpret these findings?","options":["Expected anxiety response","Adverse effect of anticonvulsants","Late sign of severely increased ICP","Typical finding of absence seizure"],"answer":2,"rationale":"Bradycardia, widened pulse pressure, and irregular respirations are components of Cushing triad, a late sign of severely increased ICP.","stem":"interpret findings","topic":"ICP"},{"type":"mcq","prompt":"A nurse is caring for a client at risk for increased ICP. Which nursing intervention is most appropriate?","options":["Keep the neck in neutral alignment","Encourage frequent Valsalva maneuvers for bowel movements","Place the client in Trendelenburg position","Suction routinely every hour"],"answer":0,"rationale":"Neutral head and neck alignment promotes venous drainage from the brain. Trendelenburg, routine suctioning, and Valsalva can increase ICP.","stem":"best intervention","topic":"ICP"},{"type":"mcq","prompt":"Which client statement most clearly requires immediate follow-up by the nurse?","options":["My headache is getting worse and I feel more confused","The room is a little noisy today","I am tired after physical therapy","I do not like the hospital food"],"answer":0,"rationale":"Worsening headache with confusion is concerning for neurologic deterioration and possible increasing ICP, which requires prompt reassessment and escalation.","stem":"requires immediate follow-up","topic":"ICP"},{"type":"mcq","prompt":"A client receiving mannitol for increased ICP should be evaluated first for which therapeutic response?","options":["Improved neurologic status","New onset diarrhea","Increased gingival tissue","Slower speech with increasing lethargy"],"answer":0,"rationale":"Mannitol is used to reduce cerebral edema and ICP. Improvement in neurologic status suggests therapeutic benefit. Worsening lethargy would be concerning, not therapeutic.","stem":"evaluate effectiveness","topic":"Pharmacology"},{"type":"mcq","prompt":"Which assessment finding in a client with suspected hemorrhagic stroke is most concerning for rapid deterioration?","options":["Sudden severe headache with decreased level of consciousness","History of seasonal allergies","Blood glucose of 102 mg/dL","Mild fatigue for several weeks"],"answer":0,"rationale":"Hemorrhagic stroke often presents with sudden severe headache, vomiting, and decreased LOC due to bleeding and increased ICP. This is a neurologic emergency.","stem":"most concerning finding","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"A client presents with facial droop, arm weakness, and slurred speech. Which diagnostic test should the nurse anticipate first to differentiate ischemic from hemorrhagic stroke?","options":["Electroencephalogram","Noncontrast head CT","Lumbar puncture","Carotid Doppler in 24 hours"],"answer":1,"rationale":"A noncontrast CT is the first-line study to quickly identify bleeding and help determine stroke type and treatment plan.","stem":"anticipate diagnostic","topic":"Stroke"},{"type":"mcq","prompt":"The nurse is teaching a family member about the acronym B.E. F.A.S.T. Which example best reflects correct understanding?","options":["Balance, Eyes, Face, Arms, Speech, Time","Blood pressure, Eyes, Fever, Arms, Sleep, Temperature","Balance, Eating, Face, Airway, Speech, Treatment","Brain, Extremities, Face, Aspiration, Safety, Timing"],"answer":0,"rationale":"B.E. F.A.S.T. stands for Balance, Eyes, Face, Arms, Speech, and Time and helps identify possible stroke symptoms quickly.","stem":"patient/family teaching","topic":"Stroke"},{"type":"mcq","prompt":"A client has a sudden seizure. Which action by the nurse is appropriate?","options":["Insert a padded tongue blade","Restrain the client's extremities","Turn the client to the side and protect the head","Offer water once shaking begins"],"answer":2,"rationale":"During a seizure, the nurse should protect the client from injury, maintain airway safety, and turn the client to the side if possible. Nothing should be inserted into the mouth, and the client should not be restrained.","stem":"priority during event","topic":"Seizures"},{"type":"mcq","prompt":"Which finding would the nurse expect during the postictal phase after a tonic-clonic seizure?","options":["Immediate full orientation with no fatigue","Confusion and decreased responsiveness","Persistent laughing and eye fluttering only","Continuous purposeful movement"],"answer":1,"rationale":"The postictal phase commonly includes confusion, drowsiness, fatigue, and decreased responsiveness after generalized tonic-clonic seizures.","stem":"expected finding","topic":"Seizures"},{"type":"mcq","prompt":"A nurse caring for a client with recurrent seizures should identify which situation as status epilepticus?","options":["One brief seizure lasting 20 seconds","A seizure followed by full recovery and a nap","Continuous or repeated seizures without recovery between episodes","A febrile seizure in a toddler"],"answer":2,"rationale":"Status epilepticus is a prolonged seizure or repeated seizures without return to baseline consciousness between episodes and is a medical emergency.","stem":"identify condition","topic":"Seizures"},{"type":"mcq","prompt":"A nurse is preparing discharge teaching for a client prescribed phenytoin. Which statement by the client indicates understanding?","options":["I will stop taking it when I have gone a week without seizures","I should keep up with good oral hygiene","I can double the dose if I miss one","I do not need lab monitoring with this medicine"],"answer":1,"rationale":"Phenytoin can cause gingival hyperplasia, so good oral hygiene is important. It should not be stopped abruptly, doubled after missed doses, or taken without appropriate monitoring.","stem":"teaching understanding","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which history finding should the nurse clarify before giving valproic acid?","options":["Liver disease","Mild seasonal allergies","Remote ankle sprain","Need for glasses"],"answer":0,"rationale":"Valproic acid has important hepatic considerations, so a history of liver disease requires careful review and possible provider notification.","stem":"hold / clarify","topic":"Antiepileptics"},{"type":"mcq","prompt":"A client is prescribed levetiracetam and asks how the nurse will know if it is working. Which response is best?","options":["We will monitor whether your seizure frequency decreases","We will check whether your pupils stay dilated","We will measure your bowel sounds each shift","We will compare your hair growth each week"],"answer":0,"rationale":"Antiseizure medication effectiveness is evaluated primarily by reduction or prevention of seizure activity and improved safety/function.","stem":"evaluate effectiveness","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which client is at greatest risk for traumatic causes of intracranial regulation problems according to the module overview?","options":["Older adult after a fall","Teen with sports-related head trauma","Both A and B","Preschooler with a scraped knee"],"answer":2,"rationale":"The notes emphasize both older adults and adolescents/young adults as important at-risk groups because of falls, trauma, and risk-taking injuries.","stem":"risk factor application","topic":"Risk"},{"type":"mcq","prompt":"Which finding best distinguishes a transient ischemic attack from a completed stroke?","options":["Symptoms resolve without lasting deficit","The client has a headache","Blood pressure is elevated","Speech is affected"],"answer":0,"rationale":"A TIA causes transient neurologic dysfunction without permanent infarction or lasting deficits, while stroke causes more sustained injury.","stem":"differentiate disorders","topic":"Stroke"},{"type":"mcq","prompt":"A nurse is reviewing seizure types. Which presentation is most consistent with an absence seizure?","options":["Brief staring spell and impaired awareness","Sudden unilateral weakness and aphasia","Rhythmic full-body jerking with postictal confusion","Explosive headache with vomiting"],"answer":0,"rationale":"Absence seizures typically cause brief staring episodes with impaired awareness and little or no postictal confusion.","stem":"recognize pattern","topic":"Seizures"},{"type":"mcq","prompt":"Which cue best supports suspected subarachnoid hemorrhage?","options":["Thunderclap headache with nuchal rigidity","Gradual fatigue for a month","Itching after taking antibiotics","Chronic back pain"],"answer":0,"rationale":"Subarachnoid hemorrhage classically presents with sudden severe headache, often described as the worst headache of life, and may include neck stiffness and decreased LOC.","stem":"recognize complication","topic":"Hemorrhagic stroke"},{"type":"sata","prompt":"The nurse is caring for a client with increased ICP. Which interventions are appropriate? Select all that apply.","options":["Maintain neutral head and neck alignment","Reduce unnecessary environmental stimulation","Encourage coughing every 10 minutes","Prevent straining with bowel movements","Space care to avoid repeated stimulation"],"answers":[0,1,3,4],"rationale":"Neutral alignment, minimizing stimulation, preventing Valsalva/straining, and spacing care help limit ICP spikes. Frequent coughing increases intrathoracic pressure and can worsen ICP.","stem":"select all appropriate interventions","topic":"ICP"},{"type":"sata","prompt":"Which findings are associated with early manifestations of increased ICP? Select all that apply.","options":["Restlessness","Confusion","Change in LOC","Bradycardia with widened pulse pressure","Headache"],"answers":[0,1,2,4],"rationale":"Early ICP signs include changes in LOC, restlessness, confusion, and headache. Bradycardia with widened pulse pressure is a later sign.","stem":"select early signs","topic":"ICP"},{"type":"sata","prompt":"A nurse is educating staff about seizure safety. Which actions are appropriate during a seizure? Select all that apply.","options":["Protect the client from injury","Loosen restrictive clothing","Insert an oral airway immediately","Turn the client to the side if possible","Document the seizure duration and characteristics"],"answers":[0,1,3,4],"rationale":"Seizure care includes protecting from injury, maintaining airway safety, loosening restrictive clothing, positioning on the side when possible, and documenting details. Objects should not be inserted into the mouth.","stem":"safety measures","topic":"Seizures"},{"type":"sata","prompt":"Which findings may be seen after a generalized tonic-clonic seizure? Select all that apply.","options":["Fatigue","Confusion","Postictal decreased responsiveness","Immediate return to baseline with no memory gap","Soreness"],"answers":[0,1,2,4],"rationale":"Generalized tonic-clonic seizures are often followed by a postictal state with confusion, fatigue, decreased responsiveness, and muscle soreness.","stem":"expected postictal findings","topic":"Seizures"},{"type":"sata","prompt":"Which findings support possible acute stroke and require rapid action? Select all that apply.","options":["Sudden facial droop","New unilateral arm weakness","Speech difficulty","Two years of chronic knee pain","Sudden vision change"],"answers":[0,1,2,4],"rationale":"Sudden facial droop, unilateral weakness, speech difficulty, and acute vision changes are stroke warning signs requiring rapid evaluation.","stem":"identify urgent cues","topic":"Stroke"},{"type":"sata","prompt":"Which client statements indicate correct teaching about antiseizure medications? Select all that apply.","options":["I should take the medication exactly as prescribed","I should not stop it abruptly unless told to","I may need lab monitoring depending on the medication","If I miss one dose, I should always double the next dose","I should report concerning adverse effects"],"answers":[0,1,2,4],"rationale":"Adherence, avoiding abrupt discontinuation, appropriate monitoring, and reporting adverse effects are correct teaching points. Doubling doses is unsafe unless specifically directed.","stem":"teaching points","topic":"Antiepileptics"},{"type":"sata","prompt":"Which are recognized risk factors or contributors to hemorrhagic stroke? Select all that apply.","options":["Hypertension","Aneurysm or vascular malformation","Head trauma","Use of anticoagulants in some cases","Daily stretching exercises"],"answers":[0,1,2,3],"rationale":"Hemorrhagic stroke can be associated with hypertension, aneurysm/AVM, trauma, and anticoagulation-related bleeding risk. Daily stretching is not a cause.","stem":"risk factor recognition","topic":"Hemorrhagic stroke"},{"type":"sata","prompt":"The nurse is reviewing diagnostics used in neurologic disorders. Which statements are correct? Select all that apply.","options":["EEG measures electrical activity of the brain","Video EEG can help identify psychogenic nonepileptic seizures","CT helps rapidly identify intracranial bleeding","MRI is useful for detailed brain imaging","A dental x-ray is the first-line test for stroke"],"answers":[0,1,2,3],"rationale":"EEG and video EEG assess seizure-related brain activity. CT is rapid for bleeding, and MRI offers detailed imaging. Dental x-rays are not part of acute stroke workup.","stem":"diagnostic knowledge","topic":"Diagnostics"},{"type":"sata","prompt":"Which findings suggest worsening neurologic status in a client with cerebral edema? Select all that apply.","options":["Increasing headache","Declining LOC","New vomiting","Improved attention and alertness","Abnormal posturing"],"answers":[0,1,2,4],"rationale":"Worsening headache, vomiting, declining LOC, and abnormal posturing suggest worsening cerebral edema and rising ICP. Improved alertness would not suggest deterioration.","stem":"worsening vs improving","topic":"Cerebral edema"},{"type":"sata","prompt":"Which nursing priorities are appropriate when caring for a client with suspected hemorrhagic stroke? Select all that apply.","options":["Frequent neurologic assessment","Rapid escalation and provider notification for deterioration","Support airway and hemodynamic stability","Delay imaging until tomorrow","Monitor for signs of increased ICP"],"answers":[0,1,2,4],"rationale":"Hemorrhagic stroke care priorities include airway/hemodynamic support, frequent neuro checks, rapid escalation, and monitoring for ICP. Imaging should not be delayed.","stem":"priority nursing care","topic":"Hemorrhagic stroke"},{"type":"sata","prompt":"A client with a history of seizures asks about lifestyle safety. Which teaching points are appropriate? Select all that apply.","options":["Take medications consistently","Avoid abrupt withdrawal of therapy","Follow provider guidance regarding driving and safety","Ignore breakthrough auras if they are brief","Keep follow-up appointments"],"answers":[0,1,2,4],"rationale":"Adherence, safety precautions, and follow-up are important. Breakthrough auras or seizure changes should not be ignored.","stem":"safety teaching","topic":"Seizures"},{"type":"matrix","prompt":"Classify each finding as Early increased ICP sign or Late increased ICP sign.","rows":["Restlessness","Headache","Change in level of consciousness","Bradycardia with widened pulse pressure","Abnormal posturing"],"cols":["Early sign","Late sign"],"answer_map":{"Restlessness":"Early sign","Headache":"Early sign","Change in level of consciousness":"Early sign","Bradycardia with widened pulse pressure":"Late sign","Abnormal posturing":"Late sign"},"rationale":"Early ICP changes include subtle neurologic changes such as restlessness, headache, and altered LOC. Late findings include Cushing triad and posturing.","stem":"chart item classification","topic":"ICP"},{"type":"matrix","prompt":"Classify each statement as Seizure intervention or Not appropriate during a seizure.","rows":["Protect the head","Insert an object into the mouth","Turn to the side if possible","Restrain extremities","Document duration"],"cols":["Appropriate","Not appropriate"],"answer_map":{"Protect the head":"Appropriate","Insert an object into the mouth":"Not appropriate","Turn to the side if possible":"Appropriate","Restrain extremities":"Not appropriate","Document duration":"Appropriate"},"rationale":"Proper seizure care focuses on safety and documentation. Restraints and mouth insertion are unsafe and not recommended.","stem":"chart item application","topic":"Seizures"},{"type":"matrix","prompt":"Classify each feature as more consistent with TIA or Stroke.","rows":["Neurologic symptoms resolve without lasting deficit","Persistent neurologic deficit","May warn of future stroke risk","Requires urgent evaluation","Permanent tissue injury more likely"],"cols":["TIA","Stroke"],"answer_map":{"Neurologic symptoms resolve without lasting deficit":"TIA","Persistent neurologic deficit":"Stroke","May warn of future stroke risk":"TIA","Requires urgent evaluation":"Stroke","Permanent tissue injury more likely":"Stroke"},"rationale":"TIA symptoms resolve but still signal high stroke risk. Stroke is more likely to produce persistent deficits and permanent injury. Both warrant urgent attention, but this item emphasizes completed stroke evaluation when deficits persist.","stem":"differentiate chart","topic":"Stroke"},{"type":"matrix","prompt":"Classify each medication-related statement as Correct teaching or Needs correction.","rows":["Take phenytoin with attention to oral care","Stop antiseizure medicine abruptly if seizure-free for 1 week","Report concerning adverse effects","Double the next dose after a missed dose without instructions","Attend lab follow-up if ordered"],"cols":["Correct teaching","Needs correction"],"answer_map":{"Take phenytoin with attention to oral care":"Correct teaching","Stop antiseizure medicine abruptly if seizure-free for 1 week":"Needs correction","Report concerning adverse effects":"Correct teaching","Double the next dose after a missed dose without instructions":"Needs correction","Attend lab follow-up if ordered":"Correct teaching"},"rationale":"Correct teaching emphasizes adherence, monitoring, and oral care with phenytoin. Abrupt discontinuation and self-doubling doses are unsafe.","stem":"teaching chart","topic":"Antiepileptics"},{"type":"matrix","prompt":"Classify each cue as More consistent with hemorrhagic stroke or More consistent with seizure disorder.","rows":["Thunderclap headache","Postictal confusion","Rhythmic jerking movements","Rapid decline in LOC after severe headache","Brief absence staring episode"],"cols":["Hemorrhagic stroke","Seizure disorder"],"answer_map":{"Thunderclap headache":"Hemorrhagic stroke","Postictal confusion":"Seizure disorder","Rhythmic jerking movements":"Seizure disorder","Rapid decline in LOC after severe headache":"Hemorrhagic stroke","Brief absence staring episode":"Seizure disorder"},"rationale":"Severe sudden headache and rapid LOC decline point toward hemorrhagic stroke, while postictal confusion, rhythmic jerking, and absence spells fit seizure disorders.","stem":"pattern recognition chart","topic":"Stroke vs Seizure"},{"type":"bowtie","prompt":"A client with a severe head injury becomes increasingly restless and confused and reports worsening headache.","left_label":"Most likely problem","left_options":["Early increased ICP","Stable recovery","Simple febrile seizure","Hypoglycemia only"],"left_answer":"Early increased ICP","center_label":"Priority nursing action","center_options":["Reduce stimulation and perform focused neuro reassessment","Lay the client flat and encourage coughing","Delay assessment until next routine round","Insert an oral airway"],"center_answer":"Reduce stimulation and perform focused neuro reassessment","right_label":"Most important parameter to trend","right_options":["Level of consciousness","Favorite food choice","Shoe size","Skin freckle count"],"right_answer":"Level of consciousness","rationale":"Restlessness, confusion, and worsening headache suggest early increased ICP. Immediate focused reassessment and trending LOC are essential.","stem":"bowtie priority linkage","topic":"ICP"},{"type":"bowtie","prompt":"A client becomes unresponsive with generalized jerking movements.","left_label":"Most likely event","left_options":["Tonic-clonic seizure","TIA","Mild anxiety episode","Stable sleep pattern"],"left_answer":"Tonic-clonic seizure","center_label":"Priority action","center_options":["Protect from injury and turn to side if possible","Insert a tongue blade","Hold all limbs down","Give oral fluids immediately"],"center_answer":"Protect from injury and turn to side if possible","right_label":"Expected follow-up finding","right_options":["Postictal confusion","Instant complete orientation","Improved attention with no fatigue","No need for documentation"],"right_answer":"Postictal confusion","rationale":"Generalized tonic-clonic seizure care prioritizes safety and airway support. Postictal confusion is expected afterward.","stem":"bowtie seizure care","topic":"Seizures"},{"type":"bowtie","prompt":"A client suddenly develops facial droop, unilateral arm weakness, and slurred speech.","left_label":"Most likely condition","left_options":["Acute stroke","Absence seizure","Migraine only","Mild dehydration"],"left_answer":"Acute stroke","center_label":"Priority diagnostic study","center_options":["Noncontrast head CT","Dental x-ray","EEG first","Bone scan"],"center_answer":"Noncontrast head CT","right_label":"Why time matters","right_options":["Potentially salvageable brain tissue","Hair loss prevention","To avoid constipation","Because speech changes are rarely important"],"right_answer":"Potentially salvageable brain tissue","rationale":"Sudden focal deficits suggest stroke. Rapid CT helps determine stroke type, and early treatment matters because threatened tissue may still be salvageable.","stem":"bowtie stroke response","topic":"Stroke"},{"type":"bowtie","prompt":"A client prescribed phenytoin asks what nursing teaching is most important.","left_label":"Medication concern to monitor","left_options":["Gingival hyperplasia","Hair texture only","Seasonal allergies","Color blindness"],"left_answer":"Gingival hyperplasia","center_label":"Best teaching action","center_options":["Maintain good oral hygiene","Stop the medication whenever gums bleed slightly","Double doses after missed pills","Skip follow-up appointments"],"center_answer":"Maintain good oral hygiene","right_label":"Safety principle","right_options":["Do not stop abruptly without guidance","Discontinue after one seizure-free week","Take extra doses before exercise","Ignore breakthrough symptoms"],"right_answer":"Do not stop abruptly without guidance","rationale":"Phenytoin teaching includes oral hygiene because of gingival hyperplasia risk, and antiseizure medications should not be stopped abruptly unless directed.","stem":"bowtie medication teaching","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which assessment finding would best suggest a client is improving after treatment for cerebral edema?","options":["Improved alertness and more appropriate responses","New bradycardia and irregular respirations","Increasing vomiting and confusion","Development of abnormal posturing"],"answer":0,"rationale":"Improved alertness and appropriate responses suggest better cerebral perfusion and reduced ICP, whereas bradycardia, vomiting, confusion, and posturing suggest worsening.","stem":"evaluate improvement","topic":"Cerebral edema"},{"type":"mcq","prompt":"The nurse is caring for a client after a possible TIA. Which teaching point is most important?","options":["Symptoms resolving means follow-up is unnecessary","A TIA may warn of future stroke and still needs urgent evaluation","Only speech changes matter after a TIA","TIAs are always caused by seizures"],"answer":1,"rationale":"A TIA is a warning event for future stroke and requires prompt evaluation and risk-reduction planning even if deficits resolve.","stem":"priority teaching","topic":"TIA"},{"type":"mcq","prompt":"Which action by the nurse would be most helpful in distinguishing seizure activity from psychogenic nonepileptic events when ordered by the provider?","options":["Prepare the client for video EEG","Ask the client to exercise vigorously","Measure shoe size daily","Schedule a dental x-ray"],"answer":0,"rationale":"Video EEG is specifically useful for capturing events and helping distinguish epileptic from psychogenic nonepileptic seizures.","stem":"diagnostic application","topic":"Diagnostics"},{"type":"mcq","prompt":"A client with head trauma needs ongoing assessment for neurologic deterioration. Which finding should the nurse report first?","options":["Client rates headache 3/10 after acetaminophen","Client becomes more difficult to arouse","Client requests a blanket","Client says the room feels cool"],"answer":1,"rationale":"A decline in arousability indicates worsening neurologic status and possible increased ICP, requiring immediate reporting and evaluation.","stem":"report first","topic":"ICP"},{"type":"mcq","prompt":"Which explanation best links hemorrhagic stroke to increased ICP?","options":["Bleeding adds volume in the skull and promotes edema","Stroke always lowers pressure in the skull","Hemorrhage only affects limb muscles","ICP changes are unrelated to bleeding"],"answer":0,"rationale":"Intracranial bleeding increases intracranial volume and triggers edema, both of which can raise ICP and reduce cerebral perfusion.","stem":"explain why","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"Which nursing action should be avoided in a client with increased ICP unless absolutely necessary?","options":["Maintaining neutral alignment","Reducing stimulation","Frequent unnecessary suctioning","Performing focused neuro checks"],"answer":2,"rationale":"Suctioning can increase ICP and should be limited to when clinically necessary. Neutral alignment, low stimulation, and neuro assessment are appropriate.","stem":"avoid action","topic":"ICP"},{"type":"mcq","prompt":"A client with epilepsy asks why lab monitoring may be ordered for some antiseizure medications. Which response is best?","options":["To help assess therapeutic levels and safety","To measure bone length changes","To prove the client is not stressed","To replace all seizure diaries"],"answer":0,"rationale":"Some antiseizure medications require level or safety monitoring to evaluate therapeutic range, toxicity risk, and adherence.","stem":"patient teaching rationale","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which assessment cue is most consistent with a focal seizure rather than generalized tonic-clonic seizure?","options":["Localized symptoms depending on where the seizure starts","Immediate full-body stiffening and jerking every time","Always complete loss of consciousness","Always followed by status epilepticus"],"answer":0,"rationale":"Focal seizures arise from a specific brain region, so symptoms vary depending on the area involved and may or may not impair awareness.","stem":"differentiate seizure type","topic":"Seizures"},{"type":"mcq","prompt":"The nurse reviewing a neurologic emergency note recognizes which phrase as most concerning for subarachnoid hemorrhage?","options":["Worst headache of my life","Mild headache after reading","Occasional tension behind the eyes","Headache after skipping coffee"],"answer":0,"rationale":"A sudden severe thunderclap headache described as the worst headache of life strongly suggests subarachnoid hemorrhage.","stem":"recognize emergency language","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"Which client would the nurse prioritize for immediate reassessment?","options":["Client with chronic stable migraines asking for dim lights","Client with seizure history who is sleepy but easily aroused after a witnessed tonic-clonic seizure","Client with head injury who is newly confused and harder to arouse","Client with old stroke deficits requesting a snack"],"answer":2,"rationale":"New confusion and decreased arousability after head injury suggest worsening neurologic status and possible rising ICP. That requires immediate reassessment.","stem":"priority client","topic":"Prioritization"},{"type":"mcq","prompt":"A client is receiving teaching about stroke warning signs. Which statement shows the need for more teaching?","options":["Speech changes can be a stroke warning sign","Time matters if stroke symptoms appear","If symptoms go away quickly, I can still need urgent evaluation","Vision changes are never part of stroke warning signs"],"answer":3,"rationale":"Vision changes can absolutely be part of stroke symptoms. The other statements are correct.","stem":"needs more teaching","topic":"Stroke"},{"type":"mcq","prompt":"Which finding best suggests status epilepticus rather than a single resolved seizure?","options":["The client is sleepy for 20 minutes after the seizure","The client has repeated seizures without regaining baseline consciousness","The client reports an aura before a seizure","The client experiences one brief absence seizure"],"answer":1,"rationale":"Repeated seizures without return to baseline or continuous seizure activity indicate status epilepticus, an emergency requiring rapid treatment.","stem":"identify emergency","topic":"Seizures"},{"type":"mcq","prompt":"The nurse is caring for a client with suspected increased ICP. Which explanation best supports keeping stimulation low?","options":["Stimulation can worsen ICP elevations","The client needs to sleep because the brain stops working when awake","Visitors are always contraindicated in neurologic care","Stimulation causes permanent memory loss"],"answer":0,"rationale":"Environmental and physical stimulation can trigger transient ICP elevations, so minimizing unnecessary stimulation is appropriate.","stem":"why this intervention","topic":"ICP"},{"type":"mcq","prompt":"A client with new unilateral weakness asks why the nurse is moving so quickly. Which response is best?","options":["Because these symptoms may indicate a stroke and fast treatment matters","Because weakness always means a seizure is about to happen","Because all headaches need surgery within an hour","Because hospital policy requires CT for every complaint"],"answer":0,"rationale":"Sudden focal neurologic deficits may indicate stroke, and prompt action is essential because early treatment can preserve threatened brain tissue.","stem":"therapeutic explanation","topic":"Stroke"},{"type":"mcq","prompt":"Which factor would most strongly increase concern for hemorrhagic rather than ischemic stroke in the history?","options":["Known aneurysm","History of nearsightedness","Mild lactose intolerance","Recent dental cleaning"],"answer":0,"rationale":"Aneurysm is a major risk factor for intracranial bleeding and hemorrhagic stroke.","stem":"risk factor application","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"Which action best reflects appropriate documentation after a seizure?","options":["Record the duration and observed characteristics","Document that the client misbehaved","Skip charting because the seizure has ended","Only chart if the provider witnessed it"],"answer":0,"rationale":"Objective documentation of seizure duration, characteristics, response, and postictal status is essential for diagnosis and treatment planning.","stem":"documentation standard","topic":"Seizures"},{"type":"mcq","prompt":"A nurse is comparing CT and EEG with a student. Which statement is most accurate?","options":["CT helps detect bleeding; EEG measures brain electrical activity","CT and EEG are interchangeable","EEG is used first to diagnose hemorrhagic stroke in every case","CT is mainly for measuring bowel obstruction"],"answer":0,"rationale":"CT is important for structural brain assessment and rapid bleeding identification, while EEG evaluates electrical activity and seizure patterns.","stem":"compare diagnostics","topic":"Diagnostics"},{"type":"mcq","prompt":"Which finding is more consistent with worsening increased ICP than with a routine postictal state?","options":["Progressive decline in level of consciousness after head trauma","Brief fatigue after a known seizure","Need for rest after tonic-clonic activity","Temporary confusion that improves"],"answer":0,"rationale":"A progressive decline in LOC after head trauma suggests worsening ICP, whereas temporary fatigue and confusion can occur during a routine postictal period.","stem":"differentiate causes","topic":"ICP vs Seizure"},{"type":"mcq","prompt":"Which nurse statement best teaches why a client with a TIA still needs evaluation even if symptoms stop?","options":["Because a TIA can signal future stroke risk","Because TIAs always cause permanent paralysis","Because TIAs are contagious","Because symptoms that go away never return"],"answer":0,"rationale":"TIAs are warning events associated with increased risk of later stroke, so evaluation and prevention are important even when symptoms resolve.","stem":"patient teaching","topic":"TIA"},{"type":"mcq","prompt":"Which client response indicates understanding of levetiracetam teaching?","options":["I will keep taking it as prescribed and report any concerning changes","I can stop it the day after my last seizure","If one tablet is good, two are always better","I do not need follow-up because it is newer"],"answer":0,"rationale":"Levetiracetam, like other antiseizure drugs, should be taken consistently with follow-up and reporting of concerning side effects or seizure changes.","stem":"teaching evaluation","topic":"Antiepileptics"},{"type":"sata","prompt":"The nurse is assessing a client with suspected stroke. Which findings support urgent activation of a stroke response? Select all that apply.","options":["Sudden facial asymmetry","New unilateral weakness","Acute slurred speech","Gradual toenail discoloration","Sudden balance difficulty"],"answers":[0,1,2,4],"rationale":"Sudden facial droop, unilateral weakness, speech difficulty, and balance changes are stroke warning signs needing urgent evaluation.","stem":"urgent stroke cues","topic":"Stroke"},{"type":"sata","prompt":"Which cues should raise concern for subarachnoid hemorrhage? Select all that apply.","options":["Sudden severe headache","Neck stiffness","Possible decreased LOC","Months of stable eczema","Vomiting"],"answers":[0,1,2,4],"rationale":"Subarachnoid hemorrhage often causes thunderclap headache, nuchal rigidity, vomiting, and possible decreased consciousness.","stem":"recognize SAH cues","topic":"Hemorrhagic stroke"},{"type":"sata","prompt":"Which measures help reduce secondary brain injury in a client with intracranial problems? Select all that apply.","options":["Frequent focused neurologic assessment","Rapid recognition of deterioration","Avoiding unnecessary ICP-provoking maneuvers","Ignoring subtle changes until a late sign appears","Prompt communication of concerning findings"],"answers":[0,1,2,4],"rationale":"Secondary injury is reduced by early detection, preventing avoidable ICP increases, and promptly escalating concerning changes. Waiting for late signs is unsafe.","stem":"secondary injury prevention","topic":"ICP"},{"type":"sata","prompt":"Which findings may be associated with focal seizures depending on the area of onset? Select all that apply.","options":["Localized sensory symptoms","Motor symptoms in one area","Altered awareness in some cases","Always generalized jerking of the whole body","Behavioral changes"],"answers":[0,1,2,4],"rationale":"Focal seizures can produce localized sensory, motor, awareness, or behavioral changes depending on where they originate. They do not always generalize.","stem":"focal seizure characteristics","topic":"Seizures"},{"type":"sata","prompt":"Which statements are appropriate when teaching about stroke response time? Select all that apply.","options":["Get emergency help immediately for stroke symptoms","Do not wait to see if speech returns later","Fast evaluation helps guide treatment","A resolved TIA means there is no need for assessment","Time matters because some tissue may still be salvageable"],"answers":[0,1,2,4],"rationale":"Rapid evaluation is critical for stroke and TIA because treatment decisions are time-sensitive and brain tissue may still be threatened but salvageable.","stem":"time-sensitive teaching","topic":"Stroke"},{"type":"matrix","prompt":"Classify each finding as More consistent with stroke warning sign or More consistent with postictal state.","rows":["Sudden unilateral weakness","Temporary confusion after witnessed seizure","Speech difficulty","Facial droop","Fatigue after tonic-clonic activity"],"cols":["Stroke warning sign","Postictal state"],"answer_map":{"Sudden unilateral weakness":"Stroke warning sign","Temporary confusion after witnessed seizure":"Postictal state","Speech difficulty":"Stroke warning sign","Facial droop":"Stroke warning sign","Fatigue after tonic-clonic activity":"Postictal state"},"rationale":"Sudden focal deficits suggest stroke, whereas confusion and fatigue after a witnessed seizure fit a postictal state.","stem":"chart differentiation","topic":"Stroke vs Seizure"},{"type":"matrix","prompt":"Classify each cue as Suggests therapeutic response or Suggests worsening neurologic status.","rows":["Improved responsiveness after ICP treatment","Worsening headache","New abnormal posturing","Better orientation to person and place","Increasing difficulty arousing the client"],"cols":["Therapeutic response","Worsening neurologic status"],"answer_map":{"Improved responsiveness after ICP treatment":"Therapeutic response","Worsening headache":"Worsening neurologic status","New abnormal posturing":"Worsening neurologic status","Better orientation to person and place":"Therapeutic response","Increasing difficulty arousing the client":"Worsening neurologic status"},"rationale":"Improved responsiveness and orientation suggest benefit from therapy; worsening headache, posturing, and declining arousal are ominous neurologic changes.","stem":"response vs deterioration chart","topic":"ICP"},{"type":"matrix","prompt":"Classify each statement as Appropriate nursing response or Inappropriate nursing response for suspected increased ICP.","rows":["Maintain neutral alignment","Encourage repeated Valsalva","Limit unnecessary stimulation","Perform focused neuro checks","Suction routinely without need"],"cols":["Appropriate","Inappropriate"],"answer_map":{"Maintain neutral alignment":"Appropriate","Encourage repeated Valsalva":"Inappropriate","Limit unnecessary stimulation":"Appropriate","Perform focused neuro checks":"Appropriate","Suction routinely without need":"Inappropriate"},"rationale":"Appropriate ICP care promotes venous drainage, minimizes stimulation, and monitors neuro status. Valsalva and unnecessary suctioning can worsen ICP.","stem":"intervention chart","topic":"ICP"},{"type":"matrix","prompt":"Classify each statement as Seizure medication safety teaching or Needs correction.","rows":["Do not stop the medication abruptly","Report concerning side effects","Take missed doses however you want","Attend monitoring appointments when ordered","Medication effectiveness is partly judged by seizure control"],"cols":["Safety teaching","Needs correction"],"answer_map":{"Do not stop the medication abruptly":"Safety teaching","Report concerning side effects":"Safety teaching","Take missed doses however you want":"Needs correction","Attend monitoring appointments when ordered":"Safety teaching","Medication effectiveness is partly judged by seizure control":"Safety teaching"},"rationale":"Safe teaching includes adherence, avoiding abrupt discontinuation, monitoring, and tracking seizure control. Clients should not make up doses arbitrarily.","stem":"med safety chart","topic":"Antiepileptics"},{"type":"bowtie","prompt":"A client develops a thunderclap headache, vomiting, and decreased responsiveness.","left_label":"Most likely condition","left_options":["Subarachnoid hemorrhage","Routine tension headache","Absence seizure","Stable TIA recovery"],"left_answer":"Subarachnoid hemorrhage","center_label":"Priority nurse response","center_options":["Escalate immediately and anticipate rapid neurologic evaluation","Offer snacks and dim lights only","Plan discharge teaching","Encourage strenuous ambulation"],"center_answer":"Escalate immediately and anticipate rapid neurologic evaluation","right_label":"Most relevant reason","right_options":["Risk for bleeding-related increased ICP and rapid decline","Because headaches always resolve with hydration","Because confusion means boredom","To prevent muscle cramps only"],"right_answer":"Risk for bleeding-related increased ICP and rapid decline","rationale":"Thunderclap headache with vomiting and decreased responsiveness suggests subarachnoid hemorrhage, which can deteriorate rapidly because of bleeding and increased ICP.","stem":"bowtie hemorrhagic emergency","topic":"Hemorrhagic stroke"},{"type":"bowtie","prompt":"A client with epilepsy reports fewer seizures since starting levetiracetam.","left_label":"Interpretation","left_options":["Therapeutic response","Medication failure","Allergy proof","Evidence of hemorrhagic stroke"],"left_answer":"Therapeutic response","center_label":"Best nursing follow-up","center_options":["Reinforce adherence and continue monitoring","Tell the client to stop the drug immediately","Advise doubling doses on stressful days","Cancel all follow-up visits"],"center_answer":"Reinforce adherence and continue monitoring","right_label":"Most useful outcome measure","right_options":["Seizure frequency trend","Hair texture","Shoe size","Taste preference"],"right_answer":"Seizure frequency trend","rationale":"Fewer seizures indicate therapeutic benefit. The nurse should reinforce adherence and continue evaluating control and side effects over time.","stem":"bowtie med evaluation","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which nursing observation would best support that a client's seizure has ended and the postictal phase has begun?","options":["Jerking stops and the client is confused and sleepy","The client starts answering questions rapidly during convulsions","The client begins running in the hallway","The client becomes more alert than baseline immediately"],"answer":0,"rationale":"The postictal phase follows seizure cessation and is often marked by confusion, fatigue, and decreased responsiveness.","stem":"identify phase","topic":"Seizures"},{"type":"mcq","prompt":"A nurse is prioritizing care for four clients. Which client should be seen first?","options":["Client with controlled epilepsy requesting discharge papers","Client with resolved TIA symptoms waiting for transport","Client with new headache, confusion, and declining LOC after head trauma","Client asking for education about phenytoin"],"answer":2,"rationale":"New headache, confusion, and declining LOC after head trauma suggest worsening neurologic status and possible increased ICP, requiring immediate assessment.","stem":"priority client first","topic":"Prioritization"},{"type":"mcq","prompt":"Which statement best describes why frequent neurologic assessment is important in intracranial regulation problems?","options":["Subtle changes may be the earliest sign of deterioration","It replaces the need for all diagnostics","It guarantees seizures will stop","It eliminates stroke risk"],"answer":0,"rationale":"Frequent neurologic assessment is essential because subtle changes, especially in LOC, may be the earliest signs of worsening neurologic status.","stem":"why frequent assessment","topic":"ICP"},{"type":"mcq","prompt":"Which history detail makes the nurse most concerned that a severe headache may represent hemorrhagic stroke rather than a benign headache?","options":["The headache began suddenly and is the worst the client has experienced","The client skipped breakfast","The client has mild seasonal allergies","The client wears contact lenses"],"answer":0,"rationale":"A sudden severe headache described as the worst headache of life is a classic warning sign for hemorrhagic stroke, especially subarachnoid hemorrhage.","stem":"red flag history","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"Which response by the nurse best explains why the client with a seizure is not being restrained?","options":["Restraints can increase injury risk during a seizure","Restraints stop all seizure activity","Restraints improve airway patency","Restraints are required only for staff convenience"],"answer":0,"rationale":"Restraining a client during a seizure can increase injury risk. The goal is to protect from injury, not forcibly stop movement.","stem":"therapeutic communication","topic":"Seizures"},{"type":"mcq","prompt":"A client with a possible TIA asks, \"If I'm fine now, why are you still worried?\" Which response is best?","options":["Because TIAs can be warning signs for a future stroke","Because TIAs always lead to brain hemorrhage that same day","Because everyone with a TIA has epilepsy","Because you probably imagined the symptoms"],"answer":0,"rationale":"A TIA is important because it can signal increased future stroke risk and requires prompt follow-up and prevention planning.","stem":"best response","topic":"TIA"},{"type":"sata","prompt":"Which cues suggest a client may be progressing from early toward late signs of increased ICP? Select all that apply.","options":["Change in LOC","Headache","Bradycardia","Widened pulse pressure","Abnormal posturing"],"answers":[0,1,2,3,4],"rationale":"LOC changes and headache are early cues, while bradycardia, widened pulse pressure, and posturing reflect more advanced ICP elevation. Seeing the pattern across these signs suggests progression.","stem":"progression recognition","topic":"ICP"},{"type":"sata","prompt":"Which information should the nurse gather and document about a seizure event? Select all that apply.","options":["Duration","Observed movements and characteristics","Level of responsiveness after the event","What color scrubs the nurse wore","Possible triggers or preceding aura"],"answers":[0,1,2,4],"rationale":"Useful seizure documentation includes duration, characteristics, postictal response, and any reported trigger or aura. Nurse scrub color is irrelevant.","stem":"documentation details","topic":"Seizures"},{"type":"matrix","prompt":"Classify each client situation as Emergent neurologic concern or Nonemergent neurologic concern.","rows":["Repeated seizures without recovery","Sudden unilateral weakness and slurred speech","Mild stable headache after reading","Cushing triad in a head-injured client","Sudden severe explosive headache with neck stiffness"],"cols":["Emergent","Nonemergent"],"answer_map":{"Repeated seizures without recovery":"Emergent","Sudden unilateral weakness and slurred speech":"Emergent","Mild stable headache after reading":"Nonemergent","Cushing triad in a head-injured client":"Emergent","Sudden severe explosive headache with neck stiffness":"Emergent"},"rationale":"Status epilepticus, stroke symptoms, Cushing triad, and suspected SAH are emergent neurologic events. A mild stable headache without other red flags is not inherently emergent.","stem":"emergent vs nonemergent chart","topic":"Prioritization"},{"type":"matrix","prompt":"For each medication-related statement, classify it as Therapeutic response, Adverse concern/hold-clarify, or Teaching point.","rows":["Improved neurologic status after mannitol","History of liver disease before valproic acid","Good oral care with phenytoin","Need for serum drug levels when seizure control is poor","Abruptly stopping antiseizure therapy"],"cols":["Therapeutic response","Adverse concern / hold-clarify","Teaching point"],"answer_map":{"Improved neurologic status after mannitol":"Therapeutic response","History of liver disease before valproic acid":"Adverse concern / hold-clarify","Good oral care with phenytoin":"Teaching point","Need for serum drug levels when seizure control is poor":"Teaching point","Abruptly stopping antiseizure therapy":"Adverse concern / hold-clarify"},"rationale":"Improvement after mannitol reflects response. Liver disease requires clarification with valproate. Oral care and serum-level monitoring are key teaching/follow-up points. Abrupt stopping is unsafe.","stem":"therapeutic vs adverse chart","topic":"Pharmacology"},{"type":"bowtie","prompt":"A client with a severe head injury becomes progressively drowsy and confused and now reports worsening headache.","left_label":"Most likely condition","left_options":["Early increased ICP","Stable postictal phase","TIA","Simple febrile seizure"],"left_answer":"Early increased ICP","center_label":"Priority nursing action","center_options":["Reassess in 8 hours","Promote maneuvers that increase thoracic pressure","Notify provider and continue frequent neuro assessment","Place client flat"],"center_answer":"Notify provider and continue frequent neuro assessment","right_label":"Parameter to monitor closely","right_options":["LOC trend","Hair color","Daily shoe size","Bowel sounds only"],"right_answer":"LOC trend","rationale":"The earliest sign of increased ICP is a change in level of consciousness, with headache another early clue. Prompt escalation and ongoing neuro monitoring are appropriate.","stem":"bowtie clinical linkage","topic":"ICP"},{"type":"bowtie","prompt":"A client in bed develops rhythmic jerking of all extremities and becomes unresponsive.","left_label":"Most likely event","left_options":["Tonic-clonic seizure","TIA","TIA aftercare","Meningeal irritation only"],"left_answer":"Tonic-clonic seizure","center_label":"Priority action","center_options":["Insert tongue blade","Turn to side and protect from injury","Restrain the arms","Ask the client to sip water"],"center_answer":"Turn to side and protect from injury","right_label":"Expected follow-up finding","right_options":["Postictal decreased responsiveness","Immediate full orientation with no fatigue","Persistent voluntary lip smacking for hours","Instant discharge home"],"right_answer":"Postictal decreased responsiveness","rationale":"During a tonic-clonic seizure, safety and airway protection are key. The postictal period commonly includes decreased responsiveness and fatigue.","stem":"bowtie seizure management","topic":"Seizures"},{"type":"bowtie","prompt":"A client suddenly develops facial droop, right arm weakness, and difficulty speaking.","left_label":"Most likely problem","left_options":["Acute stroke","Absence seizure","Chronic dementia","Routine aging change"],"left_answer":"Acute stroke","center_label":"Priority diagnostic study","center_options":["Noncontrast head CT","Lumbar puncture first","Brain biopsy","Dental x-ray"],"center_answer":"Noncontrast head CT","right_label":"Reason time matters","right_options":["Potentially salvageable ischemic tissue","Stroke can only worsen after one month","Hemorrhage is treated with gingival care","Neurologic deficits are usually psychogenic"],"right_answer":"Potentially salvageable ischemic tissue","rationale":"B.E. F.A.S.T. symptoms suggest acute stroke. Rapid noncontrast CT helps determine hemorrhage, and early treatment matters because threatened tissue may still be salvageable.","stem":"bowtie stroke recognition","topic":"Stroke"},{"type":"bowtie","prompt":"A client with new epilepsy is prescribed valproic acid and asks what the nurse will monitor.","left_label":"Key risk to clarify","left_options":["Liver disease","Seasonal allergies","Nearsightedness","Tonsillectomy history"],"left_answer":"Liver disease","center_label":"Best measure of effectiveness","center_options":["Trend in seizure frequency","Hair growth","Color of urine only","Daily weight only"],"center_answer":"Trend in seizure frequency","right_label":"Teaching emphasis","right_options":["Take exactly as prescribed and report concerning effects","Stop suddenly if no seizures for 3 days","Skip doses before driving tests","Double the dose after any aura"],"right_answer":"Take exactly as prescribed and report concerning effects","rationale":"Valproic acid requires caution with liver disease. Effectiveness is judged by seizure control, and adherence/side-effect reporting are essential.","stem":"bowtie medication application","topic":"Antiepileptics"},{"type":"mcq","prompt":"Which population is specifically highlighted as being at increased risk for traumatic-brain-injury-related intracranial regulation problems?","options":["Older adults and adolescents/young adults","Only newborns","Only middle-aged office workers","Only clients with eczema"],"answer":0,"rationale":"The module notes highlight older adults due to falls/degenerative changes and adolescents/young adults due to trauma and risky behaviors.","stem":"population at risk","topic":"Risk"},{"type":"mcq","prompt":"Which statement best explains why cerebral edema is dangerous?","options":["It only affects vision","It increases pressure within the skull and can restrict blood supply to the brain","It always resolves without treatment","It affects only the peripheral nerves"],"answer":1,"rationale":"Cerebral edema increases intracranial pressure and restricts cerebral blood flow, potentially causing irreversible damage or death.","stem":"pathophysiology application","topic":"Cerebral edema"},{"type":"mcq","prompt":"Which finding best correlates with the pathophysiology of hemorrhagic stroke?","options":["A clot dissolves and restores perfusion","Bleeding causes mass effect, edema, and secondary brain injury","There is only a temporary reduction in blood flow with no major risk","Neuronal discharge decreases because of improved GABA activity"],"answer":1,"rationale":"Hemorrhagic stroke injures the brain through bleeding, mass effect, edema, rising ICP, and secondary injury.","stem":"cause\u2192effect","topic":"Hemorrhagic stroke"},{"type":"mcq","prompt":"Which assessment is most helpful in identifying the origin of seizure activity and diagnosing psychogenic nonepileptic seizures?","options":["Video EEG","Skull radiograph","Routine urinalysis","Bone scan"],"answer":0,"rationale":"EEG measures electrical activity; video EEG can help localize seizure origin and identify psychogenic nonepileptic seizures.","stem":"diagnostic selection","topic":"Diagnostics"},{"type":"mcq","prompt":"The nurse caring for a comatose patient with severe head injury knows ICP monitoring is especially recommended when which findings are present?","options":["GCS 3\u20138 with abnormal CT","GCS 15 and normal CT","Minor headache after stress","Stable gait with no neuro deficit"],"answer":0,"rationale":"Severe head injury guidelines support ICP monitoring in comatose patients with GCS 3\u20138 and an abnormal CT.","stem":"who needs monitoring","topic":"Diagnostics"}];
+
+const state = {
+  current: 0,
+  theme: localStorage.getItem("icrQuizTheme") || "light",
+  responses: JSON.parse(localStorage.getItem("icrQuizResponses") || "[]"),
+  graded: JSON.parse(localStorage.getItem("icrQuizGraded") || "[]"),
+  correctness: JSON.parse(localStorage.getItem("icrQuizCorrectness") || "[]")
+};
+
+function persist() {
+  localStorage.setItem("icrQuizResponses", JSON.stringify(state.responses));
+  localStorage.setItem("icrQuizGraded", JSON.stringify(state.graded));
+  localStorage.setItem("icrQuizCorrectness", JSON.stringify(state.correctness));
+  localStorage.setItem("icrQuizTheme", state.theme);
+}
+function setTheme() { document.body.classList.toggle("dark", state.theme === "dark"); }
+setTheme();
+
+function showToast(message, kind="info") {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = "toast " + kind + " show";
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove("show"), 2200);
+}
+function letter(i) { return String.fromCharCode(65 + i); }
+function getResponse(index) { return state.responses[index] ?? null; }
+function setResponse(index, value) {
+  state.responses[index] = value;
+  persist();
+  updateStats();
+  renderQuestionList();
+}
+function isAnswered(index) {
+  const r = getResponse(index);
+  if (r === null || r === undefined) return false;
+  if (Array.isArray(r)) return r.length > 0;
+  if (typeof r === "object") return Object.keys(r).length > 0;
+  return true;
+}
+function gradeCurrent() {
+  const idx = state.current;
+  const q = questions[idx];
+  const response = getResponse(idx);
+  if (!isAnswered(idx)) {
+    showToast("Select an answer before grading this question.", "warn");
+    return;
+  }
+  let correct = false;
+  if (q.type === "mcq") {
+    correct = response === q.answer;
+  } else if (q.type === "sata") {
+    const sortedA = [...(response || [])].sort((a,b)=>a-b);
+    const sortedB = [...q.answers].sort((a,b)=>a-b);
+    correct = JSON.stringify(sortedA) === JSON.stringify(sortedB);
+  } else if (q.type === "matrix") {
+    correct = q.rows.every(row => response[row] === q.answer_map[row]);
+  } else if (q.type === "bowtie") {
+    correct = response.left === q.left_answer && response.center === q.center_answer && response.right === q.right_answer;
+  }
+
+  state.graded[idx] = true;
+  state.correctness[idx] = correct;
+  persist();
+  updateStats();
+  renderQuestionList();
+  renderQuestion();
+
+  if (correct) {
+    const messages = [
+      "Correct. Strong clinical judgment.",
+      "Correct. Your prioritization is on point.",
+      "Correct. Solid nursing reasoning.",
+      "Correct. You linked the assessment and intervention well.",
+      "Correct. Nice work applying the stem the right way."
+    ];
+    showToast(messages[idx % messages.length], "success");
+  } else {
+    showToast("Not quite. Review the rationale and tighten the clinical cue that drives the answer.", "warn");
+  }
+}
+function updateStats() {
+  const answered = questions.filter((_,i)=>isAnswered(i)).length;
+  const correct = state.correctness.filter(Boolean).length;
+  const gradedCount = state.graded.filter(Boolean).length;
+  const pct = gradedCount ? Math.round((correct / gradedCount) * 100) : 0;
+  document.getElementById("answeredCount").textContent = answered;
+  document.getElementById("correctCount").textContent = correct;
+  document.getElementById("scorePct").textContent = pct + "%";
+  document.getElementById("progressFill").style.width = ((gradedCount / questions.length) * 100) + "%";
+}
+function renderQuestionList() {
+  const wrap = document.getElementById("questionList");
+  wrap.innerHTML = "";
+  questions.forEach((q, i) => {
+    const btn = document.createElement("button");
+    btn.className = "q-jump";
+    if (i === state.current) btn.classList.add("current");
+    if (state.graded[i] && state.correctness[i]) btn.classList.add("answered");
+    if (state.graded[i] && !state.correctness[i]) btn.classList.add("graded-wrong");
+    btn.textContent = i + 1;
+    btn.onclick = () => goToQuestion(i);
+    wrap.appendChild(btn);
+  });
+}
+function goToQuestion(index) {
+  state.current = Math.max(0, Math.min(index, questions.length - 1));
+  renderQuestionList();
+  document.getElementById("finalCard").classList.remove("show");
+  document.getElementById("questionCard").style.display = "flex";
+  renderQuestion();
+}
+function resetQuiz() {
+  if (!confirm("Reset all answers, grading, and score tracking for this quiz?")) return;
+  state.responses = [];
+  state.graded = [];
+  state.correctness = [];
+  state.current = 0;
+  persist();
+  updateStats();
+  renderQuestionList();
+  renderQuestion();
+  document.getElementById("finalCard").classList.remove("show");
+  document.getElementById("questionCard").style.display = "flex";
+  showToast("Quiz reset. Fresh start ready.", "info");
+}
+function renderMCQ(q, idx) {
+  const response = getResponse(idx);
+  const graded = !!state.graded[idx];
+  const opts = q.options.map((opt, i) => {
+    let cls = "option";
+    if (response === i) cls += " selected";
+    if (graded && i === q.answer) cls += " correct";
+    if (graded && response === i && i !== q.answer) cls += " incorrect";
+    return `
+      <label class="${cls}" onclick="selectMCQ(${idx}, ${i})">
+        <div class="marker">${letter(i)}</div>
+        <div class="option-text">${opt}</div>
+      </label>
+    `;
+  }).join("");
+  return `<div class="options">${opts}</div>`;
+}
+function renderSATA(q, idx) {
+  const response = getResponse(idx) || [];
+  const graded = !!state.graded[idx];
+  const opts = q.options.map((opt, i) => {
+    let cls = "option";
+    if (response.includes(i)) cls += " selected";
+    if (graded && q.answers.includes(i)) cls += " correct";
+    if (graded && response.includes(i) && !q.answers.includes(i)) cls += " incorrect";
+    return `
+      <label class="${cls}" onclick="toggleSATA(${idx}, ${i})">
+        <div class="marker">${response.includes(i) ? "✓" : letter(i)}</div>
+        <div class="option-text">${opt}</div>
+      </label>
+    `;
+  }).join("");
+  return `<div class="options">${opts}</div>`;
+}
+function renderMatrix(q, idx) {
+  const response = getResponse(idx) || {};
+  const graded = !!state.graded[idx];
+  const rows = q.rows.map(row => {
+    const chips = q.cols.map(col => {
+      let cls = "chip";
+      if (response[row] === col) cls += " selected";
+      if (graded && q.answer_map[row] === col) cls += " correct";
+      if (graded && response[row] === col && q.answer_map[row] !== col) cls += " incorrect";
+      return `<button class="${cls}" onclick='selectMatrix(${idx}, ${JSON.stringify(row)}, ${JSON.stringify(col)})'>${col}</button>`;
+    }).join("");
+    return `
+      <div class="matrix-row">
+        <div class="matrix-row-title">${row}</div>
+        <div class="matrix-choices">${chips}</div>
+      </div>
+    `;
+  }).join("");
+  return `<div class="matrix-grid">${rows}</div>`;
+}
+function renderBowtie(q, idx) {
+  const response = getResponse(idx) || {};
+  const graded = !!state.graded[idx];
+
+  function optionMarkup(options, selected, part, answer) {
+    return `<select class="select" onchange='selectBowtie(${idx}, ${JSON.stringify(part)}, this.value)'>
+      <option value="">Select one</option>
+      ${options.map(opt => `<option value="${String(opt).replace(/"/g, '&quot;')}" ${selected===opt?'selected':''}>${opt}</option>`).join('')}
+    </select>
+    ${graded ? `<div style="margin-top:8px;color:${selected===answer?'var(--green)':'var(--danger)'};font-weight:700;">Correct answer: ${answer}</div>` : ''}`;
+  }
+
+  return `
+    <div class="bowtie-wrap">
+      <div class="bowtie-box">
+        <h4>1) ${q.left_label}</h4>
+        ${optionMarkup(q.left_options, response.left, 'left', q.left_answer)}
+      </div>
+      <div class="bowtie-box">
+        <h4>2) ${q.center_label}</h4>
+        ${optionMarkup(q.center_options, response.center, 'center', q.center_answer)}
+      </div>
+      <div class="bowtie-box">
+        <h4>3) ${q.right_label}</h4>
+        ${optionMarkup(q.right_options, response.right, 'right', q.right_answer)}
+      </div>
+    </div>
+  `;
+}
+function renderQuestion() {
+  const idx = state.current;
+  const q = questions[idx];
+  const graded = !!state.graded[idx];
+  const correct = state.correctness[idx];
+  const qCard = document.getElementById("questionCard");
+
+  let content = "";
+  if (q.type === "mcq") content = renderMCQ(q, idx);
+  if (q.type === "sata") content = renderSATA(q, idx);
+  if (q.type === "matrix") content = renderMatrix(q, idx);
+  if (q.type === "bowtie") content = renderBowtie(q, idx);
+
+  const instructionMap = {
+    mcq: "Choose the single best answer, then submit for grading.",
+    sata: "Select all that apply, then submit for grading.",
+    matrix: "Classify each row, then submit for grading.",
+    bowtie: "Complete all three linked selections, then submit for grading."
+  };
+  const rationaleClass = graded ? "rationale show" : "rationale";
+  const resultTag = graded
+    ? `<span class="pill ${correct ? 'pill-green' : 'pill-yellow'}">${correct ? 'Correctly graded' : 'Review rationale'}</span>`
+    : "";
+
+  qCard.innerHTML = `
+    <div class="q-head">
+      <span class="pill pill-blue">Question ${idx + 1} of ${questions.length}</span>
+      <span class="pill pill-yellow">${q.type.toUpperCase()}</span>
+      <span class="pill pill-green">${q.stem}</span>
+      ${resultTag}
+    </div>
+    <div class="question-text">${q.prompt}</div>
+    <div class="instructions">${instructionMap[q.type] || ''}</div>
+    ${content}
+    <div class="${rationaleClass}">
+      <h3>Rationale</h3>
+      <div>${q.rationale}</div>
+    </div>
+    <div class="nav">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-secondary" onclick="prevQuestion()" ${idx===0?'disabled':''}>Back</button>
+        <button class="btn-secondary" onclick="nextQuestion()" ${idx===questions.length-1?'disabled':''}>Next</button>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-success" onclick="gradeCurrent()">Submit for Grading</button>
+        <button class="btn-primary" onclick="finishQuiz()">Finish Quiz</button>
+      </div>
+    </div>
+  `;
+}
+function selectMCQ(idx, option) {
+  if (state.graded[idx]) return;
+  setResponse(idx, option);
+  renderQuestion();
+}
+function toggleSATA(idx, option) {
+  if (state.graded[idx]) return;
+  let arr = getResponse(idx) || [];
+  if (arr.includes(option)) arr = arr.filter(x => x !== option);
+  else arr = [...arr, option];
+  setResponse(idx, arr);
+  renderQuestion();
+}
+function selectMatrix(idx, row, col) {
+  if (state.graded[idx]) return;
+  const current = getResponse(idx) || {};
+  current[row] = col;
+  setResponse(idx, current);
+  renderQuestion();
+}
+function selectBowtie(idx, part, value) {
+  if (state.graded[idx]) return;
+  const current = getResponse(idx) || {};
+  current[part] = value;
+  setResponse(idx, current);
+}
+function prevQuestion() {
+  if (state.current > 0) goToQuestion(state.current - 1);
+}
+function nextQuestion() {
+  if (state.current < questions.length - 1) goToQuestion(state.current + 1);
+}
+function finishQuiz() {
+  const gradedCount = state.graded.filter(Boolean).length;
+  const correct = state.correctness.filter(Boolean).length;
+  const pct = gradedCount ? Math.round((correct / gradedCount) * 100) : 0;
+
+  document.getElementById("questionCard").style.display = "none";
+  const finalCard = document.getElementById("finalCard");
+  finalCard.classList.add("show");
+  document.getElementById("finalScore").textContent = `${correct} / ${gradedCount || questions.length} • ${pct}%`;
+
+  let message = "";
+  if (pct >= 90) message = "Excellent work. Your application-level reasoning is very strong across the Module 5 material.";
+  else if (pct >= 80) message = "Strong performance. Review the missed items, especially the subtle prioritization and pharmacology cues.";
+  else if (pct >= 70) message = "Solid base. Tighten early-vs-late ICP signs, seizure safety steps, and stroke-type management differences.";
+  else message = "Good start. Rework the rationales and focus on first-priority decisions, immediate follow-up findings, and med-specific cautions.";
+  document.getElementById("finalMessage").textContent = message;
+}
+document.getElementById("themeToggle").addEventListener("click", () => {
+  state.theme = state.theme === "dark" ? "light" : "dark";
+  persist();
+  setTheme();
+});
+document.getElementById("resetQuiz").addEventListener("click", resetQuiz);
+updateStats();
+renderQuestionList();
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PP2 Module 5 — Intracranial Regulation Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-deep: #0B2545;
+  --blue-mid: #1B6CA8;
+  --blue-bright: #2196F3;
+  --cyan: #06B6D4;
+  --teal: #14B8A6;
+  --green: #10B981;
+  --green-light: #34D399;
+  --yellow: #F59E0B;
+  --yellow-bright: #FCD34D;
+  --gold: #D97706;
+  --ombre-grad: linear-gradient(135deg, #0B2545 0%, #1B6CA8 25%, #06B6D4 50%, #14B8A6 75%, #10B981 100%);
+  --ombre-text: linear-gradient(90deg, #2196F3, #06B6D4, #10B981, #F59E0B);
+  --ombre-accent: linear-gradient(135deg, #06B6D4, #10B981, #F59E0B);
+}
+[data-theme="dark"] {
+  --bg: #060f1c;
+  --bg2: #0d1f35;
+  --bg3: #112840;
+  --card: #0f2236;
+  --card2: #142d46;
+  --border: rgba(6,182,212,0.18);
+  --text: #e8f4f8;
+  --text2: #94c8d8;
+  --text3: #5b8fa8;
+  --heading: #f0faff;
+  --tab-active-bg: rgba(6,182,212,0.15);
+  --shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+[data-theme="light"] {
+  --bg: #f0f8ff;
+  --bg2: #ddeeff;
+  --bg3: #c8e6f7;
+  --card: #ffffff;
+  --card2: #f0f8ff;
+  --border: rgba(27,108,168,0.2);
+  --text: #0a1628;
+  --text2: #1b4f72;
+  --text3: #2980b9;
+  --heading: #0B2545;
+  --tab-active-bg: rgba(27,108,168,0.12);
+  --shadow: 0 4px 30px rgba(11,37,69,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+::selection{background:rgba(6,182,212,0.3);color:var(--heading)}
+
+/* ═══ HEADER ═══ */
+.site-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 1.5rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;padding:0.75rem 0}
+.logo-area h1{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;background:var(--ombre-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.logo-area p{font-size:0.72rem;color:var(--text3);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:1rem}
+.theme-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.9rem;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem}
+.theme-btn:hover{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.objectives-chip{background:linear-gradient(90deg,rgba(6,182,212,0.15),rgba(16,185,129,0.15));border:1px solid rgba(6,182,212,0.3);border-radius:20px;padding:0.35rem 0.8rem;font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:.04em}
+
+/* ═══ TAB NAV ═══ */
+.tab-nav-wrap{background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:70px;z-index:99}
+.tab-nav-wrap::-webkit-scrollbar{display:none}
+.tab-nav{display:flex;max-width:1400px;margin:0 auto;padding:0 1rem;gap:0}
+.tab-btn{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:0.85rem 1.1rem;border:none;background:transparent;color:var(--text3);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.2s;position:relative}
+.tab-btn:hover{color:var(--cyan)}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan);background:var(--tab-active-bg)}
+.tab-btn .tab-num{font-size:0.62rem;background:var(--border);border-radius:10px;padding:2px 6px;margin-right:5px}
+.tab-btn.active .tab-num{background:rgba(6,182,212,0.25);color:var(--cyan)}
+
+/* ═══ CONTENT AREA ═══ */
+.tab-content{display:none;max-width:1400px;margin:0 auto;padding:2rem 1.5rem;animation:fadeIn 0.3s ease}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ SECTION HEADINGS ═══ */
+.section-hero{background:var(--ombre-grad);border-radius:16px;padding:2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.section-hero::after{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.section-hero h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:0.4rem}
+.section-hero p{color:rgba(255,255,255,0.75);font-size:0.92rem;max-width:600px}
+.section-hero .obj-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+.obj-tag{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:0.25rem 0.7rem;font-size:0.72rem;color:rgba(255,255,255,0.9);font-weight:500}
+
+/* ═══ CARDS ═══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;margin-bottom:1.2rem;box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.card-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.card-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--heading)}
+.card-subtitle{font-size:0.78rem;color:var(--text3);margin-top:2px}
+
+/* ═══ GRID ═══ */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+
+/* ═══ INFO ITEMS ═══ */
+.info-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.info-list li{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.88rem;color:var(--text);line-height:1.5}
+.info-list li::before{content:'▸';color:var(--cyan);font-size:0.8rem;margin-top:2px;flex-shrink:0}
+.info-list li strong{color:var(--heading)}
+
+/* ═══ BADGES/PILLS ═══ */
+.pill{display:inline-block;padding:0.2rem 0.65rem;border-radius:20px;font-size:0.72rem;font-weight:600;letter-spacing:.03em}
+.pill-blue{background:rgba(33,150,243,0.15);color:#60b4ff;border:1px solid rgba(33,150,243,0.25)}
+.pill-cyan{background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.25)}
+.pill-green{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25)}
+.pill-yellow{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.25)}
+.pill-red{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.pill-orange{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.25)}
+
+/* ═══ ALERT BOXES ═══ */
+.alert{border-radius:10px;padding:0.9rem 1.1rem;margin:0.8rem 0;font-size:0.87rem;display:flex;align-items:flex-start;gap:0.7rem;border-left:4px solid}
+.alert-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.alert-text{line-height:1.55}
+.alert-text strong{display:block;margin-bottom:3px}
+.alert-nclex{background:rgba(245,158,11,0.1);border-color:var(--yellow);color:var(--text)}
+.alert-nclex .alert-icon{color:var(--yellow)}
+.alert-danger{background:rgba(239,68,68,0.1);border-color:#ef4444;color:var(--text)}
+.alert-danger .alert-icon{color:#ef4444}
+.alert-info{background:rgba(6,182,212,0.1);border-color:var(--cyan);color:var(--text)}
+.alert-info .alert-icon{color:var(--cyan)}
+.alert-success{background:rgba(16,185,129,0.1);border-color:var(--green);color:var(--text)}
+.alert-success .alert-icon{color:var(--green)}
+
+/* ═══ TABLE ═══ */
+.data-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.data-table th{background:linear-gradient(135deg,rgba(6,182,212,0.2),rgba(16,185,129,0.2));color:var(--heading);font-family:'Syne',sans-serif;font-weight:700;padding:0.75rem 1rem;text-align:left;font-size:0.78rem;text-transform:uppercase;letter-spacing:.05em}
+.data-table td{padding:0.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--tab-active-bg)}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+
+/* ═══ COMPARISON COLUMNS ═══ */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.compare-col{border-radius:12px;padding:1.2rem;border:1px solid var(--border)}
+.compare-col h4{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem}
+.compare-left{background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(6,182,212,0.08));border-color:rgba(6,182,212,0.25)}
+.compare-left h4{color:var(--cyan)}
+.compare-right{background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(245,158,11,0.08));border-color:rgba(16,185,129,0.25)}
+.compare-right h4{color:var(--green)}
+
+/* ═══ PHASE TIMELINE ═══ */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0.55rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue-bright),var(--cyan),var(--green),var(--yellow))}
+.timeline-item{position:relative;margin-bottom:1.2rem}
+.timeline-dot{position:absolute;left:-1.7rem;top:0.35rem;width:14px;height:14px;border-radius:50%;border:2px solid var(--cyan);background:var(--bg)}
+.timeline-item:nth-child(2) .timeline-dot{border-color:var(--teal)}
+.timeline-item:nth-child(3) .timeline-dot{border-color:var(--green)}
+.timeline-item:nth-child(4) .timeline-dot{border-color:var(--yellow)}
+.timeline-item:nth-child(5) .timeline-dot{border-color:var(--gold)}
+.timeline-label{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.timeline-body{font-size:0.87rem;color:var(--text);line-height:1.55}
+
+/* ═══ DRUG CARDS ═══ */
+.drug-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.4rem;box-shadow:var(--shadow)}
+.drug-header{padding:1rem 1.4rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.drug-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--heading)}
+.drug-generic{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text3);margin-top:3px}
+.drug-class-badge{flex-shrink:0}
+.drug-body{padding:0 1.4rem 1.4rem}
+.drug-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem;margin-top:0.5rem}
+.drug-section{background:var(--bg2);border-radius:10px;padding:0.9rem}
+.drug-section-title{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:0.5rem}
+.drug-section-title.moa{color:var(--blue-bright)}
+.drug-section-title.use{color:var(--cyan)}
+.drug-section-title.ae{color:#f87171}
+.drug-section-title.ni{color:var(--green)}
+.drug-section-title.eval{color:var(--yellow)}
+.drug-section-title.teach{color:#c084fc}
+.drug-items{list-style:none;display:flex;flex-direction:column;gap:0.3rem}
+.drug-items li{font-size:0.82rem;color:var(--text);line-height:1.45;padding-left:0.9rem;position:relative}
+.drug-items li::before{content:'·';position:absolute;left:0;color:var(--text3);font-size:1.2rem;line-height:1}
+.drug-items li.critical{color:#f87171;font-weight:600}
+.drug-items li.critical::before{content:'⚠';font-size:0.7rem;top:2px}
+.drug-divider{height:1px;background:var(--border);margin:0 1.4rem}
+.drug-nursing-bar{background:linear-gradient(90deg,rgba(16,185,129,0.08),rgba(245,158,11,0.08));padding:0.8rem 1.4rem;display:flex;align-items:flex-start;gap:0.6rem;font-size:0.83rem}
+.nursing-bar-icon{color:var(--green);font-size:1rem;flex-shrink:0}
+
+/* ═══ QUIZ STYLES ═══ */
+.quiz-container{max-width:900px;margin:0 auto}
+.quiz-progress-wrap{background:var(--card);border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--border)}
+.quiz-progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem}
+.progress-text{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--heading)}
+.score-display{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--cyan)}
+.progress-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--ombre-grad);border-radius:3px;transition:width 0.4s ease}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;box-shadow:var(--shadow)}
+.q-header{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem}
+.q-num{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;background:var(--ombre-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-transform:uppercase;letter-spacing:.05em}
+.q-type-badge{font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.q-type-mcq{background:rgba(33,150,243,0.15);color:#60b4ff;border:1px solid rgba(33,150,243,0.2)}
+.q-type-sata{background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.2)}
+.q-type-matrix{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.2)}
+.q-type-bowtie{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.2)}
+
+.q-stem{font-size:0.97rem;line-height:1.65;color:var(--text);margin-bottom:1.2rem}
+.q-stem .scenario{background:var(--bg2);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;padding:0.9rem 1rem;margin-bottom:1rem;font-size:0.88rem;color:var(--text2)}
+.q-stem strong{color:var(--heading)}
+
+/* MCQ Options */
+.mcq-options{display:flex;flex-direction:column;gap:0.6rem}
+.mcq-option{display:flex;align-items:flex-start;gap:0.8rem;padding:0.85rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;font-size:0.88rem;line-height:1.5}
+.mcq-option:hover{border-color:var(--cyan);background:var(--tab-active-bg)}
+.mcq-option input[type="radio"]{accent-color:var(--cyan);width:16px;height:16px;flex-shrink:0;margin-top:2px}
+.mcq-option.selected{border-color:var(--cyan);background:rgba(6,182,212,0.1)}
+.mcq-option.correct{border-color:var(--green)!important;background:rgba(16,185,129,0.12)!important}
+.mcq-option.incorrect{border-color:#ef4444!important;background:rgba(239,68,68,0.08)!important}
+
+/* SATA Options */
+.sata-options{display:flex;flex-direction:column;gap:0.6rem}
+.sata-option{display:flex;align-items:flex-start;gap:0.8rem;padding:0.85rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;font-size:0.88rem;line-height:1.5}
+.sata-option:hover{border-color:var(--cyan);background:var(--tab-active-bg)}
+.sata-option input[type="checkbox"]{accent-color:var(--cyan);width:16px;height:16px;flex-shrink:0;margin-top:2px}
+.sata-option.selected{border-color:var(--cyan);background:rgba(6,182,212,0.1)}
+.sata-option.correct{border-color:var(--green)!important;background:rgba(16,185,129,0.12)!important}
+.sata-option.incorrect{border-color:#ef4444!important;background:rgba(239,68,68,0.08)!important}
+.sata-option.missed{border-color:var(--yellow)!important;background:rgba(245,158,11,0.08)!important}
+
+/* Matrix */
+.matrix-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin-bottom:1rem}
+.matrix-table th{background:rgba(6,182,212,0.15);color:var(--cyan);font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:0.6rem 0.8rem;text-align:center;border:1px solid var(--border)}
+.matrix-table th:first-child{text-align:left}
+.matrix-table td{padding:0.65rem 0.8rem;border:1px solid var(--border);text-align:center;vertical-align:middle;font-size:0.84rem;color:var(--text)}
+.matrix-table td:first-child{text-align:left;font-size:0.83rem}
+.matrix-table tr:nth-child(even) td{background:var(--bg2)}
+.matrix-table input[type="radio"]{accent-color:var(--cyan);width:15px;height:15px}
+.matrix-table td.cell-correct{background:rgba(16,185,129,0.15)!important}
+.matrix-table td.cell-incorrect{background:rgba(239,68,68,0.1)!important}
+
+/* Bowtie */
+.bowtie-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-top:0.5rem}
+.bowtie-col{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:0.5rem}
+.bowtie-col h5{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.4rem;color:var(--cyan)}
+.bowtie-col h5.green{color:var(--green)}
+.bowtie-col h5.yellow{color:var(--yellow)}
+.bowtie-arrow{display:flex;align-items:center;justify-content:center;padding:0 0.5rem;font-size:1.3rem;color:var(--text3)}
+.bowtie-option{display:flex;align-items:flex-start;gap:0.5rem;padding:0.5rem 0.7rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:0.82rem;background:var(--card);transition:all 0.2s}
+.bowtie-option:hover{border-color:var(--cyan)}
+.bowtie-option input{accent-color:var(--cyan);flex-shrink:0;margin-top:2px}
+.bowtie-option.correct{border-color:var(--green);background:rgba(16,185,129,0.12)}
+.bowtie-option.incorrect{border-color:#ef4444;background:rgba(239,68,68,0.08)}
+
+/* Submit + Feedback */
+.q-submit-row{display:flex;align-items:center;gap:1rem;margin-top:1.4rem;flex-wrap:wrap}
+.btn-submit{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:.04em;background:var(--ombre-grad);color:#fff;border:none;padding:0.75rem 2rem;border-radius:10px;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
+.btn-submit:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(6,182,212,0.35)}
+.btn-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.btn-next{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:.04em;background:var(--card2);color:var(--cyan);border:1px solid var(--cyan);padding:0.75rem 2rem;border-radius:10px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;display:none}
+.btn-next:hover{background:rgba(6,182,212,0.1)}
+.btn-reset-quiz{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;background:transparent;color:var(--text3);border:1px solid var(--border);padding:0.5rem 1.2rem;border-radius:8px;cursor:pointer;transition:all 0.2s;margin-left:auto}
+.btn-reset-quiz:hover{color:var(--yellow);border-color:var(--yellow)}
+
+.rationale-box{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin-top:1rem;display:none;animation:fadeIn 0.3s ease}
+.rationale-box h5{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.5rem;color:var(--yellow)}
+.rationale-box p{font-size:0.87rem;color:var(--text);line-height:1.6}
+
+/* Popup */
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px)}
+.popup-overlay.active{opacity:1;pointer-events:all}
+.popup-box{background:var(--card);border:2px solid var(--green);border-radius:20px;padding:2rem;text-align:center;max-width:380px;width:90%;transform:scale(0.8);transition:transform 0.3s;box-shadow:0 20px 60px rgba(16,185,129,0.3)}
+.popup-overlay.active .popup-box{transform:scale(1)}
+.popup-emoji{font-size:3rem;margin-bottom:0.8rem;display:block}
+.popup-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--green);margin-bottom:0.5rem}
+.popup-msg{font-size:0.9rem;color:var(--text2);line-height:1.5;margin-bottom:1.2rem}
+.popup-close{background:var(--green);color:#fff;border:none;padding:0.6rem 1.8rem;border-radius:10px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem}
+
+/* Results */
+.results-card{background:var(--card);border:2px solid var(--cyan);border-radius:20px;padding:2.5rem;text-align:center;max-width:500px;margin:2rem auto}
+.results-score{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;background:var(--ombre-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.results-label{font-family:'Syne',sans-serif;font-size:1rem;color:var(--text2);margin-top:0.4rem}
+
+/* Responsive */
+@media(max-width:700px){
+  .compare-grid{grid-template-columns:1fr}
+  .bowtie-wrap{grid-template-columns:1fr;gap:0.5rem}
+  .bowtie-arrow{transform:rotate(90deg)}
+  .section-hero h2{font-size:1.4rem}
+  .tab-btn{font-size:0.72rem;padding:0.75rem 0.8rem}
+  .drug-grid{grid-template-columns:1fr}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(6,182,212,0.3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(6,182,212,0.6)}
+
+/* GCS + NIHSS special */
+.scale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.scale-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.scale-header{background:linear-gradient(90deg,rgba(6,182,212,0.2),rgba(16,185,129,0.2));padding:0.7rem 1rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--heading)}
+.scale-items{padding:0.8rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
+.scale-row{display:flex;justify-content:space-between;align-items:center;font-size:0.84rem;padding:0.35rem 0;border-bottom:1px solid var(--border)}
+.scale-row:last-child{border-bottom:none}
+.scale-score{font-family:'JetBrains Mono',monospace;font-size:0.82rem;font-weight:600;color:var(--cyan);background:rgba(6,182,212,0.1);padding:2px 8px;border-radius:6px}
+
+/* ═══ SIGN TRAFFIC LIGHT ═══ */
+.stoplight{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin:0.8rem 0}
+.stoplight-col{border-radius:12px;padding:1rem;text-align:center}
+.sl-early{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25)}
+.sl-moderate{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25)}
+.sl-late{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)}
+.stoplight-col h4{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.6rem}
+.sl-early h4{color:#34d399}
+.sl-moderate h4{color:var(--yellow)}
+.sl-late h4{color:#f87171}
+.sl-items{list-style:none;display:flex;flex-direction:column;gap:0.3rem}
+.sl-items li{font-size:0.8rem;color:var(--text)}
+
+@media(max-width:550px){.stoplight{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <h1>🧠 Intracranial Regulation</h1>
+      <p>PP2 Module 5 — Spring 2026 · UWG Nursing</p>
+    </div>
+    <div class="header-right">
+      <span class="objectives-chip">4 Module Objectives</span>
+      <button class="theme-btn" onclick="toggleTheme()">☀️ Light Mode</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ TAB NAV ══════════════════ -->
+<nav class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('overview',this)"><span class="tab-num">01</span>Overview & ICR</button>
+    <button class="tab-btn" onclick="showTab('icp',this)"><span class="tab-num">02</span>Increased ICP</button>
+    <button class="tab-btn" onclick="showTab('seizures',this)"><span class="tab-num">03</span>Seizures & Epilepsy</button>
+    <button class="tab-btn" onclick="showTab('stroke',this)"><span class="tab-num">04</span>Stroke</button>
+    <button class="tab-btn" onclick="showTab('meds',this)"><span class="tab-num">05</span>Medications</button>
+    <button class="tab-btn" onclick="showTab('quiz',this)"><span class="tab-num">06</span>60-Q Quiz</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — OVERVIEW & ICR
+══════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-content active">
+  <div class="section-hero">
+    <h2>Intracranial Regulation (ICR)</h2>
+    <p>Mechanisms &amp; conditions that impact intracranial processing and function — anything affecting the contents of the cranium.</p>
+    <div class="obj-tags">
+      <span class="obj-tag">OBJ 1: Risk Factors</span>
+      <span class="obj-tag">OBJ 2: Pathophysiology</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(6,182,212,0.15)">🧬</div>
+        <div><div class="card-title">What Is ICR?</div><div class="card-subtitle">Core definition</div></div>
+      </div>
+      <ul class="info-list">
+        <li>ICR = all mechanisms &amp; conditions that <strong>impact intracranial processing and function</strong></li>
+        <li>When functioning optimally, ICR allows individuals to function normally</li>
+        <li>Impairment caused by: <strong>reduced blood flow</strong>, compromised neurotransmitters, or <strong>damage to brain tissue</strong></li>
+        <li>Dysfunction ranges from minimal to severe depending on the cause and extent</li>
+        <li>The cranium is a <strong>rigid, closed box</strong> — any increase in volume inside raises pressure</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(16,185,129,0.15)">⚠️</div>
+        <div><div class="card-title">Three Pillars of Impaired ICR</div><div class="card-subtitle">How ICR breaks down</div></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-label" style="color:var(--cyan)">Impaired Perfusion</div>
+          <div class="timeline-body">Brain needs <strong>constant O₂ and nutrients</strong> via blood. Requires adequate hemoglobin, cardiac function, and lung gas exchange. <em>Think: anemia, heart failure, COPD all impact cerebral perfusion.</em></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-label" style="color:var(--teal)">Glucose Dysregulation</div>
+          <div class="timeline-body">Carbohydrates are the <strong>primary brain fuel</strong>. Hypoglycemia is <strong>life-threatening</strong> — the brain cannot use fat or protein as alternate energy sources effectively.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-label" style="color:var(--green)">Altered Neurotransmission</div>
+          <div class="timeline-body">Normal function requires intact neurons, nerves, and balanced neurotransmitters. Imbalance → seizures, altered mental status, psychiatric symptoms.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(245,158,11,0.15)">👥</div>
+      <div><div class="card-title">Risk Factors for Altered ICR — Objective 1</div></div>
+    </div>
+    <div class="grid-3">
+      <div style="background:var(--bg2);border-radius:10px;padding:1rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--cyan);margin-bottom:0.6rem">INDIVIDUAL RISK FACTORS</div>
+        <ul class="info-list">
+          <li>Hypertension (most significant)</li>
+          <li>Diabetes mellitus</li>
+          <li>Smoking / tobacco use</li>
+          <li>Obesity</li>
+          <li>Cardiovascular disease</li>
+          <li>Advanced age</li>
+          <li>Prior TIA or stroke</li>
+          <li>Atrial fibrillation</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg2);border-radius:10px;padding:1rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--teal);margin-bottom:0.6rem">ELDERLY POPULATION</div>
+        <ul class="info-list">
+          <li>Degenerative pathological conditions</li>
+          <li>Fall-related traumatic brain injury</li>
+          <li>Cerebrovascular disease</li>
+          <li>Medication interactions</li>
+          <li>Polypharmacy risk</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg2);border-radius:10px;padding:1rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--yellow);margin-bottom:0.6rem">YOUTH / ADOLESCENT</div>
+        <ul class="info-list">
+          <li>Traumatic brain injury (TBI)</li>
+          <li>Motor vehicle crashes</li>
+          <li>Risky behaviors / sports</li>
+          <li>Substance abuse (cocaine → hemorrhagic stroke)</li>
+          <li>Congenital/genetic epilepsy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(33,150,243,0.15)">🔬</div>
+      <div><div class="card-title">Assessment Tools for ICR</div><div class="card-subtitle">Know your scales — tested on NCLEX</div></div>
+    </div>
+
+    <div class="scale-grid">
+      <!-- GCS -->
+      <div class="scale-card">
+        <div class="scale-header">Glasgow Coma Scale (GCS)</div>
+        <div class="scale-items">
+          <div style="font-family:'Syne',sans-serif;font-size:0.76rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">👁 Eye Opening</div>
+          <div class="scale-row"><span>Spontaneously</span><span class="scale-score">4</span></div>
+          <div class="scale-row"><span>To speech</span><span class="scale-score">3</span></div>
+          <div class="scale-row"><span>To pain</span><span class="scale-score">2</span></div>
+          <div class="scale-row"><span>No response</span><span class="scale-score">1</span></div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.76rem;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 4px">🗣 Verbal Response</div>
+          <div class="scale-row"><span>Oriented ×3</span><span class="scale-score">5</span></div>
+          <div class="scale-row"><span>Confused</span><span class="scale-score">4</span></div>
+          <div class="scale-row"><span>Inappropriate words</span><span class="scale-score">3</span></div>
+          <div class="scale-row"><span>Incomprehensible sounds</span><span class="scale-score">2</span></div>
+          <div class="scale-row"><span>No response</span><span class="scale-score">1</span></div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.76rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 4px">💪 Motor Response</div>
+          <div class="scale-row"><span>Obeys commands</span><span class="scale-score">6</span></div>
+          <div class="scale-row"><span>Localizes pain</span><span class="scale-score">5</span></div>
+          <div class="scale-row"><span>Flexion withdrawal</span><span class="scale-score">4</span></div>
+          <div class="scale-row"><span>Abnormal flexion (decorticate)</span><span class="scale-score">3</span></div>
+          <div class="scale-row"><span>Extension (decerebrate)</span><span class="scale-score">2</span></div>
+          <div class="scale-row"><span>No response</span><span class="scale-score">1</span></div>
+        </div>
+        <div style="background:rgba(6,182,212,0.1);padding:0.7rem 1rem;border-top:1px solid var(--border);font-size:0.82rem">
+          <span class="pill pill-green">15 = Best</span>&nbsp;
+          <span class="pill pill-yellow">≤8 = Coma</span>&nbsp;
+          <span class="pill pill-red">3 = Totally Unresponsive</span>
+        </div>
+      </div>
+
+      <!-- NIHSS -->
+      <div class="scale-card">
+        <div class="scale-header">NIH Stroke Scale (NIHSS) — Range 0–42</div>
+        <div class="scale-items">
+          <div class="scale-row"><span>Level of consciousness (1a–1c)</span></div>
+          <div class="scale-row"><span>Gaze (horizontal)</span></div>
+          <div class="scale-row"><span>Visual fields</span></div>
+          <div class="scale-row"><span>Facial palsy</span></div>
+          <div class="scale-row"><span>Motor arm (left &amp; right)</span></div>
+          <div class="scale-row"><span>Motor leg (left &amp; right)</span></div>
+          <div class="scale-row"><span>Limb ataxia</span></div>
+          <div class="scale-row"><span>Sensory</span></div>
+          <div class="scale-row"><span>Best language</span></div>
+          <div class="scale-row"><span>Dysarthria</span></div>
+          <div class="scale-row"><span>Extinction/inattention</span></div>
+        </div>
+        <div style="background:rgba(6,182,212,0.05);padding:0.8rem 1rem;border-top:1px solid var(--border);font-size:0.82rem;display:flex;flex-direction:column;gap:0.3rem">
+          <div><span class="pill pill-green">0 = No stroke</span> <span class="pill pill-blue">1–4 = Minor</span></div>
+          <div><span class="pill pill-cyan">5–15 = Moderate</span></div>
+          <div><span class="pill pill-yellow">16–20 = Mod-Severe</span> <span class="pill pill-red">21–42 = Severe</span></div>
+          <div style="color:var(--text3);font-size:0.78rem;margin-top:4px">Higher score = greater deficit/severity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-nclex">
+    <span class="alert-icon">🎯</span>
+    <div class="alert-text"><strong>NCLEX Application:</strong> The GCS is NOT just a number — understand WHAT each score means clinically. A decrease of even 2 points is clinically significant and must be reported. Decorticate (score 3 motor) = cortex damage. Decerebrate (score 2 motor) = brainstem involvement and is FAR WORSE.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — INCREASED ICP
+══════════════════════════════════════════ -->
+<div id="tab-icp" class="tab-content">
+  <div class="section-hero">
+    <h2>Increased Intracranial Pressure</h2>
+    <p>Elevated pressure within the rigid skull compresses blood vessels → cerebral hypoxia → brain stem compression → death. Time-critical emergency.</p>
+    <div class="obj-tags">
+      <span class="obj-tag">OBJ 2: Pathophysiology</span>
+      <span class="obj-tag">OBJ 3: Drug Therapy</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(6,182,212,0.15)">📊</div>
+        <div><div class="card-title">ICP Basics — Know the Numbers</div></div>
+      </div>
+      <ul class="info-list">
+        <li><strong>Normal ICP = 5–15 mmHg</strong> — measured by catheter placed in cranium</li>
+        <li><strong>CPP = MAP − ICP</strong> — Cerebral Perfusion Pressure; must be maintained ≥50–70 mmHg</li>
+        <li>Increasing ICP → decreasing CPP → brain ischemia</li>
+        <li>The skull is a <strong>rigid closed box</strong> (Monro-Kellie doctrine): blood + CSF + brain tissue = constant. Increase one → the others must compensate or pressure rises</li>
+        <li>MAP (Mean Arterial Pressure) = DBP + 1/3 (SBP−DBP)</li>
+      </ul>
+      <div class="alert alert-info" style="margin-top:1rem">
+        <span class="alert-icon">💡</span>
+        <div class="alert-text"><strong>Why we DON'T lower BP aggressively in ICP:</strong> If MAP drops, CPP drops → worsening ischemia. Must balance BP management carefully.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(239,68,68,0.15)">🚨</div>
+        <div><div class="card-title">Cushing's Triad — LATE &amp; DEADLY</div><div class="card-subtitle">Indicates impending herniation</div></div>
+      </div>
+      <ul class="info-list">
+        <li><strong>Wide (widened) pulse pressure</strong> — HIGH systolic BP + LOW diastolic = wide gap. <em>Why: brain tries to push more blood against rising pressure.</em></li>
+        <li><strong>Bradycardia</strong> — reflex slowing of heart. <em>Think: CRUSHING triad → CRUSHing HR down.</em></li>
+        <li><strong>Irregular respirations</strong> — Cheyne-Stokes or other abnormal patterns. Brainstem respiratory centers failing.</li>
+      </ul>
+      <div class="alert alert-danger" style="margin-top:0.8rem">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text"><strong>Cushing's Triad = EMERGENCY.</strong> This is NOT an early sign — by the time Cushing's appears, herniation is imminent. Notify provider IMMEDIATELY.</div>
+      </div>
+      <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:0.7rem;margin-top:0.6rem;font-size:0.83rem">
+        <strong style="color:var(--yellow)">Memory Trick:</strong> <span style="font-family:'JetBrains Mono',monospace">CUSHing → CRUSHing:</span> Crushed HR &amp; RR + Wide BP
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(239,68,68,0.15)">📈</div>
+      <div><div class="card-title">Progressive Signs of Increased ICP</div><div class="card-subtitle">Early → Moderate → Critical Late</div></div>
+    </div>
+    <div class="stoplight">
+      <div class="stoplight-col sl-early">
+        <h4>🟢 Early Signs</h4>
+        <ul class="sl-items">
+          <li><strong>↓ LOC</strong> — irritability, restlessness <em>(EARLIEST sign)</em></li>
+          <li>Headache</li>
+          <li>Decreased mental status</li>
+          <li>Sleepiness / drowsiness</li>
+          <li>Flat affect, anxiety, confusion</li>
+        </ul>
+      </div>
+      <div class="stoplight-col sl-moderate">
+        <h4>🟡 Moderate Signs</h4>
+        <ul class="sl-items">
+          <li>Constant headache</li>
+          <li>Sudden vomiting WITHOUT nausea (report to HCP!)</li>
+          <li>Sluggish pupils</li>
+          <li>Unequal pupils</li>
+          <li>Visual changes</li>
+          <li>Lethargy increasing</li>
+        </ul>
+      </div>
+      <div class="stoplight-col sl-late">
+        <h4>🔴 Late / DEADLY</h4>
+        <ul class="sl-items">
+          <li>Fixed &amp; dilated pupils (8mm)</li>
+          <li><strong>Cushing's Triad</strong></li>
+          <li>Cheyne-Stokes respirations</li>
+          <li>Nuchal rigidity (stiff neck)</li>
+          <li>Positive Babinski (adult)</li>
+          <li>Decorticate / Decerebrate posturing</li>
+          <li>Seizures &amp; Coma</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert-nclex" style="margin-top:0.8rem">
+      <span class="alert-icon">🎯</span>
+      <div class="alert-text"><strong>NCLEX PRIORITY:</strong> The FIRST/EARLIEST sign of IICP is always a <strong>change in LOC</strong> — specifically increased irritability, restlessness, or confusion. Vomiting without nausea (projectile vomiting) is a classic moderate sign. Pupil changes signal brainstem compression.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(16,185,129,0.15)">🧍</div>
+        <div><div class="card-title">Abnormal Posturing</div><div class="card-subtitle">Motor responses to severe ICP</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.9rem">
+        <div style="background:var(--bg2);border-radius:10px;padding:1rem">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--yellow);margin-bottom:0.4rem">Decorticate Posturing (Score 3)</div>
+          <ul class="info-list">
+            <li><strong>Arms FLEX toward core</strong> (adducted, flexed against chest)</li>
+            <li>Legs internally rotated, feet turned inward</li>
+            <li>Indicates cortical/cerebral hemisphere damage</li>
+            <li>Bad — but less severe than decerebrate</li>
+          </ul>
+        </div>
+        <div style="background:var(--bg2);border-radius:10px;padding:1rem">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:#f87171;margin-bottom:0.4rem">Decerebrate Posturing (Score 2) — FAR WORSE</div>
+          <ul class="info-list">
+            <li><strong>Arms EXTEND outward</strong> (straight, extended, hands curled)</li>
+            <li>Head and neck arched, legs straight, toes pointed downward</li>
+            <li>Indicates <strong>brainstem involvement</strong> — extremely ominous</li>
+            <li>Memory: Decor<strong>E</strong>brate → <strong>E</strong>xtend arms away</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(33,150,243,0.15)">🏥</div>
+        <div><div class="card-title">Causes of Increased ICP</div></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem">
+        <span class="pill pill-blue">Cerebral Edema</span>
+        <span class="pill pill-cyan">TBI / Head Trauma</span>
+        <span class="pill pill-teal" style="background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.25)">Stroke</span>
+        <span class="pill pill-green">Brain Abscess</span>
+        <span class="pill pill-yellow">Brain Tumor</span>
+        <span class="pill pill-red">Hemorrhage</span>
+        <span class="pill pill-orange">Meningitis</span>
+        <span class="pill pill-blue">High Altitude</span>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--cyan);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:.04em">Treatment of Increased ICP</div>
+      <ul class="info-list">
+        <li><strong>Mannitol (IV)</strong> — osmotic diuretic; pulls fluid from brain tissue → reduces edema</li>
+        <li><strong>Head positioning</strong> — HOB 30°, midline, avoid extreme neck flexion</li>
+        <li><strong>Avoid Valsalva</strong> — no straining, coughing, sneezing forcefully</li>
+        <li>Controlled <strong>hyperventilation</strong> (temporary: CO₂↓ → vasoconstriction → ↓ cerebral blood volume)</li>
+        <li><strong>Antiepileptics</strong> — prevent seizures which ↑ ICP further</li>
+        <li><strong>Glucocorticoids</strong> — reduce edema around tumors/abscesses</li>
+        <li>Surgical: <strong>craniotomy, shunt procedures</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:rgba(16,185,129,0.15)">💊</div>
+      <div><div class="card-title">Nursing Interventions to PREVENT ICP Elevation</div><div class="card-subtitle">Application-level nursing care</div></div>
+    </div>
+    <div class="grid-2">
+      <ul class="info-list">
+        <li><strong>Quiet, non-stimulating environment</strong> — noise, light, pain all ↑ ICP</li>
+        <li><strong>HOB 30° elevation, head midline</strong> — promotes venous drainage from brain</li>
+        <li><strong>Avoid extreme hip or neck flexion</strong> — compresses jugular veins, traps blood in skull</li>
+        <li><strong>Exhale during repositioning</strong> — Valsalva ↑ intrathoracic pressure → ↑ ICP</li>
+        <li><strong>Avoid clustering nursing care</strong> — every intervention stimulates and can ↑ ICP</li>
+      </ul>
+      <ul class="info-list">
+        <li><strong>O₂ therapy if SpO₂ &lt;95%</strong> — hypoxia is a major ICP trigger</li>
+        <li><strong>Stool softeners</strong> — prevent straining (Valsalva) during bowel movements</li>
+        <li><strong>Prevent fever</strong> — hyperthermia increases metabolic demand → ↑ ICP</li>
+        <li><strong>Do NOT put in Trendelenburg</strong> (head-down) — increases cerebral blood volume</li>
+        <li><strong>Monitor ICP readings</strong> — report values &gt;15 mmHg or trends of increase</li>
+      </ul>
+    </div>
+    <div class="alert alert-danger" style="margin-top:0.8rem">
+      <span class="alert-icon">🚫</span>
+      <div class="alert-text"><strong>CONTRAINDICATED with IICP:</strong> Blowing nose, isometric exercises (push against resistance), vigorous coughing, Trendelenburg position, oversedation without airway protection, nasal packing (if CSF leak). These all raise intrathoracic or venous pressure.</div>
+    </div>
+    <div class="alert alert-danger" style="margin-top:0.8rem">
+      <span class="alert-icon">⚠️</span>
+      <div class="alert-text"><strong>LUMBAR PUNCTURE — Contraindicated if IICP suspected:</strong> LP must be DEFERRED until AFTER a head CT when intracranial hypertension is suspected. Performing an LP with elevated ICP can precipitate brainstem herniation as pressure suddenly shifts. Always image first. CT → then LP only if safe and needed (e.g., rule out meningitis, confirm SAH when CT is negative).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — SEIZURES & EPILEPSY
+══════════════════════════════════════════ -->
+<div id="tab-seizures" class="tab-content">
+  <div class="section-hero">
+    <h2>Seizures &amp; Epilepsy</h2>
+    <p>Abnormal, sudden, excessive, uncontrolled electrical discharge of neurons — can cause LOC changes, motor/sensory changes, or behavioral changes.</p>
+    <div class="obj-tags"><span class="obj-tag">OBJ 2: Pathophysiology</span><span class="obj-tag">OBJ 3: Drug Therapy</span></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(6,182,212,0.15)">⚡</div><div><div class="card-title">Seizure vs. Epilepsy</div></div></div>
+      <ul class="info-list">
+        <li><strong>Seizure:</strong> Single episode of abnormal electrical neuronal discharge. May be provoked (fever, electrolytes, alcohol withdrawal) or unprovoked</li>
+        <li><strong>Epilepsy:</strong> Chronic disorder with REPEATED, UNPROVOKED seizures. Caused by imbalance of neurotransmitters (↑ excitatory or ↓ inhibitory)</li>
+        <li><strong>Status Epilepticus:</strong> Continuous or recurring seizure activity lasting ≥30 minutes — a medical emergency! Risk of permanent brain damage, hypoxia, hyperthermia</li>
+      </ul>
+      <div class="alert alert-nclex"><span class="alert-icon">🎯</span><div class="alert-text"><strong>Key distinction:</strong> A single febrile seizure ≠ epilepsy. Epilepsy = REPEATED + UNPROVOKED seizures.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15)">🔬</div><div><div class="card-title">Etiology of Seizures</div></div></div>
+      <div class="compare-grid">
+        <div class="compare-col compare-left">
+          <h4>Primary/Idiopathic</h4>
+          <ul class="info-list">
+            <li>No identifiable brain lesion</li>
+            <li>Genetic factors likely involved</li>
+            <li>No specific cause found</li>
+          </ul>
+        </div>
+        <div class="compare-col compare-right">
+          <h4>Secondary Causes</h4>
+          <ul class="info-list">
+            <li>Brain tumor/trauma</li>
+            <li>Metabolic disorders</li>
+            <li>Electrolyte disturbances (hyperkalemia, hypoglycemia)</li>
+            <li>Alcohol withdrawal</li>
+            <li>High fever</li>
+            <li>Stroke/head injury</li>
+            <li>Substance abuse</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:rgba(16,185,129,0.15)">📋</div><div><div class="card-title">Types of Seizures</div></div></div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Subtype</th><th>Clinical Features</th><th>Key Facts</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="6"><strong>Generalized</strong><br><span style="font-size:0.75rem;color:var(--text3)">All brain affected; unconscious</span></td><td>Tonic-clonic</td><td>Stiffening (tonic) THEN rhythmic jerking (clonic) of all extremities</td><td>Most recognized; grand mal; postictal phase follows</td></tr>
+          <tr><td>Clonic</td><td>Rhythmic jerking of all extremities</td><td>No tonic phase</td></tr>
+          <tr><td>Tonic</td><td>Abrupt muscle tone increase, LOC, autonomic changes</td><td>Lasts ~30 seconds</td></tr>
+          <tr><td>Myoclonic</td><td>Brief jerking or stiffening of extremities</td><td>Short duration</td></tr>
+          <tr><td>Atonic</td><td>Sudden LOSS of muscle tone → drop attacks</td><td>Lasts seconds; fall risk</td></tr>
+          <tr><td>Absence</td><td>Brief, blank stare, appears to be daydreaming</td><td>Common in children; unaware it happened; brief (&lt;30 sec)</td></tr>
+          <tr><td rowspan="2"><strong>Partial (Focal)</strong><br><span style="font-size:0.75rem;color:var(--text3)">One brain area; may/may not lose consciousness</span></td><td>Complex Partial</td><td>LOC altered for 1–3 min; unaware of environment; possible amnesia</td><td>May have automatisms (lip smacking, picking)</td></tr>
+          <tr><td>Simple Partial</td><td>Begins with AURA; patient remains conscious; may have déjà vu</td><td>Motor, sensory, or autonomic manifestations</td></tr>
+          <tr><td colspan="2"><strong>Status Epilepticus</strong></td><td>Continuous seizure ≥30 min or recurrent seizures without recovery</td><td class="critical-cell" style="color:#f87171;font-weight:600">MEDICAL EMERGENCY — first-line: Lorazepam IV</td></tr>
+          <tr><td colspan="2"><strong>Simple Febrile</strong></td><td>Associated with fever; rule out meningitis</td><td>NOT epilepsy; educate parents</td></tr>
+          <tr><td colspan="2"><strong>Pseudoseizures</strong></td><td>Non-epileptic phenomena; looks like seizures</td><td>EEG confirms; psychogenic etiology</td></tr>
+          <tr><td colspan="2"><strong>Lennox-Gastaut Syndrome</strong></td><td>Childhood epileptic disorder with multiple seizure types</td><td>Can lead to developmental delays; diazepam used</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15)">⏱️</div><div><div class="card-title">Seizure Phases — Know the Timeline</div></div></div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Prodrome Phase</div><div class="timeline-body">Early clinical manifestations occurring <strong>DAYS TO HOURS before</strong> seizure. Headache, malaise, changes in smell/taste, hearing/vision. Patient may sense something is coming.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Aura Phase</div><div class="timeline-body">Sensation that <strong>immediately precedes</strong> seizure onset. Gustatory (taste), visual (lights/colors), or auditory (sounds). Some experience dizziness, numbness, or "funny feeling." Aura = warning to get safe.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Ictal Phase</div><div class="timeline-body">The <strong>actual seizure event</strong>. Includes tonic phase (muscle rigidity, apnea possible) and clonic phase (rhythmic jerking). Duration varies by type.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Tonic Phase</div><div class="timeline-body">State of muscle <strong>contraction with excessive muscle tone</strong>. Stiffening. May have apnea → cyanosis possible. Lasts seconds to ~1 minute.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Clonic Phase</div><div class="timeline-body">State of <strong>alternating contraction and relaxation</strong> of muscles. Rhythmic jerking movements. Gradually slowing.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label" style="color:var(--yellow)">Postictal Phase</div><div class="timeline-body">Period <strong>immediately following</strong> cessation of seizure activity. Patient confused, exhausted, may not remember seizure. May last minutes to hours. <em>Key nursing intervention: turn to side, assess LOC, protect airway.</em></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(239,68,68,0.15)">🛡️</div><div><div class="card-title">Seizure Precautions</div><div class="card-subtitle">Set up BEFORE a seizure occurs</div></div></div>
+      <ul class="info-list">
+        <li><strong>Pad side rails</strong> of bed — prevent injury during jerking</li>
+        <li><strong>Place airway at bedside</strong> — oral airway for post-seizure positioning</li>
+        <li><strong>Oxygen and suction at bedside</strong> — maintain airway post-ictally</li>
+        <li><strong>IV access patent</strong> — flush regularly; medications given IV in emergency</li>
+        <li><strong>Bed in LOW position</strong> — NOT high! Fall prevention</li>
+        <li><strong>Do NOT put padded tongue blade</strong> — never place anything in mouth!</li>
+        <li>Remove sharp objects from environment</li>
+      </ul>
+      <div class="alert alert-danger"><span class="alert-icon">🚫</span><div class="alert-text"><strong>NEVER:</strong> Restrain limbs, force objects into mouth, put fingers in mouth during seizure. These cause injury, not safety.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(16,185,129,0.15)">🏃</div><div><div class="card-title">Nursing Care DURING &amp; AFTER Seizure</div></div></div>
+      <ul class="info-list">
+        <li><strong>Time the seizure</strong> — duration is critical clinical data</li>
+        <li><strong>Do NOT restrain</strong> — guide limbs gently if needed</li>
+        <li><strong>Loosen restrictive clothing</strong></li>
+        <li><strong>Position to side</strong> (lateral) if possible — prevents aspiration</li>
+        <li><strong>Head flexed forward</strong> — maintains airway</li>
+        <li><strong>Raise padded side rails</strong></li>
+        <li>After seizure: <strong>assess LOC, breathing, orientation</strong></li>
+        <li>Suction if needed; apply O₂</li>
+        <li><strong>Document</strong>: what happened before, during, after; body parts involved; duration</li>
+        <li>If seizure &gt;5 min or no recovery between seizures → <strong>administer emergency anticonvulsant</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-nclex">
+    <span class="alert-icon">🎯</span>
+    <div class="alert-text"><strong>NCLEX Application — Status Epilepticus:</strong> An intubated patient seizing for 20+ minutes = Status Epilepticus. First-line drug = <strong>Lorazepam IV</strong> (NOT diazepam IV first if intubated, though diazepam is also used). Phenobarbital is used when benzodiazepines fail. For children with status epilepticus = often Diazepam IV/PR, then Phenobarbital if no response.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15)">⚡</div><div><div class="card-title">Common Seizure Triggers</div><div class="card-subtitle">Factors that lower seizure threshold</div></div></div>
+      <ul class="info-list">
+        <li><strong>Hypoglycemia</strong> — brain deprived of fuel; major trigger</li>
+        <li><strong>Sleep deprivation / fatigue</strong> — lowers neuronal threshold</li>
+        <li><strong>Fever / infection</strong> — hyperthermia increases neuronal excitability</li>
+        <li><strong>Emotional or physical stress</strong> — heightens CNS excitation</li>
+        <li><strong>Alcohol withdrawal</strong> — rebound CNS excitation after chronic suppression</li>
+        <li><strong>Electrolyte imbalances</strong> — hyperkalemia, hyponatremia (large water intake), hypocalcemia, hypomagnesemia</li>
+        <li><strong>Flashing/blinking lights</strong> — photosensitive epilepsy trigger</li>
+        <li><strong>Missed AED doses</strong> — most common cause of breakthrough seizures; ~50% of treatment failures</li>
+        <li><strong>Abrupt AED withdrawal</strong> — can precipitate status epilepticus</li>
+        <li><strong>Certain medications</strong> — antipsychotics (especially with alcohol), hyperventilation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(6,182,212,0.15)">🔬</div><div><div class="card-title">Seizure Diagnostics & AED Rules</div><div class="card-subtitle">Workup + key medication principles</div></div></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--cyan);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:.04em">Diagnostic Workup</div>
+      <ul class="info-list">
+        <li><strong>EEG (Electroencephalogram)</strong> — gold standard; measures electrical activity; video-EEG localizes seizure origin; confirms vs. pseudoseizures</li>
+        <li><strong>CT scan</strong> — detects structural causes (tumors, hemorrhage, trauma)</li>
+        <li><strong>MRI</strong> — best soft tissue visualization for seizure focus</li>
+        <li><strong>Labs</strong> — blood glucose, serum calcium, electrolytes (rule out metabolic triggers)</li>
+        <li><strong>Lumbar puncture</strong> — if infection (meningitis) suspected as seizure cause</li>
+      </ul>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--yellow);margin:0.8rem 0 0.5rem;text-transform:uppercase;letter-spacing:.04em">AED Key Rules</div>
+      <ul class="info-list">
+        <li><strong>NEVER stop AEDs abruptly</strong> — abrupt withdrawal → seizures or status epilepticus</li>
+        <li><strong>Taper over 6 weeks to several months</strong> when discontinuing; if on two drugs, withdraw one at a time</li>
+        <li><strong>Strict adherence is critical</strong> — missing doses is the #1 cause of treatment failure</li>
+        <li><strong>Monitor therapeutic blood levels</strong> — especially phenytoin (10–20 mcg/mL); helps detect toxicity and nonadherence</li>
+        <li><strong>Do not drive</strong> or do hazardous activities until seizure control is confirmed</li>
+        <li><strong>All AEDs carry suicide risk</strong> — monitor for mood changes, agitation, depression, suicidal ideation</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 — STROKE
+══════════════════════════════════════════ -->
+<div id="tab-stroke" class="tab-content">
+  <div class="section-hero">
+    <h2>Stroke — Brain Attack</h2>
+    <p>Interruption of perfusion to any part of the brain, resulting in infarction. Time-critical: <strong>every minute counts</strong> — 1.9 million neurons die per minute without treatment.</p>
+    <div class="obj-tags"><span class="obj-tag">OBJ 2: Pathophysiology</span><span class="obj-tag">OBJ 3: Drug Therapy</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:rgba(6,182,212,0.15)">🆘</div><div><div class="card-title">B.E. F.A.S.T. Recognition</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.6rem">
+      <div style="background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.05));border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--cyan)">B</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Balance</div><div style="font-size:0.75rem;color:var(--text2)">Loss of balance, headache, dizziness</div></div>
+      <div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(6,182,212,0.03));border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--teal)">E</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Eyes</div><div style="font-size:0.75rem;color:var(--text2)">Sudden loss of vision in one or both eyes</div></div>
+      <div style="background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.05));border:1px solid rgba(16,185,129,0.25);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--green)">F</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Face</div><div style="font-size:0.75rem;color:var(--text2)">Facial droop, uneven smile</div></div>
+      <div style="background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.03));border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#34d399">A</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Arm</div><div style="font-size:0.75rem;color:var(--text2)">Weakness, ask to raise both arms</div></div>
+      <div style="background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border:1px solid rgba(245,158,11,0.25);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--yellow)">S</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Speech</div><div style="font-size:0.75rem;color:var(--text2)">Slurred, strange, or no speech</div></div>
+      <div style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.05));border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:0.9rem;text-align:center"><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#f87171">T</div><div style="font-weight:700;font-size:0.82rem;color:var(--heading);margin-bottom:3px">Time</div><div style="font-size:0.75rem;color:var(--text2)">Note time → CALL 911 immediately</div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(239,68,68,0.15)">🩸</div><div><div class="card-title">Hemorrhagic Stroke</div></div></div>
+      <ul class="info-list">
+        <li><strong>Intracerebral hemorrhage</strong> — bleeding INTO brain tissue; most commonly from <strong>severe/sustained hypertension</strong></li>
+        <li>Elevated BP → arterial wall changes → rupture → blood in brain tissue compresses/destroys neurons</li>
+        <li><strong>Cocaine use</strong> can trigger sudden dramatic BP elevation → hemorrhagic stroke</li>
+        <li><strong>Subarachnoid hemorrhage</strong> — bleeding into subarachnoid space; typically from <strong>ruptured aneurysm or AVM</strong></li>
+        <li>Aneurysm = abnormal ballooning or blister along a normal artery</li>
+      </ul>
+      <div class="alert alert-danger" style="margin-top:0.8rem"><span class="alert-icon">⚠️</span><div class="alert-text"><strong>tPA is CONTRAINDICATED in hemorrhagic stroke!</strong> You must differentiate stroke type via CT BEFORE administering thrombolytics.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(33,150,243,0.15)">🫀</div><div><div class="card-title">Ischemic Stroke</div></div></div>
+      <ul class="info-list">
+        <li><strong>Thrombotic</strong> — most common (&gt;50% of all strokes); associated with <strong>atherosclerosis and hypercoagulation</strong>; plaque builds up in cerebral or carotid arteries → occlusion</li>
+        <li><strong>Embolic</strong> — thrombus or clot breaks off from elsewhere (typically cardiac source = <strong>atrial fibrillation</strong>, or carotid artery plaques) → travels to cerebral arteries</li>
+        <li>Both result in brain ischemia and infarction within minutes</li>
+        <li>tPA is the treatment if given within the therapeutic window</li>
+      </ul>
+      <div class="grid-2" style="gap:0.6rem;margin-top:0.8rem">
+        <div style="background:rgba(33,150,243,0.08);border:1px solid rgba(33,150,243,0.2);border-radius:8px;padding:0.7rem;font-size:0.83rem"><strong style="display:block;color:var(--blue-bright);margin-bottom:4px">tPA Window</strong>3–4.5 hours from symptom onset (standard). Must rule out hemorrhagic stroke first via CT.</div>
+        <div style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:0.7rem;font-size:0.83rem"><strong style="display:block;color:var(--cyan);margin-bottom:4px">TIA</strong>Temporary neurologic dysfunction; resolves within 30–60 min (up to 24h); <strong>precursor to stroke — act now</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:rgba(16,185,129,0.15)">🧠</div><div><div class="card-title">Left vs. Right Brain Stroke Effects</div><div class="card-subtitle">Brain damage affects OPPOSITE side of body (contralateral)</div></div></div>
+    <div class="compare-grid">
+      <div class="compare-col compare-left">
+        <h4>🧠 Left Brain Stroke</h4>
+        <ul class="info-list">
+          <li><strong>Right-sided paralysis</strong> and sensory changes</li>
+          <li><strong>Speech/language problems</strong> — aphasia, dysarthria</li>
+          <li>Abstract thinking deficits</li>
+          <li>Memory problems (language-based)</li>
+          <li><strong>Slow, cautious behavioral style</strong></li>
+          <li>Difficulty reading, writing, calculating</li>
+        </ul>
+      </div>
+      <div class="compare-col compare-right">
+        <h4>🧠 Right Brain Stroke</h4>
+        <ul class="info-list">
+          <li><strong>Left-sided paralysis</strong> and sensory changes</li>
+          <li>Spatial/perceptual deficits</li>
+          <li>Left-sided neglect (ignores left side)</li>
+          <li>Memory problems (performance-based)</li>
+          <li><strong>Quick, impulsive behavioral style</strong></li>
+          <li>Poor judgment, overestimates abilities</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert-nclex" style="margin-top:0.8rem"><span class="alert-icon">🎯</span><div class="alert-text"><strong>NCLEX Tip:</strong> Left brain stroke → RIGHT-sided deficits + speech problems. Right brain stroke → LEFT-sided deficits + spatial/perceptual problems. The behavioral style difference is also tested: Left = slow/cautious; Right = quick/impulsive/poor safety judgment.</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15)">💊</div><div><div class="card-title">Stroke Pharmacological Management</div></div></div>
+      <ul class="info-list">
+        <li><strong>tPA (Alteplase)</strong> — thrombolytic; breaks down clot in ischemic stroke; ≤3–4.5h window; monitor for bleeding complications</li>
+        <li><strong>Anticoagulants</strong> — Warfarin; prevention of embolic strokes</li>
+        <li><strong>Antiplatelets</strong> — Clopidogrel, Aspirin; post-TIA, post-ischemic stroke prevention</li>
+        <li><strong>BP medications</strong> — ACE inhibitors, beta-blockers, calcium channel blockers; control hypertension (primary stroke risk)</li>
+        <li><strong>Statins</strong> — atorvastatin (Lipitor), pravastatin, rosuvastatin (Crestor), simvastatin (Zocor); reduce atherosclerosis/plaque</li>
+        <li><strong>Nimodipine</strong> — calcium channel blocker; used to treat/prevent cerebral vasospasm after subarachnoid hemorrhage (SAH); relaxes cerebral vessel smooth muscle to improve distal perfusion</li>
+        <li><strong>Stool softeners</strong> — prevent straining/Valsalva which raises ICP; important in all neurologic patients</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(16,185,129,0.15)">🏥</div><div><div class="card-title">Stroke Nursing Priorities</div></div></div>
+      <ul class="info-list">
+        <li><strong>Airway first</strong> — ensure respiratory status, cardiovascular function stable; ABCs before anything else</li>
+        <li><strong>Rapid CT scan (non-contrast)</strong> — rule out hemorrhagic stroke BEFORE any thrombolytics; CT is the FIRST test</li>
+        <li><strong>NIHSS score</strong> — establish baseline neurological deficit; use standardized scale consistently</li>
+        <li><strong>tPA (Alteplase) requirements:</strong> BP must be &lt;185/110 mmHg BEFORE administration; dose 0.9 mg/kg (10% over first minute, rest over 60 min); goal door-to-needle (DTN) ≤45 min</li>
+        <li><strong>Post-tPA monitoring:</strong> Maintain BP &lt;180/105; frequent neuro checks; hold infusion for severe headache, vomiting, or sudden BP spike (may indicate hemorrhagic conversion); avoid invasive lines for 24h</li>
+        <li><strong>Dysphagia assessment FIRST</strong> — patient is NPO until swallowing is formally screened; SLP consult as needed; aspiration is a major early complication</li>
+        <li><strong>Do NOT lower BP too aggressively</strong> in ischemic stroke — high BP may be maintaining perfusion to ischemic penumbra; lowering too fast can worsen ischemia</li>
+        <li><strong>Prevent ICP elevation</strong> — HOB 30°, head midline, avoid clustering care, O₂ if SpO₂ &lt;95%, quiet environment</li>
+        <li><strong>Communication adaptations</strong> — aphasia is common; see aphasia guide below; never assume patient cannot understand</li>
+        <li><strong>Antiplatelet therapy</strong> (aspirin, clopidogrel) — post-ischemic stroke and TIA; reduce platelet stickiness to prevent recurrent thrombosis; NOT given within 24h of tPA</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(239,68,68,0.15)">💬</div><div><div class="card-title">Aphasia vs. Dysarthria</div><div class="card-subtitle">Communication deficits after stroke</div></div></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--cyan);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:.04em">Expressive Aphasia (Broca's)</div>
+      <ul class="info-list">
+        <li><strong>Understands language</strong> but CANNOT express it verbally or in writing</li>
+        <li>Speech is non-fluent; knows what they want to say but can't get the words out</li>
+        <li>Often very frustrated — they understand everything</li>
+        <li><strong>Nursing:</strong> Ask yes/no questions; use simple phrases; allow extra time; do NOT speak loudly</li>
+      </ul>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--yellow);margin:0.8rem 0 0.5rem;text-transform:uppercase;letter-spacing:.04em">Receptive Aphasia (Wernicke's)</div>
+      <ul class="info-list">
+        <li><strong>Cannot understand</strong> spoken or written language</li>
+        <li>Speech may be fluent but meaningless (word salad)</li>
+        <li><strong>Nursing:</strong> Use gestures, pictures, and cues; speak slowly; use one-step commands</li>
+      </ul>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--green);margin:0.8rem 0 0.5rem;text-transform:uppercase;letter-spacing:.04em">Dysarthria</div>
+      <ul class="info-list">
+        <li><strong>Motor speech disorder</strong> — slurred, slow, or poorly articulated speech from muscle weakness</li>
+        <li>Language understanding is INTACT — patient knows what to say, just can't articulate it clearly</li>
+        <li>Different from aphasia — aphasia is a language problem; dysarthria is a motor/muscle problem</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15)">👁</div><div><div class="card-title">SAH Classic Presentation & Neglect</div><div class="card-subtitle">Key clinical patterns</div></div></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--red,#ef4444);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:.04em">Subarachnoid Hemorrhage (SAH) — Red Flag</div>
+      <ul class="info-list">
+        <li><strong>"Worst headache of my life"</strong> — thunderclap headache; sudden, explosive onset within seconds</li>
+        <li>Nausea, vomiting, photophobia, neck stiffness (meningeal irritation)</li>
+        <li>Decreased LOC, cranial nerve deficits, possible seizures</li>
+        <li><strong>Diagnostic sequence:</strong> Non-contrast CT first → if negative but SAH still suspected → Lumbar puncture (look for xanthochromia)</li>
+        <li><strong>Vasospasm risk</strong> — occurs 3–14 days post-SAH; causes delayed cerebral ischemia and new neuro deficits; managed with <strong>Nimodipine</strong> (calcium channel blocker — relaxes cerebral vessel spasm)</li>
+      </ul>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:var(--cyan);margin:0.8rem 0 0.5rem;text-transform:uppercase;letter-spacing:.04em">Left-Sided Neglect (Right Brain Stroke)</div>
+      <ul class="info-list">
+        <li>Patient ignores or is unaware of the left side of their body and environment</li>
+        <li><strong>Nursing:</strong> Approach from the UNAFFECTED (right) side initially; teach patient to scan to the left; place call light and meals on the right; dress affected (left) side first</li>
+        <li>Safety risk — patient may bump into objects on left side; fall precautions essential</li>
+        <li><strong>Homonymous hemianopsia</strong> — loss of same visual field in both eyes; teach head-turning and scanning to compensate</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon" style="background:rgba(33,150,243,0.15)">📚</div><div><div class="card-title">Stroke Diagnostics</div></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+      <span class="pill pill-blue">CT Scan — First-line (rule out hemorrhage)</span>
+      <span class="pill pill-cyan">CT Angiogram — Visualize cerebral vessels</span>
+      <span class="pill pill-green">MRI / MRA — Best soft tissue visualization</span>
+      <span class="pill pill-yellow">Carotid Duplex Studies — Carotid stenosis</span>
+      <span class="pill pill-blue">NIHSS — Stroke severity</span>
+      <span class="pill pill-orange">Labs: CBC, CMP, PT/INR, PTT</span>
+      <span class="pill pill-cyan">EKG — Rule out AFib source</span>
+      <span class="pill pill-green">Lumbar Puncture — If SAH suspected with negative CT</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 5 — MEDICATIONS
+══════════════════════════════════════════ -->
+<div id="tab-meds" class="tab-content">
+  <div class="section-hero">
+    <h2>ICR Medications — Complete Drug Reference</h2>
+    <p>Objective 4: Know generic names, drug class, MOA, therapeutic use, adverse effects, nursing considerations, patient education, and evaluation parameters.</p>
+    <div class="obj-tags"><span class="obj-tag">OBJ 3: Drug Therapy Role</span><span class="obj-tag">OBJ 4: Drug Knowledge</span></div>
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:1rem;padding:0.7rem 1rem;background:linear-gradient(90deg,rgba(6,182,212,0.15),transparent);border-left:4px solid var(--cyan);border-radius:0 8px 8px 0">🔵 BROAD SPECTRUM ANTIEPILEPTICS (AEDs)</div>
+
+  <!-- Diazepam / Lorazepam -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(16,185,129,0.08))">
+      <div><div class="drug-name">Diazepam / Lorazepam</div><div class="drug-generic">(Valium / Ativan) · Benzodiazepine / Antiseizure</div></div>
+      <div class="drug-class-badge"><span class="pill pill-cyan">Benzodiazepine</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Presynaptic inhibition via GABA-A receptor enhancement</li><li>↑ chloride influx → neuronal hyperpolarization → suppresses seizures</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Therapeutic Use</div><ul class="drug-items"><li>Lennox-Gastaut, akinetic, myoclonic seizures</li><li>Prevention of acute/abrupt seizures</li><li class="critical">Lorazepam IV = FIRST LINE for Status Epilepticus</li><li>Diazepam: IV, IM, PO, PR, nasal routes</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>Bradypnea, bradycardia</li><li class="critical">Respiratory depression (major risk!)</li><li class="critical">Rapid IV admin → apnea, cardiac arrest</li><li>Palpitations, nystagmus, diplopia</li><li>Rash, drowsiness, unsteadiness</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing Interventions</div><ul class="drug-items"><li>Assess for drowsiness, unsteadiness, clumsiness</li><li>Monitor closely for behavioral changes</li><li class="critical">Have resuscitation equipment available</li><li>Do NOT give rapid IV push</li><li>Monitor respiratory status continuously</li></ul></div>
+      </div>
+      <div class="drug-section" style="margin-top:0.8rem"><div class="drug-section-title eval">Evaluation / Expected Response</div><ul class="drug-items"><li>Decrease or cessation of seizure activity WITHOUT undue sedation</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Valproic Acid -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(16,185,129,0.08))">
+      <div><div class="drug-name">Valproic Acid</div><div class="drug-generic">(Depakote, Depakene) · Antiseizure · PO and IV</div></div>
+      <div class="drug-class-badge"><span class="pill pill-yellow">Broad Spectrum AED</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Increases levels of GABA (inhibitory neurotransmitter) in the CNS</li><li>↑ GABA → ↓ neuronal excitability</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Suppression of seizure activity (broad spectrum)</li><li>Bipolar disorder, migraine prevention</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li class="critical">Hepatotoxicity — liver failure possible</li><li class="critical">Pancreatitis</li><li>Peripheral edema, hypothermia</li><li>Blood dyscrasias (leukopenia, thrombocytopenia)</li><li>Teratogen — neural tube defects</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing / Monitoring</div><ul class="drug-items"><li class="critical">CONTRAINDICATED in LIVER DISEASE</li><li>Assess for jaundice, abdominal pain, N/V (hepatic failure signs)</li><li>Monitor for pancreatitis: abdominal pain, N/V, anorexia</li><li>Monitor CBC for blood dyscrasias</li><li>Assess seizure activity and for rash</li></ul></div>
+      </div>
+      <div class="drug-section" style="margin-top:0.8rem"><div class="drug-section-title teach">Patient Teaching</div><ul class="drug-items"><li>Do NOT stop abruptly — seizure risk</li><li>Report signs of liver problems immediately (yellow skin/eyes, dark urine)</li><li>Avoid alcohol — increased CNS depression</li><li>Women of childbearing age: highly teratogenic</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Levetiracetam -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,182,212,0.08))">
+      <div><div class="drug-name">Levetiracetam</div><div class="drug-generic">(Keppra) · Antiseizure · PO and IV</div></div>
+      <div class="drug-class-badge"><span class="pill pill-green">Broad Spectrum AED</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Inhibits burst firing without affecting normal neuronal excitability</li><li>Does NOT affect normal neuronal function — selective for hyperactive seizure-generating neurons</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Decreased incidence and severity of seizures</li><li>Adjunctive therapy for partial-onset seizures</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li><strong>Most common: drowsiness, weakness</strong></li><li>Hypertension</li><li>Agitation, behavioral changes</li><li>SJS (rare)</li><li>Bone marrow suppression (rare)</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li>Monitor for behavioral changes (mood, hostility, agitation)</li><li>Monitor for skin changes (SJS risk)</li><li>Assess seizure frequency</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lamotrigine -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(245,158,11,0.08))">
+      <div><div class="drug-name">Lamotrigine</div><div class="drug-generic">(Lamictal) · Antiseizure · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-blue">Broad Spectrum AED</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Stabilizes neuronal membranes by inhibiting sodium transport</li><li>Reduces pre-synaptic neurotransmitter release</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Decreased incidence of seizures</li><li>Bipolar disorder (delayed time to mood episode recurrence)</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li class="critical">Stevens-Johnson Syndrome (SJS) — life-threatening rash</li><li>Cardiac arrest</li><li>Hepatic failure</li><li>Blurred vision</li><li class="critical">Increased suicidal ideation — higher risk than other AEDs</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li class="critical">Monitor for suicidal ideation (higher risk than other antiseizures)</li><li>Monitor for skin changes — report any rash immediately</li><li>Monitor behavioral changes</li><li>Rash development = stop drug, contact HCP</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topiramate -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(16,185,129,0.08))">
+      <div><div class="drug-name">Topiramate</div><div class="drug-generic">(Topamax) · Antiseizure · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-cyan">Broad Spectrum AED</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Blockade of sodium channels in neurons</li><li>Enhances GABA activity</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>Common: somnolence, dizziness, ataxia, nervousness, anorexia, weight loss</li><li>Rare: SJS, decreased growth in children</li><li class="critical">Vision changes: ocular pain, sudden worsening or blurred vision (report immediately — acute glaucoma)</li><li>Hyperthermia</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li>Monitor behavioral changes</li><li>Monitor growth rate in children</li><li class="critical">Any visual changes/eye pain → report immediately</li><li>Monitor for signs of hyperthermia</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--heading);margin:1.5rem 0 1rem;padding:0.7rem 1rem;background:linear-gradient(90deg,rgba(245,158,11,0.15),transparent);border-left:4px solid var(--yellow);border-radius:0 8px 8px 0">🟡 NARROW SPECTRUM ANTIEPILEPTICS</div>
+
+  <!-- Phenytoin -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(245,158,11,0.06))">
+      <div><div class="drug-name">Phenytoin</div><div class="drug-generic">(Dilantin) · Anticonvulsant/Antiepileptic · PO and IV</div></div>
+      <div class="drug-class-badge"><span class="pill pill-red">Narrow Spectrum</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Suppresses activity of seizure-generating neurons</li><li>Stabilizes neuronal membranes — blocks Na⁺ channels</li><li>Also terminates ventricular arrhythmias</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Focal-onset and generalized-onset seizures</li><li>Status epilepticus (IV)</li><li>Ventricular arrhythmias</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects — HIGH YIELD</div><ul class="drug-items"><li class="critical">Gingival hyperplasia (gum overgrowth)</li><li class="critical">Purple glove syndrome (IV extravasation)</li><li>Nystagmus, sedation, ataxia, diplopia</li><li>Cognitive impairment</li><li class="critical">Teratogen — cleft palate in fetus</li><li>Decreases effectiveness of oral contraceptives</li><li>Dysrhythmias and hypotension (IV)</li><li>Measles-like rash → risk of SJS</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li class="critical">Therapeutic Range: 10–20 mcg/mL — monitor levels</li><li>Monitor enteral feedings: hold 1 hour before AND 1 hour after (absorption interference)</li><li>Avoid grapefruit juice</li><li>Women of childbearing age: needs reliable NON-oral contraception</li><li>If pregnant, consult provider first</li><li>GI upset with PO route — take with food</li></ul></div>
+      </div>
+      <div class="drug-section" style="margin-top:0.8rem"><div class="drug-section-title teach">Patient Teaching</div><ul class="drug-items"><li><strong>Excellent oral hygiene</strong> — daily brushing and flossing (prevent gingival hyperplasia)</li><li>Report any rash to HCP immediately</li><li>Do NOT consume alcohol — increased CNS depression</li><li>Keep ALL follow-up appointments for medication level monitoring</li><li>Avoid grapefruit and grapefruit juice</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Carbamazepine -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(6,182,212,0.08))">
+      <div><div class="drug-name">Carbamazepine</div><div class="drug-generic">(Tegretol) · Antiepileptic · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-blue">Narrow Spectrum</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Decreases synaptic transmission by affecting Na⁺ channels</li><li>Suppresses high-frequency neuronal discharge in seizure foci</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Epilepsy — focal and generalized seizures</li><li>Bipolar disorder</li><li>Trigeminal neuralgia</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>CNS depressant effects, visual disturbances (nystagmus, blurred vision, diplopia)</li><li>Ataxia, vertigo, headache</li><li class="critical">Aplastic anemia (monitor CBC)</li><li>Fluid retention → edema (caution in heart failure)</li><li>SJS risk</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li>Monitor lab levels for therapeutic range</li><li class="critical">AVOID GRAPEFRUIT (enzyme interaction — increases carbamazepine levels → toxicity)</li><li class="critical">Do NOT take within 2 hours of antacid (antacid decreases absorption)</li><li>Monitor skin changes, behavioral changes (suicidal ideation risk)</li><li>Assess for fluid retention in cardiac patients</li><li>Monitor CBC — aplastic anemia risk</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gabapentin -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(245,158,11,0.08))">
+      <div><div class="drug-name">Gabapentin</div><div class="drug-generic">(Neurontin) · Anticonvulsant · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-green">Narrow Spectrum</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>SJS, nystagmus, gingivitis</li><li>Ataxia, confusion</li><li>Rhabdomyolysis (rare)</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li class="critical">Do NOT take within 2 hours of antacid (decreases absorption)</li><li>Monitor behavioral changes</li><li>Check herbal medicine interactions</li><li>Assess seizure characteristics</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phenobarbital -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(16,185,129,0.08))">
+      <div><div class="drug-name">Phenobarbital</div><div class="drug-generic">Anticonvulsant/Sedative-Hypnotic · PO, IM, IV</div></div>
+      <div class="drug-class-badge"><span class="pill pill-blue">Barbiturate AED</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Inhibits transmission in the nervous system</li><li>Raises the seizure threshold</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>Hypotension, rash, constipation</li><li>N/V/D, delirium, depression</li><li>Respiratory depression</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li>Monitor respiratory status, pulse, and BP</li><li>Monitor for angioedema signs</li><li>Note: several weeks may be needed to achieve maximum anticonvulsant effects</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title eval">Evaluation</div><ul class="drug-items"><li>Decrease or cessation of seizure activity without excessive sedation</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Oxcarbazepine -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(16,185,129,0.08))">
+      <div><div class="drug-name">Oxcarbazepine</div><div class="drug-generic">(Trileptal) · Anticonvulsant · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-cyan">Narrow Spectrum</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Blocks voltage-sensitive sodium channels</li><li>Stabilizes hyperexcitable neuronal membranes → prevents seizure spread</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Partial (focal) seizures — monotherapy or adjunctive therapy</li><li>Adults and children</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>CNS: dizziness, drowsiness, diplopia, nystagmus, headache, ataxia</li><li class="critical">Hyponatremia (sodium &lt;125 mmol/L) — nausea, headache, confusion, drowsiness</li><li class="critical">SJS/TEN — especially in patients with HLA-B*1502 (Asian descent)</li><li>Hypothyroidism (especially in children)</li><li>Rash, vision changes, GI upset</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li class="critical">Monitor sodium levels — hyponatremia is a key risk</li><li>Monitor thyroid function (TSH) — hypothyroidism risk</li><li>Monitor for skin changes — SJS risk; consider HLA-B*1502 testing in Asian patients</li><li>Monitor for behavioral changes and suicidal ideation</li><li class="critical">Teach alternative contraception — decreases oral contraceptive effectiveness</li><li>Taper slowly when discontinuing (1–6 months)</li></ul></div>
+      </div>
+      <div class="drug-eval" style="border-top:1px solid var(--border);padding-top:0.8rem;margin-top:0.8rem;font-size:0.83rem;color:var(--text2)"><strong style="color:var(--green)">Expected Response:</strong> Absence or reduction of seizure activity without excessive sedation.</div>
+    </div>
+  </div>
+
+  <!-- Pregabalin -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(6,182,212,0.08))">
+      <div><div class="drug-name">Pregabalin</div><div class="drug-generic">(Lyrica) · Anticonvulsant · PO</div></div>
+      <div class="drug-class-badge"><span class="pill pill-yellow">Narrow Spectrum</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Binds to calcium channels in CNS tissues</li><li>Regulates neurotransmitter release → ↓ neuronal excitability</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li>SJS, peripheral edema, vision changes</li><li>Dizziness, somnolence (excessive sleepiness)</li><li>N/V/D</li><li class="critical">Respiratory depression</li><li class="critical">Significant weight gain</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li class="critical">Monitor closely for suicidal thoughts or behavioral changes</li><li>Monitor weight</li><li>Monitor respiratory status</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--heading);margin:1.5rem 0 1rem;padding:0.7rem 1rem;background:linear-gradient(90deg,rgba(16,185,129,0.15),transparent);border-left:4px solid var(--green);border-radius:0 8px 8px 0">🟢 OSMOTIC DIURETIC</div>
+
+  <!-- Mannitol -->
+  <div class="drug-card">
+    <div class="drug-header" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.1))">
+      <div><div class="drug-name">Mannitol</div><div class="drug-generic">Osmotic Diuretic · IV ONLY</div></div>
+      <div class="drug-class-badge"><span class="pill pill-green">Osmotic Diuretic</span></div>
+    </div>
+    <div class="drug-body">
+      <div class="drug-grid">
+        <div class="drug-section"><div class="drug-section-title moa">MOA</div><ul class="drug-items"><li>Increases the osmotic pressure of glomerular filtrate</li><li>Inhibits reabsorption of water and electrolytes</li><li>Draws fluid OUT of brain tissue (cerebral edema) into bloodstream → excreted via kidneys</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title use">Use</div><ul class="drug-items"><li>Reduction of INTRACRANIAL pressure (cerebral edema)</li><li>Reduction of intraocular pressure</li><li>Forced diuresis</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ae">Adverse Effects</div><ul class="drug-items"><li class="critical">Heart failure / pulmonary edema (fluid shifts)</li><li>Chest pain</li><li>Blurred vision, electrolyte imbalances</li><li>N/V</li><li class="critical">COMA (if over-diuresis occurs)</li></ul></div>
+        <div class="drug-section"><div class="drug-section-title ni">Nursing</div><ul class="drug-items"><li>Monitor neurologic status and ICP readings</li><li>Monitor urine output: goal ≥30–50 mL/hr</li><li>Monitor electrolytes (Na⁺, K⁺)</li><li class="critical">Use filter needle for IV administration</li><li>Assess for signs of fluid overload (crackles, peripheral edema)</li></ul></div>
+      </div>
+      <div class="drug-section" style="margin-top:0.8rem"><div class="drug-section-title eval">Evaluation</div><ul class="drug-items"><li>Urine output ≥30–50 mL/hr (or per HCP parameters)</li><li>Reduction in intracranial pressure</li><li>Improved neurological status</li></ul></div>
+    </div>
+  </div>
+
+  <div class="alert alert-nclex">
+    <span class="alert-icon">🎯</span>
+    <div class="alert-text"><strong>High-Yield Medication Summary:</strong> SJS risk = Lamotrigine, Levetiracetam, Carbamazepine, Phenytoin, Gabapentin, Topiramate, Oxcarbazepine, Pregabalin. Liver risk = Valproic acid (MAJOR). Oral contraceptive interference = Phenytoin, Carbamazepine, Oxcarbazepine (teach alternate contraception). Gingival hyperplasia = Phenytoin only. Therapeutic level monitoring = Phenytoin (10–20). Status epilepticus first-line = Lorazepam IV. Antacid spacing = Carbamazepine (2 hours). Hyponatremia risk = Oxcarbazepine. Vasospasm (SAH) = Nimodipine.</div>
+  </div>
+</div>
+
+
+
+<!-- ═══════════════════════ TAB 6: QUIZ ═══════════════════════ -->
+<div id="tab-quiz" class="tab-content">
+  <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;background:var(--ombre-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.4rem">ICR Comprehensive Quiz</div>
+  <div style="color:var(--text2);font-size:0.88rem;margin-bottom:1.5rem">60 application-level questions · NCLEX/HESI-style · MCQ, SATA, Matrix, Bowtie</div>
+
+  <!-- Progress bar -->
+  <div class="quiz-progress-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+      <span style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--cyan)" id="q-counter">Question 1 of 60</span>
+      <span style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--yellow)" id="q-score-display">Score: 0 / 0</span>
+    </div>
+    <div style="background:var(--bg3);border-radius:999px;height:8px;overflow:hidden">
+      <div class="progress-fill" id="q-progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div id="quiz-area"></div>
+
+  <div style="text-align:center;margin-top:1.5rem">
+    <button class="btn-reset-quiz" onclick="resetQuiz()">↺ Reset Quiz</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════ POPUP ═══════════════════════ -->
+<div class="popup-overlay" id="popup-overlay" onclick="closePopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <div id="popup-emoji" style="font-size:3rem;margin-bottom:0.5rem">🎉</div>
+    <div id="popup-title" style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--green);margin-bottom:0.4rem">Correct!</div>
+    <div id="popup-msg" style="font-size:0.9rem;color:var(--text2);margin-bottom:1rem"></div>
+    <button onclick="closePopup()" style="background:var(--green);color:#fff;border:none;border-radius:8px;padding:0.5rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer">Continue →</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════ TAB SYSTEM ══════════════ */
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+document.querySelector('[onclick="showTab(\'overview\',this)"]').classList.add('active');
+
+/* ══════════════ THEME TOGGLE ══════════════ */
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '🌙 Dark Mode';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀️ Light Mode';
+  }
+}
+
+/* ══════════════ QUIZ DATA ══════════════ */
+const QUESTIONS = [
+// ── Q1 MCQ ──
+{type:'mcq',stem:'A client with a traumatic brain injury has a MAP of 85 mmHg and an ICP of 22 mmHg. The nurse calculates the cerebral perfusion pressure (CPP) to be which of the following?',choices:['A. 107 mmHg','B. 63 mmHg','C. 22 mmHg','D. 85 mmHg'],correct:1,rationale:'CPP = MAP − ICP. 85 − 22 = 63 mmHg. Normal CPP goal is ≥50–70 mmHg. This patient is at the low end; values below 50 indicate critical brain ischemia. The MAP alone (85) or ICP alone (22) are not the CPP.'},
+// ── Q2 MCQ ──
+{type:'mcq',stem:'The nurse is assessing a client admitted with increased intracranial pressure (IICP). Which assessment finding would the nurse identify as the EARLIEST sign of IICP?',choices:['A. Fixed, dilated pupils bilaterally','B. Cushing\'s triad (bradycardia, hypertension, irregular respirations)','C. Increased restlessness and irritability','D. Decerebrate posturing'],correct:2,rationale:'The EARLIEST sign of IICP is a change in level of consciousness (LOC) — presenting as restlessness, irritability, confusion, or drowsiness. Fixed dilated pupils and Cushing\'s triad are LATE/deadly signs. Decerebrate posturing indicates brainstem compromise, which is a very late sign.'},
+// ── Q3 MCQ ──
+{type:'mcq',stem:'A client recovering from a head injury is about to be repositioned. Which instruction by the nurse is MOST appropriate to prevent an increase in intracranial pressure?',choices:['A. "Take a deep breath in and hold it while we move you."','B. "Exhale slowly while we reposition you."','C. "Blow your nose to clear your airway before we move."','D. "Bear down slightly to stabilize your core."'],correct:1,rationale:'Exhaling during repositioning prevents the Valsalva maneuver. Valsalva increases intrathoracic pressure, which impairs venous return from the brain, directly raising ICP. Holding breath, nose-blowing, and bearing down all trigger Valsalva — all CONTRAINDICATED with IICP.'},
+// ── Q4 SATA ──
+{type:'sata',stem:'The nurse is placing a client on seizure precautions. Which actions should the nurse include? SELECT ALL THAT APPLY.',choices:['A. Pad the side rails of the bed','B. Place an oral airway at the bedside','C. Position the bed in the HIGH position for easy access','D. Place oxygen and suction equipment at the bedside','E. Keep an IV catheter patent','F. Place a padded tongue blade at the head of the bed'],correct:[0,1,3,4],rationale:'Correct: Padded rails (prevent injury), airway at bedside (maintain airway), O₂ and suction at bedside (emergency use), patent IV (medication administration). Bed should be in the LOW position for safety. A padded tongue blade is NEVER placed in a seizing client\'s mouth — it can break teeth, injure oral tissue, and cause aspiration. This is an outdated, dangerous practice.'},
+// ── Q5 MCQ ──
+{type:'mcq',stem:'A client receiving IV phenytoin for status epilepticus develops redness, swelling, and blistering at the IV site. The nurse recognizes this complication as which of the following?',choices:['A. Stevens-Johnson Syndrome','B. Purple Glove Syndrome','C. Gingival hyperplasia','D. Drug extravasation rash'],correct:1,rationale:'Purple Glove Syndrome is a serious complication specific to IV phenytoin, caused by extravasation at the injection site. It presents as discoloration, edema, and blistering moving up the limb. It is distinct from SJS (systemic skin reaction), gingival hyperplasia (gum overgrowth from oral phenytoin), and simple drug rash.'},
+// ── Q6 MCQ ──
+{type:'mcq',stem:'A client with epilepsy is prescribed valproic acid. Before administering the medication, which assessment is the nurse\'s HIGHEST priority?',choices:['A. Ask about history of kidney disease','B. Check serum liver function tests for signs of hepatotoxicity','C. Assess for history of COPD','D. Monitor serum potassium levels'],correct:1,rationale:'Valproic acid carries a BLACK BOX WARNING for hepatotoxicity. The nurse MUST assess baseline and ongoing liver function (LFTs). Watch for signs of jaundice, abdominal pain, anorexia, and nausea. Kidney disease and potassium are not the primary concerns. COPD is not a major concern with valproic acid.'},
+// ── Q7 Matrix ──
+{type:'matrix',stem:'A client is admitted with increased intracranial pressure following a hemorrhagic stroke. The nurse reviews the provider\'s orders. For each intervention, determine whether it is INDICATED or CONTRAINDICATED.',rows:['Elevate HOB to 30° and keep head midline','Keep the client in Trendelenburg position','Administer IV Mannitol as ordered','Encourage the client to blow their nose to clear secretions','Maintain a quiet, low-stimulation environment','Suction aggressively every 30 minutes'],cols:['Indicated','Contraindicated'],correct:[0,1,0,1,0,1],rationale:'HOB 30° midline: Indicated — promotes venous drainage. Trendelenburg: Contraindicated — increases cerebral blood volume and ICP. Mannitol IV: Indicated — osmotic diuretic, reduces cerebral edema. Nose blowing: Contraindicated — Valsalva increases ICP. Quiet environment: Indicated — stimulation increases ICP. Aggressive suctioning: Contraindicated — stimulates cough (Valsalva), spikes ICP temporarily.'},
+// ── Q8 MCQ ──
+{type:'mcq',stem:'An adult client is found with fixed, dilated pupils of 8 mm, bradycardia of 42 bpm, BP 190/50 mmHg, and Cheyne-Stokes respirations. The nurse correctly identifies these findings as which of the following?',choices:['A. Early signs of increased ICP and early intervention is needed','B. Cushing\'s Triad — a LATE, ominous sign indicating impending brain herniation','C. Normal pressure response in a sedated patient','D. Expected findings in a client taking benzodiazepines'],correct:1,rationale:'These are ALL components of late IICP. Cushing\'s Triad = widened pulse pressure (↑ systolic, ↓ diastolic) + bradycardia + irregular respirations (like Cheyne-Stokes). Fixed dilated pupils (8 mm; normal 2–6 mm) indicate brainstem involvement. Together, these signal IMPENDING HERNIATION — a neurological emergency. This is NOT early; it is a late/deadly presentation.'},
+// ── Q9 SATA ──
+{type:'sata',stem:'The nurse is caring for a client who begins to seize while in bed. Which actions should the nurse take DURING the seizure? SELECT ALL THAT APPLY.',choices:['A. Time the duration of the seizure','B. Restrain the client\'s limbs to prevent injury','C. Loosen restrictive clothing','D. Place the client in a side-lying position with head flexed forward','E. Insert an oral airway immediately','F. Raise and pad the side rails'],correct:[0,2,3,5],rationale:'Correct: Time it (>5 min = emergency; status epilepticus = ≥30 min), loosen clothing, lateral positioning with head forward (prevents aspiration), raise padded rails (prevents injury). NEVER restrain the client — you can cause fractures. NEVER insert anything into the mouth during a seizure — risk of broken teeth and aspiration. Airway equipment is available AT BEDSIDE but not inserted while actively seizing.'},
+// ── Q10 MCQ ──
+{type:'mcq',stem:'A nurse is caring for a patient taking phenytoin via enteral tube feeding. The patient\'s current phenytoin level is 8 mcg/mL (therapeutic range: 10–20 mcg/mL). The nurse\'s FIRST action should be:',choices:['A. Hold the next dose immediately','B. Verify that tube feedings were held one hour before and one hour after the dose','C. Increase the dose per protocol','D. Administer the dose and recheck levels in 48 hours'],correct:1,rationale:'Enteral tube feedings bind to phenytoin and significantly reduce absorption, causing subtherapeutic levels. The therapeutic range is 10–20 mcg/mL; this patient is at 8 (too low). The FIRST action is to verify the feeding-hold protocol: hold 1 hour BEFORE and 1 hour AFTER phenytoin dosing. The nurse should also notify the provider, but verifying the administration technique comes first.'},
+// ── Q11 MCQ ──
+{type:'mcq',stem:'A client with a history of atrial fibrillation is brought to the ED with sudden right-sided weakness, facial droop, and inability to speak. Head CT is negative for hemorrhage. The symptom onset was 2 hours ago. Which medication should the nurse anticipate administering?',choices:['A. Warfarin orally','B. Alteplase intravenously','C. Clopidogrel orally','D. Mannitol IV push'],correct:1,rationale:'This presentation is consistent with an acute ischemic stroke from cardiac embolism (AFib source). CT is negative for hemorrhage. The window for alteplase (tPA) administration is 3–4.5 hours from symptom onset. The patient is within the window. tPA is contraindicated in hemorrhagic stroke. Warfarin and clopidogrel are for prevention, not acute treatment. Mannitol is for IICP, not ischemic stroke.'},
+// ── Q12 Matrix Effective/Ineffective ──
+{type:'matrix',stem:'The nurse is evaluating the management of a client with status epilepticus. For each nursing action, determine whether it reflects EFFECTIVE or INEFFECTIVE management.',rows:['Administering IV Lorazepam as the first-line drug','Administering oral diazepam for acute seizure cessation','Timing the duration of seizure activity','Placing a padded tongue blade between the client\'s teeth','Positioning the client laterally after the seizure','Clustering all care activities to minimize interruptions'],cols:['Effective','Ineffective'],correct:[0,1,0,1,0,1],rationale:'IV Lorazepam: Effective — first-line for status epilepticus. Oral diazepam: Ineffective for acute status — onset too slow; IV/PR/nasal routes needed. Timing seizure: Effective — critical to assess duration. Tongue blade: Ineffective/dangerous — NEVER place anything in a seizing patient\'s mouth. Lateral positioning: Effective — prevents aspiration post-ictal. Clustering care: Ineffective — clustering stimuli in a neuro patient increases risk; care should be spaced.'},
+// ── Q13 MCQ ──
+{type:'mcq',stem:'A client is prescribed carbamazepine for epilepsy management. Which dietary instruction should the nurse include when providing education?',choices:['A. "Increase your intake of green leafy vegetables."','B. "Avoid grapefruit and grapefruit juice."','C. "Take the medication with an antacid to prevent GI upset."','D. "Take the medication with milk every time."'],correct:1,rationale:'Grapefruit and grapefruit juice inhibit CYP3A4 enzyme metabolism, causing dramatically increased carbamazepine plasma levels → toxicity risk. This applies to carbamazepine AND phenytoin. Green leafy vegetables are a concern with warfarin (Vitamin K), not carbamazepine. Antacids are not indicated; gabapentin specifically should NOT be taken within 2 hours of antacids.'},
+// ── Q14 MCQ ──
+{type:'mcq',stem:'A nurse is evaluating a client being treated for epilepsy with levetiracetam. Which finding would MOST concern the nurse?',choices:['A. Mild drowsiness and fatigue','B. Hypertension at 148/92','C. Family reports the client has been increasingly aggressive and made statements about not wanting to live','D. Bilateral mild hand tremors'],correct:2,rationale:'Levetiracetam can cause serious behavioral/psychiatric side effects including agitation, psychosis, depression, and suicidal ideation. Reports of aggression and statements suggesting suicidal ideation require IMMEDIATE nursing action and provider notification. Drowsiness and fatigue are the MOST COMMON (expected) side effects. Hypertension is a documented side effect but less emergent. Hand tremors are more associated with valproic acid.'},
+// ── Q15 Bowtie ──
+{type:'bowtie',stem:'A 68-year-old client is admitted following a witnessed tonic-clonic seizure. The client has a history of epilepsy and is currently prescribed phenytoin. The client is confused post-ictally. Complete the bowtie clinical reasoning.',btLeft:'Potential Causes',btRight:'Nursing Actions',btCenter:'Client Problem',leftChoices:['Subtherapeutic phenytoin level','Hyperglycemia','Supratherapeutic phenytoin level','Poor medication adherence','Dehydration causing electrolyte shift'],rightChoices:['Monitor phenytoin serum level','Assess blood glucose','Check medication compliance history','Obtain IV access and ensure airway patency','Administer PRN acetaminophen'],centerChoice:'Risk for Injury related to seizure activity and post-ictal confusion',correct:{left:[0,3],right:[0,2,3]},rationale:'Center problem: Risk for Injury — correct for this scenario. Potential causes: Subtherapeutic phenytoin (drug level too low = seizure breakthrough) and poor medication adherence (most common reason for breakthrough seizures in known epileptics) are the MOST relevant causes. Nursing actions: Monitor phenytoin level (verify therapeutic range 10–20), assess compliance, and secure IV access/airway are priority actions.'},
+// ── Q16 MCQ ──
+{type:'mcq',stem:'A client with a known seizure disorder tells the nurse: "I stopped taking my phenytoin last week because my gums have been getting really swollen." Which is the nurse\'s BEST response?',choices:['A. "You did the right thing stopping it — that\'s a dangerous allergic reaction."','B. "You should have talked to your doctor first. Stopping abruptly can trigger severe seizures. Your gum issue is called gingival hyperplasia and can be managed with excellent oral hygiene."','C. "I will contact your doctor about switching you to levetiracetam immediately."','D. "Gum swelling means the dose is too high; we just need to reduce it."'],correct:1,rationale:'Gingival hyperplasia is a known, expected side effect of phenytoin — NOT an allergy. Stopping phenytoin ABRUPTLY is extremely dangerous and can precipitate status epilepticus. The nurse should educate the client about: (1) never stopping AEDs abruptly, (2) daily brushing/flossing manages gingival hyperplasia, (3) always consult provider before any medication changes. While a medication switch may happen eventually, the immediate response addresses safety first.'},
+// ── Q17 MCQ ──
+{type:'mcq',stem:'The nurse administers IV mannitol to a client with IICP. Which assessment finding would indicate the medication is achieving its therapeutic effect?',choices:['A. Urine output of 15 mL/hr with stable electrolytes','B. Blood pressure decreased to 90/60 mmHg','C. ICP reading decreased from 24 mmHg to 13 mmHg with improved LOC','D. Client reports increased thirst and dry mouth'],correct:2,rationale:'Mannitol\'s therapeutic goals are: (1) ICP reduction (goal <15 mmHg), and (2) improved neurological status. A drop from 24 to 13 mmHg IS the therapeutic effect. Urine output of 15 mL/hr is too LOW — goal is ≥30–50 mL/hr. A hypotensive BP (90/60) is a serious adverse effect (fluid shifts). Dry mouth/thirst may occur but do not confirm therapeutic efficacy.'},
+// ── Q18 SATA ──
+{type:'sata',stem:'A client is prescribed lamotrigine. Which instructions should the nurse include in patient education? SELECT ALL THAT APPLY.',choices:['A. Report any new skin rash immediately to the healthcare provider','B. This medication may increase suicidal ideation — monitor your mood closely','C. You may take double the dose if you miss one','D. This medication can be used to treat bipolar disorder in addition to seizures','E. Abrupt discontinuation can trigger rebound seizures','F. Grapefruit juice is safe to drink with this medication'],correct:[0,1,3,4],rationale:'Correct: Report rash (SJS risk — starts as rash, progresses to life-threatening mucocutaneous sloughing), monitor for suicidal ideation (lamotrigine has the highest suicidal ideation risk among AEDs), bipolar disorder is a therapeutic use, never stop abruptly. Never double doses — risks toxicity. Grapefruit is a concern with carbamazepine and phenytoin, not lamotrigine specifically.'},
+// ── Q19 MCQ ──
+{type:'mcq',stem:'A client with a right hemisphere stroke has been transferred to the med-surg unit. The nurse notes the client repeatedly eats only the right side of the meal tray and ignores the left side of their environment. This finding BEST indicates which complication?',choices:['A. Expressive aphasia from left hemisphere injury','B. Left-sided neglect syndrome from right hemisphere injury','C. Visual field defects from occipital lobe damage','D. Right-sided weakness consistent with right hemisphere stroke'],correct:1,rationale:'Left-sided neglect (unilateral neglect) is a classic manifestation of RIGHT brain stroke — clients are unaware of the left side of their environment. Right brain stroke causes LEFT-sided deficits. Aphasia is a left brain stroke complication (language center). A simple visual field defect wouldn\'t cause the client to eat only the right side. Right-sided weakness is a LEFT brain finding.'},
+// ── Q20 MCQ ──
+{type:'mcq',stem:'A client is admitted with an ischemic stroke. The tPA infusion is started. Thirty minutes later, the client\'s blood pressure is 218/118 mmHg and they report a sudden, severe headache. The nurse\'s PRIORITY action is:',choices:['A. Administer a PRN antihypertensive and monitor the situation','B. Stop the tPA infusion immediately and notify the provider','C. Increase the IV fluid rate to ensure adequate perfusion','D. Obtain a stat blood glucose level'],correct:1,rationale:'During tPA, blood pressure must be maintained BELOW 180/105 mmHg. A BP of 218/118 + sudden severe headache = HEMORRHAGIC CONVERSION (bleeding into the brain) — the most dangerous complication of tPA. The nurse STOPS the infusion IMMEDIATELY (hemorrhagic conversion is a contraindication to continued tPA) and notifies the provider for emergency CT. Antihypertensives may follow per protocol, but stopping the infusion is FIRST.'},
+// ── Q21 Matrix Patient Teaching ──
+{type:'matrix',stem:'The nurse has taught a client with epilepsy who is prescribed phenytoin about medication management. Which client statements indicate UNDERSTANDING vs. NEEDS MORE TEACHING?',rows:['I will brush and floss my teeth every day.','I can take grapefruit juice with my pills since it\'s natural.','I will keep all my follow-up appointments to check drug levels.','If I feel better, I can slowly wean off phenytoin on my own.','I should avoid alcohol while taking this medication.','I can use my birth control pills as my only method of contraception.'],cols:['Understands','Needs More Teaching'],correct:[0,1,0,1,0,1],rationale:'Understands: Daily oral hygiene (prevents gingival hyperplasia), follow-up for drug levels (therapeutic range 10–20), avoid alcohol (increased CNS depression). Needs more teaching: Grapefruit inhibits phenytoin metabolism → toxicity (avoid it). NEVER self-wean AEDs — can trigger status epilepticus. Phenytoin DECREASES oral contraceptive effectiveness — client needs a backup/alternative method of birth control.'},
+// ── Q22 MCQ ──
+{type:'mcq',stem:'A client is admitted with a suspected stroke. Which diagnostic test should the nurse anticipate FIRST?',choices:['A. MRI brain with contrast','B. Lumbar puncture to rule out subarachnoid hemorrhage','C. Non-contrast CT scan of the head','D. Carotid duplex ultrasound'],correct:2,rationale:'A non-contrast CT scan is the FIRST diagnostic test for stroke — it is fast, widely available, and effectively distinguishes hemorrhagic from ischemic stroke. This is critical because tPA (given for ischemic) is CONTRAINDICATED in hemorrhagic stroke. MRI is more sensitive but takes longer. Lumbar puncture is done if CT is negative but SAH is still suspected. Carotid duplex is used after initial stabilization.'},
+// ── Q23 MCQ ──
+{type:'mcq',stem:'The nurse is caring for a client post-stroke. The client can speak but uses the wrong words (says "apple" when meaning "chair"). The nurse documents this as:',choices:['A. Dysarthria','B. Expressive aphasia (Broca\'s aphasia)','C. Receptive aphasia (Wernicke\'s aphasia)','D. Global aphasia'],correct:2,rationale:'Receptive aphasia (Wernicke\'s) = fluent speech but incorrect/nonsensical words — the client doesn\'t comprehend language correctly. Broca\'s aphasia = difficulty producing speech (non-fluent). Dysarthria = motor difficulty with speech articulation (slurred, slow) — words are correct but production is impaired. Global aphasia = both expressive AND receptive are severely impaired.'},
+// ── Q24 MCQ ──
+{type:'mcq',stem:'A client is prescribed topiramate for seizure management. The client calls the clinic reporting sudden, severe eye pain with blurred vision. The nurse\'s BEST action is:',choices:['A. Tell the client this is a common side effect that will resolve in a few days','B. Instruct the client to hold the next dose and monitor the eye','C. Instruct the client to go to the emergency department immediately — this may indicate acute angle-closure glaucoma','D. Advise the client to take an antihistamine for the eye irritation'],correct:2,rationale:'Topiramate is associated with secondary acute angle-closure glaucoma — a rare but serious ophthalmologic emergency presenting as sudden eye pain, redness, and blurred vision. Untreated acute glaucoma can lead to permanent vision loss within hours. This is NOT a common/benign side effect to wait on. The client needs IMMEDIATE emergency ophthalmologic evaluation and discontinuation of topiramate.'},
+// ── Q25 SATA ──
+{type:'sata',stem:'The nurse is caring for a client following an ischemic stroke who received tPA 2 hours ago. Which nursing interventions are appropriate at this time? SELECT ALL THAT APPLY.',choices:['A. Monitor blood pressure every 15 minutes','B. Keep blood pressure below 180/105 mmHg','C. Assess for signs of bleeding including gum bleeding and petechiae','D. Administer aspirin 325 mg for headache as ordered','E. Assess neurological status using the NIHSS frequently','F. Maintain NPO status until formal swallowing assessment is completed'],correct:[0,1,2,4,5],rationale:'All correct except aspirin after tPA: A (BP monitoring q15 min is standard post-tPA), B (BP goal <180/105 while on tPA), C (bleeding assessment — tPA activates plasminogen systemically), E (NIHSS monitoring for neurological changes), F (swallowing must be assessed before oral intake — stroke patients have high aspiration risk). Aspirin is CONTRAINDICATED within 24 hours of tPA due to compounded bleeding risk.'},
+// ── Q26 MCQ ──
+{type:'mcq',stem:'A client taking phenobarbital for seizure management asks when they can expect maximum seizure control from the medication. The nurse\'s BEST response is:',choices:['A. "You should feel full seizure protection within 24 hours of starting."','B. "Maximum anticonvulsant effect from phenobarbital may require several weeks to achieve."','C. "If you don\'t see improvement in 3 days, the medication is not working for you."','D. "The medication works immediately but the effects wear off after a month."'],correct:1,rationale:'Phenobarbital is a barbiturate anticonvulsant that can take SEVERAL WEEKS to achieve maximum anticonvulsant effect due to its long half-life and accumulation in CNS tissue. This is unique compared to IV formulations for acute seizures. Clients must be educated to continue taking the medication and not to assume it isn\'t working based on early experience.'},
+// ── Q27 MCQ ──
+{type:'mcq',stem:'The nurse is evaluating a client\'s understanding of seizure first aid taught to the client\'s family. Which statement by a family member indicates the need for FURTHER TEACHING?',choices:['A. "I will time how long the seizure lasts and call 911 if it goes over 5 minutes."','B. "I will put something soft between their teeth to prevent biting."','C. "I will turn them to their side to prevent choking."','D. "I will stay with them and reassure them when they wake up."'],correct:1,rationale:'NEVER place anything in a seizing person\'s mouth — this is a dangerous, outdated practice. Inserting objects risks injury to the rescuer\'s fingers, breaking the client\'s teeth, and causing aspiration. The tongue CANNOT be swallowed. The family needs retraining on this point. Timing (>5 min = call 911), lateral positioning (prevent aspiration), and staying with the person are all CORRECT actions.'},
+// ── Q28 Matrix ──
+{type:'matrix',stem:'A client is being evaluated for stroke type after presenting with sudden onset of symptoms. For each clinical finding, determine whether it is consistent with HEMORRHAGIC STROKE or ISCHEMIC STROKE.',rows:['History of sustained hypertension and cocaine use','Blood on CT scan in the brain parenchyma','History of atrial fibrillation','Sudden onset "thunderclap" headache described as worst of life','tPA is an appropriate treatment option','Left-sided weakness with BP of 160/95 in a client with atherosclerosis'],cols:['Hemorrhagic','Ischemic'],correct:[0,0,1,0,1,1],rationale:'Hemorrhagic: Sustained HTN + cocaine (triggers arterial rupture), blood on CT, "thunderclap" headache (classic for subarachnoid hemorrhage from aneurysm rupture). Ischemic: AFib (cardiac emboli source), tPA eligible (only appropriate for ischemic — contraindicated for hemorrhagic), atherosclerosis with thrombotic stroke. The BP of 160/95 with atherosclerosis fits thrombotic ischemic stroke.'},
+// ── Q29 MCQ ──
+{type:'mcq',stem:'A nurse reviews a client\'s Glasgow Coma Scale assessment: Eye opening to speech (score 3), confused verbal response (score 4), withdraws from pain (score 4). What is the TOTAL GCS score and clinical interpretation?',choices:['A. GCS 11 — moderate brain injury, not yet comatose','B. GCS 11 — comatose state requiring intubation','C. GCS 8 — comatose state, intubation likely needed','D. GCS 15 — intact neurological function'],correct:0,rationale:'GCS = Eye (3) + Verbal (4) + Motor (4) = 11. GCS ≤8 = comatose (needs airway intervention). GCS 15 = best possible. A score of 11 indicates moderate impairment but is NOT comatose. The "comatose" threshold is ≤8. This client has eyes opening to speech (3), confused speech (4), and withdrawal from pain (4) — concerning but not yet at coma level.'},
+// ── Q30 MCQ ──
+{type:'mcq',stem:'A client with a TBI is noted to have arms adducted and flexed tightly against the chest with legs internally rotated. The nurse documents this finding as:',choices:['A. Decerebrate posturing — indicates brainstem injury','B. Decorticate posturing — indicates cortical/cerebral injury','C. Flaccid posturing — indicates complete motor pathway disruption','D. Normal protective positioning response'],correct:1,rationale:'Arms FLEXED and ADDUCTED toward the CHEST (curled inward toward the core) = DECORTICATE posturing — indicates cortical hemisphere damage. Score 3 on GCS motor. Decerebrate = arms EXTEND outward (straight with hands curled, toes pointed down) — indicates brainstem involvement, far worse prognosis (GCS motor 2). Memory trick: deCORTicate = toward CORe. deCEREbrate = arms EXTEND away from body (external).'},
+// ── Q31 MCQ ──
+{type:'mcq',stem:'The nurse is caring for a client with IICP. The provider orders a stool softener. The rationale the nurse should understand for this order is:',choices:['A. Stool softeners prevent constipation caused by the client\'s antihypertensive medications','B. Straining during bowel movements triggers Valsalva, which increases intrathoracic pressure and worsens ICP','C. Stool softeners are given to prevent aspiration of stool','D. This is a routine hospital admission order unrelated to ICP management'],correct:1,rationale:'Straining to defecate = Valsalva maneuver → increases intrathoracic and intra-abdominal pressure → impairs venous return from the brain → spikes ICP. Stool softeners PREVENT this dangerous Valsalva. This is a direct, intentional ICP management strategy — not a coincidence or routine admission. Understanding the WHY is essential for nursing rationale.'},
+// ── Q32 MCQ ──
+{type:'mcq',stem:'A nurse is preparing to administer IV diazepam to a client in active status epilepticus. Which safety consideration is MOST important?',choices:['A. Shake the vial vigorously before drawing up','B. Administer the medication as a rapid IV push for fastest onset','C. Have resuscitation equipment at the bedside; administer slowly and monitor respirations closely','D. Mix diazepam with normal saline in an IV bag for continuous infusion'],correct:2,rationale:'IV benzodiazepines (diazepam AND lorazepam) can cause RAPID IV administration-induced respiratory depression, apnea, and cardiac arrest. Resuscitation equipment MUST be at bedside. Administer slowly. Monitor respiratory rate, SpO₂, and cardiac status continuously. Never give as a rapid push. IV diazepam is incompatible with most solutions and should not be diluted in bags.'},
+// ── Q33 SATA ──
+{type:'sata',stem:'A client is prescribed gabapentin for partial seizures. Which nursing considerations apply? SELECT ALL THAT APPLY.',choices:['A. Do not administer gabapentin within 2 hours of antacids','B. Monitor for Stevens-Johnson Syndrome','C. Inform the client that gabapentin has no interaction with herbal medicines','D. Assess location, duration, and characteristics of seizures','E. Monitor for signs of rhabdomyolysis','F. Gabapentin can be taken with any other medications without concern'],correct:[0,1,3,4],rationale:'Correct: Hold gabapentin 2 hours from antacids (antacids decrease absorption), monitor for SJS (all AEDs carry this risk), assess seizure activity (evaluate effectiveness), monitor for rhabdomyolysis (rare but documented). Incorrect: Herbal medicine interactions DO exist and must be assessed. Gabapentin has drug interactions and cannot be carelessly combined.'},
+// ── Q34 MCQ ──
+{type:'mcq',stem:'A client with IICP has an order for controlled hyperventilation. The nurse explains to the student nurse that the purpose of this intervention is:',choices:['A. To increase oxygen delivery to brain tissue','B. To lower CO₂ levels, causing cerebral vasoconstriction, temporarily reducing cerebral blood volume and ICP','C. To prevent aspiration in the unconscious client','D. To reduce the client\'s respiratory workload'],correct:1,rationale:'Controlled hyperventilation lowers PaCO₂ → cerebral arteries VASOCONSTRICT in response to alkalosis → cerebral blood volume decreases → ICP drops temporarily. This is a SHORT-TERM emergency measure used while awaiting definitive treatment — prolonged hyperventilation causes ischemia. It does NOT primarily increase O₂; it works through CO₂/vasoconstriction mechanism.'},
+// ── Q35 MCQ ──
+{type:'mcq',stem:'A nurse is assessing a client 48 hours after a left hemisphere ischemic stroke. Which behavioral pattern would the nurse MOST likely observe?',choices:['A. Impulsive behavior, short attention span, spatial perceptual deficits','B. Slow, cautious behavior, speech/language problems, right-sided weakness','C. Right-sided neglect, quick inquisitive behavior, spatial imagery problems','D. Left-sided weakness, speech production difficulties'],correct:1,rationale:'LEFT brain stroke = RIGHT-sided motor/sensory deficits + speech/language problems (language center = left hemisphere) + slow, cautious behavioral style + abstract thinking problems. Right brain stroke = left-sided deficits + spatial problems + impulsive behavior + left neglect. "Slow and cautious" left vs. "Quick and impulsive" right is a key NCLEX distinction.'},
+// ── Q36 MCQ ──
+{type:'mcq',stem:'A client is admitted reporting a "thunderclap headache — the worst headache of my life," followed by vomiting, neck stiffness, and photophobia. The initial CT scan is negative. The nurse anticipates which next diagnostic test?',choices:['A. EEG to rule out seizures','B. Lumbar puncture to detect xanthochromia indicating subarachnoid blood','C. Carotid duplex to rule out stenosis','D. MRI with contrast to image soft tissue'],correct:1,rationale:'Classic presentation of subarachnoid hemorrhage (SAH) from a ruptured aneurysm is the "thunderclap headache." When CT is NEGATIVE but SAH is still clinically suspected (based on symptoms), lumbar puncture is performed to detect xanthochromia (yellow discoloration of CSF from RBC breakdown) — which confirms SAH even with a negative CT. This sequence is high-yield NCLEX content.'},
+// ── Q37 Bowtie ──
+{type:'bowtie',stem:'A 72-year-old client with hypertension and diabetes presents with NIHSS score of 16, right-sided hemiplegia, and global aphasia. CT confirms no hemorrhage. Symptoms began 90 minutes ago. Complete the clinical reasoning bowtie.',btLeft:'Priority Conditions to Consider',btRight:'Priority Nursing Actions',btCenter:'Primary Client Condition',leftChoices:['Acute ischemic stroke — moderate to severe','Hemorrhagic stroke requiring surgery','Transient ischemic attack','Hypertensive emergency only','Status epilepticus'],rightChoices:['Prepare to administer IV alteplase (tPA)','Establish airway, assess respiratory and cardiovascular status','Perform formal dysphagia assessment before any oral intake','Administer warfarin immediately for anticoagulation','Obtain baseline NIHSS and monitor neurological status'],centerChoice:'Ineffective Cerebral Tissue Perfusion related to arterial occlusion',correct:{left:[0],right:[0,1,2,4]},rationale:'NIHSS 16 = moderate-to-severe stroke. No hemorrhage on CT. Symptoms < 3 hours = within tPA window. Primary condition: Ineffective Cerebral Tissue Perfusion. Priority actions: Prepare tPA (time critical), secure airway (ABCs first), dysphagia assessment (stroke = aspiration risk, NPO until cleared), baseline NIHSS (track change). Warfarin is NOT used for acute treatment — it is for prevention. Hemorrhagic stroke is excluded by CT.'},
+// ── Q38 MCQ ──
+{type:'mcq',stem:'A nurse is assessing a client being treated with oxcarbazepine. Which finding requires IMMEDIATE notification of the provider?',choices:['A. Client reports mild dizziness when standing up','B. Client develops a widespread blistering rash with fever and mucous membrane involvement','C. Client has a headache rated 3/10','D. Client reports mild nausea after the morning dose'],correct:1,rationale:'Widespread blistering rash + fever + mucous membrane involvement = Stevens-Johnson Syndrome (SJS)/Toxic Epidermal Necrolysis (TEN) — a potentially fatal skin reaction. SJS is a risk with ALL anticonvulsants on this list (especially lamotrigine, phenytoin, carbamazepine, oxcarbazepine). This is a MEDICAL EMERGENCY requiring IMMEDIATE drug discontinuation and provider notification. Dizziness, headache, and mild nausea are non-urgent side effects.'},
+// ── Q39 SATA ──
+{type:'sata',stem:'The nurse is educating a client newly diagnosed with epilepsy. Which statements by the client indicate APPROPRIATE understanding of their condition? SELECT ALL THAT APPLY.',choices:['A. "I should never drive until I have been seizure-free for the period required by state law."','B. "I can stop taking my medication when I feel normal again."','C. "I should wear a medical alert bracelet."','D. "I need to have adequate sleep — sleep deprivation can trigger seizures."','E. "Alcohol in moderate amounts is fine with my AED medications."','F. "I should avoid flashing lights if they trigger my seizures."'],correct:[0,2,3,5],rationale:'Correct: No driving until seizure-free per state law (safety), medical alert bracelet (emergency identification), adequate sleep (major seizure trigger), avoid personal triggers like flashing lights. Incorrect: NEVER stop AEDs when feeling normal — breakthrough seizures (status epilepticus risk). Alcohol INTERACTS with AEDs (increases CNS depression) and lowers seizure threshold — should be avoided.'},
+// ── Q40 MCQ ──
+{type:'mcq',stem:'A nurse is preparing a client for administration of IV mannitol. Which action is ESSENTIAL before and during the infusion?',choices:['A. Administer through a peripheral IV — central line is not required','B. Use a filter needle when drawing up mannitol from the vial','C. Mix mannitol with potassium chloride to prevent electrolyte loss','D. Shake the mannitol bag to dissolve any visible crystals before use'],correct:1,rationale:'Mannitol can crystallize, especially when exposed to temperature changes. A filter needle MUST be used when drawing up mannitol to prevent crystal particles from entering the IV tubing. Mannitol should NOT be mixed with electrolytes (risk of precipitation). If crystals are seen, the vial should be gently warmed (not shaken) and crystals should dissolve before administration.'},
+// ── Q41 MCQ ──
+{type:'mcq',stem:'A client with newly diagnosed epilepsy asks the nurse why they need to take antiepileptic medications even when they are not having seizures. The nurse\'s BEST explanation is:',choices:['A. "The medications are just a precaution during your recovery."','B. "AEDs maintain steady blood levels that reduce neuronal excitability and prevent the threshold for abnormal discharge from being reached — even during normal daily activities."','C. "You only need them when you feel a seizure coming on."','D. "The medications repair the underlying brain damage that causes seizures."'],correct:1,rationale:'AEDs work through ONGOING mechanisms — sodium channel blockade, GABA enhancement, calcium channel regulation — that require constant therapeutic blood levels to keep neuronal excitability below the seizure threshold. They don\'t "repair" the brain or wait for a seizure to start. This is why taking them consistently (even when feeling well) is critical — missing doses lowers the level and removes the protection.'},
+// ── Q42 Matrix ──
+{type:'matrix',stem:'The nurse is evaluating AED medication responses. For each client outcome, determine if it indicates an EXPECTED or UNEXPECTED (concerning) response.',rows:['Client on levetiracetam reports mild drowsiness','Client on valproic acid has jaundice and right upper quadrant pain','Client on lamotrigine develops a widespread blistering rash','Client on phenobarbital reports sedation in the first week','Client on phenytoin has gum overgrowth after 6 months','Client on topiramate reports 10 lb weight gain in 2 months'],cols:['Expected','Unexpected/Concern'],correct:[0,1,1,0,0,1],rationale:'Expected: Levetiracetam-drowsiness (most common side effect), phenobarbital-sedation (weeks to adjust), phenytoin-gingival hyperplasia (known AE managed with oral hygiene). Unexpected/Concerning: Valproic acid-jaundice/RUQ pain (hepatotoxicity — black box warning), lamotrigine-blistering rash (SJS — EMERGENCY), topiramate-weight GAIN (topiramate typically causes WEIGHT LOSS — this is an unexpected finding warranting evaluation).'},
+// ── Q43 MCQ ──
+{type:'mcq',stem:'A client is brought to the ED having a seizure. The seizure has lasted 35 minutes with no recovery. The nurse recognizes this as which condition requiring immediate intervention?',choices:['A. A prolonged absence seizure — treat with oral diazepam','B. Status Epilepticus — administer IV Lorazepam as first-line treatment','C. Status Epilepticus — administer phenytoin 20 mg/kg IV push','D. A complex partial seizure — reassure family and observe'],correct:1,rationale:'Status Epilepticus = continuous seizure activity ≥30 minutes OR repeated seizures without recovery. It is a NEUROLOGICAL EMERGENCY with risk of permanent brain damage, hypoxia, and death. FIRST-LINE treatment = IV Lorazepam (or IV diazepam). Phenytoin can be used as SECOND-LINE, but never IV push (causes cardiac arrhythmias/hypotension). Oral forms are inappropriate for acute emergencies due to delayed absorption.'},
+// ── Q44 MCQ ──
+{type:'mcq',stem:'A nurse is reviewing a client\'s medication history before starting carbamazepine. Which finding in the client\'s history would be MOST concerning?',choices:['A. History of hyperlipidemia managed with diet','B. History of aplastic anemia diagnosed 3 years ago','C. Client uses OTC naproxen occasionally for headaches','D. Client has a history of seasonal allergies'],correct:1,rationale:'Carbamazepine carries a risk of aplastic anemia and agranulocytosis (bone marrow suppression). A client with a prior history of aplastic anemia is at extremely high risk for recurrence or exacerbation with carbamazepine. This is a major contraindication requiring provider clarification before administration. Hyperlipidemia, OTC NSAIDs, and seasonal allergies are not specific major concerns for carbamazepine.'},
+// ── Q45 Bowtie ──
+{type:'bowtie',stem:'A client with a TBI from an MVA is on the neuro-ICU. Assessment: GCS 7, BP 168/94, ICP 26 mmHg, pupils sluggish and unequal, HOB at 10°. The provider has been notified. Complete the bowtie for the nurse\'s priorities.',btLeft:'Contributing Factors',btRight:'Nursing Actions to Perform Now',btCenter:'Primary Nursing Problem',leftChoices:['HOB too low impeding venous drainage','Cocaine use increasing BP','Active hemorrhage requiring surgery','Poor positioning causing jugular compression','Hypoxia from impaired airway'],leftCorrect:[0,3,4],rightChoices:['Elevate HOB to 30°, keep head midline','Administer IV furosemide','Ensure airway patency — O₂ for SpO₂ < 95%','Administer mannitol per order','Cluster care activities for efficiency'],rightCorrect:[0,2,3],centerChoice:'Decreased Intracranial Adaptive Capacity',correct:{left:[0,3,4],right:[0,2,3]},rationale:'Primary Problem: Decreased Intracranial Adaptive Capacity. Contributing factors: HOB at 10° (impairs venous outflow → ↑ ICP), poor positioning compressing jugular veins, and hypoxia (any SpO₂ drop increases ICP). Actions NOW: Immediately elevate HOB to 30° midline, ensure airway/O₂, administer mannitol per order. Furosemide is NOT first-line for cerebral edema. Clustering care is CONTRAINDICATED — it spikes ICP.'},
+// ── Q46 MCQ ──
+{type:'mcq',stem:'A TIA patient is being prepared for discharge. Which statement by the patient indicates APPROPRIATE understanding of discharge teaching?',choices:['A. "Since my symptoms went away, I don\'t need to take any medications."','B. "I will take my aspirin and/or clopidogrel daily and control my blood pressure and blood sugar to prevent a full stroke."','C. "TIA is just a mini-stroke and is not serious — I can resume all activities normally."','D. "I should avoid all exercise since it stresses the blood vessels."'],correct:1,rationale:'TIA is a SERIOUS warning sign — up to 10–15% of TIA patients have a stroke within 90 days. Antiplatelet therapy (aspirin, clopidogrel) is prescribed to prevent thrombotic/embolic strokes. BP, diabetes, and lifestyle management are essential secondary prevention. TIA symptoms resolving does NOT mean medications are unnecessary. Exercise (appropriate levels) is actually protective, not harmful.'},
+// ── Q47 MCQ ──
+{type:'mcq',stem:'The nurse is caring for a post-stroke client with known swallowing difficulties. The family brings in the client\'s favorite orange juice. Which action by the nurse is MOST appropriate?',choices:['A. Allow the client to drink the juice since it is a thin liquid and easy to swallow','B. Thicken the juice per the dysphagia diet order and test swallowing ability first','C. Tell the family juice is fine as long as the client sits upright','D. Allow small sips only since the client is thirsty'],correct:1,rationale:'Post-stroke dysphagia assessment MUST be done before ANY oral intake. Thin liquids (like juice) are the MOST DANGEROUS for dysphagia clients — they aspirate into the lungs easily. The speech-language pathologist determines the appropriate diet consistency. Juice must be thickened per order. Aspiration pneumonia is a leading cause of death in stroke patients. The nurse keeps ALL oral intake per the formal dysphagia evaluation.'},
+// ── Q48 SATA ──
+{type:'sata',stem:'The nurse is assessing a client with suspected IICP following a blunt head trauma. Which findings should the nurse report to the provider IMMEDIATELY? SELECT ALL THAT APPLY.',choices:['A. GCS decreased from 14 to 10 over the past 2 hours','B. Bilateral equal pupils 3 mm — reactive','C. Fixed and dilated pupils bilaterally','D. Bradycardia HR 44 bpm, BP 192/56, irregular respirations','E. Client reports mild headache rated 2/10','F. Bloody drainage from the nose or ears'],correct:[0,2,3,5],rationale:'IMMEDIATELY report: Decreasing GCS (neurological deterioration), fixed/dilated pupils (brainstem compression), Cushing\'s Triad (bradycardia + widened pulse pressure + irregular respirations = impending herniation), bloody drainage from nose/ears (basilar skull fracture — NO nasal packing; alert provider). Small equal reactive pupils and mild headache are concerning but less acutely emergent than the above findings.'},
+// ── Q49 MCQ ──
+{type:'mcq',stem:'A client with IICP following a TBI has a nasal drainage that tests positive for glucose. The nurse\'s PRIORITY action is:',choices:['A. Insert nasal packing to stop the bleeding','B. Apply a cervical collar and prepare for spine surgery','C. Alert the provider — this indicates a CSF leak from a basilar skull fracture; do NOT pack the nose','D. Place the client in reverse Trendelenburg position'],correct:2,rationale:'Glucose-positive nasal drainage = CSF rhinorrhea = basilar skull fracture. CONTRAINDICATED: nasal packing (could drive bacteria into CNS → meningitis) and nasotracheal suctioning. The nurse alerts the provider immediately. This was also the answer to the muddy points warm-up question (Slide 3): bloody drainage from nose after head injury = alert provider, do NOT insert nasal packing.'},
+// ── Q50 MCQ ──
+{type:'mcq',stem:'The nurse notes that a client recovering from epilepsy surgery is being started on pregabalin for persistent partial-onset seizures. The nurse should monitor closely for which of the following?',choices:['A. Gingival hyperplasia and purple glove syndrome','B. Respiratory depression and significant weight gain','C. Hepatotoxicity and pancreatitis','D. Suicidal ideation with the highest risk among all AEDs'],correct:1,rationale:'Pregabalin\'s notable adverse effects include: respiratory depression (important — monitor SpO₂), significant weight gain (notable counseling point), somnolence, peripheral edema, and SJS. Gingival hyperplasia and purple glove = phenytoin. Hepatotoxicity/pancreatitis = valproic acid. Highest suicidal ideation risk = lamotrigine (all AEDs have some risk, but lamotrigine has the highest among those listed).'},
+// ── Q51 MCQ ──
+{type:'mcq',stem:'A client taking valproic acid is scheduled for emergency surgery. The surgeon notes the platelet count is 78,000/mm³ (normal: 150,000–400,000/mm³) and PTT is elevated (normal aPTT: 25–35 sec). The nurse connects these findings to the medication because:',choices:['A. Valproic acid increases renal clearance of clotting factors','B. Valproic acid can cause thrombocytopenia and blood dyscrasias, increasing bleeding risk','C. Valproic acid causes vitamin K deficiency','D. These are unrelated to valproic acid — the client likely has hepatitis'],correct:1,rationale:'Valproic acid can cause BLOOD DYSCRASIAS including thrombocytopenia (↓ platelets; normal 150,000–400,000/mm³) and leukopenia (↓ WBCs; normal 4,500–11,000/mm³). Low platelet count and elevated PTT (normal aPTT: 25–35 sec) directly increase surgical bleeding risk. This is a critical pre-operative assessment the nurse must connect to the medication history. Surgeons must be notified about the valproic acid. The nurse should assess for signs of bleeding — bruising, petechiae.'},
+// ── Q52 Matrix Effective/Ineffective ──
+{type:'matrix',stem:'The nurse is evaluating stroke prevention education for a client who had a TIA. For each client behavior, determine whether it reflects EFFECTIVE or INEFFECTIVE prevention.',rows:['Client takes clopidogrel daily as prescribed','Client stopped their amlodipine because "BP feels fine"','Client maintains blood sugar below 180 mg/dL (acceptable post-meal target for DM; normal fasting: 70–99 mg/dL) per glucose log','Client smokes 1 pack/day but has reduced from 2 packs','Client follows a low-sodium diet and exercises 30 min/day','Client drinks 3 glasses of wine nightly to "relax the blood vessels"'],cols:['Effective Prevention','Ineffective Prevention'],correct:[0,1,0,1,0,1],rationale:'Effective: Daily clopidogrel (antiplatelet for stroke prevention), glucose control (DM is a major stroke risk factor), diet + exercise (modifiable risk factors). Ineffective: Stopping amlodipine — hypertension is the #1 modifiable stroke risk; stopping BP meds is dangerous. Smoking reduction is good but not cessation — complete cessation is the goal. Alcohol INCREASES stroke risk (especially hemorrhagic) — "relaxing blood vessels" is a myth for stroke prevention.'},
+// ── Q53 MCQ ──
+{type:'mcq',stem:'A nurse is assessing a client\'s NIHSS score. The client: opens eyes only to pain (score 2 on GCS, note this is the NIHSS item for LOC response to stimulation = 2), cannot answer orientation questions (2 on 1b), facial droop on right side complete (3 on item 4), left arm drifts and falls to bed before 10 seconds (3 on item 5a). Which NIHSS range does this client fall into?',choices:['A. Minor stroke (NIHSS 1–4)','B. Moderate stroke (NIHSS 5–15)','C. Moderate to severe stroke (NIHSS 16–20)','D. Severe stroke (NIHSS 21–42)'],correct:2,rationale:'Adding the described scores: LOC to pain (2) + cannot answer questions (2) + complete facial droop (3) + arm falls before 10 sec (3) = 10 from these 4 items alone, but with additional items it would place higher. However, the scenario describes a presentation consistent with NIHSS 16–20 (moderate to severe) based on complete facial palsy and total arm failure combined with altered LOC. NIHSS ranges: 0=none, 1–4=minor, 5–15=moderate, 16–20=mod-severe, 21–42=severe.'},
+// ── Q54 SATA ──
+{type:'sata',stem:'The nurse is caring for a client with a left hemispheric ischemic stroke. Which interventions are appropriate when communicating with this client? SELECT ALL THAT APPLY.',choices:['A. Speak in short, simple sentences','B. Use gestures, pictures, and visual cues','C. Speak loudly — the client is likely hearing impaired','D. Allow extra time for the client to respond','E. Approach the client from the right (unaffected) side','F. Involve multiple family members speaking simultaneously to provide stimulation'],correct:[0,1,3,4],rationale:'Left brain stroke affects LANGUAGE (aphasia). Interventions: Short simple sentences (reduces cognitive load), use gestures/pictures (compensate for verbal deficits), allow extra time (do not rush), approach from unaffected right side (the client may have right-sided sensory loss, but the approach promotes engagement). Loudness is irrelevant — aphasia is NOT a hearing problem. Multiple simultaneous speakers are overwhelming and counterproductive.'},
+// ── Q55 MCQ ──
+{type:'mcq',stem:'A client with a new seizure disorder is started on topiramate as monotherapy. The client reports they have been trying to lose weight. The nurse should inform the client that:',choices:['A. Topiramate typically causes significant weight gain — dietary counseling will be provided','B. Topiramate often causes anorexia and weight loss, which aligns with your goal but requires monitoring for nutritional deficits','C. Weight changes are not associated with topiramate','D. Topiramate will cause rapid 20-30 lb weight gain in the first month'],correct:1,rationale:'Topiramate is well-known for causing ANOREXIA and WEIGHT LOSS — it is sometimes used off-label for weight management. While this may seem to align with the client\'s goal, the nurse must counsel the client about adequate nutrition, monitor weight and eating patterns, and assess for symptoms of malnutrition. This is the OPPOSITE of pregabalin, which causes significant weight GAIN.'},
+// ── Q56 MCQ ──
+{type:'mcq',stem:'A client with epilepsy managed on carbamazepine states she is trying to get pregnant. Which is the nurse\'s most important teaching point?',choices:['A. Carbamazepine is safe during pregnancy for all seizure types','B. Carbamazepine interferes with oral contraceptives AND is a teratogen — she must discuss this with her provider before conception, as dose adjustments or a safer AED may be needed','C. She should double her carbamazepine dose during pregnancy for fetal protection','D. Pregnancy is absolutely contraindicated with carbamazepine use'],correct:1,rationale:'Critical teaching: (1) Carbamazepine reduces oral contraceptive effectiveness — unintended pregnancy is possible; (2) Carbamazepine is TERATOGENIC (associated with neural tube defects, fetal carbamazepine syndrome). Pre-conception counseling with her neurologist is essential to weigh risks of uncontrolled seizures during pregnancy vs. fetal risks. The provider may recommend folic acid supplementation, AED switch, or dosing adjustments. Doubling the dose is harmful and inappropriate.'},
+// ── Q57 MCQ ──
+{type:'mcq',stem:'A nurse caring for a client with IICP notes the following vital signs: BP 162/98, HR 58, RR 8 and irregular with Cheyne-Stokes pattern, pupils 8 mm bilaterally and non-reactive. The nurse\'s FIRST action is:',choices:['A. Obtain IV access and prepare to administer mannitol','B. Document the findings and continue monitoring','C. Call a rapid response/code and notify the provider STAT — these are signs of impending herniation','D. Recheck the pupils in 15 minutes before acting'],correct:2,rationale:'This is a MEDICAL EMERGENCY. The clinical picture = COMPLETE Cushing\'s Triad (widened pulse pressure, bradycardia, irregular respirations/Cheyne-Stokes) + fixed dilated pupils = impending brain herniation. The FIRST action is IMMEDIATE provider/rapid response notification. Every minute matters. Documenting without acting is negligent. Mannitol is an appropriate intervention but comes AFTER the emergency is called.'},
+// ── Q58 Matrix ──
+{type:'matrix',stem:'The nurse is caring for clients prescribed various AEDs. For each medication-finding pair, determine if immediate FOLLOW-UP is required or NOT required.',rows:['Phenytoin: serum level of 7 mcg/mL (therapeutic range: 10–20 mcg/mL) with breakthrough seizure','Levetiracetam: client reports mild headache day 2','Valproic acid: client has yellowing of sclera and right upper quadrant pain','Phenobarbital: client is drowsy and fatigued in week 1','Lamotrigine: client develops fever and oral ulcers','Carbamazepine: client reports double vision and unsteady gait'],cols:['Immediate Follow-Up Required','Not Required — Expected/Monitor'],correct:[0,1,0,1,0,0],rationale:'Immediate: Phenytoin level 7 (subtherapeutic, below 10–20 range + breakthrough seizure = provider notification), valproic acid jaundice/RUQ pain (hepatotoxicity emergency), lamotrigine fever + oral ulcers (early SJS — STOP drug, notify provider), carbamazepine diplopia + ataxia (signs of toxicity/CNS depression). Not urgent: Levetiracetam mild headache day 2 (minor expected side effect), phenobarbital drowsiness week 1 (expected adjustment period — takes weeks for full effect).'},
+// ── Q59 SATA ──
+{type:'sata',stem:'A client presents to the ED with sudden loss of balance, right arm weakness, and slurred speech. A left hemispheric ischemic stroke is confirmed. NIHSS is 9. Which provider orders should the nurse anticipate? SELECT ALL THAT APPLY.',choices:['A. Non-contrast CT scan of the head (completed in ED prior to transfer)','B. IV alteplase (tPA) if within the 3–4.5 hour window','C. CBC, CMP, PT/INR, PTT, type and screen','D. Aspirin 325 mg orally immediately','E. NPO with formal swallowing evaluation','F. EKG to rule out atrial fibrillation'],correct:[1,2,4,5],rationale:'Anticipate: IV tPA if within window (NIHSS 9 = moderate, candidate), labs (CBC/CMP/coagulation — pre-tPA workup), NPO with swallowing eval (dysphagia screening before oral intake), EKG (rule out AFib as embolic source). CT was already done. Aspirin 324 mg is CONTRAINDICATED within 24 hours of tPA (compounded bleeding risk) — so this order would NOT be expected acutely. CT was already completed (listed as completed, so no new order needed).'},
+// ── Q60 MCQ ──
+{type:'mcq',stem:'The nursing student asks: "Why do we position the head of bed at 30 degrees and keep the head midline — not tilted to the side — for a client with IICP?" The nurse preceptor\'s BEST explanation is:',choices:['A. "It prevents the client from rolling out of bed."','B. "HOB at 30° promotes cerebral venous drainage by gravity, and keeping the head midline prevents jugular vein compression — both directly reduce ICP."','C. "It improves lung expansion and prevents pneumonia."','D. "It makes it easier for the nurse to monitor pupil responses."'],correct:1,rationale:'HOB 30° uses gravity to facilitate venous drainage FROM the brain (through the jugular veins, which empty into the SVC). Tilting or rotating the head COMPRESSES the jugular veins, impairing venous outflow and causing blood to pool in the cranium, spiking ICP. Both the elevation AND the midline alignment work together to optimize cerebral venous drainage. This is one of the most testable non-pharmacologic ICP management concepts.'}
+];
+
+/* ══════════════ QUIZ ENGINE ══════════════ */
+let currentQ = 0;
+let score = 0;
+let answered = 0;
+let submitted = new Array(QUESTIONS.length).fill(false);
+let userAnswers = new Array(QUESTIONS.length).fill(null);
+
+function renderQuestion(idx) {
+  const q = QUESTIONS[idx];
+  const area = document.getElementById('quiz-area');
+  document.getElementById('q-counter').textContent = `Question ${idx+1} of ${QUESTIONS.length}`;
+  document.getElementById('q-score-display').textContent = `Score: ${score} / ${answered}`;
+  const pct = ((idx)/QUESTIONS.length)*100;
+  document.getElementById('q-progress-bar').style.width = pct + '%';
+  
+  let typeLabel = q.type === 'mcq' ? 'MCQ' : q.type === 'sata' ? 'SATA' : q.type === 'matrix' ? 'MATRIX' : 'BOWTIE';
+  let typeClass = q.type === 'mcq' ? 'mcq' : q.type === 'sata' ? 'sata' : q.type === 'matrix' ? 'matrix' : 'bowtie';
+  
+  let bodyHTML = '';
+  
+  if (q.type === 'mcq') {
+    bodyHTML = `<div class="mcq-options" id="opts-${idx}">` +
+      q.choices.map((c,i) => `<div class="mcq-option" id="opt-${idx}-${i}" onclick="selectMCQ(${idx},${i})">${c}</div>`).join('') +
+      `</div>`;
+  } else if (q.type === 'sata') {
+    bodyHTML = `<div style="font-size:0.78rem;color:var(--cyan);font-weight:600;margin-bottom:0.7rem;font-family:'Syne',sans-serif">Select ALL that apply — click to toggle</div>
+    <div class="sata-options" id="opts-${idx}">` +
+      q.choices.map((c,i) => `<div class="sata-option" id="opt-${idx}-${i}" onclick="toggleSATA(${idx},${i})">${c}</div>`).join('') +
+      `</div>`;
+  } else if (q.type === 'matrix') {
+    bodyHTML = `<div style="overflow-x:auto"><table class="matrix-table" id="opts-${idx}">
+      <thead><tr><th style="min-width:220px">Finding/Action</th>${q.cols.map(c=>`<th style="text-align:center;min-width:100px">${c}</th>`).join('')}</tr></thead>
+      <tbody>${q.rows.map((r,ri)=>`<tr><td style="padding:0.6rem 0.8rem">${r}</td>${q.cols.map((c,ci)=>`<td style="text-align:center;padding:0.6rem"><div id="opt-${idx}-${ri}-${ci}" class="matrix-cell" onclick="selectMatrix(${idx},${ri},${ci})" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--border);margin:auto;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-size:0.8rem"></div></td>`).join('')}</tr>`).join('')}
+      </tbody></table></div>`;
+  } else if (q.type === 'bowtie') {
+    bodyHTML = `<div class="bowtie-wrap" id="opts-${idx}">
+      <div class="bowtie-col">
+        <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--blue-bright);text-transform:uppercase;margin-bottom:0.5rem">${q.btLeft}</div>
+        ${q.leftChoices.map((c,i)=>`<div class="bowtie-option left" id="opt-${idx}-L${i}" onclick="toggleBowtie(${idx},'L',${i})">${c}</div>`).join('')}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.5rem">
+        <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;text-align:center;margin-bottom:0.5rem">Client Problem</div>
+        <div style="background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(16,185,129,0.15));border:2px solid var(--cyan);border-radius:12px;padding:0.6rem 0.8rem;font-size:0.8rem;font-weight:600;color:var(--heading);text-align:center;max-width:180px">${q.centerChoice}</div>
+      </div>
+      <div class="bowtie-col">
+        <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--green);text-transform:uppercase;margin-bottom:0.5rem">${q.btRight}</div>
+        ${q.rightChoices.map((c,i)=>`<div class="bowtie-option right" id="opt-${idx}-R${i}" onclick="toggleBowtie(${idx},'R',${i})">${c}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  area.innerHTML = `<div class="q-card">
+    <div class="q-header">
+      <span class="q-num">Q${idx+1}</span>
+      <span class="q-type-badge ${typeClass}">${typeLabel}</span>
+    </div>
+    <div class="q-stem">${q.stem}</div>
+    ${bodyHTML}
+    <div id="rationale-${idx}" class="rationale-box" style="display:none"></div>
+    <div style="display:flex;gap:1rem;margin-top:1.2rem;flex-wrap:wrap">
+      ${!submitted[idx] ? `<button class="btn-submit" onclick="submitAnswer(${idx})">Submit Answer</button>` : ''}
+      ${idx > 0 ? `<button class="btn-next" onclick="goTo(${idx-1})">← Prev</button>` : ''}
+      ${idx < QUESTIONS.length-1 ? `<button class="btn-next" onclick="goTo(${idx+1})">Next →</button>` : `<button class="btn-next" onclick="showResults()">See Results 🏆</button>`}
+    </div>
+  </div>`;
+  
+  // Restore state if already answered
+  if (submitted[idx]) {
+    restoreAnswerState(idx);
+    showRationale(idx);
+  }
+  if (userAnswers[idx] !== null && !submitted[idx]) {
+    restoreSelections(idx);
+  }
+}
+
+function restoreSelections(idx) {
+  const q = QUESTIONS[idx];
+  const ua = userAnswers[idx];
+  if (!ua) return;
+  if (q.type === 'mcq' && ua.sel !== undefined) {
+    const el = document.getElementById(`opt-${idx}-${ua.sel}`);
+    if (el) el.classList.add('selected');
+  } else if (q.type === 'sata' && ua.sel) {
+    ua.sel.forEach(i => {
+      const el = document.getElementById(`opt-${idx}-${i}`);
+      if (el) el.classList.add('selected');
+    });
+  } else if (q.type === 'bowtie' && ua.selL) {
+    ua.selL.forEach(i => {
+      const el = document.getElementById(`opt-${idx}-L${i}`);
+      if (el) el.classList.add('selected');
+    });
+    if (ua.selR) ua.selR.forEach(i => {
+      const el = document.getElementById(`opt-${idx}-R${i}`);
+      if (el) el.classList.add('selected');
+    });
+  }
+}
+
+function restoreAnswerState(idx) {
+  const q = QUESTIONS[idx];
+  const ua = userAnswers[idx];
+  if (!ua) return;
+  if (q.type === 'mcq') {
+    q.choices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-${i}`);
+      if (!el) return;
+      if (i === q.correct) el.classList.add('correct');
+      else if (i === ua.sel) el.classList.add('incorrect');
+    });
+  } else if (q.type === 'sata') {
+    q.choices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-${i}`);
+      if (!el) return;
+      const isCorrect = q.correct.includes(i);
+      const isSelected = ua.sel && ua.sel.includes(i);
+      if (isCorrect && isSelected) el.classList.add('correct');
+      else if (!isCorrect && isSelected) el.classList.add('incorrect');
+      else if (isCorrect && !isSelected) el.classList.add('missed');
+    });
+  } else if (q.type === 'matrix') {
+    q.rows.forEach((_,ri) => {
+      q.cols.forEach((_,ci) => {
+        const el = document.getElementById(`opt-${idx}-${ri}-${ci}`);
+        if (!el) return;
+        const correctCol = q.correct[ri];
+        const isSelected = ua.matrix && ua.matrix[ri] === ci;
+        if (correctCol === ci && isSelected) { el.style.background='var(--green)'; el.style.borderColor='var(--green)'; el.textContent='✓'; }
+        else if (correctCol === ci && !isSelected) { el.style.background='rgba(245,158,11,0.3)'; el.style.borderColor='var(--yellow)'; el.textContent='✓'; }
+        else if (correctCol !== ci && isSelected) { el.style.background='rgba(248,113,113,0.3)'; el.style.borderColor='#f87171'; el.textContent='✗'; }
+      });
+    });
+  } else if (q.type === 'bowtie') {
+    q.leftChoices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-L${i}`);
+      if (!el) return;
+      const isCorrect = q.correct.left.includes(i);
+      const isSelected = ua.selL && ua.selL.includes(i);
+      if (isCorrect && isSelected) el.classList.add('correct');
+      else if (!isCorrect && isSelected) el.classList.add('incorrect');
+      else if (isCorrect && !isSelected) el.classList.add('missed');
+    });
+    q.rightChoices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-R${i}`);
+      if (!el) return;
+      const isCorrect = q.correct.right.includes(i);
+      const isSelected = ua.selR && ua.selR.includes(i);
+      if (isCorrect && isSelected) el.classList.add('correct');
+      else if (!isCorrect && isSelected) el.classList.add('incorrect');
+      else if (isCorrect && !isSelected) el.classList.add('missed');
+    });
+  }
+}
+
+function selectMCQ(idx, i) {
+  if (submitted[idx]) return;
+  document.querySelectorAll(`#opts-${idx} .mcq-option`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`opt-${idx}-${i}`).classList.add('selected');
+  userAnswers[idx] = {sel: i};
+}
+function toggleSATA(idx, i) {
+  if (submitted[idx]) return;
+  if (!userAnswers[idx]) userAnswers[idx] = {sel: []};
+  const el = document.getElementById(`opt-${idx}-${i}`);
+  const arr = userAnswers[idx].sel;
+  const pos = arr.indexOf(i);
+  if (pos === -1) { arr.push(i); el.classList.add('selected'); }
+  else { arr.splice(pos,1); el.classList.remove('selected'); }
+}
+function selectMatrix(idx, ri, ci) {
+  if (submitted[idx]) return;
+  if (!userAnswers[idx]) userAnswers[idx] = {matrix: {}};
+  const q = QUESTIONS[idx];
+  q.cols.forEach((_,c) => {
+    const el = document.getElementById(`opt-${idx}-${ri}-${c}`);
+    if (el) { el.style.background=''; el.style.borderColor='var(--border)'; el.textContent=''; el.classList.remove('selected'); }
+  });
+  const el = document.getElementById(`opt-${idx}-${ri}-${ci}`);
+  if (el) { el.style.background='rgba(6,182,212,0.3)'; el.style.borderColor='var(--cyan)'; el.textContent='●'; }
+  userAnswers[idx].matrix[ri] = ci;
+}
+function toggleBowtie(idx, side, i) {
+  if (submitted[idx]) return;
+  if (!userAnswers[idx]) userAnswers[idx] = {selL:[], selR:[]};
+  if (!userAnswers[idx].selL) userAnswers[idx].selL = [];
+  if (!userAnswers[idx].selR) userAnswers[idx].selR = [];
+  const arrKey = side === 'L' ? 'selL' : 'selR';
+  const elId = `opt-${idx}-${side}${i}`;
+  const el = document.getElementById(elId);
+  const arr = userAnswers[idx][arrKey];
+  const pos = arr.indexOf(i);
+  if (pos === -1) { arr.push(i); el.classList.add('selected'); }
+  else { arr.splice(pos,1); el.classList.remove('selected'); }
+}
+
+function submitAnswer(idx) {
+  if (submitted[idx]) return;
+  const q = QUESTIONS[idx];
+  const ua = userAnswers[idx];
+  submitted[idx] = true;
+  answered++;
+  let correct = false;
+  
+  if (q.type === 'mcq') {
+    if (!ua || ua.sel === undefined) { alert('Please select an answer.'); submitted[idx]=false; answered--; return; }
+    correct = ua.sel === q.correct;
+    q.choices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-${i}`);
+      if (i === q.correct) el.classList.add('correct');
+      else if (i === ua.sel) el.classList.add('incorrect');
+    });
+  } else if (q.type === 'sata') {
+    if (!ua || !ua.sel || ua.sel.length === 0) { alert('Please select at least one answer.'); submitted[idx]=false; answered--; return; }
+    const selected = new Set(ua.sel);
+    const correctSet = new Set(q.correct);
+    correct = selected.size === correctSet.size && [...selected].every(x => correctSet.has(x));
+    q.choices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-${i}`);
+      const isCor = q.correct.includes(i);
+      const isSel = ua.sel.includes(i);
+      if (isCor && isSel) el.classList.add('correct');
+      else if (!isCor && isSel) el.classList.add('incorrect');
+      else if (isCor && !isSel) el.classList.add('missed');
+    });
+  } else if (q.type === 'matrix') {
+    if (!ua || !ua.matrix || Object.keys(ua.matrix).length < q.rows.length) { alert('Please answer all rows.'); submitted[idx]=false; answered--; return; }
+    let allRight = true;
+    q.rows.forEach((_,ri) => {
+      const correctCol = q.correct[ri];
+      const selectedCol = ua.matrix[ri];
+      q.cols.forEach((_,ci) => {
+        const el = document.getElementById(`opt-${idx}-${ri}-${ci}`);
+        if (!el) return;
+        if (correctCol === ci && selectedCol === ci) { el.style.background='var(--green)'; el.style.borderColor='var(--green)'; el.textContent='✓'; }
+        else if (correctCol === ci) { el.style.background='rgba(245,158,11,0.3)'; el.style.borderColor='var(--yellow)'; el.textContent='✓'; allRight=false; }
+        else if (selectedCol === ci) { el.style.background='rgba(248,113,113,0.3)'; el.style.borderColor='#f87171'; el.textContent='✗'; allRight=false; }
+      });
+    });
+    correct = allRight;
+  } else if (q.type === 'bowtie') {
+    if (!ua || !ua.selL || ua.selL.length === 0) { alert('Please select options on both sides.'); submitted[idx]=false; answered--; return; }
+    const lSet = new Set(ua.selL || []);
+    const rSet = new Set(ua.selR || []);
+    const lCor = new Set(q.correct.left);
+    const rCor = new Set(q.correct.right);
+    correct = lSet.size === lCor.size && [...lSet].every(x=>lCor.has(x)) && rSet.size === rCor.size && [...rSet].every(x=>rCor.has(x));
+    q.leftChoices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-L${i}`);
+      if (!el) return;
+      if (q.correct.left.includes(i) && ua.selL.includes(i)) el.classList.add('correct');
+      else if (!q.correct.left.includes(i) && ua.selL.includes(i)) el.classList.add('incorrect');
+      else if (q.correct.left.includes(i)) el.classList.add('missed');
+    });
+    q.rightChoices.forEach((_,i) => {
+      const el = document.getElementById(`opt-${idx}-R${i}`);
+      if (!el) return;
+      if (q.correct.right.includes(i) && ua.selR && ua.selR.includes(i)) el.classList.add('correct');
+      else if (!q.correct.right.includes(i) && ua.selR && ua.selR.includes(i)) el.classList.add('incorrect');
+      else if (q.correct.right.includes(i)) el.classList.add('missed');
+    });
+  }
+  
+  if (correct) score++;
+  showRationale(idx);
+  
+  // Remove submit button
+  const submitBtn = document.querySelector(`button[onclick="submitAnswer(${idx})"]`);
+  if (submitBtn) submitBtn.remove();
+  
+  if (correct) showPopup(true, q.rationale);
+  else showPopup(false, q.rationale);
+  
+  document.getElementById('q-score-display').textContent = `Score: ${score} / ${answered}`;
+}
+
+function showRationale(idx) {
+  const q = QUESTIONS[idx];
+  const el = document.getElementById(`rationale-${idx}`);
+  if (el) { el.innerHTML = `<strong>📖 Rationale:</strong> ${q.rationale}`; el.style.display='block'; }
+}
+
+function goTo(idx) {
+  currentQ = idx;
+  renderQuestion(idx);
+  window.scrollTo({top: document.getElementById('quiz-area').getBoundingClientRect().top + window.scrollY - 160, behavior:'smooth'});
+}
+
+function showPopup(correct, msg) {
+  document.getElementById('popup-emoji').textContent = correct ? '🎉' : '💡';
+  document.getElementById('popup-title').textContent = correct ? 'Correct! Great work!' : 'Not quite — but you can do this!';
+  document.getElementById('popup-title').style.color = correct ? 'var(--green)' : 'var(--yellow)';
+  document.getElementById('popup-msg').textContent = msg.substring(0, 220) + (msg.length > 220 ? '...' : '');
+  document.getElementById('popup-overlay').style.display = 'flex';
+}
+function closePopup() { document.getElementById('popup-overlay').style.display = 'none'; }
+
+function showResults() {
+  const pct = Math.round((score/QUESTIONS.length)*100);
+  let grade = pct >= 90 ? '🏆 Outstanding — NCLEX-ready!' : pct >= 80 ? '🌟 Great — strong understanding' : pct >= 70 ? '📘 Passing — review flagged areas' : '💪 Keep studying — review notes and retry';
+  document.getElementById('quiz-area').innerHTML = `<div class="results-card">
+    <div style="font-size:3.5rem;margin-bottom:0.5rem">${pct>=80?'🏆':'📚'}</div>
+    <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:var(--ombre-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem">Quiz Complete!</div>
+    <div style="font-size:3rem;font-weight:800;font-family:'Syne',sans-serif;color:var(--cyan);margin:0.5rem 0">${score} / ${QUESTIONS.length}</div>
+    <div style="font-size:1.4rem;color:var(--yellow);font-weight:700;margin-bottom:0.5rem">${pct}%</div>
+    <div style="color:var(--text2);font-size:1rem;margin-bottom:1rem">${grade}</div>
+    <button class="btn-reset-quiz" onclick="resetQuiz()" style="margin-top:0.5rem">↺ Try Again</button>
+  </div>`;
+}
+
+function resetQuiz() {
+  currentQ = 0; score = 0; answered = 0;
+  submitted = new Array(QUESTIONS.length).fill(false);
+  userAnswers = new Array(QUESTIONS.length).fill(null);
+  renderQuestion(0);
+}
+
+// Initialize quiz when tab is opened
+document.querySelector('[onclick="showTab(\'quiz\',this)"]').addEventListener('click', () => {
+  if (!document.getElementById('quiz-area').innerHTML.trim()) renderQuestion(0);
+});
+// Initial render check
+setTimeout(() => {
+  if (document.getElementById('quiz-area') && !document.getElementById('quiz-area').innerHTML.trim()) {
+    // pre-render silently
+  }
+}, 100);
+</script>
+</body>
+</html>
